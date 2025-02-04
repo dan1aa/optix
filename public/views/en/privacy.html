@@ -1,0 +1,974 @@
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:; default-src *; style-src * 'self' 'unsafe-inline' 'unsafe-eval'; script-src * 'self' 'unsafe-inline' 'unsafe-eval';">
+        <meta charset="UTF-8">
+        <meta name="Keywords" content="Форекс, Биржа Форекс, Бинарные Опционы, торговля акциями, Биржа">
+        <meta name="description" content="Надежная торговая платформа бинарных опционов с доходностью до 76%. Доступные инструменты для ведения торговли, обучающие материалы и простой в использовании интерфейс. "/>
+        <link rel="icon" type='image/png' href="/images/small-logo.png">
+        <title>Privacy Policy | CryptGates</title>
+        <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/css/main.css?v4" rel="stylesheet" type="text/css" />        <script src="/js/jquery.js" type="text/javascript" /></script><script src="/js/bootstrap.min.js" type="text/javascript" /></script><script src="/js/main.js" type="text/javascript" /></script><meta name="frog" content="b4f134ae336d927bcf8206d38534bf79" />
+    </head>
+    <body ng-app="app">
+            <script>
+
+    </script>
+    <style>
+        #loginModal .label{
+            color: black;
+        }
+            
+        #loginModal .modal-dialog{
+            width:370px;
+        }
+        
+        #loginModal .modal-content{
+            padding:0px 30px;
+            border-radius: 0px;
+            border:1px solid #374057;
+            /*background: url('/images/auth_form_bg.jpg') no-repeat center center;
+            background-size:cover;*/
+            background: #2a3143;
+        }
+        #loginModal .modal-body{
+            padding:15px 0px;
+        }
+        #loginModal .modal-header{
+            padding-left:0px;
+            padding-right:0px;
+        }
+        #loginModal .modal-title{
+            height: 37px;
+            
+            font-size:18px;
+            color:white;
+            font-weight:bolder;            
+            text-align: left;
+            border-radius: 5px;
+        }
+        #loginModal input[type=text],#loginModal input[type=password]{
+            border-radius: 0px;
+        }
+        #loginModal input[type=submit]{
+            /*background: #fec307;*/
+            background: #6cbb2c;
+            color: #0e1322;
+            font-weight:bolder;
+            border:none;
+        }
+        #loginModal .modal-header{            
+            border-bottom: 1px solid #2c3039;
+        }
+        #loginModal .modal-header .close{
+            color:#f2f2f0;
+            opacity: 1;
+             text-shadow: 0 1px 0 #f4ae01;
+        }
+        
+        #loginModal .modal-body a.forgot{
+            color:#9da3b1;
+            font-weight:bolder;
+            font-size:12px;
+            margin-top:8px;
+            display:block;
+        }
+        #loginModal .error{
+            font-weight:bolder;
+            font-size:13px;
+            color: red;
+        }
+    </style>
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title font-header">AUTHORIZATION</h4>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <div class="row">                                
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" placeholder="E-mail" name='email'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input type="password" class="form-control" placeholder='Password' name='password'>
+                                <div class="error"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="border-bottom: 1px solid #444f6b; padding-bottom:30px;">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!--<a href="#forgotModal" data-target="#forgotModal" data-toggle="modal" class="forgot">Forgot your password?</a>-->
+                                <a href="/signin/forgot/" class="forgot">Forgot your password?</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="submit" class="btn btn-primary pull-right" value="Login">
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top:15px;">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="label" style="color: white; font-size:14px; font-weight:normal;">You dont have account?</div>
+                                <a href="/registration/" style="color:#6cbb2c;" class="pull-right">Open account</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>        <style>
+    #personal{
+        background: #31394d;
+        height: 44px;
+        width:100%;
+        border-bottom:1px solid #363f54;
+        margin-bottom: -1px;
+        z-index: 10;
+        position:relative;
+    }
+    #personal ul li{
+        letter-spacing:normal;  
+        vertical-align: top;
+        height:44px;;
+    }
+    #personal .balance{
+        font-weight:bold;
+        font-size: 17px;
+        color: #fec307;
+        margin-left:15px;
+        margin-right:15px;
+        display:inline-block;
+        vertical-align: middle;
+    }
+    #personal .modes{
+        cursor:pointer;
+        padding:12px 20px;
+        color: #a9acb4;
+        font-size:14px;
+        font-weight: bolder;
+        margin:0px;
+        border-left: 1px solid #3c455e;
+        border-right: 1px solid #3c455e;
+    }
+    #personal .modes a{
+        text-decoration: none;
+        color: #a9acb4;
+    }
+
+    #personal .modes .status{
+        margin-top:-3px;
+        margin-right:10px;
+        display:inline-block;
+        vertical-align: middle;
+        background: url('/images/acc-buttons.png');
+        width:17px;
+        height:17px;
+    }
+    #personal .modes .status{
+        background-position: -23px -66px;
+    }
+    #personal .modes:hover .status{
+        background-position: -3px -65px;
+    }
+    #personal .modes.active .status{
+        background-position: -1px -47px;
+    }
+    
+    #personal .modes.active,#personal .modes:hover{
+        background: #3c455e;
+        color: #f3f3f1;
+    }
+    #personal .info{
+        padding:10px 10px;
+    }
+    #personal .info .ico{
+        margin-top:-3px;
+        margin-right:10px;        
+        width:19px;
+        height:20px;
+        background:url('/images/acc-buttons.png');
+        background-position:-59px 0px;
+        display:inline-block; 
+        vertical-align: middle;
+    }
+    #personal .info .username{
+        line-height: 10px;
+        text-transform: uppercase;
+        color: #f3f3f1;
+        font-size:12px;
+        font-weight:bolder;
+    }
+    #personal .info .email{
+        color:#a9acb4;
+        font-size:10px;
+        font-weight:bold;
+    }
+    #personal .logout{
+        padding:12px;
+        
+    }
+    #personal .logout a{
+        color:#f3f3f1;
+        font-size:12px;
+        font-weight:900;
+    }
+    #personal .logout .ico{
+        margin-top:-2px;
+        display:inline-block;
+        vertical-align: middle;
+        width:29px;
+        height:20px;
+        background:url('/images/acc-buttons.png');
+        background-position:-59px -23px;
+        margin-right:5px;
+    }
+</style>
+<nav class="navbar navbar-default " id="header" style="display: none">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#headerMenu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            <a class="navbar-brand logo" href="/"></a>
+        </div>
+<style>
+    #header #headerMenu .language{
+        margin-top:12px;
+        margin-left:10px;        
+    }
+    #header #headerMenu .language .current_language{
+        background:#f3f3f1;
+    }
+    #header #headerMenu .language .current_language .lang{
+        color: #384259;
+    }
+    #header #headerMenu .language .current_language .lang .caret{
+        color: #384259;
+    }
+    #header #headerMenu .language .list a{
+        height:26px;
+        font-size:14px;
+    }
+</style>
+        <ul class="nav navbar-nav navbar-collapse collapse " id="headerMenu">
+                        <li class="active">
+                <a type="button" class="contacts_link" href="/faq/" data-toggle="collapse" data-target="#subMenu1" onclick="return false">
+                    Info                </a>
+                
+                <style>                    
+                    #header #headerMenu .submenu{
+                        
+                        top:75px;
+                        left:0px;
+                        margin-left:-70px;
+                        z-index:101;
+                        padding:0px;
+                        position:absolute;
+                        background: #3c455e;
+                        text-decoration: none;
+                        width:220px;
+                    }
+                    #header #headerMenu .submenu:after{
+                        display:block;
+                        position:absolute;
+                        top:-14px;
+                        left:50%;
+                        margin-left:-7px;
+                        content: ' ';
+                        border: 7px solid transparent; 
+                        border-bottom: 7px solid #3c455e;
+                        width:14px;
+                        height:14px;
+                        background: transparent;
+                    }
+                    
+                    #header #headerMenu .submenu li a{
+                        text-decoration: none;
+                        padding:12px 20px;
+                        display: block;
+                        color: #e0e0e2;
+                        font-size:14px;
+                        border-bottom: 1px solid #414b66;
+                        height:42px;
+                    }
+                    #header #headerMenu .submenu li a:last-child{
+                        border-bottom: none;
+                    }
+                    #header #headerMenu .submenu li a:hover{
+                        background: #2a3142;
+                    }
+                    
+                </style>
+                <ul class="collapse submenu" id="subMenu1">
+                    
+                    <li><a href="/faq/">FAQ</a></li>
+                    <li><a href="/faq/privacy/">Privacy</a></li>                    
+                    <li><a href="/faq/glossary/">Glossary</a></li>                    
+                    <li><a href="/termsandconditions/">Terms and Conditions</a></li>
+                </ul>
+            </li>
+                        <li class=""><a class="oustaff_link" href="/aboutus/">About Us</a></li>
+            <li class=""><a class="oustaff_link" href="/faq/bonus/">Bonus</a></li>
+                    </ul>
+        
+        <style>
+            #header .control_menu{
+                padding-top:20px;
+            }
+            #header .control_menu li{
+                margin-right:20px;
+                vertical-align: middle;
+            }
+            #header .control_menu li:last-child{
+                margin-right:0px;
+            }
+            #header.main .control_menu li a{
+                color:#13161c;
+            }
+            .control_menu li a{
+                font-size: 12px;
+                font-weight:900;
+                
+                color:#e0e0e2;
+            }
+            #header .control_menu .reg_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:0px -23px;
+                display:inline-block;
+                width:27px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .reg_icon{
+                background-position:0px 0px;
+            }
+            #header .control_menu .login_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:-32px -23px;
+                display:inline-block;
+                width:23px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .login_icon{
+                background-position:-32px 0px;
+            }
+            
+            #header .language{
+                margin-top:-3px;
+                position:relative;
+            }
+            #header .language .current_language{
+                cursor:pointer;
+                padding:6px 10px;
+                text-align: center;
+                background: #384259;
+                height: 30px;
+                border-radius: 5px;
+            }
+            #header .language .current_language .lang{
+                font-size:12px;
+                font-weight:900;
+                color: white;
+            }
+            #header .language .current_language .lang .caret{
+                margin-left:5px;
+                color: white;
+            }
+        </style>
+                <ul class="pull-right control_menu list-inline">
+            
+                <li class="pull-left">
+                    <a href="/registration/" class=""><span class="reg_icon"></span>REGISTRATION</a>
+                </li>
+                                <li class="pull-left">
+                    <a href="" data-toggle="modal" data-target="#loginModal"><span class="login_icon"></span>LOGIN</a>
+                </li>
+            
+
+            <li class="pull-left">
+                 <div class="language">
+                    <div class="current_language dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                                                    <div class="ico en"></div>
+                            <div class="lang">EN<div class="caret"></div></div>
+                                                    
+                    </div>
+
+                    <ul class="list collapse dropdown-menu" aria-expanded="false">
+                        <li>
+                            <a href="/en/faq/privacy/">
+                                <div class="ico en"></div>
+                                <div class="lang">English</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/ru/faq/privacy/">
+                            <div class="ico ru"></div>
+                            <div class="lang">Русский</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+            </div>
+</nav>
+<div id='personal'>
+    <div class='container'>
+        <ul class='list-inline pull-right' style='font-size:0px;letter-spacing:-1px;'>
+            <li style='padding-top:6px;'>
+	                            <a href='/account/deposit/card-fk/' class='btn btn-grey' style='display:inline-block; vertical-align: middle;'>Deposit</a>
+	                            <span class='balance'>$1,079.60</span>
+            </li>
+                                                                <li class="modes active">   
+                        <a href="/switch/?account=250239">
+                            <div class='status'></div>
+                            Demo                        </a>
+                    </li>
+                                                                                <li class="modes ">   
+                        <a href="/switch/?account=250240">
+                            <div class='status'></div>
+                            Real                        </a>
+                    </li>
+                                        
+            <!--<li class="modes">
+                <div class='status'></div>
+                Demo
+            </li><li class="modes active">
+                <div class='status'></div>
+                Real
+            </li>-->
+            <li class='info'>
+                <div class='ico'></div>
+                <div style='display:inline-block; vertical-align: middle;'>
+                    <div class='username'>Саня Верняев</div>
+                    <div class='email'>olegmongol99812@gmail.com</div>
+                </div>
+            </li>
+            <li class='logout'>
+                <a href="/en/logout">
+                    <div class='ico'></div>
+                    Logout                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    #header{        
+        margin:0px;
+        padding-top:5px;
+        height: 80px;
+        border:none;
+        background: white;
+        border-radius: 0px;
+    }
+    #header.main{
+        background:transparent;
+        border-top:1px solid transparent;
+    }
+    #header .logo{
+        position:relative;
+        top:10px;
+        width:283px;
+        height:48px;
+        background: url('/images/logo2.png');
+    }
+
+    #header.main .logo{
+        background: url('/images/logo.png');
+    }
+    
+    #header #headerMenu{
+        margin-top:5px;
+    }
+    
+    #header #headerMenu li a{
+        height:45px;
+        color: #e0e0e2;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    #header.main #headerMenu li a{
+        color:#13161c;
+    }
+    #header #headerMenu li.active a{        
+        background: none;
+        border-bottom: 3px solid #ff4b00;
+    }
+    
+    #header{
+        border-top:1px solid #6dba2e;
+        background:#2a3142;
+    }
+</style>
+
+<nav class="navbar navbar-default " id="header" style="display: none">
+    <div class='container'>
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#headerMenu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            <a class="navbar-brand logo" href="/"></a>
+        </div>
+<style>
+    #header #headerMenu .language{
+        margin-top:12px;
+        margin-left:10px;        
+    }
+    #header #headerMenu .language .current_language{
+        background:#f3f3f1;
+    }
+    #header #headerMenu .language .current_language .lang{
+        color: #384259;
+    }
+    #header #headerMenu .language .current_language .lang .caret{
+        color: #384259;
+    }
+    #header #headerMenu .language .list a{
+        height:26px;
+        font-size:14px;
+    }
+</style>
+        <ul class="nav navbar-nav navbar-collapse collapse pull-right" id="headerMenu">
+                            <li class=""><a href="/account/history/">Analytics</a></li>
+                        <li class="active">
+                <a type="button" class="contacts_link" href="/faq/" data-toggle="collapse" data-target="#subMenu1" onClick="return false">
+                    Info                </a>
+                
+                <style>                    
+                    #header #headerMenu .submenu{
+                        
+                        top:75px;
+                        left:0px;
+                        margin-left:-70px;
+                        z-index:101;
+                        padding:0px;
+                        position:absolute;
+                        background: #3c455e;
+                        text-decoration: none;
+                        width:220px;
+                    }
+                    #header #headerMenu .submenu:after{
+                        display:block;
+                        position:absolute;
+                        top:-14px;
+                        left:50%;
+                        margin-left:-7px;
+                        content: ' ';
+                        border: 7px solid transparent; 
+                        border-bottom: 7px solid #3c455e;
+                        width:14px;
+                        height:14px;
+                        background: transparent;
+                    }
+                    
+                    #header #headerMenu .submenu li a{
+                        text-decoration: none;
+                        padding:12px 20px;
+                        display: block;
+                        color: #e0e0e2;
+                        font-size:14px;
+                        border-bottom: 1px solid #414b66;
+                        height:42px;
+                    }
+                    #header #headerMenu .submenu li a:last-child{
+                        border-bottom: none;
+                    }
+                    #header #headerMenu .submenu li a:hover{
+                        background: #2a3142;
+                    }
+                    
+                </style>
+                <ul class="collapse submenu" id="subMenu1">
+                    
+                    <li><a href="/faq/">FAQ</a></li>
+                    <li><a href="/faq/privacy/">Privacy</a></li>                    
+                    <li><a href="/faq/glossary/">Glossary</a></li>                    
+                    <li><a href="/termsandconditions/">Terms and Conditions</a></li>
+                </ul>
+            </li>
+                            <li class=""><a class="oustaff_link" href="/trade/">Trade</a></li>
+                        <li class=""><a class="oustaff_link" href="/aboutus/">About Us</a></li>
+            <li class=""><a class="oustaff_link" href="/faq/bonus/">Bonus</a></li>
+                        <li class=""><a class="oustaff_link" href="/account/personalinfo/">Personal Info</a></li>
+            <li>
+                <div class='language'>
+                    <div class='current_language dropdown-toggle'  data-toggle="dropdown" href="#" aria-expanded="false">
+                                                    <div class='ico en'></div>
+                            <div class='lang'>EN<div class='caret'></div></div>
+                                                    
+                    </div>
+
+                    <ul class='list collapse dropdown-menu' aria-expanded="false">
+                        <li>
+                            <a href='/en/faq/privacy/'>
+                                <div class='ico en'></div>
+                                <div class='lang'>English</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href='/ru/faq/privacy/'>
+                            <div class='ico ru'></div>
+                            <div class='lang'>Русский</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+                    </ul>
+        
+        <style>
+            #header .control_menu{
+                padding-top:20px;
+            }
+            #header .control_menu li{
+                margin-right:20px;
+                vertical-align: middle;
+            }
+            #header .control_menu li:last-child{
+                margin-right:0px;
+            }
+            #header.main .control_menu li a{
+                color:#13161c;
+            }
+            .control_menu li a{
+                font-size: 12px;
+                font-weight:900;
+                
+                color:#e0e0e2;
+            }
+            #header .control_menu .reg_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:0px -23px;
+                display:inline-block;
+                width:27px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .reg_icon{
+                background-position:0px 0px;
+            }
+            #header .control_menu .login_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:-32px -23px;
+                display:inline-block;
+                width:23px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .login_icon{
+                background-position:-32px 0px;
+            }
+            
+            #header .language{
+                margin-top:-3px;
+                position:relative;
+            }
+            #header .language .current_language{
+                cursor:pointer;
+                padding:6px 10px;
+                text-align: center;
+                background: #384259;
+                height: 30px;
+                border-radius: 5px;
+            }
+            #header .language .current_language .lang{
+                font-size:12px;
+                font-weight:900;
+                color: white;
+            }
+            #header .language .current_language .lang .caret{
+                margin-left:5px;
+                color: white;
+            }
+        </style>
+            </div>
+</nav>
+    <style>
+        #submenu{
+            
+            margin-bottom:0px;
+            height: 46px;
+            background: #6dba2e;
+        }
+        #submenu .table{
+            height: 46px;;
+        }
+
+        #submenu .table td{
+            padding:0px;
+            vertical-align: middle;
+            text-align: center;
+            border:none;
+            border-left:1px solid #63a82a;
+        }
+        #submenu .table td:last-child{
+            border-right:1px solid #63a82a;
+        }
+        #submenu .table td.active,#submenu .table td:hover{
+            background: #63a82a;
+        }
+
+        #submenu a{
+            padding:10px;
+            width:100%;
+            height:46px;
+            display:block;
+            color: white;
+            font-size:15px;
+            font-weight:bolder;
+        }
+        #submenu a:hover{
+            text-decoration: none;
+        }
+
+    </style>
+    <div id="submenu" style="display: none">
+  <div class="container">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td class="">
+            <a href="/trade/">Trade</a>
+          </td>
+          <td class="">
+            <a href="/autotrade/">Robot</a>
+          </td>
+          <td class="">
+            <a href="/account/deposit/card-fk/">Deposit</a>
+          </td>
+          <td class="">
+            <a href="/account/withdrawal/cc">Withdrawal</a>
+          </td>
+          <td class="">
+            <a href="/account/transactions/">Transactions</a>
+          </td>
+          <td class="">
+            <a href="/account/bonuses/">Bonuses</a>
+          </td>
+          <td class="active">
+            <a href="/account/history/">History</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+                <div class="container" style="padding-bottom:30px;">
+    <div class="pagetitle">Privacy Policy</div>
+
+
+        <p>Your privacy is important to CryptGates. We recognize the importance of protecting personal information and so we take the maintaining of our trader`s privacy and security very seriously.</p>
+        <p>Please take a moment to familiarize yourself with our policy and let us know if you have any questions. The provisions of this notice apply to both former and current customers.</p>
+
+        <div>1.Personal Information</div>
+        <p>In order to provide you with the very best service, when you apply to become an CryptGates customer or open a live account, we will ask you for personal information. This information will assist us in evaluating your financial experience, processing your requests and transactions, retrieving lost passwords, keeping you informed about products and services that may be of interest to you, and providing you with a better customer experience. We are also required by law to retain some records.</p>
+
+        <div>2.Required Information May Include:</div>
+        <p>
+            Application Information - full name, address, birth date, identity or social security number, occupation, assets and income, and other similar information, as detailed on the application forms.            Transaction Information - Information about your transactions with us and/or our affiliates, and records of past communications. These may include your account balances, trading activity, past inquiries and our responses.        </p>
+        <p>Verification Information - This may be required to verify your identity, and may include passport or driver`s license, utility bill, bank statement, credit card copy etc.</p>
+        <p>Note: Anti-Money Laundering ("AML") regulations requires financial institutions to collect information and take action where necessary, in order to verify a customer`s identity.</p>
+        <p>Note: CryptGates will not knowingly collect or maintain personal information from children under 18. If we become aware that a person under 18 has provided us with Personal Information, we will take steps to delete such information from our files.</p>
+        <p>If a parent or guardian becomes aware that his or her child has provided us with Personal Information without their consent, he or she should contact us at support@CryptGates.com</p>
+
+        <div>3.The Use of Cookies</div>
+        <p>
+            CryptGates also collects and uses information acquired from cookies. Cookies are bits of textual information that are sent electronically from a web server to your browser and are stored on your computer. They do not identify you individually nor do they contain personal information about you, unless you have identified yourself or provided the information by, for example, opening an account or registering for an on-line service. We may use cookies to measure and identify website traffic patterns and to track the performance of web features and advertisements.            By providing CryptGates with a better understanding of how you and others use our websites and other web services, cookies enable our company to improve the navigation and functionality of its websites and to present the most useful information and offers to you.            We may share information obtained from cookies with its employees, agents and affiliates, but does not sell such information to unaffiliated third parties.            CryptGates may permit other companies or their third party ad servers to set their own cookies on your browser when you visit our website. Such companies generally use these cookies as we do, but you should refer to their privacy policies in case of any doubt        </p>
+
+        <div>4.  Sharing Information</div>
+        <p>a) Affiliates</p>
+        <p>We may share some or all of the personal information described above with our affiliates in order to service client accounts or inform clients of new products and services. Our affiliates may include companies controlled or owned by us, as well as companies which have an ownership interest in our company. Our affiliates will maintain the privacy of your information in the same manner and to the same extent as CryptGates, and in accordance with this privacy policy.</p>
+        <p>b) Third Parties</p>
+        <p>
+            CryptGates does not disclose your personal information to third parties, except as described in this privacy policy. Third party disclosures may include sharing such information with non-affiliated companies that perform support services for your account or facilitate your transactions with us. These companies may include those that provide professional, legal or accounting services to us. Non-affiliate companies that assist our company in providing services are required to maintain the confidentiality of such information to the extent they receive it. In addition, they are obligated to use your personal information only in the course of providing such services and only for the purposes dictated by us. 
+            We may disclose a customer`s personal information to a third party in order to fulfill their instructions or pursuant to express consent. It is important to us that you know that our company will not sell your personal information.        </p> 
+        <p>c) Regulators </p>
+        <p>CryptGates may disclose your personal information to third parties as permitted by, or in order to comply with applicable laws and regulations. This may include disclosing personal information in order to cooperate with regulatory authorities and law enforcement agencies, as may be necessary to protect our property or rights.</p>
+        <p>d)Merger or Bankruptcy</p>
+        <p>In the event of a merger of CryptGates, the company`s customer information will merge along with the company. In the event of bankruptcy, different legal statuses shall apply in accordance with its incorporation laws and its recordkeeping requirements. </p>
+        <p>e) Payment Information </p>
+        <p>CryptGates does not keep, in any form, customer`s credit cards information. </p>
+
+        <div>5. Failure to Provide Personal Information</div>
+        <p>You have a choice to supply any or all of the personal information required. However, missing information may result in our being unable to open or maintain your account and /or to provide you with our services.</p>
+
+        <div>6. Opt Out </div>
+        <p>Should you choose to have your name and personal data removed from our database, you can do so by sending an email to support@CryptGates.com but kindly note that missing information may result in our being unable to open or maintain your account and /or to provide you with our services.</p>
+
+        <div>7. Mailing Information</div>
+
+        <p>Whether you wish to talk to us about our privacy policy or any other issue, the professional team at CryptGates is available to assist you . Please feel free to contact us via e-mail, phone, fax and mailing address. You can also or use our chat facility to IM a customer service representative.</p>
+</div>        
+        <style>
+    #contacts{
+        width:100%;
+        height:115px;
+        background: url('/images/contacts_bg.jpg') no-repeat center center;
+        background-size: cover;
+        display:none;
+    }
+    #contacts .phone_ico{
+        display: inline-block;
+        vertical-align: middle;
+        margin-right:20px;
+        width:98px;
+        height:59px;
+        background: url('/images/contact_icons.png');
+        background-position: 0px 0px;
+    }
+    #contacts .mail_ico{
+        display:inline-block;
+        vertical-align: middle;
+        margin-right:20px;
+        width:77px;
+        height:59px;
+        background: url('/images/contact_icons.png');
+        background-position: -130px -4px;
+    }
+</style>
+<div id='contacts'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-sm-4' style='font-size:23px; font-weight:bolder; padding-top:40px;'>
+                You can contact us            </div>
+            <div class='col-sm-4' style='font-size:22px; font-weight:bolder;padding-top:26px;'>
+                            </div>
+            <div class='col-sm-4' style='font-size: 18px; font-weight:bolder;padding-top:26px;'>
+                <div class='mail_ico'></div>
+                support@platformail.com            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #footer{
+        padding-top:40px;
+        height:auto;
+        width:100%;
+        background: #f3f3f1;
+    }            
+    #footer .logo{
+        background: url('/images/logo.png');
+        width:283px;
+        height:48px;
+        margin-bottom:20px;
+    }
+    #footer .menu ul{
+        padding-left:0px;
+    }
+    #footer .menu li{
+        margin-bottom:12px;
+    }
+    #footer .menu li a{
+        
+        font-size:16px;
+        font-weight: bolder;
+        color:#1d242b ;
+    }
+    #footer .menu li.sub{
+        margin-bottom:8px;
+    }
+    #footer .menu li.sub a{
+        margin-bottom:8px;
+        font-size:13px;
+        font-weight: normal;
+    }
+    #footer .bottom{
+        margin-top:40px;
+        padding-top:25px;
+        border-top:1px solid #c7c9c9;
+        font-size:12px;
+    }
+    #footer .bottom .copyrights{
+        font-size:13px;
+        font-weight: bolder;
+    }
+</style>
+<div id="footer">
+    <div class='container'>
+        <div class='top'>
+            <div class='row'>
+                <div class='col-sm-4'>
+                    <div class='logo'></div>
+                    <p>For all questions please contact customer support:<br><a style="margin-bottom:14px;display:block;" href='mailto:support@platformail.com'>support@platformail.com</a></p>
+                </div>
+                <div class='col-sm-8'>
+                    <div class='row menu'>
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/'>HOME</a></li>
+                                <li><a href='/termsandconditions/'>RULES</a></li>
+                                <li><a href='/faq/'>FAQ</a></li>                                
+                            </ul>   
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>                                
+                                <li><a href='/aboutus/'>ABOUT US</a></li>
+                                <li><a href='/faq/bonus/'>BONUS</a></li>                                
+                            </ul>   
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/faq/'>INFO</a></li>
+                                <li class='sub'><a href='/faq/glossary/'>GLOSSARY</a></li>
+                                <li class='sub'><a href='/faq/disclaimer/'>DISCLAIMER</a></li>
+                                <li class='sub'><a href='/faq/privacy/'>PRIVACY</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/trade/'>TRADE</a></li>
+                                <li class='sub'><a href='/trade/'>60 Seconds</a></li>
+                            </ul>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='bottom'>
+            <p>You haven`t made any investments in Option builder tool yet. To make an investment you should: Choose the asset you want to trade with, enter your current investment amount. And choose how will asset behavior: if it will rise - press HIGH button, other way press LOW button. Select the profit and the pay off level. Confirm your deal with the Confirmal button. Due to different time zones at the worldwide stocks, some assets could be inactive or might has limited availability. If the asset`s value didn`t change sinse made an investment, the full investment price will be returned to investor.</p>
+            <p>Legal: cryptgates.com is a trading name of CryptGates, registration number: IBC 2015 (Suite 305, Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
+            <div class='copyrights'>© 2025 | CryptGates - All rights reserved</div>
+        </div>
+<a href="https://freekassa.ru" target="_blank" rel="noopener noreferrer">
+  <img src="/images/freekasa.png" title="Прием платежей на сайте">
+</a>
+    </div>
+</div><script src="/js/global.js"></script>    </body>
+</html>

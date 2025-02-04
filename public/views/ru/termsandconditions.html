@@ -1,0 +1,1147 @@
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:; default-src *; style-src * 'self' 'unsafe-inline' 'unsafe-eval'; script-src * 'self' 'unsafe-inline' 'unsafe-eval';">
+        <meta charset="UTF-8">
+        <meta name="Keywords" content="Форекс, Биржа Форекс, Бинарные Опционы, торговля акциями, Биржа">
+        <meta name="description" content="Надежная торговая платформа бинарных опционов с доходностью до 76%. Доступные инструменты для ведения торговли, обучающие материалы и простой в использовании интерфейс. "/>
+        <link rel="icon" type='image/png' href="/images/small-logo.png">
+        <title>Условия и положения | CryptGates</title>
+        <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/css/main.css?v4" rel="stylesheet" type="text/css" />        <script src="/js/jquery.js" type="text/javascript" /></script><script src="/js/bootstrap.min.js" type="text/javascript" /></script><script src="/js/main.js" type="text/javascript" /></script><meta name="frog" content="b4f134ae336d927bcf8206d38534bf79" />
+    </head>
+    <body ng-app="app">
+            <script>
+
+    </script>
+    <style>
+        #loginModal .label{
+            color: black;
+        }
+            
+        #loginModal .modal-dialog{
+            width:370px;
+        }
+        
+        #loginModal .modal-content{
+            padding:0px 30px;
+            border-radius: 0px;
+            border:1px solid #374057;
+            /*background: url('/images/auth_form_bg.jpg') no-repeat center center;
+            background-size:cover;*/
+            background: #2a3143;
+        }
+        #loginModal .modal-body{
+            padding:15px 0px;
+        }
+        #loginModal .modal-header{
+            padding-left:0px;
+            padding-right:0px;
+        }
+        #loginModal .modal-title{
+            height: 37px;
+            
+            font-size:18px;
+            color:white;
+            font-weight:bolder;            
+            text-align: left;
+            border-radius: 5px;
+        }
+        #loginModal input[type=text],#loginModal input[type=password]{
+            border-radius: 0px;
+        }
+        #loginModal input[type=submit]{
+            /*background: #fec307;*/
+            background: #6cbb2c;
+            color: #0e1322;
+            font-weight:bolder;
+            border:none;
+        }
+        #loginModal .modal-header{            
+            border-bottom: 1px solid #2c3039;
+        }
+        #loginModal .modal-header .close{
+            color:#f2f2f0;
+            opacity: 1;
+             text-shadow: 0 1px 0 #f4ae01;
+        }
+        
+        #loginModal .modal-body a.forgot{
+            color:#9da3b1;
+            font-weight:bolder;
+            font-size:12px;
+            margin-top:8px;
+            display:block;
+        }
+        #loginModal .error{
+            font-weight:bolder;
+            font-size:13px;
+            color: red;
+        }
+    </style>
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title font-header">АВТОРИЗАЦИЯ</h4>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <div class="row">                                
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" placeholder="E-mail" name='email'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input type="password" class="form-control" placeholder='Пароль' name='password'>
+                                <div class="error"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="border-bottom: 1px solid #444f6b; padding-bottom:30px;">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!--<a href="#forgotModal" data-target="#forgotModal" data-toggle="modal" class="forgot">Забыли пароль?</a>-->
+                                <a href="/signin/forgot/" class="forgot">Забыли пароль?</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="submit" class="btn btn-primary pull-right" value="Войти">
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top:15px;">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="label" style="color: white; font-size:14px; font-weight:normal;">У вас нет аккаунта?</div>
+                                <a href="/registration/" style="color:#6cbb2c;" class="pull-right">Зарегистрируйтесь</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>        <style>
+    #personal{
+        background: #31394d;
+        height: 44px;
+        width:100%;
+        border-bottom:1px solid #363f54;
+        margin-bottom: -1px;
+        z-index: 10;
+        position:relative;
+    }
+    #personal ul li{
+        letter-spacing:normal;  
+        vertical-align: top;
+        height:44px;;
+    }
+    #personal .balance{
+        font-weight:bold;
+        font-size: 17px;
+        color: #fec307;
+        margin-left:15px;
+        margin-right:15px;
+        display:inline-block;
+        vertical-align: middle;
+    }
+    #personal .modes{
+        cursor:pointer;
+        padding:12px 20px;
+        color: #a9acb4;
+        font-size:14px;
+        font-weight: bolder;
+        margin:0px;
+        border-left: 1px solid #3c455e;
+        border-right: 1px solid #3c455e;
+    }
+    #personal .modes a{
+        text-decoration: none;
+        color: #a9acb4;
+    }
+
+    #personal .modes .status{
+        margin-top:-3px;
+        margin-right:10px;
+        display:inline-block;
+        vertical-align: middle;
+        background: url('/images/acc-buttons.png');
+        width:17px;
+        height:17px;
+    }
+    #personal .modes .status{
+        background-position: -23px -66px;
+    }
+    #personal .modes:hover .status{
+        background-position: -3px -65px;
+    }
+    #personal .modes.active .status{
+        background-position: -1px -47px;
+    }
+    
+    #personal .modes.active,#personal .modes:hover{
+        background: #3c455e;
+        color: #f3f3f1;
+    }
+    #personal .info{
+        padding:10px 10px;
+    }
+    #personal .info .ico{
+        margin-top:-3px;
+        margin-right:10px;        
+        width:19px;
+        height:20px;
+        background:url('/images/acc-buttons.png');
+        background-position:-59px 0px;
+        display:inline-block; 
+        vertical-align: middle;
+    }
+    #personal .info .username{
+        line-height: 10px;
+        text-transform: uppercase;
+        color: #f3f3f1;
+        font-size:12px;
+        font-weight:bolder;
+    }
+    #personal .info .email{
+        color:#a9acb4;
+        font-size:10px;
+        font-weight:bold;
+    }
+    #personal .logout{
+        padding:12px;
+        
+    }
+    #personal .logout a{
+        color:#f3f3f1;
+        font-size:12px;
+        font-weight:900;
+    }
+    #personal .logout .ico{
+        margin-top:-2px;
+        display:inline-block;
+        vertical-align: middle;
+        width:29px;
+        height:20px;
+        background:url('/images/acc-buttons.png');
+        background-position:-59px -23px;
+        margin-right:5px;
+    }
+</style>
+<nav class="navbar navbar-default " id="header" style="display: none">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#headerMenu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            <a class="navbar-brand logo" href="/"></a>
+        </div>
+<style>
+    #header #headerMenu .language{
+        margin-top:12px;
+        margin-left:10px;        
+    }
+    #header #headerMenu .language .current_language{
+        background:#f3f3f1;
+    }
+    #header #headerMenu .language .current_language .lang{
+        color: #384259;
+    }
+    #header #headerMenu .language .current_language .lang .caret{
+        color: #384259;
+    }
+    #header #headerMenu .language .list a{
+        height:26px;
+        font-size:14px;
+    }
+</style>
+        <ul class="nav navbar-nav navbar-collapse collapse " id="headerMenu">
+                        <li class="active">
+                <a type="button" class="contacts_link" href="/faq/" data-toggle="collapse" data-target="#subMenu1" onclick="return false">
+                    Инфо                </a>
+                
+                <style>                    
+                    #header #headerMenu .submenu{
+                        
+                        top:75px;
+                        left:0px;
+                        margin-left:-70px;
+                        z-index:101;
+                        padding:0px;
+                        position:absolute;
+                        background: #3c455e;
+                        text-decoration: none;
+                        width:220px;
+                    }
+                    #header #headerMenu .submenu:after{
+                        display:block;
+                        position:absolute;
+                        top:-14px;
+                        left:50%;
+                        margin-left:-7px;
+                        content: ' ';
+                        border: 7px solid transparent; 
+                        border-bottom: 7px solid #3c455e;
+                        width:14px;
+                        height:14px;
+                        background: transparent;
+                    }
+                    
+                    #header #headerMenu .submenu li a{
+                        text-decoration: none;
+                        padding:12px 20px;
+                        display: block;
+                        color: #e0e0e2;
+                        font-size:14px;
+                        border-bottom: 1px solid #414b66;
+                        height:42px;
+                    }
+                    #header #headerMenu .submenu li a:last-child{
+                        border-bottom: none;
+                    }
+                    #header #headerMenu .submenu li a:hover{
+                        background: #2a3142;
+                    }
+                    
+                </style>
+                <ul class="collapse submenu" id="subMenu1">
+                    
+                    <li><a href="/faq/">FAQ</a></li>
+                    <li><a href="/faq/privacy/">Конфиденциальность</a></li>                    
+                    <li><a href="/faq/glossary/">Словарь Терминов</a></li>                    
+                    <li><a href="/termsandconditions/">Условия и положения</a></li>
+                </ul>
+            </li>
+                        <li class=""><a class="oustaff_link" href="/aboutus/">О нас</a></li>
+            <li class=""><a class="oustaff_link" href="/faq/bonus/">Бонус</a></li>
+                    </ul>
+        
+        <style>
+            #header .control_menu{
+                padding-top:20px;
+            }
+            #header .control_menu li{
+                margin-right:20px;
+                vertical-align: middle;
+            }
+            #header .control_menu li:last-child{
+                margin-right:0px;
+            }
+            #header.main .control_menu li a{
+                color:#13161c;
+            }
+            .control_menu li a{
+                font-size: 12px;
+                font-weight:900;
+                
+                color:#e0e0e2;
+            }
+            #header .control_menu .reg_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:0px -23px;
+                display:inline-block;
+                width:27px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .reg_icon{
+                background-position:0px 0px;
+            }
+            #header .control_menu .login_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:-32px -23px;
+                display:inline-block;
+                width:23px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .login_icon{
+                background-position:-32px 0px;
+            }
+            
+            #header .language{
+                margin-top:-3px;
+                position:relative;
+            }
+            #header .language .current_language{
+                cursor:pointer;
+                padding:6px 10px;
+                text-align: center;
+                background: #384259;
+                height: 30px;
+                border-radius: 5px;
+            }
+            #header .language .current_language .lang{
+                font-size:12px;
+                font-weight:900;
+                color: white;
+            }
+            #header .language .current_language .lang .caret{
+                margin-left:5px;
+                color: white;
+            }
+        </style>
+                <ul class="pull-right control_menu list-inline">
+            
+                <li class="pull-left">
+                    <a href="/registration/" class=""><span class="reg_icon"></span>РЕГИСТРАЦИЯ</a>
+                </li>
+                                <li class="pull-left">
+                    <a href="" data-toggle="modal" data-target="#loginModal"><span class="login_icon"></span>ВХОД</a>
+                </li>
+            
+
+            <li class="pull-left">
+                 <div class="language">
+                    <div class="current_language dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                                                    <div class="ico ru"></div>
+                            <div class="lang">RU<div class="caret"></div></div>
+                                                    
+                    </div>
+
+                    <ul class="list collapse dropdown-menu" aria-expanded="false">
+                        <li>
+                            <a href="/en/faq/">
+                                <div class="ico en"></div>
+                                <div class="lang">English</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/ru/faq/">
+                            <div class="ico ru"></div>
+                            <div class="lang">Русский</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+            </div>
+</nav>
+<div id='personal'>
+    <div class='container'>
+        <ul class='list-inline pull-right' style='font-size:0px;letter-spacing:-1px;'>
+            <li style='padding-top:6px;'>
+	                            <a href='/account/deposit/card-fk/' class='btn btn-grey' style='display:inline-block; vertical-align: middle;'>Депозит</a>
+	                            <span class='balance'>$1,181.60</span>
+            </li>
+                                                                <li class="modes active">   
+                        <a href="/switch/?account=250239">
+                            <div class='status'></div>
+                            Demo                        </a>
+                    </li>
+                                                                                <li class="modes ">   
+                        <a href="/switch/?account=250240">
+                            <div class='status'></div>
+                            Real                        </a>
+                    </li>
+                                        
+            <!--<li class="modes">
+                <div class='status'></div>
+                Demo
+            </li><li class="modes active">
+                <div class='status'></div>
+                Real
+            </li>-->
+            <li class='info'>
+                <div class='ico'></div>
+                <div style='display:inline-block; vertical-align: middle;'>
+                    <div class='username'>Саня Верняев</div>
+                    <div class='email'>olegmongol99812@gmail.com</div>
+                </div>
+            </li>
+            <li class='logout'>
+                <a href="/en/logout">
+                    <div class='ico'></div>
+                    Выйти                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    #header{        
+        margin:0px;
+        padding-top:5px;
+        height: 80px;
+        border:none;
+        background: white;
+        border-radius: 0px;
+    }
+    #header.main{
+        background:transparent;
+        border-top:1px solid transparent;
+    }
+    #header .logo{
+        position:relative;
+        top:10px;
+        width:283px;
+        height:48px;
+        background: url('/images/logo2.png');
+    }
+
+    #header.main .logo{
+        background: url('/images/logo.png');
+    }
+    
+    #header #headerMenu{
+        margin-top:5px;
+    }
+    
+    #header #headerMenu li a{
+        height:45px;
+        color: #e0e0e2;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    #header.main #headerMenu li a{
+        color:#13161c;
+    }
+    #header #headerMenu li.active a{        
+        background: none;
+        border-bottom: 3px solid #ff4b00;
+    }
+    
+    #header{
+        border-top:1px solid #6dba2e;
+        background:#2a3142;
+    }
+</style>
+
+<nav class="navbar navbar-default " id="header" style="display: none">
+    <div class='container'>
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#headerMenu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            <a class="navbar-brand logo" href="/"></a>
+        </div>
+<style>
+    #header #headerMenu .language{
+        margin-top:12px;
+        margin-left:10px;        
+    }
+    #header #headerMenu .language .current_language{
+        background:#f3f3f1;
+    }
+    #header #headerMenu .language .current_language .lang{
+        color: #384259;
+    }
+    #header #headerMenu .language .current_language .lang .caret{
+        color: #384259;
+    }
+    #header #headerMenu .language .list a{
+        height:26px;
+        font-size:14px;
+    }
+</style>
+        <ul class="nav navbar-nav navbar-collapse collapse pull-right" id="headerMenu">
+                            <li class=""><a href="/account/history/">Аналитика</a></li>
+                        <li class="">
+                <a type="button" class="contacts_link" href="/faq/" data-toggle="collapse" data-target="#subMenu1" onClick="return false">
+                    Инфо                </a>
+                
+                <style>                    
+                    #header #headerMenu .submenu{
+                        
+                        top:75px;
+                        left:0px;
+                        margin-left:-70px;
+                        z-index:101;
+                        padding:0px;
+                        position:absolute;
+                        background: #3c455e;
+                        text-decoration: none;
+                        width:220px;
+                    }
+                    #header #headerMenu .submenu:after{
+                        display:block;
+                        position:absolute;
+                        top:-14px;
+                        left:50%;
+                        margin-left:-7px;
+                        content: ' ';
+                        border: 7px solid transparent; 
+                        border-bottom: 7px solid #3c455e;
+                        width:14px;
+                        height:14px;
+                        background: transparent;
+                    }
+                    
+                    #header #headerMenu .submenu li a{
+                        text-decoration: none;
+                        padding:12px 20px;
+                        display: block;
+                        color: #e0e0e2;
+                        font-size:14px;
+                        border-bottom: 1px solid #414b66;
+                        height:42px;
+                    }
+                    #header #headerMenu .submenu li a:last-child{
+                        border-bottom: none;
+                    }
+                    #header #headerMenu .submenu li a:hover{
+                        background: #2a3142;
+                    }
+                    
+                </style>
+                <ul class="collapse submenu" id="subMenu1">
+                    
+                    <li><a href="/faq/">FAQ</a></li>
+                    <li><a href="/faq/privacy/">Конфиденциальность</a></li>                    
+                    <li><a href="/faq/glossary/">Словарь Терминов</a></li>                    
+                    <li><a href="/termsandconditions/">Условия и положения</a></li>
+                </ul>
+            </li>
+                            <li class=""><a class="oustaff_link" href="/trade/">Торговля</a></li>
+                        <li class=""><a class="oustaff_link" href="/aboutus/">О нас</a></li>
+            <li class=""><a class="oustaff_link" href="/faq/bonus/">Бонус</a></li>
+                        <li class=""><a class="oustaff_link" href="/account/personalinfo/">Личные данные</a></li>
+            <li>
+                <div class='language'>
+                    <div class='current_language dropdown-toggle'  data-toggle="dropdown" href="#" aria-expanded="false">
+                                                    <div class='ico ru'></div>
+                            <div class='lang'>RU<div class='caret'></div></div>
+                                                    
+                    </div>
+
+                    <ul class='list collapse dropdown-menu' aria-expanded="false">
+                        <li>
+                            <a href='/en/termsandconditions/'>
+                                <div class='ico en'></div>
+                                <div class='lang'>English</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href='/ru/termsandconditions/'>
+                            <div class='ico ru'></div>
+                            <div class='lang'>Русский</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+                    </ul>
+        
+        <style>
+            #header .control_menu{
+                padding-top:20px;
+            }
+            #header .control_menu li{
+                margin-right:20px;
+                vertical-align: middle;
+            }
+            #header .control_menu li:last-child{
+                margin-right:0px;
+            }
+            #header.main .control_menu li a{
+                color:#13161c;
+            }
+            .control_menu li a{
+                font-size: 12px;
+                font-weight:900;
+                
+                color:#e0e0e2;
+            }
+            #header .control_menu .reg_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:0px -23px;
+                display:inline-block;
+                width:27px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .reg_icon{
+                background-position:0px 0px;
+            }
+            #header .control_menu .login_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:-32px -23px;
+                display:inline-block;
+                width:23px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .login_icon{
+                background-position:-32px 0px;
+            }
+            
+            #header .language{
+                margin-top:-3px;
+                position:relative;
+            }
+            #header .language .current_language{
+                cursor:pointer;
+                padding:6px 10px;
+                text-align: center;
+                background: #384259;
+                height: 30px;
+                border-radius: 5px;
+            }
+            #header .language .current_language .lang{
+                font-size:12px;
+                font-weight:900;
+                color: white;
+            }
+            #header .language .current_language .lang .caret{
+                margin-left:5px;
+                color: white;
+            }
+        </style>
+            </div>
+</nav>
+    <style>
+        #submenu{
+            
+            margin-bottom:0px;
+            height: 46px;
+            background: #6dba2e;
+        }
+        #submenu .table{
+            height: 46px;;
+        }
+
+        #submenu .table td{
+            padding:0px;
+            vertical-align: middle;
+            text-align: center;
+            border:none;
+            border-left:1px solid #63a82a;
+        }
+        #submenu .table td:last-child{
+            border-right:1px solid #63a82a;
+        }
+        #submenu .table td.active,#submenu .table td:hover{
+            background: #63a82a;
+        }
+
+        #submenu a{
+            padding:10px;
+            width:100%;
+            height:46px;
+            display:block;
+            color: white;
+            font-size:15px;
+            font-weight:bolder;
+        }
+        #submenu a:hover{
+            text-decoration: none;
+        }
+
+    </style>
+    <div id="submenu">
+        <div class="container">
+            
+            <table class="table">
+                <tbody><tr>
+                    <td class="">
+                        <a href="/trade/">Торговля</a>
+                    </td>
+                    <td class="">
+                        <a href="/autotrade/">Робот</a>
+                    </td>
+                                            <td class="">
+
+	                                        <a href="/account/deposit/card-fk/">Депозит</a>
+	            
+                        </td>
+
+                        <td class="">
+                            <a href="/account/withdrawal/cc">Вывод средств</a>
+                        </td>
+                                        <td class="">
+                        <a href="/account/transactions/">Транзакции</a>
+                    </td>
+                                            <td class="">
+                            <a href="/account/bonuses/">Бонусы</a>
+                        </td>
+                                        <td class="active">
+                        <a href="/account/history/">История</a>
+                    </td>
+                </tr>
+            </tbody></table>
+        </div>
+    </div>
+                <script>
+    $('document').ready(function(){
+        //$('.faq .element').not('.active').click(function(){
+        $('.faq .element').click(function(){
+            if($(this).attr('class').indexOf('active') != -1) return;
+            $('.faq .element').removeClass('active');
+            $(this).addClass('active');
+        });
+    });
+</script>
+<div class="container">
+    <div class="pagetitle">Правила и условия.</div>
+    <div class='faq'>
+        <div class="element">
+            <div class="title">Общие положения </div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p> Нижеследующее описывает правила и условия, на которых CryptGates (“Компания”, “Мы”, “Наш” или “Нас”) предлагает Вам (“Вы”) доступ к своему Веб-сайту и использованию его услуг (“Соглашение”). Это Соглашение, которое устанавливает юридически обязывающее соглашение между Вами и компанией, описывает правила, условия и риски, применимые к Вашему использованию наших услуг. Настоящим Вы признаёте, что предлагаемые услуги являются услугами беспоставочной опционной торговли и, это означает, что торгуя на нашей платформе, Вам не даётся право получать, а Мы не должны предоставлять, какие бы то ни было активы, взамен инвестируемых Вами средств в бинарные опционы через Сайт.</p>
+                <p>Вы должны ознакомиться, понять и согласиться на все правила и условия по использованию Сайта и/или Услуг, содержащиеся в данном Соглашении, без изменений, после чего, Вы можете стать нашим клиентом. Все условия и правила данного Соглашения вступают в юридическую силу с момента окончания регистрации Клиента. Если Вы не согласны с правилами и условиями этого Соглашения, не посещайте и не используйте данный Сайт и/или Услуги и незамедлительно сообщите нашей компании об этом в письменной форме. В случае если Вы не согласны, но продолжаете посещать и пользоваться Сайтом  и/или Услугами нашего сайта, Вы автоматически подпадаете под положения и условия данного соглашения.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Условия участия в торговле</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>Услуги доступны и могут быть использованы только юридически дееспособными лицами или компаниями, согласно действующему для них законодательству. Включая вышеупомянутое условие, использование Сайта и/или его Услуг не доступно для лиц, не достигших 18 лет или иного юридически дееспособного возраста (далее “Несовершеннолетний”), согласно действующему законодательству Вашей страны проживания. Если Вы несовершеннолетний, Вы не можете пользоваться Сайтом и/или Услугами; в случае нарушения данного условия обманным путем, Наша компания сохраняет за собой право (но не обязанность) запросить подтверждение возраста в любой момент, чтобы проверить, что Вы не являетесь несовершеннолетним. Наша компания может приостановить действие и/или аннулировать Ваш счёт и закрыть для Вас доступ к Сайту и/или Услугами, если доказательство Вашего возраста не предоставлено и/или у Нас есть подозрение, что Вы несовершеннолетний. В таком случае, Мы не обязаны возвращать какие бы то ни было средства, содержащиеся на Вашем торговом счете в Нашей Компании. Любое такое Наше решение является окончательным, обязательным и обжалованию не подлежит.</p>
+                <p>Во избежание разночтений, возможность доступа к Сайту и/или Услугам не означает, что Ваши действия на Сайте и/или Ваше использование Услуг являются правомерными с точки зрения законов, норм и директив, относящихся к Вам. Во избежание разночтений, настоящим уточняется, что Мы не предоставляем никаких заверений и не даём никаких гарантий, явно выраженных либо подразумеваемых, что использование Вами Сайта и/или Услуг является законным в стране Вашего проживания. Не исключая вышеупомянутого, Сайт и/или Услуги не являются доступными для инвесторов из США; если Вы являетесь гражданином и/или резидентом США, Вы не можете пользоваться Сайтом и Услугами Нашей компании. Мы сохраняем право, по нашему собственному усмотрению, отказать в доступе к Сайту и Услугам гражданам, резидентам и/или другим людям, по месту их проживания, согласно юрисдикции.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Регистрационная Информация и Требования</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>Для того чтобы пользоваться Сайтом и/или Услугами, Вы должны зарегистрироваться на нашем сайте. Когда Вы регистрируетесь у Нас, Мы просим Вас предоставить определенную идентифицирующую информацию и документацию; Вы не сможете закончить регистрацию на нашем сайте без предоставления такой информации и/или документации. Мы сохраняем за собой право, в любое время (до завершения регистрации или после), потребовать от Вас предоставить и/или подтвердить дополнительную информацию и/или документацию которую Вы Нам ранее предоставили; если Вы не предоставите такую информацию и/или документацию в течение запрашиваемого времени или если наша компания предполагает, что какая-либо информация и/или документация, предоставленная Вами, была неправдивой или неточной или не является достоверной, или если Вы каким-либо другим образом не соответствуете какому бы то ни было правилу или условию данного Соглашения и/или всем правилам и принципам по использованию нашего Сайта и/или Услуг, или Мы предполагаем, по собственному усмотрению, что Вы злоупотребили, каким бы то ни было, способом или недобросовестно действовали в отношении Сайта и/или Услуг и/или других пользователей Сайта и Услуг, Мы сохраняем за собой право отказать Вам в открытии счёта, приостановить действие и/или аннулировать Ваш счёт на нашем сайте, и оставляем за собой право, заморозить и/или изъять какие бы то ни было средства, содержащиеся на Вашем счёте, на основании вышеупомянутых причин. Предоставляя Нам детали, каких бы то ни было платёжных средств, Вы заявляете и гарантируете, что либо Вы являетесь владельцем этих платёжных средств, либо владелец этих платёжных средств согласился на использование Вами платёжных средств, в связи с Сайтом и/или Услугами, и что такое использование осуществляется в рамках данного соглашения.</p>
+                <p>Вы подтверждаете, что Мы никоим образом не несём юридической ответственности за проверку наличия согласия, и в какой мере владелец платёжных средств дал разрешение на такое использование, и (в добавление к любым другим средствам правовой защиты и правам, принадлежащим Нам). Вы будете нести полную ответственность, за какое бы то ни было ненадлежащее использование таких платёжных средств. Вы полностью ответственны за обеспечение защиты логина и пароля Вашего счёта на Нашем сайте, и Вы не должны передавать данную информацию какой бы то ни было третьей стороне. Компания не обязана защищать Ваши имя пользователя и пароль (за исключением условий пункта №15 данного соглашения). Вы соглашаетесь предоставлять достоверную, точную, актуальную и полную информацию относительно Вас во время процесса регистрации и после него. Вы также соглашаетесь не выдавать себя за другое физическое или юридическое лицо, не предоставлять заведомо ложную информацию о принадлежности к физическому или юридическому лицу или объединению или другим способом скрывать Вашу личность от Нас, с какими бы то ни было целями. Вы должны немедленно сообщить Нам, о каком бы то ни было изменении какой любой информации,  предоставленной Вами нашей компании ранее.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Использование Cайта и/или Услуг</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>Используя Сайт и/или Наши услуги, настоящим Вы признаёте, что: </p>
+                <ul class="ul_style">
+                    <li>- Ваш счёт у Нас служит исключительно для Вашего персонального пользования, и Вы не должны допускать использования Вашего счёта, какой бы то ни было третьей стороной. Вы несёте полную и единоличную ответственность за любые утраты или повреждения, вызванные, каким бы то ни было действием или бездействием, с Вашей или третьей стороны, в результате ненадлежащего, ошибочного или неправомерного использования Вашего счёта. Не исключая упомянутого выше, Вы должны немедленно сообщать Нам о каком бы то ни было неправомерном использовании Вашего счёта;</li>
+                    <li>- Вы единолично ответственны за учёт и уплату, каких бы то ни было налогов или других сборов, которые могут подлежать оплате ввиду пользования Вами Сайтом и/или Услугами (включая, но, не ограничиваясь, платежами с полученного дохода);</li>
+                    <li>- Вы будете пользоваться Сайтом и/или Услугами добросовестно в отношении Компании и других пользователей Услуг;</li>
+                    <li>- В случае мошенничества или подозрения в мошенничестве, Мы можем по собственному усмотрению, открывать, администрировать и/или закрывать Ваш счёт, а также заморозить и/или изъять все или часть средств, содержащихся на Вашем счете, чтобы возместить ущерб и/или осуществить возврат средств или дохода, полученного Вами от Нас, путем неправомерных действий, упомянутых выше, и любое такое решение, либо любое другое решение Компании по вышеупомянутым причинам в связи с Сайтом и/или Услугами является окончательным и обсуждению, либо обжалованию не подлежит;</li>
+                    <li>- Настоящим Вы подтверждаете и принимаете, что Сайт и/или наши услуги могут быть предоставлены, частично или целиком, третьими сторонами; Вы отказываетесь от какого бы то ни было иска против Нас по причине обеспечения Сайта и/или Услуг какой бы то ни было третьей стороной;;</li>
+                    <li>- Вы не будете копировать или распространять какие бы то ни было материалы с Сайта для какой бы то ни было цели, отличной от пользования Вами Сайтом и/или Услугами;</li>
+                    <li>- Вы не будете копировать или распространять какие бы то ни было материалы с Сайта для какой бы то ни было цели, отличной от пользования Вами Сайтом и/или Услугами;</li>
+                    <li>- Вы не будете использовать Сайт и/или Услуги для любых целей, которые являются незаконными, нечестными, оскорбительными, вторгающимися в личную жизнь других людей, доставляющими беспокойство кому-либо, клеветническими, оскорбляющими достоинство, обременяющими, непристойными, угрожающими или ненавистническими.</li>
+                </ul>
+                <p></p>
+           </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Предупреждение о рисках</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>Вы соглашаетесь использовать Сайт и/или Услуги на свой собственный риск. Не ограничивая упомянутое выше, Услуги подходят только для клиентов, которые осознают, что есть вероятность частичной или полной потери Ваших инвестиций, которые понимают риски, связанные с торговлей на финансовых рынках и имеют опыт управления такими рисками. В связи с вышеупомянутым, Вы не должны инвестировать средства, которые Вы не можете позволить себе потерять. Вы должны быть осведомлены обо всех рисках, связанных с торговлей бинарными опционами (включая, но, не ограничиваясь, рисками, обусловленными состояниями рынков, правилами тех или иных рынков) и обратиться за консультацией к независимому финансовому консультанту, если Вам необходимо что-то уточнить. Настоящим Вы признаёте, что Вы будете нести единоличную ответственность, за какие бы то ни было потери, вызванные с использованием Сайта и/или Услуг.</p>
+                <p>Помимо всего, Сайт и/или Услуги доступны и могут использоваться только лицами, которые имеют достаточный опыт и знания в финансовых вопросах, чтобы быть способными оценивать выгоды и риски заключения финансовых сделок через этот Сайт, не завися при этом от какой бы то ни было информации, содержащейся на этом Сайте или предоставленной Нами;</p>
+                <p>Настоящим Вы заверяете и гарантируете, что Вы владеете таким достаточным опытом и знаниями в финансовых вопросах, чтобы быть способными оценивать выгоды и риски совершения финансовых сделок через Сайт, не завися при этом от какой бы то ни было информации, содержащейся на этом Сайте или предоставленной Нами.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Финансовая информация</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>
+                    Мы несём ответственность только за всю информацию, связанную с торгами на платформе, а именно с графиками, котировками, датами, сроками и датами истечения опционов. Компания может сделать доступным для Вас, посредством Наших Услуг, широкий выбор информации, которая генерируется внутри или получена от агентов, поставщиков или партнёров (“Сторонние поставщики”). Это включает, кроме прочего, данные финансовых рынков, новости, мнения аналитиков и отчёты исследований, котировки, графики и иные данные (“Информация”).                     Информация, доступная на Сайте, не является советом для инвестиций. Компания не подтверждает и не устанавливает подлинность этой Информации, и Мы делаем её доступной для Вас, только как услугу для Вашего удобства. CryptGates и её Сторонние поставщики не гарантируют точность, своевременность, полноту или правильную последовательность Информации и не гарантирует какие бы то ни было результаты использования Вами или доверия к Информации.                 </p>
+                <p>Данная Информация может быстро терять свою актуальность по разным причинам, включающим, кроме прочего, изменения условий рынка или ситуации в экономике и т.д. Ни Мы, ни Сторонние поставщики не обязаны обновлять какую бы то ни было информацию или мнения, содержащиеся в какой бы то ни было Информации, и Компания может прекратить предоставление Информации в любой момент без предупреждения. Это Ваша обязанность проверять достоверность информации на Сайте и её соответствие Вашим потребностям. Наша компания исключает, какую бы то ни было ответственность за какие бы то ни было претензии, потери или убытки, какого бы то ни было рода, предположительно вызванные информацией, представленной на Сайте, или информацией, на которую Сайт ссылается. </p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Ссылки</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>Мы можем предоставлять ссылки на другие сайты, которые контролируются и/или предлагаются третьими сторонами. Такая ссылка на сайт или сайты не является подтверждённой, авторизированной, спонсорской или аффилированной в отношении такого сайта, его владельцев или представителей. CryptGates предупреждает Вас о необходимости удостовериться в Вашем понимании рисков, сопряжённых с использованием таких сайтов перед открытием, использованием, или покупкой чего бы то ни было через Интернет. Ссылки на эти веб-сайты предоставлены исключительно для Вашего удобства, и Вы соглашаетесь, что ни при каких обстоятельствах Вы не будете предъявлять CryptGates обвинения в каких бы то ни было потерях или убытках, вызванных использованием какого-либо содержания, товаров или услуг, доступных на других сайтах. </p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Аннулирование сделок</div>
+            <div class="line"></div>
+            <div class="info">
+                <p>CryptGates сохраняет право, по нашему собственному усмотрению, отказать в предоставлении Услуг (полностью или частично), и/или отказать в выдаче прибыли кому бы то ни было на любом законном основании, включая, но не ограничивая:</p>
+                <ul class="ul_style">    
+                    <li>- любой случай, когда CryptGates имеет основания полагать, что Ваши действия на Сайте могут быть незаконными;                    <li>- любой случай, когда CryptGates может понести какие бы то ни было фискальные, регулятивные или материальные потери;                    <li>- любой случай, когда CryptGates имеет основания полагать, что Ваши действия на Сайте могут быть незаконными;                 </ul>
+                 <p>CryptGates сохраняет право аннулировать, приостановить, изменить или временно отключить Услуги, если, по какой бы то ни было причине, Услуги не могут осуществляться в запланированном порядке, включая инфицирование компьютерным вирусом, ошибки в программе, взлом или неправомочное вмешательство, обман, технические ошибки или любые другие причины неподвластные нашему контролю. Если Вы, по вышеупомянутым причинам, получили или увеличили Ваши денежные средства, Вы не имеете права претендовать на эти денежные средства. Вы должны немедленно сообщить Нам об ошибке и должны вернуть Нам денежные средства, которые были зачислены на Ваш счёт по ошибке или Мы можем, по Нашему собственному решению, вычесть с Вашего счёта ту сумму, которую Вы должны были вернуть CryptGates по вышеупомянутым причинам. CryptGates предоставляет клиентам возможность отмены сделки при ее открытии. Если у нашей Компании есть основания полагать, что Клиент злоупотребляет или пытается злоупотреблять данной услугой, Мы оставляем за собой право аннулировать сделки, которые были совершенны, после отмены предыдущих сделок более двух раз подряд.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Процедура вывода денег</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>Мы сохраняем за собой единственное и исключительное право запросить дополнительные документы перед предоставлением такой возможности вывода денег. Запрос на вывод денег может обрабатываться до трех рабочих дней с момента его получения, при условии, что документы уже были представлены и утверждены. Как только запрос на вывод был утвержден и произведен, Вам необходимо связаться с представителями службы, через которую был сделан вывод средств, чтобы получить более детальную информацию, когда денежные средства поступят на Ваш счёт. </p>
+                <p>Один раз в 30 дней, вы можете проводить снятие средств со своего торгового баланса с минимальной комиссией. Однако, при снятии средств чаще, чем раз в месяц с Вас будет удерживаться дополнительная плата в размере &dollar;10. Таким образом, наша компания покрывает комиссионные издержки. </p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Ограниченная ответственность</div>
+            <div class="line"></div>
+            <div class="info">
+                <p>Наша компания не берет на себя ответственность за какие бы то ни было ошибки, бездействие, прерывание, удаление, дефекты, задержки в операциях или сделках, технические ошибки, вирусы, неисправности каналов связи, кражи, разрушения или неправомочный доступ или изменения Сайта или Услуг. Мы не несём ответственности за какие бы то ни было проблемы или техническую неисправность каких бы то ни было телефонных или сетевых линий, компьютерных онлайн-систем, серверов или провайдеров, компьютеров, программного обеспечения, сбоя по причине технических проблем или перегруженности траффика в Интернете (или невозможности доступа в Интернет). Ни при каких обстоятельствах наша компания и/или кто бы то ни было, действующий от её имени, не несёт ответственности за какие бы то ни было прямые, непрямые, случайные, фактические или косвенные убытки или убытки по потери прибыли, дохода, данных или пользования, понесённых Вами или какой бы то ни было третьей стороной, в проведении контракта либо правонарушения, исходящие из доступа или использования Сайта и/или Услуг. Мы и/или кто бы то ни было, действующий от Нашего имени, не делаем никаких заявлений о пригодности, достоверности, доступности, своевременности и точности Услуг. Все Услуги предоставляются “как есть” без каких бы то ни было гарантий. Настоящим Компания отказывается от всех, явно выраженных либо подразумеваемых, гарантий в отношении Сайта и Услуг, включая, мимо прочего, гарантии и условия пригодности для торговли, удовлетворительного качества, соответствия определённой цели, полноты или точности, ненарушения прав интеллектуальной собственности третьих лиц или соответствующих законов, норм и директив, или что Сайт и Услуги будут непрерывными, своевременными, безопасными или безошибочными. В максимальной степени, допустимой соответствующим законом, ни при каких обстоятельствах, Мы не несём ответственности, за какую бы то ни было потерю или ущерб, происходящие из-за использования Сайта или Услуг, какого бы то ни было содержания, размещённого на или через Сайт или Услуги, или через деятельность каких бы то ни было пользователей Сайта или Услуг, онлайн или офлайн.</p>
+                <p>НИ В КАКОМ СЛУЧАЕ CryptGates ИЛИ КТО ЛИБО ИЗ ЕЁ СЛУЖАЩИХ, ДИРЕКТОРОВ, СОТРУДНИКОВ, ПОСТАВЩИКОВ УСЛУГ ИЛИ АГЕНТОВ НЕ НЕСУТ ОТВЕТСТВЕННОСТИ ПЕРЕД ВАМИ ЗА КАКИЕ БЫ ТО НИ БЫЛО УБЫТКИ, ВКЛЮЧАЯ, БЕЗ ОГРАНИЧЕНИЙ КОСВЕННЫЕ, СЛУЧАЙНЫЕ, ФАКТИЧЕСКИЕ, ШТРАФНЫЕ ИЛИ ПОСЛЕДУЮЩИЕ УБЫТКИ, ИСХОДЯЩИЕ ИЗ ИЛИ СВЯЗАННЫЕ С ВАШИМ ИСПОЛЬЗОВАНИЕМ САЙТА ИЛИ УСЛУГ, ВКЛЮЧАЯ, КРОМЕ ПРОЧЕГО, КАЧЕСТВО, ТОЧНОСТЬ ИЛИ ПРИГОДНОСТЬ ПРЕДОСТАВЛЕННОЙ ИНФОРМАЦИИ, НА САЙТЕ ИЛИ ПОСРЕДСТВОМ САЙТА ИЛИ ДЛЯ КАКИХ БЫ ТО НИ БЫЛО ИНВЕСТИЦИОННЫХ РЕШЕНИЙ, СДЕЛАННЫХ НА ОСНОВЕ ТАКОЙ ИНФОРМАЦИИ, ВНЕ ЗАВИСИМОСТИ, ЯВЛЯЮТСЯ ЛИ ПОТЕРИ ПРЕДВИДИМЫМИ И ПРЕДУПРЕЖДАЛА ЛИ КОМПАНИЯ CryptGates О ВОЗМОЖНОСТИ ТАКИХ ПОТЕРЬ. УСТАНОВЛЕННОЕ ВЫШЕ ОГРАНИЧЕНИЕ ОТВЕТСТВЕННОСТИ ПРИМЕНЯЕТСЯ В НАИБОЛЬШЕЙ СТЕПЕНИ, ДОПУСТИМОЙ ЗАКОНОМ, И НИ В КОЕМ СЛУЧАЕ СОВОКУПНАЯ ОТВЕТСТВЕННОСТЬ CryptGates ПЕРЕД ВАМИ НЕ МОЖЕТ ПРЕВЫШАТЬ СУММУ ДЕНЕГ, КОТОРУЮ ВЫ ПЕРЕЧИСЛИЛИ ИЛИ ВНЕСЛИ НА ВАШ АККАУНТ НА САЙТЕ В ОТНОШЕНИИ СДЕЛКИ, КОТОРАЯ ПРИВЕЛА К ТАКОЙ ОТВЕТСТВЕННОСТИ.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Процедуры по борьбе с отмыванием денег, полученных преступным путём (AML)</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>Настоящим Вы удостоверяете, что денежные средства, инвестированные на Ваш счёт на нашем сайте, не появились по причине незаконного оборота наркотиков, похищения людей, каких бы то ни было криминальных или незаконных действий или какой бы то ни было политической принадлежности. Вы не можете злоупотреблять Сайтом и/или Услугами с целью легализации преступных доходов или для какой бы то ни было другой нелегальной, незаконной или неправомерной деятельности. Мы сохраняем право отказать Вам в разрешении пользоваться Вашим счётом, и/или приостановить, и/или аннулировать, и/или закрыть Ваш счет, и/или изъять или конфисковать все денежные средства на Вашем счете, если Вы не придерживаетесь или не соответствуете следующим требованиям и принципам по борьбе с легализацией преступных доходов (AML) (или каким бы то ни было другим требованиям по борьбе с легализацией преступных доходов (AML), требуемым Нами время от времени):</p>
+                <ul class="ul_style">
+                    <li>- Вы обязаны предоставить всю запрашиваемую информацию и документацию после регистрации.</li>
+                    <li>- Если Вы осуществляете деятельность, на своем счёте используя телеграфные депозиты, денежные средства будут выданы только владельцу банковского счёта, с которого осуществляется перевод. Производя депозиты таким способом, Вы принимаете на себя ответственность по проверке того, что номер торгового счета Клиента и зарегистрированное имя владельца счета совпадают со всеми переводами в CryptGates.</li>
+                    <li>- На одного человека разрешается открыть только по одному счету по каждой доступной валюте. Никакие денежные средства не могут быть выведены со счетов, открытых на  несуществующие имена или на множественные счета, открытые одним и тем же лицом.</li>
+                </ul>
+               <p>Если Мы подозреваем ведение какой бы то ни было нелегальной или незаконной деятельности через Ваш счёт, Мы сохраняем право раскрыть всю информацию, касающуюся Вас, уполномоченным органам, а также приостановить и/или закрыть Ваш счет, и/или изъять какие бы то ни было денежные средства с Вашего счёта по выше упомянутым причинам.</p>
+           <p>Все торговые счёта которые не были верифицированы в течении 3 месяцев с момента регистрации подпадают под автоматическое аннулирование баланса.</p>
+               <p>В связи с тем, что компания борется с мошенническими действиями и отмыванием денег, все клиенты, пополнившие торговый счёт, обязуются провести объём операций равный внесённой сумме. Таким образом, при пополнении, к примеру на сумму 500$ трейдеру необходимо проторговать объём операций на такую же сумму в 500$.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Интеллектуальная собственность</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>Всё содержание, торговые марки, знаки обслуживания, торговые имена, логотипы, иконки, любая другая интеллектуальная собственность, относящаяся к Сайту или Услугам (“Права ИС”) являются единственной и исключительной собственностью CryptGates или её партнёров или агентов. Вы можете использовать Права ИС исключительно как описано в этом Соглашении, и Вы не будете получать какие бы то ни было Права ИС. Вы соглашаетесь не удалять какие бы то ни было уведомления об авторском праве из материалов, которые Вы распечатываете или загружаете с Сайта. Изображения, отображаемые на Сайте, являются либо собственностью CryptGates, либо используются с нашего разрешения. Вы соглашаетесь не закачивать, не размещать, не воспроизводить или распространять какую бы то ни было информацию, программное обеспечение или другие материалы, защищённые авторским правом или какими бы то ни было правами интеллектуальной собственности (также как и публичными правами и правами на приватность) без предварительного получения разрешения от владельца таких прав и письменного предварительного согласия CryptGates.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Возмещение Ущерба</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>Вы соглашаетесь предоставить возмещение, защиту и неприкосновенность CryptGates и её служащим, директорам, сотрудникам, агентам, исполнителям, консультантам и поставщикам от и против каких бы то ни было претензий, ответственности, ущерба, потерь, расходов и издержек, включая, без ограничений, издержек на адвокатов, исходящих из или каким либо способом связанных с (I) Вашим доступом или пользованием Сайтом или Услугами; (II) нарушением Вами каких бы то ни было правил данного соглашения; или (III) нарушением Вами каких бы то ни было соответствующих законов, норм и директив.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Срок Действия и Условия Прекращения Соглашения</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>Срок действия Соглашения является неограниченным, тем не менее, Мы имеем право прекратить действие данного Соглашения и Вашего торгового счёта в любое время, при этом уведомив Нас. После прекращения действия Соглашения, Вы не сможете открывать новые сделки, и Вы соглашаетесь прекратить доступ к Сайту и Услугам. Вы соглашаетесь, что CryptGates, на своё собственное усмотрение с предупреждением или без него, может прекратить Ваш доступ ко всем Услугам, закрыть Ваши открытые сделки и удалить и избавиться от какой бы то ни было информации в рамках Услуг. Прекращение действия данного Соглашения не должно влиять на какие бы то ни было положения и условия данного Соглашения, которые, прямо или косвенно, должны вступить в действие или продолжать действовать во время или после такого прекращения.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Конфиденциальность</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>Настоящим Вы соглашаетесь, что Мы будем собирать личную информацию от Вас и про Вас, включая (но не ограничиваясь) Ваше имя, дату рождения, адрес, адрес электронной почты, информацию, касающуюся способов платежей, и контактную информацию. Помимо этого, настоящим Вы даёте Нам Ваше согласие на сбор информации о Вашей деятельности, включая (но, не ограничиваясь) дату и время доступа к Сайту и Услугам, продолжительность доступа к Сайту и Услугам, IP адрес, использования языка и все аспекты, связанные с Вашей торговлей. Вы также даёте нам Ваше согласие на сбор личной информации, используя cookies, расположенные на Вашем компьютере.</p>
+                <p>Наша компания использует личную информацию (включая её раскрытие аффилированным лицам или третьим сторонам), чтобы обеспечить Вам Услуги, гарантировать необходимую безопасность и установить проверки подлинности, обеспечить поддержку клиентов, производить любые Ваши онлайн сделки и для какой бы то ни было другой цели, относящейся к функционированию Сайта и Услуг. Ваша личная информация может быть также использована нами (или третьими сторонами, которым мы раскрываем личную информацию), чтобы обеспечить Вам льготные предложения и информацию, относительно продуктов и наших услуг, а также как продукции и услуг третьих сторон. Мы можем также использовать личную информацию для других внутренних целей, таких как оценка, обеспечение и улучшение Услуг и Сайта. Мы можем раскрыть Вашу личную информацию, если этого потребует закон или компетентный орган, или, если такое раскрытие представляется необходимым нам, чтобы защитить права или собственность нашей компании, личную безопасность других пользователей Сайта и/или Услуг или общества. Мы сохраняем право делиться личной информацией с другими операторами онлайн сайтов, банками, компаниями, выдающими банковские карты, и соответствующими агентствами и органами, если мы посчитаем по собственному мнению, что Вы обманули или пытались обмануть нас, или если Мы подозреваем, что Вы совершаете или совершили какое бы то ни было обманное действие, или если Вы нарушили данное Соглашение. Вы можете отказаться от получения сообщений от нас, отослав электронное письмо на адрес службы поддержки, с Вашего почтового ящика, на который зарегистрирован Ваш счёт на нашем сайте, с просьбой его закрытия. Мы можем передавать Вашу личную информацию соответствующим органам за пределы юрисдикции Вашего проживания и/или вне Европейского Союза. Согласно Защите данных и законов о неприкосновенности частной жизни, юрисдикции в которые будет передаваться личная информация, могут быть не такими обширными, как в Европейском Союзе. В таком случае мы предпримем меры, чтобы обеспечить адекватный уровень защиты Вашей личной информации.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Общие положения</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>Это Соглашение должно регулироваться и толковаться в соответствии с законами Сент-Винсент и Гренадины, исключая часть, входящую в правовую коллизию. Какое бы то ни было правовое действие или процесс, возникающие по данному Соглашению, будут рассматриваться исключительно в судах, расположенных в Сент-Винсент и Гренадины, и настоящим стороны безоговорочно соглашаются с персональной юрисдикцией и местом рассмотрения дела. В случае если какое бы то ни было положение в данном Соглашении признано недействительным или невыполнимым судом компетентной юрисдикции, оставшиеся положения данного Соглашения останутся в полной силе без изменений и будут толковаться, чтобы привести в действие, в наиболее возможной мере, цель этого положения. Несовершенные действия или задержка со стороны нашей компании в осуществлении, какого бы то ни было права, полномочия, судебной защиты или положения данного Соглашения или частичное исполнение такого права, полномочия, судебной защиты или положения, не будут означать отказа от такого права, полномочия, судебной защиты или положения. </p>
+                <p>У нас есть право, по собственному усмотрению, вносить поправки, изменять или прекращать, время от времени, какие бы то ни было из Услуг. Мы не несём ответственности за какую бы то ни было потерю, понесённую Вами, в результате каких бы то ни было произведённых изменений, и Вы не должны иметь каких бы то ни было претензий в адрес нашего сайта в этом отношении. Мы можем передавать, уступать или закладывать это Соглашение, либо какие бы то ни было права и/или обязанности, в силу настоящего Соглашения, какой бы то ни было третьей стороне без Вашего согласия. Вы не можете передавать, уступать или закладывать, каким бы то ни было способом, в силу настоящего Соглашения, какие бы то ни было из Ваших прав или обязанностей по данному Соглашению. Кроме случаев, прямо указанных в данном Соглашении, ничто в данном Соглашении не может: (I) считаться таким, которое создаёт, какое бы то ни было представительство, соглашение, фонд фидуциарных отношений или какие бы то ни было похожие отношения между Вами и Нашей компанией; (II) создаёт или предоставляет какие бы то ни было права или выгоды какой бы то ни было третьей стороне или (III) даёт Вам какое бы то ни было обеспечительное право на какую бы то ни было нашей ответственности, включая (но не ограничиваясь) какую бы то ни было сумму на Вашем аккаунте.</p>
+                <p>Во избежание сомнений, настоящим уточнено, что какие бы то ни было платёжные средства, содержащиеся на Вашем аккаунте, не будут накапливать какие бы то ни было проценты. Все акции, бонусы или специальные предложения являются предметом дополнительных правил и условий, и любой бонус, зачисленный на Ваш аккаунт, должен быть использован в соответствии с этими правилами и условиями. Мы имеем право, по нашему единоличному и исключительному усмотрению, отозвать какой бы то ни было бонус, акцию или специальное предложение в любое время. Если Мы предполагаем, что Вы злоупотребляете или пытаетесь злоупотребить бонусом или другими акциями, или, вероятно, получите выгоду посредством злоупотребления или недобросовестности, тогда наша компания может, по единоличному и исключительному усмотрению, отклонить, остановить или отозвать от Вас какой бы то ни было бонус или акцию, временно или навсегда, или остановить действие Вашего аккаунта без обязательств выплаты Вам каких бы то ни было денежных средств, содержащихся на Вашем счёте. Мы сохраняем право вычитать какие то ни было средства с баланса на Вашем аккаунте в счёт Вашей задолженности Нам. Какое бы то ни было уведомление, предоставленное Вам нашей компанией, будь то через Ваш аккаунт, Сайт, или email, будет считаться полученным в срок не позднее 24 часов от времени, когда такое уведомление было предоставлено Нами. Мы можем, время от времени, вносить изменения в правила данного Соглашения, по Нашему единоличному и исключительному усмотрению и без предоставления какого бы то ни было  предварительного уведомления, путём размещения изменённого Соглашения на Сайте. </p>
+                <p>Вы ответственны за проверку на предмет внесённых изменений каждый раз перед использованием Вами Сайта и/или Услуг. Каждое изменение вступает в силу в день публикации на Сайте. Если Вы не согласны быть связанными изменениями в Соглашении, не используйте и не осуществляйте доступ к Сайту и/или Услугам и сообщите CryptGates немедленно в письменной форме. В случае Вашего продолжения пользования Сайтом и/или Услугами, Вы подтверждаете Ваше согласие на изменения Соглашения. Это Соглашение устанавливает целое и полное соглашение между Вами и нашей компании в отношении пользования Сайтом и Услугами и отменяет любые и все предыдущие соглашения между Вами и нашей компании в отношении использования Сайта и Услуг. Также Компания оставляет за собой право изменять правила использования сайта без предварительного уведомления клиентов. Вы подтверждаете, что Вы не полагались на какие бы то ни было заверения Компании, за исключением каких бы то ни было выраженных заявлений, сделанных нами в данном Соглашении. Это Соглашение было составлено на русском языке. В случае какого либо несоответствия между значениями каких бы то ни было переведённых версий данного Соглашения и англоязычной версии, значение версии на английском языке имеет преимущественную силу.</p>
+                <p>При разрешении спорных вопросов необходимо опираться на условия и положения на языке оригинала</p>
+            </div>
+        </div>
+        
+        <div class="element">
+            <div class="title">Правила работы по системе Офферов:</div>
+            <div class="line"></div>
+            <div class="info">
+                <p>Принимая торговый контракт(оффер) от инвестора, трейдер соглашается с условиями контракта и получает в управление обозначенную сумму в данном оффере. Контракт закрывается автоматически после выполнения условий по нему, по истечению срока действия контракта или в связи с невыполнением обозначенных условий(достижений критического уровня просадки по торговому счёту, который указал инвестор). Также компания оставляет за инвестором право досрочного закрытия(аннулирования) контракта при обращение в компанию, предоставив видео или фото(скриншот) подтверждающий нарушения трейдером условий по контракту. Если трейдер выполнил верно все условия по контракту, ему начислается процент от прибыли по данному офферу, который был указан в условиях контракта, на счёт Real. Средства на данном счёте доступны для торговли и последующего вывода на платёжные реквизиты(с которых был внесён депозит) только после верификации аккаунта. </p>
+                
+                <p>Не верифицированные аккаунты ограничены количеством офферов, им доступен к выполнению 1 оффер с максимальной выплатой до 45%.</p>
+                <p>Верифицированные аккаунты, не ограничиваются количеством доступных к выполнению офферов.</p>
+                
+                <p>Контракт на доверительное управление (Offer), имеют право выдавать все верифицированные трейдера у которых есть статус «Инвестор».</p>
+                <p>Статус «Инвестор» присваивается верифицированным трейдерам, которые пополнили свой счет на сумму не меньше $ 2000,00.  </p>
+            </div>
+        </div>
+        
+        <div class="element">
+            <div class="title">Процедура верификации аккаунта:</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>Процедура верификации аккаунта обязательна для всех новых клиентов компании и происходит автоматически после пополнения счёта на минимальную сумму. Минимальная сумма пополнения указана в разделе "Депозит" после авторизации на сайте компании и может меняться при различных акциях или изменении условий минимальной суммы внесения депозита.</p>
+            </div>
+        </div>
+    </div>
+</div>        
+        <style>
+    #contacts{
+        width:100%;
+        height:115px;
+        background: url('/images/contacts_bg.jpg') no-repeat center center;
+        background-size: cover;
+        display:none;
+    }
+    #contacts .phone_ico{
+        display: inline-block;
+        vertical-align: middle;
+        margin-right:20px;
+        width:98px;
+        height:59px;
+        background: url('/images/contact_icons.png');
+        background-position: 0px 0px;
+    }
+    #contacts .mail_ico{
+        display:inline-block;
+        vertical-align: middle;
+        margin-right:20px;
+        width:77px;
+        height:59px;
+        background: url('/images/contact_icons.png');
+        background-position: -130px -4px;
+    }
+</style>
+<div id='contacts'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-sm-4' style='font-size:23px; font-weight:bolder; padding-top:40px;'>
+                Вы можете связаться с нами            </div>
+            <div class='col-sm-4' style='font-size:22px; font-weight:bolder;padding-top:26px;'>
+                                <div class='phone_ico'></div>
+                +X (XX) XXX-XX-XX
+                            </div>
+            <div class='col-sm-4' style='font-size: 18px; font-weight:bolder;padding-top:26px;'>
+                <div class='mail_ico'></div>
+                support@platformail.com            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #footer{
+        padding-top:40px;
+        height:auto;
+        width:100%;
+        background: #f3f3f1;
+    }            
+    #footer .logo{
+        background: url('/images/logo.png');
+        width:283px;
+        height:48px;
+        margin-bottom:20px;
+    }
+    #footer .menu ul{
+        padding-left:0px;
+    }
+    #footer .menu li{
+        margin-bottom:12px;
+    }
+    #footer .menu li a{
+        
+        font-size:16px;
+        font-weight: bolder;
+        color:#1d242b ;
+    }
+    #footer .menu li.sub{
+        margin-bottom:8px;
+    }
+    #footer .menu li.sub a{
+        margin-bottom:8px;
+        font-size:13px;
+        font-weight: normal;
+    }
+    #footer .bottom{
+        margin-top:40px;
+        padding-top:25px;
+        border-top:1px solid #c7c9c9;
+        font-size:12px;
+    }
+    #footer .bottom .copyrights{
+        font-size:13px;
+        font-weight: bolder;
+    }
+</style>
+<div id="footer">
+    <div class='container'>
+        <div class='top'>
+            <div class='row'>
+                <div class='col-sm-4'>
+                    <div class='logo'></div>
+                    <p>По всем вопросам обращайтесь в службу поддержки:<br><a style="margin-bottom:14px;display:block;" href='mailto:support@platformail.com'>support@platformail.com</a></p>
+                </div>
+                <div class='col-sm-8'>
+                    <div class='row menu'>
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/'>ГЛАВНАЯ</a></li>
+                                <li><a href='/termsandconditions/'>ПРАВИЛА</a></li>
+                                <li><a href='/faq/'>FAQ</a></li>                                
+                            </ul>   
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>                                
+                                <li><a href='/aboutus/'>О НАС</a></li>
+                                <li><a href='/faq/bonus/'>БОНУС</a></li>                                
+                            </ul>   
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/faq/'>ИНФО</a></li>
+                                <li class='sub'><a href='/faq/glossary/'>СЛОВАРЬ ТЕРМИНОВ</a></li>
+                                <li class='sub'><a href='/faq/disclaimer/'>ПРЕДУПРЕЖДЕНИЕ</a></li>
+                                <li class='sub'><a href='/faq/privacy/'>КОНФИДЕНЦИАЛЬНОСТЬ</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/trade/'>ТОРГОВАТЬ</a></li>
+                                <li class='sub'><a href='/trade/'>60 Секунд</a></li>
+                            </ul>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='bottom'>
+            <p>You haven`t made any investments in Option builder tool yet. To make an investment you should: Choose the asset you want to trade with, enter your current investment amount. And choose how will asset behavior: if it will rise - press HIGH button, other way press LOW button. Select the profit and the pay off level. Confirm your deal with the Confirmal button. Due to different time zones at the worldwide stocks, some assets could be inactive or might has limited availability. If the asset`s value didn`t change sinse made an investment, the full investment price will be returned to investor.</p>
+            <p>Legal: cryptgates.com is a trading name of CryptGates, registration number: IBC 2015 (Suite 305, Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
+            <div class='copyrights'>© 2025 | CryptGates - All rights reserved</div>
+        </div>
+<a href="https://freekassa.ru" target="_blank" rel="noopener noreferrer">
+  <img src="/images/freekasa.png" title="Прием платежей на сайте">
+</a>
+    </div>
+</div><script src="/js/global.js"></script>    </body>
+</html>

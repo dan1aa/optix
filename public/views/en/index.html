@@ -1,0 +1,2804 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <meta charset="UTF-8">
+    <meta name="Keywords" content="Форекс, Биржа Форекс, Бинарные Опционы, торговля акциями, Биржа">
+    <meta name="description"
+        content="Надежная торговая платформа бинарных опционов с доходностью до 76%. Доступные инструменты для ведения торговли, обучающие материалы и простой в использовании интерфейс. ">
+    <link rel="icon" type="image/png" href="images/small-logo.png">
+    <title>Sixty Seconds - fastest binary options tool - CryptGates</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/main.css" rel="stylesheet" type="text/css">
+    <script src="/js/jquery.js" type="text/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/js/main.js" type="text/javascript"></script>
+    <script src="/js/angular.min.js" type="text/javascript"></script>
+    <script src="/js/jquery.scrollTo.min.js" type="text/javascript"></script>
+    <script src="/js/chartsMain.js" type="text/javascript"></script>
+    <script src="/js/service.js" type="text/javascript"></script>
+    <script src="/js/charts.js" type="text/javascript"></script>
+    <script src="/js/quotes.js" type="text/javascript"></script>
+    <script src="/js/protocol.js" type="text/javascript"></script>
+    <meta name="frog" content="b4f134ae336d927bcf8206d38534bf79">
+</head>
+
+<body ng-app="app">
+    <script>
+        $('document').ready(function () {
+
+            $('#loginModal form').submit(function () {
+                var email = $('input[name=email]', this).val();
+                var password = $('input[name=password]', this).val();
+
+                if (!password) return false;
+
+                $('#loginModal form .error').empty();
+                $.ajax({
+                    url: '/login/',
+                    type: 'POST',
+                    data: { email: email, password: password },
+                    success: function (msg) {
+                        var json = JSON.parse(msg);
+                        if (json.status == 'success') {
+                            location.href = '/trade/';
+                        } else {
+                            console.log($('#loginModal form .error'));
+                            $('#loginModal form input[name=password]').val('');
+                            $('#loginModal form .error').text(json.message);
+                        }
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+    <style>
+        #loginModal .label {
+            color: black;
+        }
+
+        #loginModal .modal-dialog {
+            width: 370px;
+        }
+
+        #loginModal .modal-content {
+            padding: 0px 30px;
+            border-radius: 0px;
+            border: 1px solid #374057;
+            background: #2a3143;
+        }
+
+        #loginModal .modal-body {
+            padding: 15px 0px;
+        }
+
+        #loginModal .modal-header {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        #loginModal .modal-title {
+            height: 37px;
+
+            font-size: 18px;
+            color: white;
+            font-weight: bolder;
+            text-align: left;
+            border-radius: 5px;
+        }
+
+        #loginModal input[type=text],
+        #loginModal input[type=password] {
+            border-radius: 0px;
+        }
+
+        #loginModal input[type=submit] {
+            /*background: #fec307;*/
+            background: #6cbb2c;
+            color: #0e1322;
+            font-weight: bolder;
+            border: none;
+        }
+
+        #loginModal .modal-header {
+            border-bottom: 1px solid #2c3039;
+        }
+
+        #loginModal .modal-header .close {
+            color: #f2f2f0;
+            opacity: 1;
+            text-shadow: 0 1px 0 #f4ae01;
+        }
+
+        #loginModal .modal-body a.forgot {
+            color: #9da3b1;
+            font-weight: bolder;
+            font-size: 12px;
+            margin-top: 8px;
+            display: block;
+        }
+
+        #loginModal .error {
+            font-weight: bolder;
+            font-size: 13px;
+            color: red;
+        }
+    </style>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title font-header">AUTHORIZATION</h4>
+                </div>
+
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" placeholder="E-mail" name="email">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="password" class="form-control" placeholder="Password" name="password">
+                                    <div class="error"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="border-bottom: 1px solid #444f6b; padding-bottom:30px;">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <!--<a href="#forgotModal" data-target="#forgotModal" data-toggle="modal" class="forgot">Forgot your password?</a>-->
+                                    <a href="/signin/forgot/" class="forgot">Forgot your password?</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="submit" class="btn btn-primary pull-right" value="Login">
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-top:15px;">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="label" style="color: white; font-size:14px; font-weight:normal;">You
+                                        dont have account?</div>
+                                    <a href="/registration/" style="color:#6cbb2c;" class="pull-right">Open account</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        #header {
+            margin: 0px;
+            padding-top: 5px;
+            height: 80px;
+            border: none;
+            background: white;
+            border-radius: 0px;
+        }
+
+        #header.main {
+            background: transparent;
+            border-top: 1px solid transparent;
+        }
+
+        #header .logo {
+            position: relative;
+            top: 10px;
+            width: 283px;
+            height: 48px;
+            background: url('/images/logo2.png');
+        }
+
+        #header.main .logo {
+            background: url('/images/logo.png');
+        }
+
+        #header #headerMenu {
+            margin-top: 5px;
+        }
+
+        #header #headerMenu li a {
+            height: 45px;
+            color: #e0e0e2;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        #header.main #headerMenu li a {
+            color: #13161c;
+        }
+
+        #header #headerMenu li.active a {
+            background: none;
+            border-bottom: 3px solid #ff4b00;
+        }
+
+        #header {
+            border-top: 1px solid #6dba2e;
+            background: #2a3142;
+        }
+    </style>
+
+    <nav class="navbar navbar-default main" id="header" style="display: none">
+        <div class="container">
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#headerMenu">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand logo" href="/"></a>
+            </div>
+            <style>
+                #header #headerMenu .language {
+                    margin-top: 12px;
+                    margin-left: 10px;
+                }
+
+                #header #headerMenu .language .current_language {
+                    background: #f3f3f1;
+                }
+
+                #header #headerMenu .language .current_language .lang {
+                    color: #384259;
+                }
+
+                #header #headerMenu .language .current_language .lang .caret {
+                    color: #384259;
+                }
+
+                #header #headerMenu .language .list a {
+                    height: 26px;
+                    font-size: 14px;
+                }
+            </style>
+            <ul class="nav navbar-nav navbar-collapse collapse " id="headerMenu">
+                <li class="">
+                    <a type="button" class="contacts_link" href="/faq/" data-toggle="collapse" data-target="#subMenu1"
+                        onclick="return false">
+                        Info </a>
+
+                    <style>
+                        #header #headerMenu .submenu {
+
+                            top: 75px;
+                            left: 0px;
+                            margin-left: -70px;
+                            z-index: 101;
+                            padding: 0px;
+                            position: absolute;
+                            background: #3c455e;
+                            text-decoration: none;
+                            width: 220px;
+                        }
+
+                        #header #headerMenu .submenu:after {
+                            display: block;
+                            position: absolute;
+                            top: -14px;
+                            left: 50%;
+                            margin-left: -7px;
+                            content: ' ';
+                            border: 7px solid transparent;
+                            border-bottom: 7px solid #3c455e;
+                            width: 14px;
+                            height: 14px;
+                            background: transparent;
+                        }
+
+                        #header #headerMenu .submenu li a {
+                            text-decoration: none;
+                            padding: 12px 20px;
+                            display: block;
+                            color: #e0e0e2;
+                            font-size: 14px;
+                            border-bottom: 1px solid #414b66;
+                            height: 42px;
+                        }
+
+                        #header #headerMenu .submenu li a:last-child {
+                            border-bottom: none;
+                        }
+
+                        #header #headerMenu .submenu li a:hover {
+                            background: #2a3142;
+                        }
+                    </style>
+                    <ul class="collapse submenu" id="subMenu1">
+
+                        <li><a href="/faq/">FAQ</a></li>
+                        <li><a href="/faq/privacy/">Privacy</a></li>
+                        <li><a href="/faq/glossary/">Glossary</a></li>
+                        <li><a href="/termsandconditions/">Terms and Conditions</a></li>
+                    </ul>
+                </li>
+                <li class=""><a class="oustaff_link" href="/aboutus/">About Us</a></li>
+                <li class=""><a class="oustaff_link" href="/faq/bonus/">Bonus</a></li>
+            </ul>
+
+            <style>
+                #header .control_menu {
+                    padding-top: 20px;
+                }
+
+                #header .control_menu li {
+                    margin-right: 20px;
+                    vertical-align: middle;
+                }
+
+                #header .control_menu li:last-child {
+                    margin-right: 0px;
+                }
+
+                #header.main .control_menu li a {
+                    color: #13161c;
+                }
+
+                .control_menu li a {
+                    font-size: 12px;
+                    font-weight: 900;
+
+                    color: #e0e0e2;
+                }
+
+                #header .control_menu .reg_icon {
+                    background: url('/images/acc-buttons.png');
+                    background-position: 0px -23px;
+                    display: inline-block;
+                    width: 27px;
+                    height: 20px;
+                    vertical-align: middle;
+                    margin-right: 10px;
+                }
+
+                #header.main .control_menu .reg_icon {
+                    background-position: 0px 0px;
+                }
+
+                #header .control_menu .login_icon {
+                    background: url('/images/acc-buttons.png');
+                    background-position: -32px -23px;
+                    display: inline-block;
+                    width: 23px;
+                    height: 20px;
+                    vertical-align: middle;
+                    margin-right: 10px;
+                }
+
+                #header.main .control_menu .login_icon {
+                    background-position: -32px 0px;
+                }
+
+                #header .language {
+                    margin-top: -3px;
+                    position: relative;
+                }
+
+                #header .language .current_language {
+                    cursor: pointer;
+                    padding: 6px 10px;
+                    text-align: center;
+                    background: #384259;
+                    height: 30px;
+                    border-radius: 5px;
+                }
+
+                #header .language .current_language .lang {
+                    font-size: 12px;
+                    font-weight: 900;
+                    color: white;
+                }
+
+                #header .language .current_language .lang .caret {
+                    margin-left: 5px;
+                    color: white;
+                }
+            </style>
+            <ul class="pull-right control_menu list-inline">
+
+                <li class="pull-left">
+                    <a href="/registration/" class=""><span class="reg_icon"></span>REGISTRATION</a>
+                </li>
+                <li class="pull-left">
+                    <a href="" data-toggle="modal" data-target="#loginModal"><span class="login_icon"></span>LOGIN</a>
+                </li>
+
+
+                <li class="pull-left">
+                    <div class="language">
+                        <div class="current_language dropdown-toggle" data-toggle="dropdown" href="#"
+                            aria-expanded="false">
+                            <div class="ico en"></div>
+                            <div class="lang">EN<div class="caret"></div>
+                            </div>
+
+                        </div>
+
+                        <ul class="list collapse dropdown-menu" aria-expanded="false">
+                            <li>
+                                <a href="/en/">
+                                    <div class="ico en"></div>
+                                    <div class="lang">English</div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/ru/">
+                                    <div class="ico ru"></div>
+                                    <div class="lang">Русский</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <style>
+        #block1 {
+            height: 800px;
+            width: 100%;
+            background: url('/images/graph2.jpg') no-repeat center center;
+            background-size: cover;
+            border-bottom: 3px solid #14191e;
+        }
+    </style>
+    <div id="block1">
+        <div class="container">
+            <div class="row" style="margin-top:170px;">
+                <div class="col-sm-5">
+                    <p style="font-size: 32px; font-weight:bolder;">Register now and receive $1000 on your demo account.
+                        Join us and start earning today.</p>
+                </div>
+
+                <div class="col-sm-6">
+                    <style>
+                        #authBlock {
+                            float: right;
+                            height: 311px;
+                            width: 350px;
+                            background: url('/images/background.jpg') no-repeat center center;
+                            background-size: cover;
+                            border-radius: 5px;
+                        }
+
+                        #authBlock form {
+                            padding: 19px 15px;
+                        }
+
+                        #authBlock form .title {
+                            font-size: 18px;
+                            font-weight: bolder;
+                            position: relative;
+                            left: -33px;
+                            height: 44px;
+                            border-radius: 5px;
+                            background: #fec719 url('/images/yellow-box.jpg') no-repeat;
+                            text-align: center;
+                            padding-top: 7px;
+                            margin-bottom: 19px;
+                        }
+
+                        #authBlock form input[type=submit] {
+                            background: #fec307;
+                            font-size: 14px;
+                            color: #0e1322;
+                            font-weight: 900;
+                            border: none;
+                        }
+                    </style>
+                    <div id="authBlock">
+                        <form class="form">
+
+                            <div class="title">Start to trade now!</div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name="firstname"
+                                            placeholder="Firstname">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name="lastname" placeholder="Lastname">
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $('document').ready(function () {
+                                    $('.form select[name=country]').change(function () {
+                                        $('.form input[name=code]').val($('option:selected', this).attr('code'));
+                                    });
+                                });
+                            </script>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="country">
+                                            <option value="0">Country</option>
+                                            <option code="93" value="53">Afghanistan</option>
+                                            <option code="358" value="143">Aland Islands</option>
+                                            <option code="355" value="128">Albania</option>
+                                            <option code="213" value="100">Algeria</option>
+                                            <option code="0" value="192">American Samoa</option>
+                                            <option code="376" value="218">Andorra</option>
+                                            <option code="244" value="70">Angola</option>
+                                            <option code="1264" value="203">Anguilla</option>
+                                            <option code="672" value="219">Antarctica</option>
+                                            <option code="1268" value="146">Antigua and Barbuda</option>
+                                            <option code="54" value="40">Argentina</option>
+                                            <option code="374" value="126">Armenia</option>
+                                            <option code="297" value="197">Aruba</option>
+                                            <option code="61" value="1">Australia</option>
+                                            <option code="43" value="127">Austria</option>
+                                            <option code="994" value="153">Azerbaijan</option>
+                                            <option code="1242" value="36">Bahamas</option>
+                                            <option code="973" value="151">Bahrain</option>
+                                            <option code="880" value="54">Bangladesh</option>
+                                            <option code="1246" value="176">Barbados</option>
+                                            <option code="375" value="113">Belarus</option>
+                                            <option code="32" value="56">Belgium</option>
+                                            <option code="501" value="57">Belize</option>
+                                            <option code="229" value="74">Benin</option>
+                                            <option code="1441" value="26">Bermuda</option>
+                                            <option code="975" value="212">Bhutan</option>
+                                            <option code="591" value="31">Bolivia</option>
+                                            <option code="387" value="141">Bosnia and Herzegovina</option>
+                                            <option code="267" value="77">Botswana</option>
+                                            <option code="47" value="178">Bouvet Island</option>
+                                            <option code="55" value="58">Brazil</option>
+                                            <option code="246" value="220">British Indian Ocean Territory</option>
+                                            <option code="673" value="131">Brunei Darussalam</option>
+                                            <option code="359" value="121">Bulgaria</option>
+                                            <option code="226" value="87">Burkina Faso</option>
+                                            <option code="257" value="208">Burundi</option>
+                                            <option code="855" value="49">Cambodia</option>
+                                            <option code="237" value="68">Cameroon</option>
+                                            <option code="1" value="24">Canada</option>
+                                            <option code="238" value="79">Cape Verde</option>
+                                            <option code="1345" value="162">Cayman Islands</option>
+                                            <option code="236" value="93">Central African Republic</option>
+                                            <option code="235" value="76">Chad</option>
+                                            <option code="56" value="38">Chile</option>
+                                            <option code="86" value="4">China</option>
+                                            <option code="61" value="244">Cocos (Keeling) Islands</option>
+                                            <option code="57" value="163">Colombia</option>
+                                            <option code="269" value="105">Comoros</option>
+                                            <option code="242" value="85">Congo</option>
+                                            <option code="682" value="180">Cook Islands</option>
+                                            <option code="506" value="173">Costa Rica</option>
+                                            <option code="225" value="239">Cote D'Ivoire</option>
+                                            <option code="385" value="202">Croatia</option>
+                                            <option code="0" value="226">Cuba</option>
+                                            <option code="357" value="117">Cyprus</option>
+                                            <option code="420" value="114">Czech Republic</option>
+                                            <option code="0" value="241">Democratic People's Republic of Korea</option>
+                                            <option code="243" value="91">Democratic Republic Of The Congo</option>
+                                            <option code="45" value="22">Denmark</option>
+                                            <option code="253" value="103">Djibouti</option>
+                                            <option code="1767" value="41">Dominica</option>
+                                            <option code="1809" value="170">Dominican Republic</option>
+                                            <option code="593" value="160">Ecuador</option>
+                                            <option code="20" value="61">Egypt</option>
+                                            <option code="503" value="174">El Salvador</option>
+                                            <option code="240" value="107">Equatorial Guinea</option>
+                                            <option code="291" value="223">Eritrea</option>
+                                            <option code="0" value="140">Estonia</option>
+                                            <option code="251" value="215">Ethiopia</option>
+                                            <option code="0" value="134">Europe</option>
+                                            <option code="500" value="150">Falkland Islands</option>
+                                            <option code="298" value="214">Faroe Islands</option>
+                                            <option code="679" value="186">Fiji</option>
+                                            <option code="358" value="139">Finland</option>
+                                            <option code="0" value="12">France</option>
+                                            <option code="0" value="230">French Guiana</option>
+                                            <option code="0" value="225">French Polynesia</option>
+                                            <option code="241" value="72">Gabon</option>
+                                            <option code="220" value="82">Gambia</option>
+                                            <option code="995" value="124">Georgia</option>
+                                            <option code="49" value="29">Germany</option>
+                                            <option code="233" value="66">Ghana</option>
+                                            <option code="350" value="181">Gibraltar</option>
+                                            <option code="30" value="18">Greece</option>
+                                            <option code="299" value="221">Greenland</option>
+                                            <option code="1473" value="171">Grenada</option>
+                                            <option code="590" value="205">Guadeloupe</option>
+                                            <option code="1671" value="156">Guam</option>
+                                            <option code="502" value="172">Guatemala</option>
+                                            <option code="44" value="207">Guernsey</option>
+                                            <option code="224" value="96">Guinea</option>
+                                            <option code="245" value="222">Guinea-Bissau</option>
+                                            <option code="592" value="198">Guyana</option>
+                                            <option code="509" value="155">Haiti</option>
+                                            <option code="39" value="196">Holy See</option>
+                                            <option code="504" value="164">Honduras</option>
+                                            <option code="0" value="8">Hong Kong</option>
+                                            <option code="36" value="118">Hungary</option>
+                                            <option code="354" value="116">Iceland</option>
+                                            <option code="0" value="6">India</option>
+                                            <option code="62" value="45">Indonesia</option>
+                                            <option code="0" value="30">Iran</option>
+                                            <option code="0" value="136">Iraq</option>
+                                            <option code="353" value="55">Ireland</option>
+                                            <option code="44" value="200">Isle of Man</option>
+                                            <option code="972" value="34">Israel</option>
+                                            <option code="39" value="13">Italy</option>
+                                            <option code="1876" value="157">Jamaica</option>
+                                            <option code="81" value="5">Japan</option>
+                                            <option code="44" value="217">Jersey</option>
+                                            <option code="962" value="191">Jordan</option>
+                                            <option code="7" value="16">Kazakhstan</option>
+                                            <option code="254" value="71">Kenya</option>
+                                            <option code="686" value="233">Kiribati</option>
+                                            <option code="0" value="3">Korea</option>
+                                            <option code="965" value="142">Kuwait</option>
+                                            <option code="996" value="210">Kyrgyzstan</option>
+                                            <option code="856" value="240">Lao</option>
+                                            <option code="371" value="111">Latvia</option>
+                                            <option code="961" value="137">Lebanon</option>
+                                            <option code="266" value="83">Lesotho</option>
+                                            <option code="231" value="97">Liberia</option>
+                                            <option code="0" value="78">Libya</option>
+                                            <option code="423" value="213">Liechtenstein</option>
+                                            <option code="370" value="144">Lithuania</option>
+                                            <option code="352" value="145">Luxembourg</option>
+                                            <option code="0" value="50">Macau</option>
+                                            <option code="389" value="147">Macedonia</option>
+                                            <option code="261" value="75">Madagascar</option>
+                                            <option code="265" value="69">Malawi</option>
+                                            <option code="60" value="2">Malaysia</option>
+                                            <option code="960" value="52">Maldives</option>
+                                            <option code="223" value="73">Mali</option>
+                                            <option code="356" value="149">Malta</option>
+                                            <option code="692" value="179">Marshall Islands</option>
+                                            <option code="596" value="216">Martinique</option>
+                                            <option code="222" value="101">Mauritania</option>
+                                            <option code="230" value="84">Mauritius</option>
+                                            <option code="269" value="237">Mayotte</option>
+                                            <option code="52" value="25">Mexico</option>
+                                            <option code="691" value="159">Micronesia</option>
+                                            <option code="373" value="138">Moldova</option>
+                                            <option code="377" value="154">Monaco</option>
+                                            <option code="976" value="195">Mongolia</option>
+                                            <option code="382" value="133">Montenegro</option>
+                                            <option code="1664" value="32">Montserrat</option>
+                                            <option code="212" value="99">Morocco</option>
+                                            <option code="258" value="81">Mozambique</option>
+                                            <option code="95" value="211">Myanmar</option>
+                                            <option code="264" value="102">Namibia</option>
+                                            <option code="674" value="236">Nauru</option>
+                                            <option code="977" value="43">Nepal</option>
+                                            <option code="31" value="33">Netherlands</option>
+                                            <option code="599" value="165">Netherlands Antilles</option>
+                                            <option code="687" value="39">New Caledonia</option>
+                                            <option code="64" value="48">New Zealand</option>
+                                            <option code="505" value="169">Nicaragua</option>
+                                            <option code="227" value="92">Niger</option>
+                                            <option code="0" value="62">Nigeria</option>
+                                            <option code="683" value="234">Niue</option>
+                                            <option code="672" value="235">Norfolk Island</option>
+                                            <option code="0" value="188">Northern Mariana Islands</option>
+                                            <option code="47" value="125">Norway</option>
+                                            <option code="968" value="122">Oman</option>
+                                            <option code="92" value="46">Pakistan</option>
+                                            <option code="680" value="189">Palau</option>
+                                            <option code="970" value="115">Palestinian Territory</option>
+                                            <option code="507" value="130">Panama</option>
+                                            <option code="675" value="51">Papua New Guinea</option>
+                                            <option code="595" value="182">Paraguay</option>
+                                            <option code="51" value="161">Peru</option>
+                                            <option code="63" value="44">Philippines</option>
+                                            <option code="872" value="238">Pitcairn Islands</option>
+                                            <option code="48" value="110">Poland</option>
+                                            <option code="351" value="17">Portugal</option>
+                                            <option code="1787" value="27">Puerto Rico</option>
+                                            <option code="974" value="190">Qatar</option>
+                                            <option code="262" value="106">Reunion</option>
+                                            <option code="40" value="123">Romania</option>
+                                            <option code="7" value="20">Russian Federation</option>
+                                            <option code="250" value="80">Rwanda</option>
+                                            <option code="290" value="243">Saint Helena</option>
+                                            <option code="1869" value="185">Saint Kitts and Nevis</option>
+                                            <option code="1758" value="194">Saint Lucia</option>
+                                            <option code="0" value="206">Saint Martin</option>
+                                            <option code="508" value="204">Saint Pierre and Miquelon</option>
+                                            <option code="685" value="184">Samoa</option>
+                                            <option code="378" value="148">San Marino</option>
+                                            <option code="239" value="229">Sao Tome and Principe</option>
+                                            <option code="966" value="19">Saudi Arabia</option>
+                                            <option code="221" value="65">Senegal</option>
+                                            <option code="381" value="120">Serbia</option>
+                                            <option code="248" value="98">Seychelles</option>
+                                            <option code="232" value="88">Sierra Leone</option>
+                                            <option code="65" value="42">Singapore</option>
+                                            <option code="421" value="119">Slovakia</option>
+                                            <option code="386" value="129">Slovenia</option>
+                                            <option code="677" value="231">Solomon Islands</option>
+                                            <option code="252" value="89">Somalia</option>
+                                            <option code="27" value="60">South Africa</option>
+                                            <option code="0" value="247">South Sudan</option>
+                                            <option code="34" value="35">Spain</option>
+                                            <option code="94" value="132">Sri Lanka</option>
+                                            <option code="249" value="67">Sudan</option>
+                                            <option code="597" value="199">Suriname</option>
+                                            <option code="47" value="242">Svalbard and Jan Mayen</option>
+                                            <option code="268" value="94">Swaziland</option>
+                                            <option code="46" value="15">Sweden</option>
+                                            <option code="41" value="59">Switzerland</option>
+                                            <option code="963" value="168">Syria</option>
+                                            <option code="886" value="7">Taiwan</option>
+                                            <option code="992" value="135">Tajikistan</option>
+                                            <option code="255" value="63">Tanzania</option>
+                                            <option code="66" value="9">Thailand</option>
+                                            <option code="670" value="228">Timor-Leste</option>
+                                            <option code="228" value="95">Togo</option>
+                                            <option code="690" value="47">Tokelau</option>
+                                            <option code="676" value="227">Tonga</option>
+                                            <option code="1868" value="177">Trinidad and Tobago</option>
+                                            <option code="216" value="108">Tunisia</option>
+                                            <option code="0" value="109">Turkey</option>
+                                            <option code="993" value="209">Turkmenistan</option>
+                                            <option code="1649" value="193">Turks and Caicos Islands</option>
+                                            <option code="688" value="232">Tuvalu</option>
+                                            <option code="256" value="86">Uganda</option>
+                                            <option code="380" value="112">Ukraine</option>
+                                            <option code="971" value="14">United Arab Emirates</option>
+                                            <option code="44" value="21">United Kingdom</option>
+                                            <option code="0" value="23">United States</option>
+                                            <option code="0" value="158">United States Minor Outlying Islands</option>
+                                            <option code="598" value="187">Uruguay</option>
+                                            <option code="998" value="152">Uzbekistan</option>
+                                            <option code="678" value="201">Vanuatu</option>
+                                            <option code="58" value="175">Venezuela</option>
+                                            <option code="84" value="11">Vietnam</option>
+                                            <option code="1284" value="167">Virgin Islands, British</option>
+                                            <option code="0" value="28">Virgin Islands, U.S.</option>
+                                            <option code="681" value="224">Wallis and Futuna</option>
+                                            <option code="212" value="245">Western Sahara</option>
+                                            <option code="967" value="166">Yemen</option>
+                                            <option code="260" value="64">Zambia</option>
+                                            <option code="263" value="90">Zimbabwe</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="email" placeholder="E-mail">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display:none">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" name="code" placeholder="code">
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="mobile" placeholder="mobile">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12" style="color: white; font-size: 13px;">
+                                        <input type="checkbox" checked="checked"> Please accept our <a
+                                            href="/termsandconditions/">Terms and Conditions</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                        <div class="col-sm-12">
+                                            <input type="submit" value="OPEN AN ACCOUNT" class="btn btn-default"
+                                                style="float:right">
+                                        </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #block2 {
+            height: 500px;
+            width: 100%;
+            background: url('/images/yellow-bg2.jpg') no-repeat center center;
+            background-size: cover;
+        }
+
+        #block2 .speedometr {
+            position: relative;
+            top: 100px;
+            margin-top: 50px;
+            width: 910px;
+            height: 328px;
+            ;
+            margin: auto;
+            background: url('/images/timer.png') no-repeat;
+        }
+
+        #block2 .speedometr .mode {
+            line-height: 100px;
+            font-weight: 900;
+            font-size: 142px;
+        }
+
+        #block2 .speedometr .mode span {
+            font-size: 37px;
+            font-weight: bolder;
+        }
+
+        #block2 .speedometr .text {
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        #block2 .speedometr .btn {
+            margin-top: 10px;
+            background: transparent;
+            border: 3px solid #12171c;
+            height: 46px;
+            font-size: 18px;
+            font-weight: bolder;
+            padding: 7px 20px;
+        }
+    </style>
+    <div id="block2">
+        <div class="container" style="">
+            <div class="speedometr">
+                <div class="row">
+                    <div class="col-sm-5">
+                    </div>
+
+                    <div class="col-sm-7">
+                        <div class="mode">
+                            60<span>Seconds</span>
+                        </div>
+
+                        <script>
+                            $('document').ready(function () {
+                                $('#start_trade').click(function () {
+                                    $.scrollTo('#block3', 1500);
+                                    return false;
+                                });
+                            });
+                        </script>
+                        <div class="text">
+                            <p>Trade in 60 seconds like a digital commerce, with one exception - all options are closed
+                                after 60 seconds. </p>
+                            <p>This type of trading is popular with traders who want to make money on short-term market
+                                trends.</p>
+                        </div>
+                        <a href="/en/registration/" id="start_trade" class="btn btn-default">START TO TRADE <span
+                                class="glyphicon glyphicon-arrow-right"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /*
+                $('document').ready(function(){
+                    $('.canvas_block').on('click','.trading-tools .icon.candles',function(){
+                        $(this).removeClass('candles').addClass('graf');
+                        grafic.changeToCandlesView();
+                    });
+                    $('.canvas_block').on('click','.trading-tools .icon.graf',function(){
+                        $(this).removeClass('graf').addClass('candles');
+                        grafic.changeToNormalView();
+                    });
+                    
+                    $('.canvas_block').on('click','.trading-tools .icon.indicator',function(){
+                        //grafic.setSMAindicator();
+                        //$('#smaIndicatorModal').modal('show');
+                        if($('#indicators_form').css('display') == 'block'){
+                            $('#indicators_form').css({'display':'none'});
+                        }else{
+                            $('#indicators_form').css({'display':'block'});
+                        }
+                    });
+                    
+                    
+                });*/
+    </script>
+    <style>
+        .ipad .canvas_block {}
+
+        .ipad #canvas {
+            border-radius: 5px;
+            position: absolute;
+            left: 70px;
+            top: 108px;
+            width: 690px;
+            height: 450px;
+            background: white;
+        }
+    </style>
+
+
+    <style>
+        #block3 {
+            height: 735px;
+            width: 100%;
+            background: #161b1f;
+        }
+
+        #block3 .ipad {
+            position: relative;
+            width: 831px;
+            height: 599px;
+            margin: 70px auto;
+            background: url('/images/chart-example.png')no-repeat center center;
+        }
+
+        #block3 #controls {
+            margin-top: 70px;
+        }
+
+        #gag {
+            background: red;
+            height: 100%;
+            position: relative;
+            z-index: 1000;
+            font-size: 0px;
+            text-align: center;
+            background: url('/images/graph.jpg');
+            background-size: cover;
+        }
+
+        #gag span {
+            position: relative;
+            font-size: 20px;
+            padding: 70px 20px;
+
+            text-align: center;
+            display: inline-block;
+            vertical-align: middle;
+            top: 40%;
+
+            height: 250px;
+            width: 250px;
+            background: #ff6b00;
+            z-index: 10;
+            position: absolute;
+            top: 110px;
+            left: 230px;
+            border-radius: 150px;
+            box-shadow: 5px 5px 10px #767676;
+        }
+    </style>
+
+    <script>
+        var IndicatorsService = angular.module('IndicatorsService', [])
+            .service('Indicator', function () {
+                //this.square = function (a) { return a*a};
+                //console.log('SERVICE');
+                this.submitRSI = function ($scope, event) {
+                    console.log('RSI RSI');
+                    var period = parseInt($('input[name=period]', event.target).val());
+                    var overbought = parseInt($('input[name=overbought]', event.target).val());
+                    var oversold = parseInt($('input[name=oversold]', event.target).val());
+
+                    $scope.grafic.setRSIindicator(period, overbought, oversold);
+                    $('#RSIIndicatorModal').modal('hide');
+                    $('#indicators_form #RSItriger').attr('checked', true);
+
+                    event.preventDefault();
+                    //return false;
+                }
+
+                this.submitAlligator = function ($scope, event) {
+                    var jaw = parseInt($('input[name=jaw]', event.target).val());
+                    var deviation_jaw = parseInt($('input[name=deviation_jaw]', event.target).val());
+                    var color_jaw = $('input[name=color_jaw]', event.target).val();
+
+                    var teeth = parseInt($('input[name=teeth]', event.target).val());
+                    var deviation_teeth = parseInt($('input[name=deviation_teeth]', event.target).val());
+                    var color_teeth = $('input[name=color_teeth]', event.target).val();
+
+                    var lips = parseInt($('input[name=lips]', event.target).val());
+                    var deviation_lips = parseInt($('input[name=deviation_lips]', event.target).val());
+                    var color_lips = $('input[name=color_lips]', event.target).val();
+
+                    $scope.grafic.setAlligatorIndicator([jaw, deviation_jaw, color_jaw], [teeth, deviation_teeth, color_teeth], [lips, deviation_lips, color_lips]);
+                    $('#alligatorIndicatorModal').modal('hide');
+                    $('#indicators_form #AlligatorTriger').attr('checked', true);
+
+                    event.preventDefault();
+                }
+
+                this.submitSMA = function ($scope, event) {
+                    var period = parseInt($('input[name=period]', event.target).val());
+                    var color = $('input[name=color]', event.target).val();
+
+                    $scope.grafic.setSMAindicator(period, color);
+                    $('#smaIndicatorModal').modal('hide');
+                    $('#indicators_form #SMAtriger').attr('checked', true);
+
+                    event.preventDefault();
+                }
+
+                this.submitBollinger = function ($scope, event) {
+                    var period = parseInt($('input[name=period]', event.target).val());
+                    var deviation = parseInt($('input[name=deviation]', event.target).val());
+                    var color1 = $('input[name=color1]', event.target).val();
+                    var color2 = $('input[name=color2]', event.target).val();
+                    var color3 = $('input[name=color3]', event.target).val();
+
+                    $scope.grafic.setBolingerIndicator(period, deviation, [color1, color2, color3]);
+
+                    $('#bolingerIndicatorModal').modal('hide');
+                    $('#indicators_form #BolingerTriger').attr('checked', true);
+
+                    event.preventDefault();
+                }
+
+                this.submitMACD = function ($scope, event) {
+                    var fast = $('input[name=fast]', event.target).val();
+                    var slow = $('input[name=slow]', event.target).val();
+                    var period = $('input[name=period]', event.target).val();
+                    $scope.grafic.setMACDIndicator(fast, slow, period);
+
+                    $('#bolingerIndicatorModal').modal('hide');
+                    $('#indicators_form #MACDtriger').attr('checked', true);
+
+                    event.preventDefault();
+                }
+            });
+
+        var app = angular.module("app", ['IndicatorsService']);
+        app.controller('controlPanelCtrl', function ($scope, Indicator) {
+            $scope.assets = {};
+
+            $scope.traderchoice = 0;
+
+            //$scope.grafic = new Canvas('canvas');
+            $scope.grafic = new Canvas({ block: 'canvas', height: 450, width: 690 });
+            $scope.params = {};
+            $scope.params.asset = 400;
+            $scope.protocol = new Protocol($scope.grafic, 400, '6f50b2b0acab64025e1d01606725bd28', '0');
+            $scope.position = '';
+            $scope.monthes = ['JAN', "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+            $scope.expiration = '';//дата завершения
+            $scope.payment = 76;
+            $scope.payouts = '0';
+            $scope.investments = '10';
+            $scope.current_asset = "400";
+
+            $scope.time = '';
+
+            $('.grafic_panel').on('click', '.type', function () {
+                if ($(this).attr('class').indexOf('active') != -1) {
+                    $(this).removeClass('active');
+                    $scope.grafic.changeToNormalView();
+                } else {
+                    $(this).addClass('active');
+                    $scope.grafic.changeToCandlesView();
+                }
+
+            });
+            ////////////////////////
+
+            $scope.setCurrentTime = function (timestamp) {
+                var d = new Date(timestamp * 1000);
+
+                var hours = d.getHours();
+                hours = hours < 10 ? '0' + hours : hours;
+                var minutes = d.getMinutes();
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                var seconds = d.getSeconds();
+                seconds = hours < 10 ? '0' + seconds : seconds;
+
+                $scope.time = hours + ':' + minutes + ':' + seconds;
+                $scope.$digest();
+            }
+
+            $scope.setPayout = function () {
+                $scope.payouts = ((parseInt($scope.investments) / 100 * 76) + parseInt($scope.investments)).toFixed(2);
+            }
+            $scope.setPayout();
+
+            $scope.setSecondsLeft = function (seconds) {
+                var minutes = Math.floor(seconds / 60);
+                var seconds = seconds - (minutes * 60);
+
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                $scope.seconds_left = minutes + ':' + seconds;
+            }
+
+            $scope.setExpirationDate = function (time) {
+                var d = new Date(time * 1000);
+
+                var day = d.getDate();
+                day = day < 10 ? '0' + day : day;
+                var month = d.getMonth();
+                var hours = d.getHours();
+                hours = hours < 10 ? '0' + hours : hours;
+                var minutes = d.getMinutes();
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                var seconds = d.getSeconds();
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                $scope.expiration = day + ' ' + $scope.monthes[month] + ' ' + hours + ':' + minutes + ':' + seconds;
+            }
+
+            //initIndicators(grafic);
+            $scope.setStartPosition = function (data) {
+                var cur, pre;
+                for (var key in data) {
+                    if (cur) pre = cur;
+                    cur = key;
+                }
+
+                if (data[cur] * 1 < data[pre] * 1) {
+                    $scope.position_status = 0;
+                } else {
+                    $scope.position_status = 1;
+                }
+                $scope.position = data[cur];
+                $scope.$digest();
+
+                $scope.grafic.setZoom(60);
+                $scope.grafic.changeToCandlesView();
+            }
+
+            $scope.gag = function () {
+                //$('#notAvailibleModal').modal('show');                
+                $('#canvas #gag').remove();
+                var d = new Date($scope.assets[$scope.current_asset][4] * 1000);
+
+                var year = d.getYear() + 1900;
+                var month = d.getMonth() + 1;
+                month = month < 10 ? '0' + month : month
+                var day = d.getDate();
+                day = day < 10 ? '0' + day : day;
+                var hours = d.getHours();
+                hours = hours < 10 ? '0' + hours : hours;
+                var minutes = d.getMinutes();
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                var text = year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
+
+                $('#canvas').append('<div id="gag"><span>Graph is not active Trade will be available: </br>' + text + '</span></div>');
+            }
+
+            $scope.protocol.onDataReceive(function (json) {
+                if (json.data != undefined) {
+                    $('#canvas #gag').remove();
+
+                    $scope.traderchoice = json.tradersChoice;
+
+                    $scope.setCurrentTime(json.time);
+
+                    $scope.grafic.syncTime(json.time);
+                    $scope.grafic.addData(json);
+
+                    $scope.$digest();
+                    $scope.setStartPosition(json.data);
+
+                } else {
+                    $scope.gag();
+                }
+            });
+
+            $scope.protocol.onTimeSync(function (time) {
+                $scope.setCurrentTime(time);
+                $scope.grafic.syncTime(time);
+                //console.log($scope.grafic.getSecondsLeft());
+
+                $scope.setSecondsLeft($scope.grafic.seconds_left);
+                $scope.setExpirationDate($scope.grafic.end_expiration);
+
+
+                $scope.$digest();
+            });
+
+            $scope.protocol.onUpdate(function (element) {
+                if (element.asset != $scope.current_asset) return;
+                if (element.amount < $scope.position) {
+                    $scope.position_status = 0;
+                } else {
+                    $scope.position_status = 1;
+                }
+
+                $scope.position = element.amount;
+
+                $scope.$digest();
+                $scope.grafic.addPosition(element);
+            });
+
+            $scope.protocol.onAsset(function (data, asset) {
+                $scope.params.asset = asset;
+                $scope.assets = data;
+
+                $scope.$digest();
+            });
+
+            $scope.changeAsset = function (asset) {
+                if (asset == undefined) {
+                    asset = parseInt($scope.current_asset);
+                }
+                $scope.protocol.changeAsset(asset);
+            }
+
+
+            $scope.trade = function (event) {
+                /*if($scope.bet_position == undefined){
+                    event.preventDeafult();
+                    return false;
+                }
+    
+                alert('Вы должны авторизироваться для совершения сделок');*/
+                $('.accepted_bet').css({ 'display': 'block' });
+                event.preventDefault();
+            }
+            $scope.call = function () {
+                $scope.bet_position = 1;
+
+                $('#controls input[type=submit]').removeClass('put').addClass('call');
+            }
+            $scope.put = function () {
+                $scope.bet_position = 0;
+                $('#controls input[type=submit]').removeClass('call').addClass('put');
+            }
+
+            $scope.hoverCall = function () {
+                $scope.grafic.setCallOnHover();
+            }
+
+            $scope.hoverPut = function () {
+                $scope.grafic.setPutOnHover();
+            }
+
+            $scope.unsetHover = function () {
+                $scope.grafic.unsetOnHover();
+            }
+
+            /*$scope.test = function(){
+                console.log($scope.current_asset);
+                console.log('TEST TETST ET T');
+            }*/
+
+            $scope.setZoom = function ($event) {
+                var value = parseInt($($event.target).text());
+                console.log(value);
+                $scope.grafic.setZoom(value);
+                $('.zoom_menu li').removeClass('active');
+                $($event.target).addClass('active');
+            }
+
+            $scope.checkChecked = function ($event) {
+                return $event.target.checked;
+            }
+        });
+    </script>
+    <style>
+        .grafic_panel {
+            background: white;
+            height: 60px;
+            width: 686px;
+            left: 71px;
+            position: absolute;
+            top: 42px;
+            padding: 17px 15px;
+        }
+    </style>
+    <div id="block3" ng-controller="controlPanelCtrl">
+        <script>
+            function initIndicators(grafic) {
+                /*$('#RSIIndicatorModal form').submit(function(){
+                    var period = parseInt($('input[name=period]',this).val());
+                    var overbought = parseInt($('input[name=overbought]',this).val());
+                    var oversold = parseInt($('input[name=oversold]',this).val());
+                    
+                    $scope.grafic.setRSIindicator(period,overbought,oversold);
+                    $('#RSIIndicatorModal').modal('hide');
+                    $('#indicators_form #RSItriger').attr('checked',true);
+                    return false;
+                });
+                
+                $('#alligatorIndicatorModal form').submit(function(){
+                    var jaw = parseInt($('input[name=jaw]',this).val());
+                    var deviation_jaw = parseInt($('input[name=deviation_jaw]',this).val());
+                    var color_jaw = $('input[name=color_jaw]',this).val();
+                    
+                    var teeth = parseInt($('input[name=teeth]',this).val());
+                    var deviation_teeth = parseInt($('input[name=deviation_teeth]',this).val());
+                    var color_teeth = $('input[name=color_teeth]',this).val();
+                    
+                    var lips = parseInt($('input[name=lips]',this).val());
+                    var deviation_lips = parseInt($('input[name=deviation_lips]',this).val());
+                    var color_lips = $('input[name=color_lips]',this).val();
+                    
+                    $scope.grafic.setAlligatorIndicator([jaw,deviation_jaw,color_jaw],[teeth,deviation_teeth,color_teeth],[lips,deviation_lips,color_lips]);
+                    $('#alligatorIndicatorModal').modal('hide');
+                    $('#indicators_form #AlligatorTriger').attr('checked',true);
+                    return false;
+                });
+                
+                $('#smaIndicatorModal form').submit(function(){
+                    var period = parseInt($('input[name=period]',this).val());
+                    var color = $('input[name=color]',this).val();
+                    
+                    $scope.grafic.setSMAindicator(period,color);
+                    $('#smaIndicatorModal').modal('hide');
+                    $('#indicators_form #SMAtriger').attr('checked',true);
+                    return false;
+                });
+                
+                $('#bolingerIndicatorModal form').submit(function(){
+                    var period = parseInt($('input[name=period]',this).val());
+                    var deviation = parseInt($('input[name=deviation]',this).val());
+                    var color1 = $('input[name=color1]',this).val();
+                    var color2 = $('input[name=color2]',this).val();
+                    var color3 = $('input[name=color3]',this).val();
+                    
+                    $scope.grafic.setBolingerIndicator(period,deviation,[color1,color2,color3]);
+                    
+                    $('#bolingerIndicatorModal').modal('hide');
+                    $('#indicators_form #BolingerTriger').attr('checked',true);
+                    return false;
+                });
+                
+                $('#MACDindicatorModal form').submit(function(){
+                    //grafic.setBolingerIndicator(period,deviation,[color1,color2,color3]);
+                    var fast = $('input[name=fast]',this).val();
+                    var slow = $('input[name=slow]',this).val();
+                    var period = $('input[name=period]',this).val();
+                    $scope.grafic.setMACDIndicator(fast,slow,period);
+                    
+                    $('#bolingerIndicatorModal').modal('hide');
+                    $('#indicators_form #MACDtriger').attr('checked',true);
+                    return false;
+                });
+                
+                $('#indicators_form li a').click(function(){
+                    $('#indicators_form').css({'display':'none'});
+                });
+                $('#indicators_form #AlligatorTriger').change(function(){
+                    if($(this)[0].checked){
+                        $scope.grafic.startAlligatorIndicator();
+                    }else{
+                        $scope.grafic.stopAlligatorIndicator();
+                    }
+                    $('#indicators_form').css({'display':'none'});
+                });
+                
+                $('#indicators_form #MACDtriger').change(function(){
+                    if($(this)[0].checked){
+                        $scope.grafic.startMACDindicator();
+                    }else{
+                        $scope.grafic.stopMACDindicator();
+                    }
+                    $('#indicators_form').css({'display':'none'});
+                });
+                
+                $('#indicators_form #RSITriger').change(function(){
+                    if($(this)[0].checked){
+                        $scope.grafic.startRSIindicator();
+                    }else{
+                        $scope.grafic.stopRSIindicator();
+                    }
+                    $('#indicators_form').css({'display':'none'});
+                });
+                
+                $('#indicators_form #SMAtriger').change(function(){
+                    console.log($(this));
+                    if($(this)[0].checked){
+                        $scope.grafic.startSMAindicator();
+                    }else{
+                        $scope.grafic.stopSMAindicator();
+                    }
+                });
+                
+                $('#indicators_form #BolingerTriger').change(function(){
+                    if($(this)[0].checked){
+                        $scope.grafic.startBolingerIndicator();
+                    }else{
+                        $scope.grafic.stopBolingerIndicator();
+                    }
+                });*/
+
+            }
+        </script>
+
+
+        <!----RSI----->
+        <style>
+            #RSIIndicatorModal .modal-dialog {
+                width: 500px;
+            }
+
+            #RSIIndicatorModal .modal-body form {
+                width: 200px;
+                margin: auto;
+            }
+
+            #RSIIndicatorModal .modal-body form .jscolor {
+                cursor: pointer;
+                width: 40px;
+                height: 40px;
+                color: transparent;
+            }
+        </style>
+        <div class="modal fade" id="RSIIndicatorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title font-header">
+                            <p><strong>Moving Average</strong></p>
+                        </h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <form action="" class="form" ng-submit="submitRSI($event)">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="label">PERIOD</div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input value="13" name="period" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="label">ПЕРЕКУПЛЕННОСТЬ</div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input value="80" name="overbought" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="label">ПЕРЕПРОДАННОСТЬ</div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input value="20" name="oversold" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12 text-center">
+                                        <input type="submit" class="btn btn-transparent-small" value="Construct">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!----MACD----->
+        <style>
+            #MACDindicatorModal .modal-dialog {
+                width: 500px;
+            }
+
+            #MACDindicatorModal .modal-body form {
+                width: 200px;
+                margin: auto;
+            }
+
+            #MACDindicatorModal .modal-body form .jscolor {
+                cursor: pointer;
+                width: 40px;
+                height: 40px;
+                color: transparent;
+            }
+        </style>
+        <div class="modal fade" id="MACDindicatorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title font-header">
+                            <p><strong>Moving Average</strong></p>
+                        </h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <form action="" class="form" ng-submit="submitMACD($event)">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="label">FAST PERIOD</div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input value="13" name="fast" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="label">SLOW PERIOD</div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input value="8" name="slow" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="label">SIGNALS PERIOD</div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input value="8" name="period" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="label" style="padding-top:15px; height:40px;display:block;">MACD
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text"
+                                            class="form-control jscolor {valueElement:'macdColorInput1',value:'ff0000'} pull-right">
+                                        <input name="color1" type="hidden" id="alligatorColorInput1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="label" style="padding-top:15px; height:40px;display:block;">SIGNAL
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text"
+                                            class="form-control jscolor {valueElement:'macdColorInput2',value:'00ff00'} pull-right">
+                                        <input name="color2" type="hidden" id="macdColorInput2">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="label" style="padding-top:15px; height:40px;display:block;">COLUMN
+                                            OF GROWTH</div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text"
+                                            class="form-control jscolor {valueElement:'macdColorInput3',value:'0000ff'} pull-right">
+                                        <input name="color3" type="hidden" id="macdColorInput3">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="label" style="padding-top:15px; height:40px;display:block;">DROP
+                                            COLUMN</div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text"
+                                            class="form-control jscolor {valueElement:'macdColorInput4',value:'0000ff'} pull-right">
+                                        <input name="color4" type="hidden" id="macdColorInput4">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12 text-center">
+                                        <input type="submit" class="btn btn-transparent-small" value="Construct">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!----ALLIGATOR----->
+        <style>
+            #alligatorIndicatorModal .modal-dialog {
+                width: 500px;
+            }
+
+            #alligatorIndicatorModal .modal-body form {
+                width: 200px;
+                margin: auto;
+            }
+
+            #alligatorIndicatorModal .modal-body form .jscolor {
+                cursor: pointer;
+                width: 40px;
+                height: 40px;
+                color: transparent;
+            }
+        </style>
+        <div class="modal fade" id="alligatorIndicatorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title font-header">
+                            <p><strong>Moving Average</strong></p>
+                        </h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <form action="" class="form" ng-submit="submitAlligator($event)">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="label">JAW</div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input value="13" name="jaw" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="label">SHIFT</div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input value="8" name="deviation_jaw" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="label">TEETH</div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input value="8" name="teeth" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="label">SHIFT</div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input value="5" name="deviation_teeth" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="label">LIPS</div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input value="5" name="lips" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="label">SHIFT</div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input value="3" name="deviation_lips" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="label" style="padding-top:15px; height:40px;display:block;">JAW
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text"
+                                            class="form-control jscolor {valueElement:'alligatorColorInputJAW',value:'ff0000'} pull-right">
+                                        <input name="color_jaw" type="hidden" id="alligatorColorInputJAW">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="label" style="padding-top:15px; height:40px;display:block;">LIPS
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text"
+                                            class="form-control jscolor {valueElement:'alligatorColorInput2',value:'00ff00'} pull-right">
+                                        <input name="color_teeth" type="hidden" id="alligatorColorInput2">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="label" style="padding-top:15px; height:40px;display:block;">TEETH
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text"
+                                            class="form-control jscolor {valueElement:'alligatorColorInput3',value:'0000ff'} pull-right">
+                                        <input name="color_lips" type="hidden" id="alligatorColorInput3">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12 text-center">
+                                        <input type="submit" class="btn btn-transparent-small" value="Construct">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!----SMA----->
+        <style>
+            #smaIndicatorModal .modal-dialog {
+                width: 500px;
+            }
+
+            #smaIndicatorModal .modal-body form {
+                width: 200px;
+                margin: auto;
+            }
+
+            #smaIndicatorModal .modal-body form .jscolor {
+                cursor: pointer;
+                width: 40px;
+                height: 40px;
+                color: transparent;
+            }
+        </style>
+        <div class="modal fade" id="smaIndicatorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title font-header">
+                            <p><strong>Moving Average</strong></p>
+                        </h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <form action="" class="form" ng-submit="submitSMA($event)">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="label">Period</div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input value="50" name="period" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="label" style="padding-top:15px; height:40px;display:block;">MA</div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text"
+                                            class="form-control jscolor {valueElement:'smaColorInput',value:'ff0000'} pull-right">
+                                        <input name="color" type="hidden" id="smaColorInput">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12 text-center">
+                                        <input type="submit" class="btn btn-transparent-small" value="Construct">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!---------BOLINGER----------->
+        <style>
+            #bolingerIndicatorModal .modal-dialog {
+                width: 500px;
+            }
+
+            #bolingerIndicatorModal .modal-body form {
+                width: 200px;
+                margin: auto;
+            }
+
+            #bolingerIndicatorModal .modal-body form .jscolor {
+                cursor: pointer;
+                width: 40px;
+                height: 40px;
+                color: transparent;
+            }
+        </style>
+        <script>
+            $('document').ready(function () {
+
+            });
+        </script>
+        <div class="modal fade" id="bolingerIndicatorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title font-header">
+                            <p><strong>Moving Average</strong></p>
+                        </h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <form action="" class="form" ng-submit="submitBollinger($event)">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="label">Period</div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input value="14" name="period" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="label">DEVIATION</div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input value="4" name="deviation" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="label" style="padding-top:15px; height:40px;display:block;">TOP LINE
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text"
+                                            class="form-control jscolor {valueElement:'bolingerColorInput1',value:'ff0000'} pull-right">
+                                        <input name="color1" type="hidden" id="bolingerColorInput1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="label" style="padding-top:15px; height:40px;display:block;">MIDDLE
+                                            LINE</div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text"
+                                            class="form-control jscolor {valueElement:'bolingerColorInput2',value:'00ff00'} pull-right">
+                                        <input name="color2" type="hidden" id="bolingerColorInput2">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="label" style="padding-top:15px; height:40px;display:block;">BOTTOM
+                                            LINE</div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text"
+                                            class="form-control jscolor {valueElement:'bolingerColorInput3',value:'0000ff'} pull-right">
+                                        <input name="color3" type="hidden" id="bolingerColorInput3">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12 text-center">
+                                        <input type="submit" class="btn btn-transparent-small" value="Construct">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="ipad">
+                        <div class="grafic_panel">
+                            <ul class="list-inline pull-left grafic_controls">
+                                <li class="indicators">
+                                    <i></i>
+                                    <ul id="indicators_form">
+                                        <li>
+                                            <input type="checkbox" id="SMAtriger"
+                                                ng-click="checkChecked($event)?grafic.startSMAindicator():grafic.stopSMAindicator()">
+                                            <a href="" data-toggle="modal"
+                                                data-target="#smaIndicatorModal"><span>MA</span> MOVING AVERAGE</a>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="MACDtriger"
+                                                ng-click="checkChecked($event)?grafic.startMACDindicator():grafic.stopMACDindicator()">
+                                            <a href="" data-toggle="modal"
+                                                data-target="#MACDindicatorModal"><span>MACD</span> Convergence /
+                                                Divergence Moving Average</a>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="BolingerTriger"
+                                                ng-click="checkChecked($event)?grafic.startBolingerIndicator():grafic.stopBolingerIndicator()">
+                                            <a href="" data-toggle="modal"
+                                                data-target="#bolingerIndicatorModal"><span>BB</span> Bollinger
+                                                Bands</a>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="AlligatorTriger"
+                                                ng-click="checkChecked($event)?grafic.startAlligatorIndicator():grafic.stopAlligatorIndicator()">
+                                            <a href="" data-toggle="modal"
+                                                data-target="#alligatorIndicatorModal"><span>ALLIGATOR</span>
+                                                Alligator</a>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="RSITriger"
+                                                ng-click="checkChecked($event)?grafic.startRSIindicator():grafic.stopRSIindicator()">
+                                            <a href="" data-toggle="modal"
+                                                data-target="#RSIIndicatorModal"><span>RSI</span> Relative Strength
+                                                Index</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="type active"><i></i></li>
+
+                            </ul>
+                            <script>
+                                $('.grafic_panel .grafic_controls').on('click', '.indicators', function () {
+                                    if ($('#indicators_form').css('display') == 'block') {
+                                        $('#indicators_form').css({ 'display': 'none' });
+                                    } else {
+                                        $('#indicators_form').css({ 'display': 'block' });
+                                    }
+                                });
+                            </script>
+
+                            <ul class="list-inline pull-right zoom_menu">
+                                Zoom:
+                                <li ng-click="setZoom($event)">5</li>
+                                <li ng-click="setZoom($event)">10</li>
+                                <li ng-click="setZoom($event)">20</li>
+                                <li ng-click="setZoom($event)">40</li>
+                                <li ng-click="setZoom($event)" class="active">60</li>
+                            </ul>
+
+                            <div class="traderchoice pull-right">
+                                <div class="red">{{traderchoice}}%</div>
+                                <div class="block">
+                                    <div class="text">Trader's Choice</div>
+                                    <div class="load" style="width:{{traderchoice}}%"></div>
+                                </div>
+                                <div class="green">{{100-traderchoice}}%</div>
+                            </div>
+                        </div>
+                        <div id="canvas" style="position:relative"></div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div id="controls">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input style="width:96px; height: 26px; margin:auto" type="text"
+                                        class="form-control" value=" " ng-model="time">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="text-align: center;">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label style="color:white;">Assets</label>
+
+                                    <select style="height:26px; padding: 0px 5px;" class="form-control"
+                                        ng-model="current_asset" ng-click="changeAsset()">
+                                        <option value="opt1">opt1</option>
+                                        <option value="opt1">opt1</option>
+                                        <option value="opt1">opt1</option>
+                                        <option value="opt1">opt1</option>
+                                        <option value="opt1">opt1</option>
+                                        <option value="opt1">opt1</option>
+                                        <option value="opt1">opt1</option>
+                                        <option value="opt1">opt1</option>
+                                        <option value="opt1">opt1</option>
+                                        <option value="opt1">opt1</option>
+                                        <option value="opt1">opt1</option>
+                                        <option value="opt1">opt1</option>
+                                        <option value="opt1">opt1</option>
+                                        <option value="opt1">opt1</option>
+                                        <option value="opt1">opt1</option>
+                                        <option value="opt1">opt1</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label style="color:white;">Assets</label>
+                                    <input style="height:26px;" type="text" class="form-control" value=" ">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input
+                                        style="width:126px; height:32px; font-weight:bolder; text-align: center; margin:auto; color:{{position_status == 1 ? 'green':'red'}}"
+                                        type="text" class="form-control" value="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group buttons">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="btn-high" ng-mouseleave="unsetHover()" ng-mouseenter="hoverCall()"
+                                        ng-click="call()"><span class="arrow"></span>HIGH</div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="btn-low" ng-mouseleave="unsetHover()" ng-mouseenter="hoverPut()"
+                                        ng-click="put()">LOW<span class="arrow"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group bottom">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        Closing: <strong>{{expiration}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6">Investments:</div>
+
+                                    <div class="col-sm-6">
+                                        <select class="form-control" style="height:27px; padding:0px 5px;"
+                                            ng-change="setPayout()" ng-model="investments">
+                                            <option value="10">$10</option>
+                                            <option value="20">$20</option>
+                                            <option value="50">$50</option>
+                                            <option value="100">$100</option>
+                                            <option value="250">$250</option>
+                                            <option value="500">$500</option>
+                                            <option value="1000">$1000</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        Payouts: <strong>${{payouts}}</strong> ({{payment}}%)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <input type="submit" class="btn btn-primary" ng-click="trade($event)"
+                                            value="TRADE">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <style>
+                                .accepted_bet {
+                                    display: none;
+                                    border-radius: 5px;
+                                    width: 90%;
+                                    height: 435px;
+                                    background: #3d445e;
+                                    position: absolute;
+                                    bottom: 20px;
+                                    margin: auto;
+                                    left: 50%;
+                                    margin-left: -45%;
+                                }
+
+                                .accepted_bet .title {
+                                    color: white;
+                                    font-size: 18px;
+                                    border-bottom: 1px solid #2a3143;
+                                    text-align: center;
+                                    height: 68px;
+                                    font-weight: bolder;
+                                    padding-top: 19px;
+                                }
+
+                                .accepted_bet .icon_block {
+                                    height: 100px;
+                                    width: 100px;
+                                    margin: auto;
+                                }
+
+                                .accepted_bet .icon_block:after {
+                                    display: block;
+                                    margin: auto;
+                                    background: url('/images/yes-no.png');
+                                    content: '';
+                                    position: relative;
+                                }
+
+                                .accepted_bet.success .icon_block:after {
+                                    width: 66px;
+                                    height: 58px;
+                                    top: 25px;
+                                    background-position: 0px 0px;
+                                }
+
+                                .accepted_bet.error .icon_block:after {
+                                    width: 56px;
+                                    height: 57px;
+                                    top: 25px;
+                                    background-position: -10px -79px;
+                                }
+
+                                .accepted_bet .message .accepted,
+                                .accepted_bet .message .error {
+                                    width: 150px;
+                                    margin: auto;
+                                    text-align: center;
+                                    margin-bottom: 15px;
+                                    font-size: 20px;
+                                    color: white;
+                                    font-weight: bolder;
+                                }
+                            </style>
+                            <div class="accepted_bet">
+                                <div class="title">INFO</div>
+                                <div class="icon_block"></div>
+                                <div class="message">
+                                    <div class="accepted">You must be logged in</div>
+                                    <div style="display:none; color :red;" class="error">Transaction error</div>
+                                </div>
+                                <div class="text-center">
+                                    <div onclick="$('.accepted_bet').css({'display': 'none'})"
+                                        style="width:146px; font-size: 16px; margin:auto;" class="btn btn-orange">
+                                        Continue</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #block4 {
+            display: none;
+            height: 674px;
+            width: 100%;
+            background: white;
+            border-bottom: 2px solid #151a1f;
+        }
+
+        #block4 h2 {
+            font-size: 40px;
+            font-weight: bolder;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        #block4 #review {
+            margin-top: 50px;
+        }
+
+        #block4 .active {
+            position: relative;
+        }
+
+        #block4 .active .left_arrow {
+            position: absolute;
+            left: 0px;
+            top: 135px;
+            cursor: pointer;
+            background: url('/images/scopes.png')no-repeat;
+            background-position: -20px 0px;
+            width: 19px;
+            height: 30px;
+        }
+
+        #block4 .active .left_arrow:hover {
+            background-position: -0px 0px;
+        }
+
+        #block4 .active .right_arrow {
+            position: absolute;
+            right: 0px;
+            top: 135px;
+            cursor: pointer;
+            background: url('/images/scopes.png')no-repeat;
+            background-position: -46px 0px;
+            width: 19px;
+            height: 30px;
+        }
+
+        #block4 .active .right_arrow:hover {
+            background-position: -68px 0px;
+        }
+
+        #block4 .active .right_arrow {}
+
+        #block4 .active .image {
+            margin: auto;
+            /*background: url('/images/review1.jpg') no-repeat center center;*/
+
+            background-size: cover;
+            width: 350px;
+            height: 350px;
+            border-radius: 175px;
+        }
+
+        #block4 #review .occupation {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bolder;
+            color: #f73f07;
+
+        }
+
+        #block4 #review .message {
+            /*width:740px;*/
+            margin: auto;
+            margin-top: 20px;
+            font-size: 22px;
+            text-align: center;
+            color: #13161c;
+            font-weight: bolder;
+        }
+
+        #block4 .left,
+        #block4 .right {
+            margin-top: 90px;
+        }
+
+        #block4 .left .image {
+            margin: auto;
+            /*background: url('/images/review2.jpg') no-repeat center center;*/
+            background-position: center center;
+            background-size: cover;
+            width: 128px;
+            height: 128px;
+            border-radius: 64px;
+        }
+
+        #block4 .right .image {
+            margin: auto;
+            /*background: url('/images/review3.jpg') no-repeat center center;*/
+            background-position: center center;
+            background-size: cover;
+            width: 128px;
+            height: 128px;
+            border-radius: 64px;
+        }
+    </style>
+    <script>
+        app.controller('reviewCtrl', ['$scope', function ($scope) {
+            $scope.elements = [
+                { img: '/images/review2.jpg', name: 'Anastasia, housewife', message: 'I didnt trade on the stock before, but after investing in apple commodities, recieved 440 dollars profit! This is so easy.' }
+                , { img: '/images/review1.jpg', name: 'Lusi, office manager', message: "I've earned 264 dollars just in hour after registration! I have made an investment for a euro rising (EUR/USD)" }
+                , { img: '/images/review3.jpg', name: 'Leon, top manager', message: 'Very convenient platform, excellent tech support. The best thing that nobody else has is the high interest rates. It would be nice if we could mark assets as favorites to quickly switch to the currencies we work with. The platform is improving. I am very pleased with CrypTrade365!' }
+            ];
+
+            $scope.active = 1;
+            $scope.left = {};
+            $scope.center = {};
+            $scope.right = {};
+
+            $scope.setElements = function () {
+                $scope.center = $scope.elements[$scope.active];
+                $scope.center.style = 'background:url("' + $scope.center.img + '") no-repeat center center;background-size: cover';
+                if ($scope.active - 1 < 0) {
+                    $scope.left = $scope.elements[$scope.elements.length - 1];
+                } else {
+                    $scope.left = $scope.elements[$scope.active - 1];
+                }
+                $scope.left.style = 'background:url("' + $scope.left.img + '") no-repeat center center;background-size: cover';
+
+                if ($scope.active + 1 >= $scope.elements.length) {
+                    $scope.right = $scope.elements[0];
+                } else {
+                    $scope.right = $scope.elements[$scope.active + 1];
+                }
+                $scope.right.style = 'background:url("' + $scope.right.img + '") no-repeat center center;background-size: cover';
+            }
+
+            $scope.next = function () {
+                if ($scope.active >= $scope.elements.length - 1) {
+                    $scope.active = 0;
+                } else {
+                    $scope.active += 1;
+                }
+
+                $scope.setElements();
+            }
+
+            $scope.prev = function () {
+                if ($scope.active <= 0) {
+                    $scope.active = $scope.elements.length - 1;
+                } else {
+                    $scope.active -= 1;
+                }
+
+                $scope.setElements();
+            }
+            $scope.setElements();
+        }]);
+    </script>
+    <div id="block4" ng-controller="reviewCtrl">
+        <div class="container">
+            <h2>Reviews</h2>
+            <div id="review">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="left">
+                            <div class="image" style="{{left.style}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="active">
+                            <div class="left_arrow" ng-click="prev()"></div>
+                            <div class="image" style="{{center.style}}">
+
+                            </div>
+
+                            <div class="right_arrow" ng-click="next()"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="right">
+                            <div class="image" style="{{right.style}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="occupation">{{center.name}}</div>
+                        <div class="message">{{center.message}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #block5 {
+            height: 850px;
+            width: 100%;
+            background: url('/images/bitcoin-bg.jpg') no-repeat center center;
+            background-size: cover;
+        }
+
+        #block5 h2 {
+            font-size: 40px;
+            font-weight: bolder;
+            margin-bottom: 46px;
+            margin-top: 85px;
+        }
+    </style>
+    <script>
+        $('document').ready(function () {
+            //$('.faq .element').not('.active').click(function(){
+            $('.faq .element').click(function () {
+                if ($(this).attr('class').indexOf('active') != -1) return;
+                $('.faq .element').removeClass('active');
+                $(this).addClass('active');
+            });
+        });
+    </script>
+
+    <div id="block5">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-4">
+                    <h2>Frequently asked Questions</h2>
+                    <div class="faq">
+                        <div class="element active">
+                            <div class="title">What are binary options?</div>
+                            <div class="line"></div>
+
+                            <div class="info">
+                                <p>Is an option with a fixed profit, where payout is determined at the onset of the
+                                    contract. It pays a fixed amount of cash if the option expires in-the-money,
+                                    independent of themagnitude by which the price of the underlying asset moves.</p>
+                            </div>
+                        </div>
+
+                        <div class="element">
+                            <div class="title">What is a "Call" option?</div>
+
+                            <div class="line"></div>
+                            <div class="info">
+                                <p>An option that provides the holder with a profit when the underlying asset increases
+                                    in price compared with the level it was purchased at.</p>
+                            </div>
+                        </div>
+
+                        <div class="element">
+                            <div class="title">What is a put options?</div>
+
+                            <div class="line"></div>
+                            <div class="info">
+                                <p>An option that provides the holder with a profit when the underlying asset
+                                    depreciates relative to the purchase level.</p>
+                            </div>
+                        </div>
+
+                        <div class="element">
+                            <div class="title">What return will I get for a successful investment?</div>
+
+                            <div class="line"></div>
+                            <div class="info">
+                                <p>A successful investment will result in a guaranteed return indicated on the site for
+                                    the underlying asset that you selected..</p>
+                            </div>
+                        </div>
+
+                        <div class="element">
+                            <div class="title">How long does the deal last?</div>
+
+                            <div class="line"></div>
+                            <div class="info">
+                                <p>The deal lasts untill expiration time, that has being chosen before</p>
+                            </div>
+                        </div>
+
+                        <div class="element">
+                            <div class="title">Could i finish the deal before expiration time?</div>
+
+                            <div class="line"></div>
+                            <div class="info">
+                                <p>After confirming the deal, expiration time couldn`t be changed.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #block6 {
+            height: 374px;
+            width: 100%;
+            background: url('/images/yellow-bg.jpg') no-repeat center center;
+            background-size: cover;
+            display: none;
+        }
+
+        #block6 h2 {
+            width: 777px;
+            font-size: 34px;
+            font-weight: bolder;
+            text-align: center;
+            margin: 58px auto 72px auto;
+        }
+
+        #block6 .contacts {
+            width: 575px;
+            margin: auto;
+        }
+
+        #block6 .contacts .phone {
+            float: left;
+        }
+
+        #block6 .contacts .email {
+            float: right;
+        }
+
+        #block6 .phone {
+            font-size: 22px;
+            font-weight: bolder;
+            text-align: center;
+
+        }
+
+        #block6 .phone .ico {
+            margin: auto;
+            width: 98px;
+            height: 59px;
+            background: url('/images/phone-mail.png');
+            background-position: 0px 0px;
+            margin-bottom: 30px;
+        }
+
+        #block6 .email {
+            font-size: 18px;
+            font-weight: bolder;
+            text-align: center;
+
+        }
+
+        #block6 .email .ico {
+            margin: auto;
+            width: 77px;
+            height: 59px;
+            background: url('/images/phone-mail.png');
+            background-position: -130px -4px;
+            margin-bottom: 30px;
+        }
+    </style>
+    <div id="block6">
+        <div class="container">
+            <h2>If you still have questions, <br> we will gladly help you to understand</h2>
+            <div class="contacts">
+                <div class="phone">
+                    <div class="ico"></div>
+                    +X (XXX) XXX-XX-XX
+                </div>
+                <div class="email">
+                    <div class="ico"></div>
+                    support@platformail.com
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <style>
+        #block7 {
+            height: 150px;
+            width: 100%;
+            background: #151a1f;
+            display: none;
+        }
+
+        #block7 li {
+            width: auto;
+            padding: 0px 24px;
+        }
+
+        #block7 .ico {
+            margin: auto;
+            background: url('/images/payments.png');
+        }
+
+        #block7 .visa {
+            width: 82px;
+            height: 40px;
+            background-position: 0px 0px;
+        }
+
+        #block7 .perfectmoney {
+            width: 98px;
+            height: 43px;
+            background-position: -104px -2px;
+        }
+
+        #block7 .mastercard {
+            width: 106px;
+            height: 40px;
+            background-position: -218px -4px;
+        }
+
+        #block7 .w1 {
+            width: 103px;
+            height: 35px;
+            background-position: -341px -6px;
+        }
+
+        #block7 .neteller {
+            width: 147px;
+            height: 33px;
+            background-position: -585px -9px;
+        }
+
+        #block7 .webmoney {
+            width: 189px;
+            height: 47px;
+            background-position: -745px 0px;
+        }
+
+        #block7 .qiwi {
+            width: 104px;
+            height: 48px;
+            background-position: -459px 0px;
+        }
+    </style>
+    <div id="block7">
+        <div class="container">
+            <ul class="list-inline" style="margin-top:48px;">
+                <li>
+                    <div class="ico visa"></div>
+                </li>
+                <li>
+                    <div class="ico perfectmoney"></div>
+                </li>
+                <li>
+                    <div class="ico mastercard"></div>
+                </li>
+                <li>
+                    <div class="ico w1"></div>
+                </li>
+                <li>
+                    <div class="ico webmoney"></div>
+                </li>
+                <li>
+                    <div class="ico qiwi"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <style>
+        #footer {
+            padding-top: 40px;
+            height: auto;
+            width: 100%;
+            background: #f3f3f1;
+        }
+
+        #footer .logo {
+            background: url('/images/logo.png');
+            width: 283px;
+            height: 48px;
+            margin-bottom: 20px;
+        }
+
+        #footer .menu ul {
+            padding-left: 0px;
+        }
+
+        #footer .menu li {
+            margin-bottom: 12px;
+        }
+
+        #footer .menu li a {
+
+            font-size: 16px;
+            font-weight: bolder;
+            color: #1d242b;
+        }
+
+        #footer .menu li.sub {
+            margin-bottom: 8px;
+        }
+
+        #footer .menu li.sub a {
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        #footer .bottom {
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid #c7c9c9;
+            font-size: 12px;
+        }
+
+        #footer .bottom .copyrights {
+            font-size: 13px;
+            font-weight: bolder;
+        }
+    </style>
+    <div id="footer">
+        <div class="container">
+            <div class="top">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="logo"></div>
+                        <p>For all questions please contact customer support:<br><a
+                                style="margin-bottom:14px;display:block;"
+                                href="mailto:support@platformail.com">support@platformail.com</a></p>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="row menu">
+                            <div class="col-sm-3">
+                                <ul>
+                                    <li><a href="/">HOME</a></li>
+                                    <li><a href="/termsandconditions/">RULES</a></li>
+                                    <li><a href="/faq/">FAQ</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <ul>
+                                    <li><a href="/aboutus/">ABOUT US</a></li>
+                                    <li><a href="/faq/bonus/">BONUS</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <ul>
+                                    <li><a href="/faq/">INFO</a></li>
+                                    <li class="sub"><a href="/faq/glossary/">GLOSSARY</a></li>
+                                    <li class="sub"><a href="/faq/disclaimer/">DISCLAIMER</a></li>
+                                    <li class="sub"><a href="/faq/privacy/">PRIVACY</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <ul>
+                                    <li><a href="/trade/">TRADE</a></li>
+                                    <li class="sub"><a href="/trade/">60 Seconds</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom">
+                <p>You haven`t made any investments in Option builder tool yet. To make an investment you should: Choose
+                    the asset you want to trade with, enter your current investment amount. And choose how will asset
+                    behavior: if it will rise - press HIGH button, other way press LOW button. Select the profit and the
+                    pay off level. Confirm your deal with the Confirmal button. Due to different time zones at the
+                    worldwide stocks, some assets could be inactive or might has limited availability. If the asset`s
+                    value didn`t change sinse made an investment, the full investment price will be returned to
+                    investor.</p>
+                <p>Legal: cryptgates.com is a trading name of CryptGates, registration number: IBC 2015 (Suite 305,
+                    Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
+                <div class="copyrights">© 2025 | CryptGates - All rights reserved</div>
+            </div>
+            <a href="https://freekassa.ru" target="_blank" rel="noopener noreferrer">
+                <img src="images/freekasa.png" title="Прием платежей на сайте">
+            </a>
+        </div>
+    </div>
+    <script src="/js/global.js"></script>
+</body>
+
+</html>

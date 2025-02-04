@@ -1,0 +1,2370 @@
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <meta name="Keywords" content="Форекс, Биржа Форекс, Бинарные Опционы, торговля акциями, Биржа">
+        <meta name="description" content="Надежная торговая платформа бинарных опционов с доходностью до 76%. Доступные инструменты для ведения торговли, обучающие материалы и простой в использовании интерфейс. "/>
+        <link rel="icon" type='image/png' href="/images/small-logo.png">
+        <title>Sixty Seconds - fastest binary options tool - CryptGates</title>
+        <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/css/main.css?v4" rel="stylesheet" type="text/css" />        <script src="/js/jquery.js" type="text/javascript" /></script><script src="/js/bootstrap.min.js" type="text/javascript" /></script><script src="/js/main.js" type="text/javascript" /></script><script src="/js/angular.min.js" type="text/javascript" /></script><script src="/js/jscolor.min.js" type="text/javascript" /></script><script src="/js/chartsMain.js" type="text/javascript" /></script><script src="/js/service.js" type="text/javascript" /></script><script src="/js/charts.js" type="text/javascript" /></script><script src="/js/quotes.js" type="text/javascript" /></script><script src="/js/protocol.js" type="text/javascript" /></script>                
+    </head>
+    <body ng-app="app">               
+        <style>
+            .container {
+                width:1250px;
+            }
+        </style>        
+        <style>
+    #personal{
+        background: #31394d;
+        height: 44px;
+        width:100%;
+        border-bottom:1px solid #363f54;
+        margin-bottom: -1px;
+        z-index: 10;
+        position:relative;
+    }
+    #personal ul li{
+        letter-spacing:normal;  
+        vertical-align: top;
+        height:44px;;
+    }
+    #personal .balance{
+        font-weight:bold;
+        font-size: 17px;
+        color: #fec307;
+        margin-left:15px;
+        margin-right:15px;
+        display:inline-block;
+        vertical-align: middle;
+    }
+    #personal .modes{
+        cursor:pointer;
+        padding:12px 20px;
+        color: #a9acb4;
+        font-size:14px;
+        font-weight: bolder;
+        margin:0px;
+        border-left: 1px solid #3c455e;
+        border-right: 1px solid #3c455e;
+    }
+    #personal .modes a{
+        text-decoration: none;
+        color: #a9acb4;
+    }
+
+    #personal .modes .status{
+        margin-top:-3px;
+        margin-right:10px;
+        display:inline-block;
+        vertical-align: middle;
+        background: url('/images/acc-buttons.png');
+        width:17px;
+        height:17px;
+    }
+    #personal .modes .status{
+        background-position: -23px -66px;
+    }
+    #personal .modes:hover .status{
+        background-position: -3px -65px;
+    }
+    #personal .modes.active .status{
+        background-position: -1px -47px;
+    }
+    
+    #personal .modes.active,#personal .modes:hover{
+        background: #3c455e;
+        color: #f3f3f1;
+    }
+    #personal .info{
+        padding:10px 10px;
+    }
+    #personal .info .ico{
+        margin-top:-3px;
+        margin-right:10px;        
+        width:19px;
+        height:20px;
+        background:url('/images/acc-buttons.png');
+        background-position:-59px 0px;
+        display:inline-block; 
+        vertical-align: middle;
+    }
+    #personal .info .username{
+        line-height: 10px;
+        text-transform: uppercase;
+        color: #f3f3f1;
+        font-size:12px;
+        font-weight:bolder;
+    }
+    #personal .info .email{
+        color:#a9acb4;
+        font-size:10px;
+        font-weight:bold;
+    }
+    #personal .logout{
+        padding:12px;
+        
+    }
+    #personal .logout a{
+        color:#f3f3f1;
+        font-size:12px;
+        font-weight:900;
+    }
+    #personal .logout .ico{
+        margin-top:-2px;
+        display:inline-block;
+        vertical-align: middle;
+        width:29px;
+        height:20px;
+        background:url('/images/acc-buttons.png');
+        background-position:-59px -23px;
+        margin-right:5px;
+    }
+</style>
+<nav class="navbar navbar-default " id="header" style="display: none">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#headerMenu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            <a class="navbar-brand logo" href="/"></a>
+        </div>
+<style>
+    #header #headerMenu .language{
+        margin-top:12px;
+        margin-left:10px;        
+    }
+    #header #headerMenu .language .current_language{
+        background:#f3f3f1;
+    }
+    #header #headerMenu .language .current_language .lang{
+        color: #384259;
+    }
+    #header #headerMenu .language .current_language .lang .caret{
+        color: #384259;
+    }
+    #header #headerMenu .language .list a{
+        height:26px;
+        font-size:14px;
+    }
+</style>
+        <ul class="nav navbar-nav navbar-collapse collapse " id="headerMenu">
+                        <li class="active">
+                <a type="button" class="contacts_link" href="/faq/" data-toggle="collapse" data-target="#subMenu1" onclick="return false">
+                    Info                </a>
+                
+                <style>                    
+                    #header #headerMenu .submenu{
+                        
+                        top:75px;
+                        left:0px;
+                        margin-left:-70px;
+                        z-index:101;
+                        padding:0px;
+                        position:absolute;
+                        background: #3c455e;
+                        text-decoration: none;
+                        width:220px;
+                    }
+                    #header #headerMenu .submenu:after{
+                        display:block;
+                        position:absolute;
+                        top:-14px;
+                        left:50%;
+                        margin-left:-7px;
+                        content: ' ';
+                        border: 7px solid transparent; 
+                        border-bottom: 7px solid #3c455e;
+                        width:14px;
+                        height:14px;
+                        background: transparent;
+                    }
+                    
+                    #header #headerMenu .submenu li a{
+                        text-decoration: none;
+                        padding:12px 20px;
+                        display: block;
+                        color: #e0e0e2;
+                        font-size:14px;
+                        border-bottom: 1px solid #414b66;
+                        height:42px;
+                    }
+                    #header #headerMenu .submenu li a:last-child{
+                        border-bottom: none;
+                    }
+                    #header #headerMenu .submenu li a:hover{
+                        background: #2a3142;
+                    }
+                    
+                </style>
+                <ul class="collapse submenu" id="subMenu1">
+                    
+                    <li><a href="/faq/">FAQ</a></li>
+                    <li><a href="/faq/privacy/">Privacy</a></li>                    
+                    <li><a href="/faq/glossary/">Glossary</a></li>                    
+                    <li><a href="/termsandconditions/">Terms and Conditions</a></li>
+                </ul>
+            </li>
+                        <li class=""><a class="oustaff_link" href="/aboutus/">About Us</a></li>
+            <li class=""><a class="oustaff_link" href="/faq/bonus/">Bonus</a></li>
+                    </ul>
+        
+        <style>
+            #header .control_menu{
+                padding-top:20px;
+            }
+            #header .control_menu li{
+                margin-right:20px;
+                vertical-align: middle;
+            }
+            #header .control_menu li:last-child{
+                margin-right:0px;
+            }
+            #header.main .control_menu li a{
+                color:#13161c;
+            }
+            .control_menu li a{
+                font-size: 12px;
+                font-weight:900;
+                
+                color:#e0e0e2;
+            }
+            #header .control_menu .reg_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:0px -23px;
+                display:inline-block;
+                width:27px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .reg_icon{
+                background-position:0px 0px;
+            }
+            #header .control_menu .login_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:-32px -23px;
+                display:inline-block;
+                width:23px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .login_icon{
+                background-position:-32px 0px;
+            }
+            
+            #header .language{
+                margin-top:-3px;
+                position:relative;
+            }
+            #header .language .current_language{
+                cursor:pointer;
+                padding:6px 10px;
+                text-align: center;
+                background: #384259;
+                height: 30px;
+                border-radius: 5px;
+            }
+            #header .language .current_language .lang{
+                font-size:12px;
+                font-weight:900;
+                color: white;
+            }
+            #header .language .current_language .lang .caret{
+                margin-left:5px;
+                color: white;
+            }
+        </style>
+                <ul class="pull-right control_menu list-inline">
+            
+                <li class="pull-left">
+                    <a href="/registration/" class=""><span class="reg_icon"></span>REGISTRATION</a>
+                </li>
+                                <li class="pull-left">
+                    <a href="" data-toggle="modal" data-target="#loginModal"><span class="login_icon"></span>LOGIN</a>
+                </li>
+            
+
+            <li class="pull-left">
+                 <div class="language">
+                    <div class="current_language dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                                                    <div class="ico en"></div>
+                            <div class="lang">EN<div class="caret"></div></div>
+                                                    
+                    </div>
+
+                    <ul class="list collapse dropdown-menu" aria-expanded="false">
+                        <li>
+                            <a href="/en/faq/privacy/">
+                                <div class="ico en"></div>
+                                <div class="lang">English</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/ru/faq/privacy/">
+                            <div class="ico ru"></div>
+                            <div class="lang">Русский</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+            </div>
+</nav>
+<div id='personal'>
+    <div class='container'>
+        <ul class='list-inline pull-right' style='font-size:0px;letter-spacing:-1px;'>
+            <li style='padding-top:6px;'>
+	                            <a href='/account/deposit/card-fk/' class='btn btn-grey' style='display:inline-block; vertical-align: middle;'>Deposit</a>
+	                            <span class='balance'>$1,155.60</span>
+            </li>
+                                                                <li class="modes active">   
+                        <a href="/switch/?account=250239">
+                            <div class='status'></div>
+                            Demo                        </a>
+                    </li>
+                                                                                <li class="modes ">   
+                        <a href="/switch/?account=250240">
+                            <div class='status'></div>
+                            Real                        </a>
+                    </li>
+                                        
+            <!--<li class="modes">
+                <div class='status'></div>
+                Demo
+            </li><li class="modes active">
+                <div class='status'></div>
+                Real
+            </li>-->
+            <li class='info'>
+                <div class='ico'></div>
+                <div style='display:inline-block; vertical-align: middle;'>
+                    <div class='username'>Саня Верняев</div>
+                    <div class='email'>olegmongol99812@gmail.com</div>
+                </div>
+            </li>
+            <li class='logout'>
+                <a href="/en/logout">
+                    <div class='ico'></div>
+                    Logout                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    #header{        
+        margin:0px;
+        padding-top:5px;
+        height: 80px;
+        border:none;
+        background: white;
+        border-radius: 0px;
+    }
+    #header.main{
+        background:transparent;
+        border-top:1px solid transparent;
+    }
+    #header .logo{
+        position:relative;
+        top:10px;
+        width:283px;
+        height:48px;
+        background: url('/images/logo2.png');
+    }
+
+    #header.main .logo{
+        background: url('/images/logo.png');
+    }
+    
+    #header #headerMenu{
+        margin-top:5px;
+    }
+    
+    #header #headerMenu li a{
+        height:45px;
+        color: #e0e0e2;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    #header.main #headerMenu li a{
+        color:#13161c;
+    }
+    #header #headerMenu li.active a{        
+        background: none;
+        border-bottom: 3px solid #ff4b00;
+    }
+    
+    #header{
+        border-top:1px solid #6dba2e;
+        background:#2a3142;
+    }
+</style>
+
+<nav class="navbar navbar-default " id="header" style="display: none">
+    <div class='container'>
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#headerMenu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            <a class="navbar-brand logo" href="/"></a>
+        </div>
+<style>
+    #header #headerMenu .language{
+        margin-top:12px;
+        margin-left:10px;        
+    }
+    #header #headerMenu .language .current_language{
+        background:#f3f3f1;
+    }
+    #header #headerMenu .language .current_language .lang{
+        color: #384259;
+    }
+    #header #headerMenu .language .current_language .lang .caret{
+        color: #384259;
+    }
+    #header #headerMenu .language .list a{
+        height:26px;
+        font-size:14px;
+    }
+</style>
+        <ul class="nav navbar-nav navbar-collapse collapse pull-right" id="headerMenu">
+                            <li class=""><a href="/account/history/">Analytics</a></li>
+                        <li class="">
+                <a type="button" class="contacts_link" href="/faq/" data-toggle="collapse" data-target="#subMenu1" onClick="return false">
+                    Info                </a>
+                
+                <style>                    
+                    #header #headerMenu .submenu{
+                        
+                        top:75px;
+                        left:0px;
+                        margin-left:-70px;
+                        z-index:101;
+                        padding:0px;
+                        position:absolute;
+                        background: #3c455e;
+                        text-decoration: none;
+                        width:220px;
+                    }
+                    #header #headerMenu .submenu:after{
+                        display:block;
+                        position:absolute;
+                        top:-14px;
+                        left:50%;
+                        margin-left:-7px;
+                        content: ' ';
+                        border: 7px solid transparent; 
+                        border-bottom: 7px solid #3c455e;
+                        width:14px;
+                        height:14px;
+                        background: transparent;
+                    }
+                    
+                    #header #headerMenu .submenu li a{
+                        text-decoration: none;
+                        padding:12px 20px;
+                        display: block;
+                        color: #e0e0e2;
+                        font-size:14px;
+                        border-bottom: 1px solid #414b66;
+                        height:42px;
+                    }
+                    #header #headerMenu .submenu li a:last-child{
+                        border-bottom: none;
+                    }
+                    #header #headerMenu .submenu li a:hover{
+                        background: #2a3142;
+                    }
+                    
+                </style>
+                <ul class="collapse submenu" id="subMenu1">
+                    
+                    <li><a href="/faq/">FAQ</a></li>
+                    <li><a href="/faq/privacy/">Privacy</a></li>                    
+                    <li><a href="/faq/glossary/">Glossary</a></li>                    
+                    <li><a href="/termsandconditions/">Terms and Conditions</a></li>
+                </ul>
+            </li>
+                            <li class="active"><a class="oustaff_link" href="/trade/">Trade</a></li>
+                        <li class=""><a class="oustaff_link" href="/aboutus/">About Us</a></li>
+            <li class=""><a class="oustaff_link" href="/faq/bonus/">Bonus</a></li>
+                        <li class=""><a class="oustaff_link" href="/account/personalinfo/">Personal Info</a></li>
+            <li>
+                <div class='language'>
+                    <div class='current_language dropdown-toggle'  data-toggle="dropdown" href="#" aria-expanded="false">
+                                                    <div class='ico en'></div>
+                            <div class='lang'>EN<div class='caret'></div></div>
+                                                    
+                    </div>
+
+                    <ul class='list collapse dropdown-menu' aria-expanded="false">
+                        <li>
+                            <a href='/en/trade/'>
+                                <div class='ico en'></div>
+                                <div class='lang'>English</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href='/ru/trade/'>
+                            <div class='ico ru'></div>
+                            <div class='lang'>Русский</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+                    </ul>
+        
+        <style>
+            #header .control_menu{
+                padding-top:20px;
+            }
+            #header .control_menu li{
+                margin-right:20px;
+                vertical-align: middle;
+            }
+            #header .control_menu li:last-child{
+                margin-right:0px;
+            }
+            #header.main .control_menu li a{
+                color:#13161c;
+            }
+            .control_menu li a{
+                font-size: 12px;
+                font-weight:900;
+                
+                color:#e0e0e2;
+            }
+            #header .control_menu .reg_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:0px -23px;
+                display:inline-block;
+                width:27px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .reg_icon{
+                background-position:0px 0px;
+            }
+            #header .control_menu .login_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:-32px -23px;
+                display:inline-block;
+                width:23px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .login_icon{
+                background-position:-32px 0px;
+            }
+            
+            #header .language{
+                margin-top:-3px;
+                position:relative;
+            }
+            #header .language .current_language{
+                cursor:pointer;
+                padding:6px 10px;
+                text-align: center;
+                background: #384259;
+                height: 30px;
+                border-radius: 5px;
+            }
+            #header .language .current_language .lang{
+                font-size:12px;
+                font-weight:900;
+                color: white;
+            }
+            #header .language .current_language .lang .caret{
+                margin-left:5px;
+                color: white;
+            }
+        </style>
+            </div>
+</nav>
+    <style>
+        #submenu{
+            
+            margin-bottom:0px;
+            height: 46px;
+            background: #6dba2e;
+        }
+        #submenu .table{
+            height: 46px;;
+        }
+
+        #submenu .table td{
+            padding:0px;
+            vertical-align: middle;
+            text-align: center;
+            border:none;
+            border-left:1px solid #63a82a;
+        }
+        #submenu .table td:last-child{
+            border-right:1px solid #63a82a;
+        }
+        #submenu .table td.active,#submenu .table td:hover{
+            background: #63a82a;
+        }
+
+        #submenu a{
+            padding:10px;
+            width:100%;
+            height:46px;
+            display:block;
+            color: white;
+            font-size:15px;
+            font-weight:bolder;
+        }
+        #submenu a:hover{
+            text-decoration: none;
+        }
+
+    </style>
+<div id="submenu" style="display: none">
+    <div class="container">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td class="">
+              <a href="/trade/">Trade</a>
+            </td>
+            <td class="">
+              <a href="/autotrade/">Robot</a>
+            </td>
+            <td class="">
+              <a href="/account/deposit/card-fk/">Deposit</a>
+            </td>
+            <td class="">
+              <a href="/account/withdrawal/cc">Withdrawal</a>
+            </td>
+            <td class="">
+              <a href="/account/transactions/">Transactions</a>
+            </td>
+            <td class="">
+              <a href="/account/bonuses/">Bonuses</a>
+            </td>
+            <td class="active">
+              <a href="/account/history/">History</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+                <div id="errorList" style="display:none">
+   <div id="_0">Ok!</div>
+   <div id="_1">error!</div>
+   <div id="_2">Wrong packet!</div>
+   <div id="_3">Wrong login or password!</div>
+   <div id="_4">Account is blocked!</div>
+   <div id="_5">Wrong session id!</div>
+   <div id="_6">SID is wrong!</div>
+   <div id="_7">Quote id not found!</div>
+   <div id="_8">Quote not found!</div>
+   <div id="_9">User not found!</div>
+   <div id="_10">Wrong option type!</div>
+   <div id="_11">Wrong position!</div>
+   <div id="_12">Wrong option mode!</div>
+   <div id="_13">Not enought fun money balance!</div>
+   <div id="_14">Not enought real money balance!</div>
+ 
+   <div id="_15">Wrong Account ID</div>
+   <div id="_16">Unknown mode!</div>
+   <div id="_17">Quote disabled!</div>
+   <div id="_18">Wrong option time!</div>
+   <div id="_19">Wrong investment amount!</div>
+   <div id="_20">Wrong time!</div>
+   <div id="_21">Wrong auction id!</div>
+   <div id="_22">Wrong first name!</div>
+   <div id="_23">Wrong last name!</div>
+   <div id="_24">Wrong phone number!</div>
+   <div id="_25">Wrong birthday!</div>
+   <div id="_26">Wrong country!</div>
+   <div id="_27">Wrong email!</div>
+   <div id="_28">Wrong password!</div>
+   <div id="_29">Wrong bid time!</div>
+   <div id="_30">Demo limit - 5 open deals</div>
+   <div id="_31">Old Software Version</div>
+   
+   <div id="_32">Wrong Contract Status</div>
+   <div id="_33">You Have Active Contracts</div>
+    
+   <div id="_34">Limit for open deals!</div>
+   <div id="_35">Your account is not verified!</div>
+   
+   <div id="_36">Bets Count Limit</div>
+   <div id="_37">Bet Amount Limit</div>
+   <div id="_38">Wrong Rule ID</div>
+   <div id="_39">You Have Open Contracts</div>
+   <div id="_40">Account Has Personal Info</div>
+   <div id="_41">Phone Is Registered</div>
+   <div id="_42">Email Is Registered</div>
+    
+   <div id="_101">Contract is closed</div>
+   <div id="_102">Contract is canceled!</div>
+</div>
+
+ 
+ 
+ 
+ 
+ <style>
+    #connectionModal .modal-dialog{
+        width:318px;        
+    }
+    #connectionModal .modal-content{
+        background: #3d445e;
+        
+    }
+    #connectionModal .modal-header{
+        border-bottom: 1px solid #2a3143;
+        color: white;
+        text-align: center;
+        font-weight:bolder;
+    }
+    #connectionModal .modal-body{
+        color:white;
+        padding:20px;
+    }
+    #connectionModal .modal-body .icon_block{
+        margin:auto;
+        width:100px;
+        height: 100px;
+    }
+    
+    #connectionModal .icon_block:after{
+        display:block;
+        margin:auto;
+        background:url('/images/message_ico.png');                        
+        content:'';  
+        position:relative;
+        width:56px;
+        height:57px;
+        top:25px;
+        background-position:-10px -79px;
+    }
+    
+    #connectionModal .modal-body .message{
+        font-size:16px;
+        text-align: center;
+        padding:0px 20px;
+        color:white;
+        margin-bottom:20px;
+    }
+    #gag{
+        background: red;
+        height: 100%;
+        position:relative;
+        z-index:1000;                
+        font-size:0px;
+        text-align: center;
+        background: url('/images/graph.jpg');
+        background-size:cover;
+    }
+
+    #gag span{
+        position:relative;
+        font-size: 20px;
+        padding:70px 20px;
+
+        text-align: center;
+        display:inline-block;
+        vertical-align: middle;
+        top:40%;
+
+        height:250px;
+        width:250px;
+        background:#ff6b00;
+        z-index:10;
+        position:absolute;
+        top:130px;
+        left:50%;
+        margin-left:-125px;
+        border-radius: 150px;
+        box-shadow: 5px 5px 10px #767676;                
+    }       
+
+</style>
+<div class="modal fade" id="connectionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title font-header">CONNECTION ERROR</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="icon_block"></div>
+                <div class="message">An error occurred while connecting to the server</div>
+                <div class="text-center">
+                    <button class="btn btn-orange" data-dismiss="modal">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-controller="graficCtrl">    
+    <script>
+        
+         var IndicatorsService = angular.module('IndicatorsService', [])
+        .service('Indicator', function () {
+            //this.square = function (a) { return a*a};
+            //console.log('SERVICE');
+            this.submitRSI = function($scope,event){
+                console.log('RSI RSI');
+                var period = parseInt($('input[name=period]',event.target).val());
+                var overbought = parseInt($('input[name=overbought]',event.target).val());
+                var oversold = parseInt($('input[name=oversold]',event.target).val());
+                
+                $scope.grafic.setRSIindicator(period,overbought,oversold);
+                $('#RSIIndicatorModal').modal('hide');
+                $('#indicators_form #RSItriger').attr('checked',true);
+                
+                event.preventDefault();
+                //return false;
+            }
+            
+            this.submitAlligator = function($scope,event){
+                var jaw = parseInt($('input[name=jaw]',event.target).val());
+                var deviation_jaw = parseInt($('input[name=deviation_jaw]',event.target).val());
+                var color_jaw = $('input[name=color_jaw]',event.target).val();
+
+                var teeth = parseInt($('input[name=teeth]',event.target).val());
+                var deviation_teeth = parseInt($('input[name=deviation_teeth]',event.target).val());
+                var color_teeth = $('input[name=color_teeth]',event.target).val();
+
+                var lips = parseInt($('input[name=lips]',event.target).val());
+                var deviation_lips = parseInt($('input[name=deviation_lips]',event.target).val());
+                var color_lips = $('input[name=color_lips]',event.target).val();
+
+                $scope.grafic.setAlligatorIndicator([jaw,deviation_jaw,color_jaw],[teeth,deviation_teeth,color_teeth],[lips,deviation_lips,color_lips]);
+                $('#alligatorIndicatorModal').modal('hide');
+                $('#indicators_form #AlligatorTriger').attr('checked',true);
+                
+                event.preventDefault();
+            }
+            
+            this.submitSMA = function($scope,event){
+                var period = parseInt($('input[name=period]',event.target).val());
+                var color = $('input[name=color]',event.target).val();
+
+                $scope.grafic.setSMAindicator(period,color);
+                $('#smaIndicatorModal').modal('hide');
+                $('#indicators_form #SMAtriger').attr('checked',true);
+                
+                event.preventDefault();
+            }
+            
+            this.submitBollinger = function($scope,event){
+                var period = parseInt($('input[name=period]',event.target).val());
+                var deviation = parseInt($('input[name=deviation]',event.target).val());
+                var color1 = $('input[name=color1]',event.target).val();
+                var color2 = $('input[name=color2]',event.target).val();
+                var color3 = $('input[name=color3]',event.target).val();
+
+                $scope.grafic.setBolingerIndicator(period,deviation,[color1,color2,color3]);
+
+                $('#bolingerIndicatorModal').modal('hide');
+                $('#indicators_form #BolingerTriger').attr('checked',true);
+                
+                event.preventDefault();
+            }
+            
+            this.submitMACD = function($scope,event){
+                var fast = $('input[name=fast]',event.target).val();
+                var slow = $('input[name=slow]',event.target).val();
+                var period = $('input[name=period]',event.target).val();
+                $scope.grafic.setMACDIndicator(fast,slow,period);
+
+                $('#bolingerIndicatorModal').modal('hide');
+                $('#indicators_form #MACDtriger').attr('checked',true);
+                
+                event.preventDefault();
+            }
+        });
+            
+                var app = angular.module("app",['IndicatorsService']);
+                app.controller('graficCtrl', function ($scope,Indicator) {
+                        $scope.current_asset = 400;
+                        $scope.current_select_asset = $scope.current_asset+'';
+                        $scope.assets = {};
+                        $scope.quotes = {};
+                        $scope.width = 0;
+                        $scope.traderchoice = 0;
+                        $scope.table_interval = null;
+
+                        $scope.updatePause = false;
+
+                        $scope.setWidth = function () {
+                            //$scope.width = window.innerWidth - $('#controls_block').width() -100;
+                            $scope.width = $('#playground').width() - $('#controls_block').width();
+                            $scope.width = 1178 - $('#controls_block').width();
+                            $('#canvas').css({'width': $scope.width + 'px'});
+
+                        }
+                        $scope.setWidth();
+
+                        $scope.grafic = new Canvas({
+                            block: 'canvas',
+                            width: $scope.width,
+                            height: 520,
+                            lang: 'ru',
+                            skin: 'light'
+                        });
+
+                        $scope.params = {};
+                        $scope.params.asset = 400;
+                        $scope.protocol = new Protocol($scope.grafic, $scope.current_asset, '8986e518f8c6aeaa6c32f7620b803ec8', '250239',function(){
+                                                        if($('#canvas #gag').length == 0){
+                                                            $('#canvas').append('<div id="gag"><span>Failed to connect to server, try again later </span></div>');
+                                                        }
+                        });
+                        $scope.position = '';
+                        $scope.monthes = ['JAN', "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+                        $scope.expiration = '';//дата завершения
+                        $scope.payment = 76;
+                        $scope.payouts = '0';
+                        $scope.investments = '10';
+                        $scope.deals = {};
+                        $scope.servertime = 0;
+
+                        $scope.amounts = [];
+
+                        $scope.time = '';
+                        
+                        $scope.submitRSI = function(event){ Indicator.submitRSI($scope,event);}
+                        $scope.submitAlligator = function(event){ Indicator.submitAlligator($scope,event);}
+                        $scope.submitSMA = function(event){ Indicator.submitSMA($scope,event);}
+                        $scope.submitBollinger = function(event){ Indicator.submitBollinger($scope,event);}
+                        $scope.submitMACD = function(event){ Indicator.submitMACD($scope,event);}
+
+                        $('.grafic_panel').on('click', '.type', function () {
+                            if ($(this).attr('class').indexOf('active') != -1) {
+                                $(this).removeClass('active');
+                                $scope.grafic.changeToNormalView();
+                            } else {
+                                $(this).addClass('active');
+                                $scope.grafic.changeToCandlesView();
+                            }
+
+                        });
+                        ////////////////////////            
+                        $scope.protocol.onAmountList(function(json){
+                            //console.log(json);
+                            $scope.amounts = json.data;
+                            
+                            $scope.$digest();
+
+                        });
+
+                        $scope.setCurrentTime = function (timestamp) {
+                            var d = new Date(timestamp * 1000);
+                            $scope.servertime = timestamp;
+                            var hours = d.getHours();
+                            hours = hours < 10 ? '0' + hours : hours;
+                            var minutes = d.getMinutes();
+                            minutes = minutes < 10 ? '0' + minutes : minutes;
+                            var seconds = d.getSeconds();
+                            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                            $scope.time = hours + ':' + minutes + ':' + seconds;
+                            $scope.$digest();
+                        }
+
+                        $scope.setPayout = function () {
+                            $scope.payouts = ((parseInt($scope.investments) / 100 * 76) + parseInt($scope.investments)).toFixed(2);
+                        }
+                        $scope.setPayout();
+
+                        $scope.setSecondsLeft = function (seconds) {
+                            var minutes = Math.floor(seconds / 60);
+                            var seconds = seconds - (minutes * 60);
+
+                            minutes = minutes < 10 ? '0' + minutes : minutes;
+                            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                            $scope.seconds_left = minutes + ':' + seconds;
+                        }
+
+                        $scope.setExpirationDate = function (time) {
+                            if(time == undefined) return;
+                            var d = new Date(time * 1000);
+
+                            var day = d.getDate();
+                            day = day < 10 ? '0' + day : day;
+                            var month = d.getMonth();
+                            var hours = d.getHours();
+                            hours = hours < 10 ? '0' + hours : hours;
+                            var minutes = d.getMinutes();
+                            minutes = minutes < 10 ? '0' + minutes : minutes;
+                            var seconds = d.getSeconds();
+                            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                            $scope.expiration = day + ' ' + $scope.monthes[month] + ' ' + hours + ':' + minutes + ':' + seconds;
+                        }
+
+                        //initIndicators(grafic);
+                        $scope.setStartPosition = function (data) {
+                            var cur, pre;
+                            for (var key in data) {
+                                if (cur)
+                                    pre = cur;
+                                cur = key;
+                            }
+
+                            if (data[cur] * 1 < data[pre] * 1) {
+                                $scope.position_status = 0;
+                            } else {
+                                $scope.position_status = 1;
+                            }
+                            $scope.position = data[cur];
+                            $scope.$digest();
+
+                            $scope.grafic.setZoom(60);
+                            $scope.grafic.changeToCandlesView();
+                        }
+
+                        $scope.initTable = function () {  //инициализируем счетчик таблицы
+                            if($scope.table_interval != null){
+                                clearInterval($scope.table_interval);
+                            }
+                            //console.log($scope.deals);                
+                            $('.deals_table td.timer').each(function () {
+                                var id = $(this).closest('tr').attr('data-id');
+                                var time = $scope.deals[id].closetime - $scope.servertime;
+                                $scope.deals[id].timer = time;
+                                $scope.protocol.addAsset($scope.deals[id].quoteid);
+
+                                //$(this).text(time);
+                            });
+                            $scope.protocol.setActives();
+
+                            $scope.table_interval = setInterval(function () {
+                                for (var key in $scope.deals) {
+                                    if (!$scope.deals[key].closeprice) {
+                                      $scope.deals[key].timer--;
+                                        $scope.deals[key].percents = 100 - ($scope.deals[key].closetime - $scope.servertime) / (($scope.deals[key].closetime - $scope.deals[key].opentime) / 100);
+                                        $scope.deals[key].quote = $scope.quotes[$scope.deals[key].quoteid];
+                                        $scope.deals[key].current_status = 'green';
+
+                                        //console.log($scope.deals[key].quoteid);
+                                        //console.log($scope.deals[key]);
+                                        if ($scope.deals[key].openprice == $scope.deals[key].quote) {
+                                            $scope.deals[key].current_status = 'orange';
+                                        } else {
+                                            if ($scope.deals[key].position == 1) {
+                                                if ($scope.deals[key].openprice < $scope.deals[key].quote) {
+                                                    $scope.deals[key].current_status = 'green';
+                                                } else {
+                                                    $scope.deals[key].current_status = 'red';
+                                                }
+                                            } else {
+                                                if ($scope.deals[key].openprice < $scope.deals[key].quote) {
+                                                    $scope.deals[key].current_status = 'red';
+                                                } else {
+                                                    $scope.deals[key].current_status = 'green';
+                                                }
+                                            }
+                                        }
+                                        //console.log($scope.deals[key]);
+
+                                        //console.log(($scope.deals[key].closetime - $scope.servertime));
+                                        //console.log($scope.deals[key].percents);
+                                    }
+                                }
+                            }, 1000);
+                        }
+
+                         $scope.gag = function(){
+                            //$('#notAvailibleModal').modal('show');                
+                            $('#canvas #gag').remove();
+                            var d = new Date($scope.assets[$scope.current_asset][4]*1000);
+
+                            var year = d.getYear()+1900;
+                            var month = d.getMonth()+1;
+                                month = month < 10 ? '0'+month:month
+                            var day = d.getDate();
+                                day = day < 10?'0'+day:day;
+                            var hours = d.getHours();
+                                hours = hours < 10 ? '0'+hours : hours;
+                            var minutes = d.getMinutes();
+                                minutes = minutes < 10 ? '0'+minutes: minutes;
+                            var text = year+'/'+month+'/'+day+' '+hours+':'+minutes;
+
+                            $('#canvas').append('<div id="gag"><span>Graph is not active Trade will be available: </br>'+text+'</span></div>');
+                        }
+
+                        $scope.protocol.socket.onerror = function(){
+                             $('#canvas').append('<div id="gag"><span>Failed to connect to server, try again later </span></div>');
+                        }
+
+                        $scope.protocol.onDataReceive(function (json) {
+                            $scope.updatePause = false;
+
+                            if(json.data != undefined){
+                                console.log('onDataReceive');
+
+                                $('#canvas #gag').remove();
+                            
+                                $scope.traderchoice = json.tradersChoice;
+
+                                $scope.setCurrentTime(json.time);
+
+                                $scope.initTable();
+
+                                $scope.grafic.syncTime(json.time);
+                                $scope.grafic.addData(json);
+
+                                $scope.$digest();
+                                $scope.setStartPosition(json.data);
+                            }else{
+                                $scope.gag();
+                            }
+
+                        });
+
+                        $scope.protocol.onTimeSync(function (time) {
+                            $scope.setCurrentTime(time);
+                            $scope.grafic.syncTime(time);
+
+                            $scope.setSecondsLeft($scope.grafic.seconds_left);
+                            $scope.setExpirationDate($scope.grafic.end_expiration);
+
+                            $scope.$digest();
+                        });
+
+                        $scope.protocol.onUpdate(function (element) {
+                            //console.log(element);
+                            //console.log($scope.current_asset == element.asset);
+                            if($scope.updatePause == true) return;
+
+                            $scope.quotes[element.asset] = element.amount;
+                            //console.log($scope.quotes[element.asset]);
+                            if (element.asset != $scope.current_asset)
+                                return;
+
+                            if (element.amount < $scope.position) {
+                                $scope.position_status = 0;
+                            } else {
+                                $scope.position_status = 1;
+                            }
+                            $scope.position = element.amount;
+
+                            $scope.$digest();
+                            $scope.grafic.addPosition(element);
+                        });
+
+                        $scope.protocol.onAsset(function (data, asset) {
+                            $scope.params.asset = asset;
+                            $scope.assets = data;
+
+                            $scope.$digest();
+                        });
+                        $scope.protocol.onGetDeals(function (deals) {
+                            //console.log(deals);
+                            $scope.deals = deals;
+                            $scope.$digest();
+                        });
+
+                        $scope.changeAsset = function (asset){
+                            if(asset == undefined){
+                                asset = parseInt($scope.current_select_asset);
+                            }
+                            $scope.updatePause = true;
+
+                            $scope.current_asset = asset;
+                            history.pushState({foo: "bar"}, "page2", "?asset=" + asset);
+                            $scope.protocol.changeAsset(asset);
+                        }
+
+                        $scope.protocol.onCreateOption(function (json) {
+                            $('#controls input[type=submit]').removeClass('put').removeClass('call');
+                            $scope.bet_position = undefined;    //что бы повторно не делало ставку
+
+                            $('.accepted_bet').css({'display': 'block'});
+                            if(json.status == 'error'){                    
+                                $('.accepted_bet').removeClass('success').addClass('error');
+                                $('.accepted_bet .accepted').css({'display':'none'});
+                                $('.accepted_bet .error').text($('#errorList #_'+json.id).text());
+                                $('.accepted_bet .error').css({'display':'block'});
+                                return;
+                            }else{
+                                $('.accepted_bet').removeClass('error').addClass('success');
+                                $('.accepted_bet .accepted').css({'display':'block'});
+                                $('.accepted_bet .error').css({'display':'none'});    
+                            }
+
+
+                            json.payout = 76;
+                            json.quotename = $scope.assets[json.quote_id][1];
+                            json.quoteid = json.quote_id;
+                            //json.closeprice =  json.closetime - $scope.servertime; //выставляем время
+                            json.timer = json.closetime - $scope.servertime; //выставляем время
+
+                            var temp_deals = $scope.deals;  //закидываем вначало
+                            $scope.deals = {};
+                            $scope.deals[json.id + '_'] = json;
+                            for (var key in temp_deals) {
+                                $scope.deals[key] = temp_deals[key];
+                            }
+
+                            $scope.$digest();
+                            $scope.grafic.onCreateOption(json);
+                        });
+
+                        $scope.protocol.onCloseOption(function (json) {
+                            for (var key in json.deals) {
+                                var id = key + '_';
+                                $scope.deals[id].closeprice = json.deals[key].closeprice;
+                                //$scope.deals[id].closeprice = '-666';
+                                $scope.deals[id].status = json.deals[key].status;
+                                $scope.deals[id].win_amount = json.deals[key].win_amount;
+                                console.log($scope.deals[id]);
+                            }
+                            $scope.grafic.onCloseOption(json);
+                            $scope.$digest();
+                        });
+
+
+
+                        /*$scope.message = function(){
+                         alert('Вы должны авторизироваться для совершения сделок');
+                         }*/
+
+                        $scope.trade = function (event) {
+                            if ($scope.bet_position == undefined) {
+                                event.preventDefault();
+                                return false;
+                            }
+
+                            $scope.protocol.submit($scope.bet_position, $scope.investments * 100);
+                            if (event) event.preventDefault();
+                        }
+                        $scope.call = function () {
+                            $scope.bet_position = 1;
+
+                            $('#controls_block input[type=submit]').removeClass('put').addClass('call');
+                        }
+                        $scope.put = function () {
+                            $scope.bet_position = 0;
+                            $('#controls_block input[type=submit]').removeClass('call').addClass('put');
+                        }
+
+                        $scope.hoverCall = function () {
+                            $scope.grafic.setCallOnHover();
+                        }
+
+                        $scope.hoverPut = function () {
+                            $scope.grafic.setPutOnHover();
+                        }
+
+                        $scope.unsetHover = function () {
+                            $scope.grafic.unsetOnHover();
+                        }
+
+                        $scope.checkChecked = function ($event) {
+                            return $event.target.checked;
+                        }
+
+                        $scope.setZoom = function ($event) {
+                            var value = parseInt($($event.target).text());
+                            console.log(value);
+                            $scope.grafic.setZoom(value);
+                            $('.zoom_menu li').removeClass('active');
+                            $($event.target).addClass('active');
+                        }
+                    });
+    </script>
+
+<script>
+    function initIndicators(grafic){
+        /*$('#RSIIndicatorModal form').submit(function(){
+            var period = parseInt($('input[name=period]',this).val());
+            var overbought = parseInt($('input[name=overbought]',this).val());
+            var oversold = parseInt($('input[name=oversold]',this).val());
+            
+            $scope.grafic.setRSIindicator(period,overbought,oversold);
+            $('#RSIIndicatorModal').modal('hide');
+            $('#indicators_form #RSItriger').attr('checked',true);
+            return false;
+        });
+        
+        $('#alligatorIndicatorModal form').submit(function(){
+            var jaw = parseInt($('input[name=jaw]',this).val());
+            var deviation_jaw = parseInt($('input[name=deviation_jaw]',this).val());
+            var color_jaw = $('input[name=color_jaw]',this).val();
+            
+            var teeth = parseInt($('input[name=teeth]',this).val());
+            var deviation_teeth = parseInt($('input[name=deviation_teeth]',this).val());
+            var color_teeth = $('input[name=color_teeth]',this).val();
+            
+            var lips = parseInt($('input[name=lips]',this).val());
+            var deviation_lips = parseInt($('input[name=deviation_lips]',this).val());
+            var color_lips = $('input[name=color_lips]',this).val();
+            
+            $scope.grafic.setAlligatorIndicator([jaw,deviation_jaw,color_jaw],[teeth,deviation_teeth,color_teeth],[lips,deviation_lips,color_lips]);
+            $('#alligatorIndicatorModal').modal('hide');
+            $('#indicators_form #AlligatorTriger').attr('checked',true);
+            return false;
+        });
+        
+        $('#smaIndicatorModal form').submit(function(){
+            var period = parseInt($('input[name=period]',this).val());
+            var color = $('input[name=color]',this).val();
+            
+            $scope.grafic.setSMAindicator(period,color);
+            $('#smaIndicatorModal').modal('hide');
+            $('#indicators_form #SMAtriger').attr('checked',true);
+            return false;
+        });
+        
+        $('#bolingerIndicatorModal form').submit(function(){
+            var period = parseInt($('input[name=period]',this).val());
+            var deviation = parseInt($('input[name=deviation]',this).val());
+            var color1 = $('input[name=color1]',this).val();
+            var color2 = $('input[name=color2]',this).val();
+            var color3 = $('input[name=color3]',this).val();
+            
+            $scope.grafic.setBolingerIndicator(period,deviation,[color1,color2,color3]);
+            
+            $('#bolingerIndicatorModal').modal('hide');
+            $('#indicators_form #BolingerTriger').attr('checked',true);
+            return false;
+        });
+        
+        $('#MACDindicatorModal form').submit(function(){
+            //grafic.setBolingerIndicator(period,deviation,[color1,color2,color3]);
+            var fast = $('input[name=fast]',this).val();
+            var slow = $('input[name=slow]',this).val();
+            var period = $('input[name=period]',this).val();
+            $scope.grafic.setMACDIndicator(fast,slow,period);
+            
+            $('#bolingerIndicatorModal').modal('hide');
+            $('#indicators_form #MACDtriger').attr('checked',true);
+            return false;
+        });
+        
+        $('#indicators_form li a').click(function(){
+            $('#indicators_form').css({'display':'none'});
+        });
+        $('#indicators_form #AlligatorTriger').change(function(){
+            if($(this)[0].checked){
+                $scope.grafic.startAlligatorIndicator();
+            }else{
+                $scope.grafic.stopAlligatorIndicator();
+            }
+            $('#indicators_form').css({'display':'none'});
+        });
+        
+        $('#indicators_form #MACDtriger').change(function(){
+            if($(this)[0].checked){
+                $scope.grafic.startMACDindicator();
+            }else{
+                $scope.grafic.stopMACDindicator();
+            }
+            $('#indicators_form').css({'display':'none'});
+        });
+        
+        $('#indicators_form #RSITriger').change(function(){
+            if($(this)[0].checked){
+                $scope.grafic.startRSIindicator();
+            }else{
+                $scope.grafic.stopRSIindicator();
+            }
+            $('#indicators_form').css({'display':'none'});
+        });
+        
+        $('#indicators_form #SMAtriger').change(function(){
+            console.log($(this));
+            if($(this)[0].checked){
+                $scope.grafic.startSMAindicator();
+            }else{
+                $scope.grafic.stopSMAindicator();
+            }
+        });
+        
+        $('#indicators_form #BolingerTriger').change(function(){
+            if($(this)[0].checked){
+                $scope.grafic.startBolingerIndicator();
+            }else{
+                $scope.grafic.stopBolingerIndicator();
+            }
+        });*/
+        
+    }
+</script>
+
+
+<!----RSI----->
+<style>
+    #RSIIndicatorModal .modal-dialog{
+        width:500px;
+    }
+    #RSIIndicatorModal .modal-body form{
+        width:200px;
+        margin:auto;
+    }
+    
+    #RSIIndicatorModal .modal-body form .jscolor{
+        cursor:pointer;
+        width:40px;
+        height:40px;
+        color: transparent;
+    }
+</style>
+<div class="modal fade" id="RSIIndicatorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title font-header"><p><strong>Moving Average</strong></p></h4>
+            </div>
+
+            <div class="modal-body">
+                <form action='' class='form' ng-submit="submitRSI($event)">
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <div class='label'>PERIOD</div>
+                            </div>
+                            <div class='col-sm-12'>
+                                <input value='13' name='period' type='text' class='form-control'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <div class='label'>ПЕРЕКУПЛЕННОСТЬ</div>
+                            </div>
+                            <div class='col-sm-12'>
+                                <input value='80' name='overbought' type='text' class='form-control'>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <div class='label'>ПЕРЕПРОДАННОСТЬ</div>
+                            </div>
+                            <div class='col-sm-12'>
+                                <input value='20' name='oversold' type='text' class='form-control'>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12 text-center'>
+                                <input type='submit' class='btn btn-transparent-small' value="Construct">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!----MACD----->
+<style>
+    #MACDindicatorModal .modal-dialog{
+        width:500px;
+    }
+    #MACDindicatorModal .modal-body form{
+        width:200px;
+        margin:auto;
+    }
+    
+    #MACDindicatorModal .modal-body form .jscolor{
+        cursor:pointer;
+        width:40px;
+        height:40px;
+        color: transparent;
+    }
+</style>
+<div class="modal fade" id="MACDindicatorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title font-header"><p><strong>Moving Average</strong></p></h4>
+            </div>
+
+            <div class="modal-body">
+                <form action='' class='form' ng-submit="submitMACD($event)">
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <div class='label'>FAST PERIOD</div>
+                            </div>
+                            <div class='col-sm-12'>
+                                <input value='13' name='fast' type='text' class='form-control'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <div class='label'>SLOW PERIOD</div>
+                            </div>
+                            <div class='col-sm-12'>
+                                <input value='8' name='slow' type='text' class='form-control'>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <div class='label'>SIGNALS PERIOD</div>
+                            </div>
+                            <div class='col-sm-12'>
+                                <input value='8' name='period' type='text' class='form-control'>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-4'>
+                                <div class='label' style='padding-top:15px; height:40px;display:block;'>MACD</div>
+                            </div>
+                            <div class='col-sm-8'>
+                                <input type='text' class="form-control jscolor {valueElement:'macdColorInput1',value:'ff0000'} pull-right">
+                                <input name="color1" type="hidden" id="alligatorColorInput1">
+                            </div>
+                        </div>  
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-4'>
+                                <div class='label' style='padding-top:15px; height:40px;display:block;'>SIGNAL</div>
+                            </div>
+                            <div class='col-sm-8'>
+                                <input type='text' class="form-control jscolor {valueElement:'macdColorInput2',value:'00ff00'} pull-right">
+                                <input name="color2" type="hidden" id="macdColorInput2">
+                            </div>
+                        </div>  
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-4'>
+                                <div class='label' style='padding-top:15px; height:40px;display:block;'>COLUMN OF GROWTH</div>
+                            </div>
+                            <div class='col-sm-8'>
+                                <input type='text' class="form-control jscolor {valueElement:'macdColorInput3',value:'0000ff'} pull-right">
+                                <input name="color3" type="hidden" id="macdColorInput3">
+                            </div>
+                        </div>  
+                    </div>
+                     <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-4'>
+                                <div class='label' style='padding-top:15px; height:40px;display:block;'>DROP COLUMN</div>
+                            </div>
+                            <div class='col-sm-8'>
+                                <input type='text' class="form-control jscolor {valueElement:'macdColorInput4',value:'0000ff'} pull-right">
+                                <input name="color4" type="hidden" id="macdColorInput4">
+                            </div>
+                        </div>  
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12 text-center'>
+                                <input type='submit' class='btn btn-transparent-small' value="Construct">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!----ALLIGATOR----->
+<style>
+    #alligatorIndicatorModal .modal-dialog{
+        width:500px;
+    }
+    #alligatorIndicatorModal .modal-body form{
+        width:200px;
+        margin:auto;
+    }
+    
+    #alligatorIndicatorModal .modal-body form .jscolor{
+        cursor:pointer;
+        width:40px;
+        height:40px;
+        color: transparent;
+    }
+</style>
+<div class="modal fade" id="alligatorIndicatorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title font-header"><p><strong>Moving Average</strong></p></h4>
+            </div>
+
+            <div class="modal-body">
+                <form action='' class='form' ng-submit="submitAlligator($event)">
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <div class='label'>JAW</div>
+                            </div>
+                            <div class='col-sm-12'>
+                                <input value='13' name='jaw' type='text' class='form-control'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <div class='label'>SHIFT</div>
+                            </div>
+                            <div class='col-sm-12'>
+                                <input value='8' name='deviation_jaw' type='text' class='form-control'>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <div class='label'>TEETH</div>
+                            </div>
+                            <div class='col-sm-12'>
+                                <input value='8' name='teeth' type='text' class='form-control'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <div class='label'>SHIFT</div>
+                            </div>
+                            <div class='col-sm-12'>
+                                <input value='5' name='deviation_teeth' type='text' class='form-control'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <div class='label'>LIPS</div>
+                            </div>
+                            <div class='col-sm-12'>
+                                <input value='5' name='lips' type='text' class='form-control'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <div class='label'>SHIFT</div>
+                            </div>
+                            <div class='col-sm-12'>
+                                <input value='3' name='deviation_lips' type='text' class='form-control'>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-4'>
+                                <div class='label' style='padding-top:15px; height:40px;display:block;'>JAW</div>
+                            </div>
+                            <div class='col-sm-8'>
+                                <input type='text' class="form-control jscolor {valueElement:'alligatorColorInputJAW',value:'ff0000'} pull-right">
+                                <input name="color_jaw" type="hidden" id="alligatorColorInputJAW">
+                            </div>
+                        </div>  
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-4'>
+                                <div class='label' style='padding-top:15px; height:40px;display:block;'>LIPS</div>
+                            </div>
+                            <div class='col-sm-8'>
+                                <input type='text' class="form-control jscolor {valueElement:'alligatorColorInput2',value:'00ff00'} pull-right">
+                                <input name="color_teeth" type="hidden" id="alligatorColorInput2">
+                            </div>
+                        </div>  
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-4'>
+                                <div class='label' style='padding-top:15px; height:40px;display:block;'>TEETH</div>
+                            </div>
+                            <div class='col-sm-8'>
+                                <input type='text' class="form-control jscolor {valueElement:'alligatorColorInput3',value:'0000ff'} pull-right">
+                                <input name="color_lips" type="hidden" id="alligatorColorInput3">
+                            </div>
+                        </div>  
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12 text-center'>
+                                <input type='submit' class='btn btn-transparent-small' value="Construct">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+<!----SMA----->
+<style>
+    #smaIndicatorModal .modal-dialog{
+        width:500px;
+    }
+    #smaIndicatorModal .modal-body form{
+        width:200px;
+        margin:auto;
+    }
+    
+    #smaIndicatorModal .modal-body form .jscolor{
+        cursor:pointer;
+        width:40px;
+        height:40px;
+        color: transparent;
+    }
+</style>
+<div class="modal fade" id="smaIndicatorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title font-header"><p><strong>Moving Average</strong></p></h4>
+            </div>
+
+            <div class="modal-body">
+                <form action='' class='form' ng-submit="submitSMA($event)">
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <div class='label'>Period</div>
+                            </div>
+                            <div class='col-sm-12'>
+                                <input value='50' name='period' type='text' class='form-control'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-4'>
+                                <div class='label' style='padding-top:15px; height:40px;display:block;'>MA</div>
+                            </div>
+                            <div class='col-sm-8'>
+                                <input type='text' class="form-control jscolor {valueElement:'smaColorInput',value:'ff0000'} pull-right">
+                                <input name="color" type="hidden" id="smaColorInput">
+                            </div>
+                        </div>  
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12 text-center'>
+                                <input type='submit' class='btn btn-transparent-small' value="Construct">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<!---------BOLINGER----------->
+<style>
+    #bolingerIndicatorModal .modal-dialog{
+        width:500px;
+    }
+    #bolingerIndicatorModal .modal-body form{
+        width:200px;
+        margin:auto;
+    }
+    
+    #bolingerIndicatorModal .modal-body form .jscolor{
+        cursor:pointer;
+        width:40px;
+        height:40px;
+        color: transparent;
+    }
+</style>
+<script>
+    $('document').ready(function(){
+        
+    });
+</script>
+<div class="modal fade" id="bolingerIndicatorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title font-header"><p><strong>Moving Average</strong></p></h4>
+            </div>
+
+            <div class="modal-body">
+                <form action='' class='form' ng-submit="submitBollinger($event)">
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <div class='label'>Period</div>
+                            </div>
+                            <div class='col-sm-12'>
+                                <input value='14' name='period' type='text' class='form-control'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <div class='label'>DEVIATION</div>
+                            </div>
+                            <div class='col-sm-12'>
+                                <input value='4' name='deviation' type='text' class='form-control'>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-4'>
+                                <div class='label' style='padding-top:15px; height:40px;display:block;'>TOP LINE</div>
+                            </div>
+                            <div class='col-sm-8'>
+                                <input type='text' class="form-control jscolor {valueElement:'bolingerColorInput1',value:'ff0000'} pull-right">
+                                <input name="color1" type="hidden" id="bolingerColorInput1">
+                            </div>
+                        </div>  
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-4'>
+                                <div class='label' style='padding-top:15px; height:40px;display:block;'>MIDDLE LINE</div>
+                            </div>
+                            <div class='col-sm-8'>
+                                <input type='text' class="form-control jscolor {valueElement:'bolingerColorInput2',value:'00ff00'} pull-right">
+                                <input name="color2" type="hidden" id="bolingerColorInput2">
+                            </div>
+                        </div>  
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-4'>
+                                <div class='label' style='padding-top:15px; height:40px;display:block;'>BOTTOM LINE</div>
+                            </div>
+                            <div class='col-sm-8'>
+                                <input type='text' class="form-control jscolor {valueElement:'bolingerColorInput3',value:'0000ff'} pull-right">
+                                <input name="color3" type="hidden" id="bolingerColorInput3">
+                            </div>
+                        </div>  
+                    </div>
+                    <div class='form-group'>
+                        <div class='row'>
+                            <div class='col-sm-12 text-center'>
+                                <input type='submit' class='btn btn-transparent-small' value="Construct">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="container">
+        <div class="pagetitle">60 Seconds</div>
+    </div>
+
+    <style>
+        #playground{
+            position:relative;            
+            background:white;
+        }
+        #canvas_block{
+            display:inline-block;
+            vertical-align: top;
+        }
+        .inner_canvas_block{                        
+            border-radius: 5px ;
+            border: 1px solid #e3e3e3;
+            background: #fafafa;
+            display:inline-block;
+            vertical-align: top;
+            padding:20px;
+        }
+        #canvas{
+            position:relative;
+            width:1000px;
+            height: 520px;
+            display:inline-block;        
+            vertical-align: top;
+        }
+
+        #controls_block{            
+            display:inline-block;
+            vertical-align: top;
+        }        
+        #controls_block #controls{
+            padding-top:0px;
+            background: white;
+
+        }
+        #controls_block #controls .form-group{
+            margin-bottom:31px;
+        }
+        #controls_block #controls .bottom{
+            border: 1px solid #e3e3e3;
+            background: #fafafa;
+        }
+    </style>
+
+    <div id="playground">
+        <div class="container">
+            <div id="canvas_block">
+                <div class="grafic_panel">
+                    <ul class="list-inline pull-left grafic_controls">
+                        <li class="indicators">
+                            <i></i>
+                            <ul id='indicators_form'>
+                                <li>
+                                    <input type='checkbox' id='SMAtriger' ng-click="checkChecked($event) ? grafic.startSMAindicator() : grafic.stopSMAindicator()">
+                                    <a href='' data-toggle="modal" data-target="#smaIndicatorModal"><span>MA</span> MOVING AVERAGE</a>
+                                </li>
+                                <li>
+                                    <input type='checkbox' id="MACDtriger" ng-click="checkChecked($event) ? grafic.startMACDindicator() : grafic.stopMACDindicator()">
+                                    <a href='' data-toggle="modal" data-target="#MACDindicatorModal"><span>MACD</span> Convergence / Divergence Moving Average</a>
+                                </li>
+                                <li>
+                                    <input type='checkbox' id="BolingerTriger" ng-click="checkChecked($event) ? grafic.startBolingerIndicator() : grafic.stopBolingerIndicator()">
+                                    <a href='' data-toggle="modal" data-target="#bolingerIndicatorModal"><span>BB</span> Bollinger Bands</a>
+                                </li>
+                                <li>
+                                    <input type='checkbox'  id="AlligatorTriger" ng-click="checkChecked($event) ? grafic.startAlligatorIndicator() : grafic.stopAlligatorIndicator()">
+                                    <a href=''  data-toggle="modal" data-target="#alligatorIndicatorModal"><span>ALLIGATOR</span> Alligator</a>
+                                </li>
+                                <li>
+                                    <input type='checkbox' id="RSITriger" ng-click="checkChecked($event) ? grafic.startRSIindicator() : grafic.stopRSIindicator()">
+                                    <a href='' data-toggle="modal" data-target="#RSIIndicatorModal"><span>RSI</span> Relative Strength Index</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="type active"><i></i></li>
+
+                    </ul>
+                    <script>
+                                $('.grafic_panel .grafic_controls').on('click', '.indicators', function () {
+                                    if ($('#indicators_form').css('display') == 'block') {
+                                        $('#indicators_form').css({'display': 'none'});
+                                    } else {
+                                        $('#indicators_form').css({'display': 'block'});
+                                    }
+                                });
+                    </script>
+
+                    <ul class='list-inline pull-right zoom_menu'>
+                        Zoom: 
+                        <li ng-click="setZoom($event)">5</li>
+                        <li ng-click="setZoom($event)">10</li>
+                        <li ng-click="setZoom($event)">20</li>
+                        <li ng-click="setZoom($event)">40</li>
+                        <li ng-click="setZoom($event)" class="active">60</li>
+                    </ul>
+
+                    <div class='traderchoice pull-right'>
+                        <div class='red'>{{traderchoice}}%</div><div class='block'>
+                            <div class='text'>Trader's Choice</div>
+                            <div class='load' style='width:{{traderchoice}}%'></div>
+                        </div><div class='green'>{{100 - traderchoice}}%</div>            
+                    </div>
+                </div>
+                <div class="inner_canvas_block">                
+                    <div id="canvas" style="position:relative"></div>                    
+                </div>
+
+            </div><div id="controls_block">
+                <div id="controls">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input style="width:96px; height: 26px; margin:auto" type="text" class="form-control" value="" ng-model="time">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" style='text-align: center;'>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label style='color:white;'>Assets</label>
+
+                                <select style="height:26px; padding: 0px 5px;" class='form-control' ng-model="current_select_asset" ng-change="changeAsset()">
+                                    <option ng-repeat="(key,item) in assets" value="{{key}}" data-start="{{item[3]}}" data-end="{{item[4]}}">{{item[1]}}</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <label style='color:white;'>Assets</label>
+                                <input style="height:26px;" type="text" class="form-control" value="{{seconds_left}}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input style="width:126px; height:32px; font-weight:bolder; text-align: center; margin:auto; color:{{position_status == 1 ? 'green':'red'}}" type="text" class="form-control" value="{{position}}">
+                            </div>                        
+                        </div>
+                    </div>
+
+                    <div class="form-group buttons">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="btn-high" ng-mouseleave="unsetHover()" ng-mouseenter="hoverCall()" ng-click="call()"><span class='arrow'></span>HIGH</div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="btn-low" ng-mouseleave="unsetHover()" ng-mouseenter="hoverPut()" ng-click="put()">LOW<span class='arrow'></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group bottom">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    Closing: <strong>{{expiration}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">Investment:</div>                                   
+
+                                <div class="col-sm-6">
+                                    <select class="form-control" style="height:27px; padding:0px 5px;" ng-change="setPayout()" ng-model="investments">
+                                        <option ng-repeat="item in amounts" value="{{item}}">${{item}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    Payouts: <strong>${{payouts}}</strong> ({{payment}}%)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="submit" class="btn btn-primary" ng-click="trade($event)" value="Trade">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <style>
+                        .accepted_bet{
+                            display:none;
+                            border-radius: 5px;
+                            width:90%;
+                            height:405px;
+                            background: #3d445e;
+                            position:absolute;
+                            bottom:50px;
+                            margin:auto;
+                            left:50%;
+                            margin-left:-45%;
+                        }
+                        .accepted_bet .title{
+                            color:white;
+                            font-size: 18px;
+                            border-bottom: 1px solid #2a3143;
+                            text-align: center;
+                            height:68px;
+                            font-weight:bolder;
+                            padding-top:19px;
+                        }
+                        .accepted_bet .icon_block{
+                            height:100px;
+                            width:100px;
+                            margin:auto;
+                        }
+                        .accepted_bet .icon_block:after{
+                            display:block;
+                            margin:auto;
+                            background:url('/images/message_ico.png');                        
+                            content:'';  
+                            position:relative;
+                        }
+                        .accepted_bet.success .icon_block:after{
+                            width:66px;
+                            height:58px;
+                            top:25px;
+                            background-position:0px 0px;
+                        }
+                        .accepted_bet.error .icon_block:after{
+                            width:56px;
+                            height:57px;
+                            top:25px;
+                            background-position:-10px -79px;
+                        }
+                        .accepted_bet .message .accepted,.accepted_bet .message .error{
+                            width: 150px;
+                            margin:auto;
+                            text-align: center;
+                            margin-bottom:15px;
+                            font-size:20px;
+                            color: white;
+                            font-weight:bolder;
+                        }
+                    </style>
+                    <div class="accepted_bet">
+                        <div class="title">INFO</div>
+                        <div class="icon_block"></div>
+                        <div class="message">
+                            <div class="accepted">Your deal is accepted</div>
+                            <div style="display:none; color :red;" class="error">Transaction error</div>
+                        </div>
+                        <div class="text-center">                        
+                            <div onClick="$('.accepted_bet').css({'display': 'none'})" style="width:146px; font-size: 16px; margin:auto;" class="btn btn-orange">Continue</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <style>
+            .deals_table .process{
+                height:100%;
+                width:100%;
+                background:white;
+                position:relative;
+                left:0px;
+                top:0px;
+            }
+            .deals_table .process.red .inner{
+                background: red;
+            }
+            .deals_table .process.green .inner{
+                background: green;
+            }
+            .deals_table .process.orange .inner{
+                background: orange;
+            }
+
+            .deals_table .process .inner{
+                height:100%;
+                background: green;
+                position:relative;
+            }
+            .deals_table .process .text{
+                position:absolute;
+                z-index:5;
+                color:black;
+                top:2px;
+                width:100%;
+                text-align: center;
+            }
+        </style>
+        <div class='container'>        
+            <table class='table table-hover table-striped deals_table'>
+                <thead>
+                    <tr>
+                        <th>Assets</th>
+                        <th>Investments</th>
+                        <th>Payouts</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Open Price</th>
+                        <th>Close Price</th>
+                        <th>Profit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(key,deal) in deals" data-id="{{key}}">
+                        <td>{{deal.quotename}}</td>
+                        <td style='font-weight:bolder'>{{deal.amount / 100|currency:'$':2 }}</td>
+                        <td>{{deal.payout}}%</td>
+                        <td>{{deal.opentime * 1000|date:'MMM dd HH:mm:ss'}}</td>
+                        <td>{{deal.closetime * 1000|date:'MMM dd HH:mm:ss'}}</td>
+                        <td class="{{deal.position == 1?'green':'red'}}">{{deal.openprice}}</td>
+                        <td style='padding:0px;vertical-align: middle;' class="{{deal.status == 2?'green':(deal.status == 3?'red':(deal.status == 4?'orange':'timer'))}}">
+                            <div class='process {{deal.current_status}}' ng-show='deal.closeprice == 0'>
+                                <div class='inner' style='width:{{deal.percents ? deal.percents:0}}%'></div>
+                                <div class='text'>{{deal.quote}}</br>{{deal.timer}}</div>
+                            </div>
+                            <span ng-hide='deal.closeprice == 0' class='closeprice'>{{deal.closeprice ? deal.closeprice : deal.timer}}</span>
+                        </td>
+                        <td>{{deal.win_amount > 0 ? (deal.win_amount / 100 | currency:'$':2) : null}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>    
+</div>        
+        <style>
+    #contacts{
+        width:100%;
+        height:115px;
+        background: url('/images/contacts_bg.jpg') no-repeat center center;
+        background-size: cover;
+        display:none;
+    }
+    #contacts .phone_ico{
+        display: inline-block;
+        vertical-align: middle;
+        margin-right:20px;
+        width:98px;
+        height:59px;
+        background: url('/images/contact_icons.png');
+        background-position: 0px 0px;
+    }
+    #contacts .mail_ico{
+        display:inline-block;
+        vertical-align: middle;
+        margin-right:20px;
+        width:77px;
+        height:59px;
+        background: url('/images/contact_icons.png');
+        background-position: -130px -4px;
+    }
+</style>
+<div id='contacts'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-sm-4' style='font-size:23px; font-weight:bolder; padding-top:40px;'>
+                You can contact us            </div>
+            <div class='col-sm-4' style='font-size:22px; font-weight:bolder;padding-top:26px;'>
+                            </div>
+            <div class='col-sm-4' style='font-size: 18px; font-weight:bolder;padding-top:26px;'>
+                <div class='mail_ico'></div>
+                support@platformail.com            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #footer{
+        padding-top:40px;
+        height:auto;
+        width:100%;
+        background: #f3f3f1;
+    }            
+    #footer .logo{
+        background: url('/images/logo.png');
+        width:283px;
+        height:48px;
+        margin-bottom:20px;
+    }
+    #footer .menu ul{
+        padding-left:0px;
+    }
+    #footer .menu li{
+        margin-bottom:12px;
+    }
+    #footer .menu li a{
+        
+        font-size:16px;
+        font-weight: bolder;
+        color:#1d242b ;
+    }
+    #footer .menu li.sub{
+        margin-bottom:8px;
+    }
+    #footer .menu li.sub a{
+        margin-bottom:8px;
+        font-size:13px;
+        font-weight: normal;
+    }
+    #footer .bottom{
+        margin-top:40px;
+        padding-top:25px;
+        border-top:1px solid #c7c9c9;
+        font-size:12px;
+    }
+    #footer .bottom .copyrights{
+        font-size:13px;
+        font-weight: bolder;
+    }
+</style>
+<div id="footer">
+    <div class='container'>
+        <div class='top'>
+            <div class='row'>
+                <div class='col-sm-4'>
+                    <div class='logo'></div>
+                    <p>For all questions please contact customer support:<br><a style="margin-bottom:14px;display:block;" href='mailto:support@platformail.com'>support@platformail.com</a></p>
+                </div>
+                <div class='col-sm-8'>
+                    <div class='row menu'>
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/'>HOME</a></li>
+                                <li><a href='/termsandconditions/'>RULES</a></li>
+                                <li><a href='/faq/'>FAQ</a></li>                                
+                            </ul>   
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>                                
+                                <li><a href='/aboutus/'>ABOUT US</a></li>
+                                <li><a href='/faq/bonus/'>BONUS</a></li>                                
+                            </ul>   
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/faq/'>INFO</a></li>
+                                <li class='sub'><a href='/faq/glossary/'>GLOSSARY</a></li>
+                                <li class='sub'><a href='/faq/disclaimer/'>DISCLAIMER</a></li>
+                                <li class='sub'><a href='/faq/privacy/'>PRIVACY</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/trade/'>TRADE</a></li>
+                                <li class='sub'><a href='/trade/'>60 Seconds</a></li>
+                            </ul>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='bottom'>
+            <p>You haven`t made any investments in Option builder tool yet. To make an investment you should: Choose the asset you want to trade with, enter your current investment amount. And choose how will asset behavior: if it will rise - press HIGH button, other way press LOW button. Select the profit and the pay off level. Confirm your deal with the Confirmal button. Due to different time zones at the worldwide stocks, some assets could be inactive or might has limited availability. If the asset`s value didn`t change sinse made an investment, the full investment price will be returned to investor.</p>
+            <p>Legal: cryptgates.com is a trading name of CryptGates, registration number: IBC 2015 (Suite 305, Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
+            <div class='copyrights'>© 2025 | CryptGates - All rights reserved</div>
+        </div>
+<a href="https://freekassa.ru" target="_blank" rel="noopener noreferrer">
+  <img src="/images/freekasa.png" title="Прием платежей на сайте">
+</a>
+    </div>
+</div>   
+<script src="/js/global.js"></script>     
+    </body>
+</html>

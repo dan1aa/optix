@@ -1,0 +1,1143 @@
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:; default-src *; style-src * 'self' 'unsafe-inline' 'unsafe-eval'; script-src * 'self' 'unsafe-inline' 'unsafe-eval';">
+        <meta charset="UTF-8">
+        <meta name="Keywords" content="Форекс, Биржа Форекс, Бинарные Опционы, торговля акциями, Биржа">
+        <meta name="description" content="Надежная торговая платформа бинарных опционов с доходностью до 76%. Доступные инструменты для ведения торговли, обучающие материалы и простой в использовании интерфейс. "/>
+        <link rel="icon" type='image/png' href="/images/small-logo.png">
+        <title>Terms and Conditions | CryptGates</title>
+        <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/css/main.css?v4" rel="stylesheet" type="text/css" />        <script src="/js/jquery.js" type="text/javascript" /></script><script src="/js/bootstrap.min.js" type="text/javascript" /></script><script src="/js/main.js" type="text/javascript" /></script><meta name="frog" content="b4f134ae336d927bcf8206d38534bf79" />
+    </head>
+    <body ng-app="app">
+            <script>
+
+    </script>
+    <style>
+        #loginModal .label{
+            color: black;
+        }
+            
+        #loginModal .modal-dialog{
+            width:370px;
+        }
+        
+        #loginModal .modal-content{
+            padding:0px 30px;
+            border-radius: 0px;
+            border:1px solid #374057;
+            /*background: url('/images/auth_form_bg.jpg') no-repeat center center;
+            background-size:cover;*/
+            background: #2a3143;
+        }
+        #loginModal .modal-body{
+            padding:15px 0px;
+        }
+        #loginModal .modal-header{
+            padding-left:0px;
+            padding-right:0px;
+        }
+        #loginModal .modal-title{
+            height: 37px;
+            
+            font-size:18px;
+            color:white;
+            font-weight:bolder;            
+            text-align: left;
+            border-radius: 5px;
+        }
+        #loginModal input[type=text],#loginModal input[type=password]{
+            border-radius: 0px;
+        }
+        #loginModal input[type=submit]{
+            /*background: #fec307;*/
+            background: #6cbb2c;
+            color: #0e1322;
+            font-weight:bolder;
+            border:none;
+        }
+        #loginModal .modal-header{            
+            border-bottom: 1px solid #2c3039;
+        }
+        #loginModal .modal-header .close{
+            color:#f2f2f0;
+            opacity: 1;
+             text-shadow: 0 1px 0 #f4ae01;
+        }
+        
+        #loginModal .modal-body a.forgot{
+            color:#9da3b1;
+            font-weight:bolder;
+            font-size:12px;
+            margin-top:8px;
+            display:block;
+        }
+        #loginModal .error{
+            font-weight:bolder;
+            font-size:13px;
+            color: red;
+        }
+    </style>
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title font-header">AUTHORIZATION</h4>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <div class="row">                                
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" placeholder="E-mail" name='email'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input type="password" class="form-control" placeholder='Password' name='password'>
+                                <div class="error"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="border-bottom: 1px solid #444f6b; padding-bottom:30px;">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!--<a href="#forgotModal" data-target="#forgotModal" data-toggle="modal" class="forgot">Forgot your password?</a>-->
+                                <a href="/signin/forgot/" class="forgot">Forgot your password?</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="submit" class="btn btn-primary pull-right" value="Login">
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top:15px;">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="label" style="color: white; font-size:14px; font-weight:normal;">You dont have account?</div>
+                                <a href="/registration/" style="color:#6cbb2c;" class="pull-right">Open account</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>        <style>
+    #personal{
+        background: #31394d;
+        height: 44px;
+        width:100%;
+        border-bottom:1px solid #363f54;
+        margin-bottom: -1px;
+        z-index: 10;
+        position:relative;
+    }
+    #personal ul li{
+        letter-spacing:normal;  
+        vertical-align: top;
+        height:44px;;
+    }
+    #personal .balance{
+        font-weight:bold;
+        font-size: 17px;
+        color: #fec307;
+        margin-left:15px;
+        margin-right:15px;
+        display:inline-block;
+        vertical-align: middle;
+    }
+    #personal .modes{
+        cursor:pointer;
+        padding:12px 20px;
+        color: #a9acb4;
+        font-size:14px;
+        font-weight: bolder;
+        margin:0px;
+        border-left: 1px solid #3c455e;
+        border-right: 1px solid #3c455e;
+    }
+    #personal .modes a{
+        text-decoration: none;
+        color: #a9acb4;
+    }
+
+    #personal .modes .status{
+        margin-top:-3px;
+        margin-right:10px;
+        display:inline-block;
+        vertical-align: middle;
+        background: url('/images/acc-buttons.png');
+        width:17px;
+        height:17px;
+    }
+    #personal .modes .status{
+        background-position: -23px -66px;
+    }
+    #personal .modes:hover .status{
+        background-position: -3px -65px;
+    }
+    #personal .modes.active .status{
+        background-position: -1px -47px;
+    }
+    
+    #personal .modes.active,#personal .modes:hover{
+        background: #3c455e;
+        color: #f3f3f1;
+    }
+    #personal .info{
+        padding:10px 10px;
+    }
+    #personal .info .ico{
+        margin-top:-3px;
+        margin-right:10px;        
+        width:19px;
+        height:20px;
+        background:url('/images/acc-buttons.png');
+        background-position:-59px 0px;
+        display:inline-block; 
+        vertical-align: middle;
+    }
+    #personal .info .username{
+        line-height: 10px;
+        text-transform: uppercase;
+        color: #f3f3f1;
+        font-size:12px;
+        font-weight:bolder;
+    }
+    #personal .info .email{
+        color:#a9acb4;
+        font-size:10px;
+        font-weight:bold;
+    }
+    #personal .logout{
+        padding:12px;
+        
+    }
+    #personal .logout a{
+        color:#f3f3f1;
+        font-size:12px;
+        font-weight:900;
+    }
+    #personal .logout .ico{
+        margin-top:-2px;
+        display:inline-block;
+        vertical-align: middle;
+        width:29px;
+        height:20px;
+        background:url('/images/acc-buttons.png');
+        background-position:-59px -23px;
+        margin-right:5px;
+    }
+</style>
+<nav class="navbar navbar-default " id="header" style="display: none">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#headerMenu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            <a class="navbar-brand logo" href="/"></a>
+        </div>
+<style>
+    #header #headerMenu .language{
+        margin-top:12px;
+        margin-left:10px;        
+    }
+    #header #headerMenu .language .current_language{
+        background:#f3f3f1;
+    }
+    #header #headerMenu .language .current_language .lang{
+        color: #384259;
+    }
+    #header #headerMenu .language .current_language .lang .caret{
+        color: #384259;
+    }
+    #header #headerMenu .language .list a{
+        height:26px;
+        font-size:14px;
+    }
+</style>
+        <ul class="nav navbar-nav navbar-collapse collapse " id="headerMenu">
+                        <li class="active">
+                <a type="button" class="contacts_link" href="/faq/" data-toggle="collapse" data-target="#subMenu1" onclick="return false">
+                    Info                </a>
+                
+                <style>                    
+                    #header #headerMenu .submenu{
+                        
+                        top:75px;
+                        left:0px;
+                        margin-left:-70px;
+                        z-index:101;
+                        padding:0px;
+                        position:absolute;
+                        background: #3c455e;
+                        text-decoration: none;
+                        width:220px;
+                    }
+                    #header #headerMenu .submenu:after{
+                        display:block;
+                        position:absolute;
+                        top:-14px;
+                        left:50%;
+                        margin-left:-7px;
+                        content: ' ';
+                        border: 7px solid transparent; 
+                        border-bottom: 7px solid #3c455e;
+                        width:14px;
+                        height:14px;
+                        background: transparent;
+                    }
+                    
+                    #header #headerMenu .submenu li a{
+                        text-decoration: none;
+                        padding:12px 20px;
+                        display: block;
+                        color: #e0e0e2;
+                        font-size:14px;
+                        border-bottom: 1px solid #414b66;
+                        height:42px;
+                    }
+                    #header #headerMenu .submenu li a:last-child{
+                        border-bottom: none;
+                    }
+                    #header #headerMenu .submenu li a:hover{
+                        background: #2a3142;
+                    }
+                    
+                </style>
+                <ul class="collapse submenu" id="subMenu1">
+                    
+                    <li><a href="/faq/">FAQ</a></li>
+                    <li><a href="/faq/privacy/">Privacy</a></li>                    
+                    <li><a href="/faq/glossary/">Glossary</a></li>                    
+                    <li><a href="/termsandconditions/">Terms and Conditions</a></li>
+                </ul>
+            </li>
+                        <li class=""><a class="oustaff_link" href="/aboutus/">About Us</a></li>
+            <li class=""><a class="oustaff_link" href="/faq/bonus/">Bonus</a></li>
+                    </ul>
+        
+        <style>
+            #header .control_menu{
+                padding-top:20px;
+            }
+            #header .control_menu li{
+                margin-right:20px;
+                vertical-align: middle;
+            }
+            #header .control_menu li:last-child{
+                margin-right:0px;
+            }
+            #header.main .control_menu li a{
+                color:#13161c;
+            }
+            .control_menu li a{
+                font-size: 12px;
+                font-weight:900;
+                
+                color:#e0e0e2;
+            }
+            #header .control_menu .reg_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:0px -23px;
+                display:inline-block;
+                width:27px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .reg_icon{
+                background-position:0px 0px;
+            }
+            #header .control_menu .login_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:-32px -23px;
+                display:inline-block;
+                width:23px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .login_icon{
+                background-position:-32px 0px;
+            }
+            
+            #header .language{
+                margin-top:-3px;
+                position:relative;
+            }
+            #header .language .current_language{
+                cursor:pointer;
+                padding:6px 10px;
+                text-align: center;
+                background: #384259;
+                height: 30px;
+                border-radius: 5px;
+            }
+            #header .language .current_language .lang{
+                font-size:12px;
+                font-weight:900;
+                color: white;
+            }
+            #header .language .current_language .lang .caret{
+                margin-left:5px;
+                color: white;
+            }
+        </style>
+                <ul class="pull-right control_menu list-inline">
+            
+                <li class="pull-left">
+                    <a href="/registration/" class=""><span class="reg_icon"></span>REGISTRATION</a>
+                </li>
+                                <li class="pull-left">
+                    <a href="" data-toggle="modal" data-target="#loginModal"><span class="login_icon"></span>LOGIN</a>
+                </li>
+            
+
+            <li class="pull-left">
+                 <div class="language">
+                    <div class="current_language dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                                                    <div class="ico en"></div>
+                            <div class="lang">EN<div class="caret"></div></div>
+                                                    
+                    </div>
+
+                    <ul class="list collapse dropdown-menu" aria-expanded="false">
+                        <li>
+                            <a href="/en/faq/privacy/">
+                                <div class="ico en"></div>
+                                <div class="lang">English</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/ru/faq/privacy/">
+                            <div class="ico ru"></div>
+                            <div class="lang">Русский</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+            </div>
+</nav>
+<div id='personal'>
+    <div class='container'>
+        <ul class='list-inline pull-right' style='font-size:0px;letter-spacing:-1px;'>
+            <li style='padding-top:6px;'>
+	                            <a href='/account/deposit/card-fk/' class='btn btn-grey' style='display:inline-block; vertical-align: middle;'>Deposit</a>
+	                            <span class='balance'>$1,079.60</span>
+            </li>
+                                                                <li class="modes active">   
+                        <a href="/switch/?account=250239">
+                            <div class='status'></div>
+                            Demo                        </a>
+                    </li>
+                                                                                <li class="modes ">   
+                        <a href="/switch/?account=250240">
+                            <div class='status'></div>
+                            Real                        </a>
+                    </li>
+                                        
+            <!--<li class="modes">
+                <div class='status'></div>
+                Demo
+            </li><li class="modes active">
+                <div class='status'></div>
+                Real
+            </li>-->
+            <li class='info'>
+                <div class='ico'></div>
+                <div style='display:inline-block; vertical-align: middle;'>
+                    <div class='username'>Саня Верняев</div>
+                    <div class='email'>olegmongol99812@gmail.com</div>
+                </div>
+            </li>
+            <li class='logout'>
+                <a href="/en/logout">
+                    <div class='ico'></div>
+                    Logout                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    #header{        
+        margin:0px;
+        padding-top:5px;
+        height: 80px;
+        border:none;
+        background: white;
+        border-radius: 0px;
+    }
+    #header.main{
+        background:transparent;
+        border-top:1px solid transparent;
+    }
+    #header .logo{
+        position:relative;
+        top:10px;
+        width:283px;
+        height:48px;
+        background: url('/images/logo2.png');
+    }
+
+    #header.main .logo{
+        background: url('/images/logo.png');
+    }
+    
+    #header #headerMenu{
+        margin-top:5px;
+    }
+    
+    #header #headerMenu li a{
+        height:45px;
+        color: #e0e0e2;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    #header.main #headerMenu li a{
+        color:#13161c;
+    }
+    #header #headerMenu li.active a{        
+        background: none;
+        border-bottom: 3px solid #ff4b00;
+    }
+    
+    #header{
+        border-top:1px solid #6dba2e;
+        background:#2a3142;
+    }
+</style>
+
+<nav class="navbar navbar-default " id="header" style="display: none">
+    <div class='container'>
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#headerMenu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            <a class="navbar-brand logo" href="/"></a>
+        </div>
+<style>
+    #header #headerMenu .language{
+        margin-top:12px;
+        margin-left:10px;        
+    }
+    #header #headerMenu .language .current_language{
+        background:#f3f3f1;
+    }
+    #header #headerMenu .language .current_language .lang{
+        color: #384259;
+    }
+    #header #headerMenu .language .current_language .lang .caret{
+        color: #384259;
+    }
+    #header #headerMenu .language .list a{
+        height:26px;
+        font-size:14px;
+    }
+</style>
+        <ul class="nav navbar-nav navbar-collapse collapse pull-right" id="headerMenu">
+                            <li class=""><a href="/account/history/">Analytics</a></li>
+                        <li class="">
+                <a type="button" class="contacts_link" href="/faq/" data-toggle="collapse" data-target="#subMenu1" onClick="return false">
+                    Info                </a>
+                
+                <style>                    
+                    #header #headerMenu .submenu{
+                        
+                        top:75px;
+                        left:0px;
+                        margin-left:-70px;
+                        z-index:101;
+                        padding:0px;
+                        position:absolute;
+                        background: #3c455e;
+                        text-decoration: none;
+                        width:220px;
+                    }
+                    #header #headerMenu .submenu:after{
+                        display:block;
+                        position:absolute;
+                        top:-14px;
+                        left:50%;
+                        margin-left:-7px;
+                        content: ' ';
+                        border: 7px solid transparent; 
+                        border-bottom: 7px solid #3c455e;
+                        width:14px;
+                        height:14px;
+                        background: transparent;
+                    }
+                    
+                    #header #headerMenu .submenu li a{
+                        text-decoration: none;
+                        padding:12px 20px;
+                        display: block;
+                        color: #e0e0e2;
+                        font-size:14px;
+                        border-bottom: 1px solid #414b66;
+                        height:42px;
+                    }
+                    #header #headerMenu .submenu li a:last-child{
+                        border-bottom: none;
+                    }
+                    #header #headerMenu .submenu li a:hover{
+                        background: #2a3142;
+                    }
+                    
+                </style>
+                <ul class="collapse submenu" id="subMenu1">
+                    
+                    <li><a href="/faq/">FAQ</a></li>
+                    <li><a href="/faq/privacy/">Privacy</a></li>                    
+                    <li><a href="/faq/glossary/">Glossary</a></li>                    
+                    <li><a href="/termsandconditions/">Terms and Conditions</a></li>
+                </ul>
+            </li>
+                            <li class=""><a class="oustaff_link" href="/trade/">Trade</a></li>
+                        <li class=""><a class="oustaff_link" href="/aboutus/">About Us</a></li>
+            <li class=""><a class="oustaff_link" href="/faq/bonus/">Bonus</a></li>
+                        <li class=""><a class="oustaff_link" href="/account/personalinfo/">Personal Info</a></li>
+            <li>
+                <div class='language'>
+                    <div class='current_language dropdown-toggle'  data-toggle="dropdown" href="#" aria-expanded="false">
+                                                    <div class='ico en'></div>
+                            <div class='lang'>EN<div class='caret'></div></div>
+                                                    
+                    </div>
+
+                    <ul class='list collapse dropdown-menu' aria-expanded="false">
+                        <li>
+                            <a href='/en/termsandconditions/'>
+                                <div class='ico en'></div>
+                                <div class='lang'>English</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href='/ru/termsandconditions/'>
+                            <div class='ico ru'></div>
+                            <div class='lang'>Русский</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+                    </ul>
+        
+        <style>
+            #header .control_menu{
+                padding-top:20px;
+            }
+            #header .control_menu li{
+                margin-right:20px;
+                vertical-align: middle;
+            }
+            #header .control_menu li:last-child{
+                margin-right:0px;
+            }
+            #header.main .control_menu li a{
+                color:#13161c;
+            }
+            .control_menu li a{
+                font-size: 12px;
+                font-weight:900;
+                
+                color:#e0e0e2;
+            }
+            #header .control_menu .reg_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:0px -23px;
+                display:inline-block;
+                width:27px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .reg_icon{
+                background-position:0px 0px;
+            }
+            #header .control_menu .login_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:-32px -23px;
+                display:inline-block;
+                width:23px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .login_icon{
+                background-position:-32px 0px;
+            }
+            
+            #header .language{
+                margin-top:-3px;
+                position:relative;
+            }
+            #header .language .current_language{
+                cursor:pointer;
+                padding:6px 10px;
+                text-align: center;
+                background: #384259;
+                height: 30px;
+                border-radius: 5px;
+            }
+            #header .language .current_language .lang{
+                font-size:12px;
+                font-weight:900;
+                color: white;
+            }
+            #header .language .current_language .lang .caret{
+                margin-left:5px;
+                color: white;
+            }
+        </style>
+            </div>
+</nav>
+    <style>
+        #submenu{
+            
+            margin-bottom:0px;
+            height: 46px;
+            background: #6dba2e;
+        }
+        #submenu .table{
+            height: 46px;;
+        }
+
+        #submenu .table td{
+            padding:0px;
+            vertical-align: middle;
+            text-align: center;
+            border:none;
+            border-left:1px solid #63a82a;
+        }
+        #submenu .table td:last-child{
+            border-right:1px solid #63a82a;
+        }
+        #submenu .table td.active,#submenu .table td:hover{
+            background: #63a82a;
+        }
+
+        #submenu a{
+            padding:10px;
+            width:100%;
+            height:46px;
+            display:block;
+            color: white;
+            font-size:15px;
+            font-weight:bolder;
+        }
+        #submenu a:hover{
+            text-decoration: none;
+        }
+
+    </style>
+    <div id="submenu" style="display: none">
+  <div class="container">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td class="">
+            <a href="/trade/">Trade</a>
+          </td>
+          <td class="">
+            <a href="/autotrade/">Robot</a>
+          </td>
+          <td class="">
+            <a href="/account/deposit/card-fk/">Deposit</a>
+          </td>
+          <td class="">
+            <a href="/account/withdrawal/cc">Withdrawal</a>
+          </td>
+          <td class="">
+            <a href="/account/transactions/">Transactions</a>
+          </td>
+          <td class="">
+            <a href="/account/bonuses/">Bonuses</a>
+          </td>
+          <td class="active">
+            <a href="/account/history/">History</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+                <script>
+    $('document').ready(function(){
+        //$('.faq .element').not('.active').click(function(){
+        $('.faq .element').click(function(){
+            if($(this).attr('class').indexOf('active') != -1) return;
+            $('.faq .element').removeClass('active');
+            $(this).addClass('active');
+        });
+    });
+</script>
+<div class="container">
+    <div class="pagetitle">Правила и условия.</div>
+    <div class='faq'>
+        <div class="element">
+            <div class="title">General </div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p> The following describes the terms and conditions upon which CryptGates Ltd (Company, We, Our or Us) offers access to its Website to you (You) and the use of Our services (the Agreement). This Agreement, which constitutes a legally binding agreement between You and Us, describes the terms, conditions and risks applicable to Your use of Our services available under the domain of current site. You hereby acknowledge that the Services offered are non-delivery options trading services, and that when You trade with Us, You are not entitled to receive, and We are under no obligation to supply, any of the assets in relation to which You invest in binary options via the Site.</p>
+                <p>You must read, agree with and accept all of the terms and conditions contained in this Agreement without modifications, which include those terms and conditions expressly set forth below and those incorporated by reference, before You may become a customer of our company and use the Site and\or the Services. By continuing to access or use the Site and\or the Services, You agree to follow the terms and conditions of this Agreement as they apply to You. This Agreement is effective upon acceptance in registration for newly registering customers. If You do not agree to be bound by the terms and conditions of this Agreement, do not use or access the Site and\or the Services, and inform Us in writing immediately. Your continued use of the Site and\or the Services represents Your consent to be bound by this Agreement.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Membership Eligibility</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>The Services are available to and may only be used by individuals or companies who can form legally binding contracts under the law applicable to them. Without limiting the foregoing, the Site and/or the Services are not available to persons under the age of 18 or otherwise under legal agewhichever is higher (Minors). If You are a Minor, You may not use the Site and\or the Services; Your continued use of the Site and\or the Services constitutes Your representation that You are not a Minor. We reserve the right (but are under no obligation) to request proof of age at any stage, to verify that You are not a Minor. We may suspend or cancel Your account and exclude You from using the Site and\or the Services if proof of age is not provided or if We suspect that You are a Minor; in such case We are under no obligation to return any funds held in Your account with Us. Any such decision of Ours shall be final, binding and not subject to appeal.</p>
+                <p>For avoidance of doubt, the ability to access the Site and\or the Services does not necessarily mean that Your activities via the Site and\or Your use of the Services are legal under the laws, regulations or directives relevant to You. For the avoidance of doubt, it is hereby clarified that We make no representations or warranties, expressed or implied, that Your use of the Site and\or the Services is lawful. Without derogating from the above, the Site and Services are not available to US investors; if You are a US citizen and\or resident, You may not use the Site and the Services. We reserve the right, at our sole discretion, to deny access to the Site and Services to citizens, residents and\or people located at additional jurisdictions.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Registration Information and Requirements</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>In order to use the Site and the Services You must register with Us. When you register with Us, We will ask You to provide certain identifying information and documentation; You will not be able to complete registration with Us without the provision of such information and documentation. We reserve the right, at any point in time (whether prior to completion of the registration or afterwards), to require from You additional information and documentation or to confirm information and documentation You previously provided to Us; if You do not supply such information and documentation within the time period asked for, or if We believe that any information or documentation provided by You was false or inaccurate or is no longer current or accurate, or if you fail to otherwise comply with any term or condition of this Agreement and all rules and guidelines of the Service or if We believe, at our sole discretion, that you have abused in any way or acted in bad faith towards the Site and\or the Services and\or other users of the Site and Services, We reserve the right to refuse to open an account for You, suspend or cancel Your account with Us, and will be entitled to seize and confiscate any funds held in Your account. When providing Us with details of any means of payment, You represent and warrant that that means of payment is either owned by You or that the owner of that means of payment agreed to Your use of the means of payment in connection with the Site and the Services and that such use is within the confines of such agreement.</p>
+                <p>You acknowledge that We are under no obligation whatsoever to verify whether and to what extent did the owner of the means of payment agreed to such a use, and (in addition to any other remedy or right We have) You will be held liable for any misuse of such means of payment. You are responsible for securing Your username and password for Your account with Us, and You shall not transfer them to any third party. We are under no obligation to maintain Your user name and password. You agree to provide true, accurate, current and complete information about Yourself during the registration process and thereafter, and You also agree not to impersonate any person or entity, misrepresent any affiliation with another person, entity or association, use false headers or otherwise conceal Your identity from Us for any purpose. You shall notify Us immediately upon any change in any of the details You provided to Us.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Your use of the Site and\or Services</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>While using the Site and\or Our Services, you hereby acknowledge that: </p>
+                <ul class="ul_style">
+                    <li>- Your account with Us is for your sole and personal use, and You must not allow the use of Your account by any third party. You hold full and sole responsibility for any loss or damage caused due to any act or omission by You or any third party as a result of inappropriate, irregular or unauthorized use of Your account. Without derogating from the above, You must inform us immediately of any unauthorized use of Your account;</li>
+                    <li>- You are solely responsible for recording, paying and accounting for any tax or other levy that may be payable due to Your use of the Site and\or the Services (including, but not limited to, payment of earnings);</li>
+                    <li>- You will use the Site and\or the Services in good faith towards the Company and others using the Services;</li>
+                    <li>- In case of Fraud account suspicion, we may, at our sole discretion, open, maintain and/or close Your Account, as well as seize and confiscate all or part of the funds held in Your account and recover and\or retain any and all earnings paid to You or to which You are entitled, and any such decision or any other decision by the Company in connection with the Site and\or the Services shall be final and not subject to dispute or appeal;</li>
+                    <li>- You hereby acknowledge and accept that the Site and\or Our Services may be supplied, in part or in whole, by third parties; You waive any claim against Us in respect of the provision of the Site and\or the Services by any such third party;;</li>
+                    <li>- You will not copy or distribute any materials appearing on the Site for any other purpose than Your use of the Site and\or the Services;</li>
+                    <li>- You will use the information appearing in the Site for the sole purpose of executing transactions inside and within the Site;</li>
+                    <li>- You will not use the Site and\or the Services for any purpose that is unlawful, tortuous, abusive, intrusive on another`s privacy, harassing, libelous, defamatory, embarrassing, obscene, threatening or hateful.</li>
+                </ul>
+                <p></p>
+           </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Risk Disclosure</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>You agree to use the Site and the Services at Your own risk. Without limiting the foregoing, the Services are suitable only for customers who are able to bear the loss of all the money they invest, and who understand the risks and have experience in taking risks involved in financial markets. The possibility exists that You could sustain a loss of some or all of Your investment and therefore You should not invest money that You cannot afford to lose. You should be aware of all the risks associated with digital options trading (including, but not limited to, risks stemming from market conditions, the rules of certain markets), and seek advice from an independent financial advisor if You have any doubts. You hereby acknowledge that You will bear sole responsibility for any losses caused through the use of the Site and\or the Services. Furthermore, the Site and\or the Services are available only to, and may only be used by, individuals who have sufficient experience and knowledge in financial matters to be capable of evaluating the merits and risks of acquiring financial contracts via this Site and have done so without relying on any information contained in this Site or provided by Us;</p>
+                <p>You hereby represent and warrant that You have such sufficient experience and knowledge in financial matters to be capable of evaluating the merits and risks of acquiring financial contracts via the Site and have done so without relying on any information contained in this Site or provided by Us. You shall bear sole responsibility for any decision made and/or to be made by You relying on the content of the Site or information provided by Us.</p>
+                <p>Without derogating from the above, We shall not be responsible for verifying and/or checking whether You possess such sufficient knowledge and/or experience, nor shall We be responsible for any damage and/or loss incurred by You due to and/or related to the Site, transactions carried out by You and/or Your use of the Services. Employees, directors and officers of the Company, as well as any of their relatives or people associated with, are not entitled to use the Site and\or the Services.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Financial Information</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>
+                    We may make available to You through the Services a broad range of financial information that is generated internally or obtained from agents, vendors or partners (Third Party Providers). This includes, but is not limited to, financial market data, quotes, news, analyst opinions and research reports, graphs or data (Financial Information).                    Financial Information provided on the Site is not intended as investment advice. The Company does not endorse or approve the Financial Information, and We make it available to You only as a service for Your own convenience. CryptGates and its Third Party Providers do not guarantee the accuracy, timeliness, completeness or correct sequencing of the Financial Information, or warrant any results from Your use or reliance on the Financial Information                </p>
+                <p>Financial Information may quickly become unreliable for various reasons including, but not limited to, changes in market conditions or economic circumstances. Neither the Company nor the Third Party Providers are obligated to update any information or opinions contained in any Financial Information, and We may discontinue offering Financial Information at any time without notice. It is Your duty to verify the reliability of the information and Financial Information on the Site and its suitability to Your needs. We exclude any liability for any claim, loss or damage of any kind allegedly caused by information presented on the Site or referred to by the Site.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Links</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>We may provide a link to other sites that are controlled or offered by third parties. Such link to a site or sites is not an endorsement, authorization, sponsorship or affiliation with respect to such site, its owners or its providers. CryptGates cautions You to ensure that You understand the risks involved in using such sites before retrieving, using, relying upon or purchasing anything via the Internet. Links to these websites are provided solely for Your convenience, and You agree that under no circumstances will You hold CryptGates liable for any loss or damage caused by use of or reliance on any content, goods or services available on other sites.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Trading Cancellation</div>
+            <div class="line"></div>
+            <div class="info">
+                <p>CryptGates reserve the right in our sole discretion to refuse and\or cancel the Services (in whole or in part), and\or refuse to distribute profits to anyone for any legitimate reason including, but not limited to:</p>
+                <ul class="ul_style">    
+                    <li>- any instance where CryptGates have cause to believe that Your activities on the Site may be illegal;                    <li>- any instance where CryptGates may suffer any fiscal, regulatory, or pecuniary disadvantage;                    <li>- any instance where one or more transactions on the Site are judged by CryptGates to have been performed in violation of this Agreement.                 </ul>
+                 <p>CryptGates reserve the right to cancel, terminate, modify or suspend the Services if for any reason, the Services cannot be conducted as planned, including infection by computer virus, bugs, tampering or unauthorized intervention, fraud, technical failures or any other causes beyond Our control. If any errors result in awarding funds to You or in an increase in funds owed or paid to You, You shall not be entitled to these funds. You shall immediately inform Us of the error and shall repay any funds credited to Your account in error to Us (as directed by Us) or We may, at our sole discretion, deduct an amount equal to such funds from Your account or set off such amount against any money owed to You by CryptGates. CryptGates provide clients the benefit of canceling a trade once placed. If we have reason to believe that a client is abusing or attempting to abuse this benefit, we reserve the right to cancel trades that were executed after more than 2 cancellations.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Withdrawal Procedure</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>We retain sole and exclusive discretion to request additional documents prior to performing such withdrawal. Once a withdrawal request is submitted it can take up to 2 business days to process the request. Once the request has been approved please allow additional 5-7 days for the funds to be received by You.</p>
+                <p>Every 30 days  You  can  withdraw  your  founds for free with no extra charges, from your trade account. However, if you want to withdraw funds in less then 30 days period - you will have to pay additional &dollar;10 fee for making a transaction.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Limited Liability</div>
+            <div class="line"></div>
+            <div class="info">
+                <p>We assume no responsibility for any error, omission, interruption, deletion, defect, delay in operation or transmission, bugs, viruses, communications line failure, theft or destruction or unauthorized access to, or alteration of, the Site or Services. We are not responsible for any problems or technical malfunction of any telephone or network lines, computer online systems, servers or providers, hardware, software, failure due to technical problems or traffic congestion on the Internet (or inaccessibility to the Internet). In no event shall the Company and/or anyone acting on its behalf be liable for any direct, indirect, incidental, special or consequential damages or damages for loss of profits, revenue, data or use incurred by You or any third party, whether in an action for contract or tort, arising from the access to, or use of, the Site and\or the Services. We and/or anyone acting on Our behalf, make no representations about the suitability, reliability, availability, timeliness and accuracy of the Services. All Services are provided as is without warranty of any kind. The Company hereby disclaims all express or implied warranties with respect to the Site and Services, including but not limited to, warranties and conditions of merchantability, satisfactory quality, fitness for a particular purpose, completeness or accuracy, non infringement of third party rights or applicable laws, regulations and directives, or that the Site and Services will be uninterrupted, timely, secure or error free. To the maximum extent permitted by applicable law, under no circumstances shall We be responsible for any loss or damage resulting from use of the Site or Services, from any content posted on or through the Site or Services, or from the conduct of any users of the Site or Services, whether online or offline.</p>
+                <p>IN NO EVENT SHALL CryptGates OR ANY OF ITS OFFICERS, DIRECTORS, EMPLOYEES, SERVICE PROVIDERS OR AGENTS BE LIABLE TO YOU FOR ANY DAMAGES WHATSOEVER, INCLUDING WITHOUT LIMITATION INDIRECT, INCIDENTAL, SPECIAL, PUNITIVE, OR CONSEQUENTIAL DAMAGES, ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF THE SITE OR SERVICES, INCLUDING BUT NOT LIMITED TO THE QUALITY, ACCURACY, OR UTILITY OF THE INFORMATION PROVIDED AS PART OF OR THROUGH THE SITE OR FOR ANY INVESTMENT DECISIONS MADE ON THE BASIS OF SUCH INFORMATION, WHETHER THE DAMAGES ARE FORESEEABLE AND WHETHER OR NOT CryptGates HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. THE FOREGOING LIMITATION OF LIABILITY SHALL APPLY TO THE FULLEST EXTENT PERMITTED BY LAW AND IN NO EVENT SHALL CryptGates CUMULATIVE LIABILITY TO YOU EXCEED THE AMOUNT OF MONEY YOU TRANSFERRED OR DEPOSITED IN YOUR ACCOUNT ON THE SITE IN RELATION TO THE TRANSACTION GIVING RISE TO SUCH LIABILITY.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">AML Procedures</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>You hereby declare that the funds invested in Your account with Us do not originate from drug trafficking, abduction, any other criminal or illegal activity, or any political affiliation. You shall not abuse the Site and\or the Services for the purpose of money laundering or for any other illegal, unlawful or improper activity. We reserve the right to refuse to allow You to use Your account, to suspend, cancel and terminate Your account and to seize and confiscate all funds in Your Account if You do not accept or conform to the following AML requirements and policies (or any other AML requirements, as required by Us from time to time):</p>
+                <ul class="ul_style">
+                    <li>- You must provide all requested information and documentation upon registration.</li>
+                    <li>- If You maintain an account by means of telegraphic deposits, funds will only be distributed to the holder of the originating bank account. When making deposits in this manner, it is Your responsibility to ensure that the trader`s account number and registered name of the account owner accompany all transfers to  CryptGates.</li>
+                    <li>- Only one account is allowed per person. No funds will be distributed from accounts opened in false names or on multiple accounts opened by the same person.</li>
+                </ul>
+               <p>If We suspect any illegal or unlawful activity is performed via Your account, we reserve the right to disclose all information relating to You to the relevant authorities, as well as suspend and terminate Your account, as well as seize and confiscate any funds in Your account.</p>
+           <p>All trading account that has not been verified within 3 months from the date of registration subject to the automatic cancellation of the balance sheet.</p>
+               <p>Due to the fact that the company is struggling to fraud and money laundering, all customers who have made a deposit or had money accrued as a result of work on the offer, undertake trades a volume of equal to the sum of the deposit plus the sum from offer. Thus, when making funds, for example in the amount of $ 500 a trader needs to close operations with a volume of $ 500. If the account were funds received as a result of work on the offer, such as $ 100, these funds are added to the deposit, in which case you will need to make transactions total with a volume of $ 600.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Intellectual Property</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>All content, trademarks, services marks, trade names, logos, icons any other intellectual property connected to the Site or the Services (the IP Rights) are the sole and exclusive property of CryptGates or its affiliates or agents. You may use the IP Rights solely as set out in this Agreement, and You will not acquire any rights whatsoever in the IP Rights. You agree not to delete any copyright notices or other indications of protected intellectual property rights from materials that You print or download from the Site. Images displayed on the Site are either the property of CryptGates or used with permission. You agree not to upload, post, reproduce or distribute any information, software or other material protected by copyright or any other intellectual property right (as well as rights of publicity and privacy) without first obtaining the permission of the owner of such rights and the prior written consent of CryptGates.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Indemnification</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>You agree to defend, hold harmless and indemnify CryptGates and its officers, directors, employees, agents, contractors, consultants and suppliers from and against any and all claims, liabilities, damages, losses, costs and expenses, including without limitation attorney fees and costs, arising out of or in any way connected with (I) your access to or use of the Site or Services; (II) Your violation of any of the terms of this Agreement; or (III) Your breach of any applicable laws, regulations or directives.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Term and Termination</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>The term of the Agreement shall be unlimited, however We will be allowed to terminate this Agreement and Your account at any time by notice to You. As of termination, You shall not be able to carry out new transactions, and You agree to cease accessing the Site and the Services. You agree that CryptGates, at its sole discretion and with or without notice, may terminate Your access to any or all Services, close Your open transaction and remove and discard any information or content within a Service. Termination of this Agreement shall not affect any provision of this Agreement which is expressly or by implication intended to come into force or continue in force on or after that termination.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">Privacy</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>You hereby agree that We will collect personally identifiable information from You and about You, including (but not limited to) Your name, date of birth, address, email address, information concerning means of payment and contact information. In addition, You hereby grant Us Your consent to collect information about Your activity, including (but not limited to) date and time of access of the Site and Services, length of access of the Site and Services, IP address, language use and all scopes of trades performed by You. You also grant Us Your consent to collect Personel info by use of cookies placed on Your computer.</p>
+                <p>We use the Personal info (including by way of disclosing it to associated entities or to third parties) to provide You with the Services, to undertake necessary security and identify verification checks, to provide customer support, to process any of Your online transactions and for any other purpose related to the operation of the Site and the Services. Your PII may also be used by Us (or by third parties to which we disclose the PII) to provide You with promotional offers and information regarding Our products and services as well as products and services from third parties. We may also use the PII for other internal purposes, such as evaluating, providing, and improving the Services and the Site. We may disclose Your PII if required by law or competent authority, or if We believe such disclosure necessary to protect and defend Our rights or property, the personal safety of other users of the Site and\or the Services or the public. We reserve the right to share the PII with other online sites` operators, banks, credit card companies and relevant agencies and authorities, if, We determine in Our sole discretion, that You have cheated or attempted to defraud Us, or if We suspect You are committing or have committed any fraudulent activity, or if You breach this Agreement. We may transfer Your PII to jurisdictions outside Your jurisdiction of residence and\or outside the European Union. The data protection and privacy laws of the jurisdictions to which the PII will be transferred may not be as comprehensive as those in the European Union; in which case We will take measures to ensure a similar level of protection is provided to Your PII.</p>
+            </div>
+        </div>
+
+        <div class="element">
+            <div class="title">General</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>This Agreement shall be governed by and interpreted in accordance with the laws of the St.Vincent and the Grenadines excluding that body of law pertaining to conflict of laws. Any legal action or proceeding arising under this Agreement will be brought exclusively in courts located in the Crete Islands, and the parties hereby irrevocably consent to the personal jurisdiction and venue therein. In the event that any provision in this Agreement is held to be invalid or unenforceable by a court of competent jurisdiction, the remaining provisions of this Agreement will remain in full force and effect and will be interpreted so as to give effect, to the fullest extent possible, to the purpose of that provision. The failure or delay on Our part to enforce any right, power, remedy or provision of this Agreement, or partial exercise of such right, power, remedy or provision will not be deemed a waiver of such right, power, remedy or provision.</p>
+                <p>We sall be entitled, in our sole discretion, to amend, modify, or discontinue, from time to time, any of the Services. The Company shall not be liable for any loss suffered by You resulting from any changes made and You shall have no claims against the Company in such regard. We may transfer, assign or pledge this Agreement or any rights and/or obligations hereunder to any third party without Your consent. You may not transfer, assign or pledge in any manner whatsoever any of Your rights or obligations under this Agreement. Unless explicitly stated in this Agreement, nothing in this Agreement shall: (I) be construed as creating any agency, arrangement, trust of fiduciary relationships or any similar relationship between You and Us; (II) create or confer any rights or benefits to any third party, or (III) grant You any security interest in any asset of the Company, including (but not limited to) any sum held in Your account. For the avoidance of doubt, it is hereby clarified that any funds held in Your account will not accrue any interest. All promotions, bonuses or special offers are subject to additional terms and conditions and any bonus credited to Your account must be used in adherence with such terms and conditions. We reserve the right, at Our sole and exclusive discretion, to withdraw any promotion, bonus or special offer at any time. If We believes You are abusing or attempting to abuse a bonus or other promotion, or are likely to benefit through abuse or lack of good faith, then We may, at Our sole and exclusive discretion, deny, withhold or withdraw from You any bonus or promotion, either temporarily or permanently, or terminate Your account without being under no obligation to pay You any funds held in Your account.</p>
+                <p>We reserve the right to set off any positive balances in Your account against any amount owed by You to Us. Any notice provided by Us to You, either through Your account, the Site or by e-mail will be deemed received within 24 hours from the time in which such notice was provided by Us.We may amend the terms of this Agreement from time to time, at Our sole and exclusive discretion and without providing any prior notice, by posting the amended Agreement on the Site. You are responsible for checking whether the Agreement was amended before each time You use the Site and\or the Services. Any amendment shall come into force as of the day it was published on the Site. If You do not agree to be bound by the changes to the Agreement, do not use or access the Site and\or the Services, and inform Us in writing immediately. Your continued use of the Site and\or the Services constitutes Your acceptance to the amended Agreement.</p>
+                <p>CryptGates reserves the right to change the terms and conditions without prior notice. This Agreement constitutes the entire and whole agreement between You and Us in respect of the use of the Site and the Services, and supersedes any and all prior agreement between You and Us in relation to the use of the Site and the Services. You confirm that You have not relied on any representation of the Company save for any express representation made by Us in this Agreement. This Agreement has been drafted in the English language. In the event of any discrepancy between the meanings of any translated versions of this Agreement and the English language version, the meaning of the English language version shall prevail.</p>
+                <p>At permission of the vexed questions it is necessary to lean against terms and positions in language of original</p>
+            </div>
+        </div>
+        
+        <div class="element">
+            <div class="title">Offers rules:</div>
+            <div class="line"></div>
+            <div class="info">
+                <p>Taking a trade contract (offer) over an investor, a trader accedes to the terms of contract and gets in a management a mark sum in this offer. A contract is closed automatically after implementation of terms on him, on expiration of validity of the contract or in connection with non-fulfillment of mark terms (achievements of critical level of margin call on a trade account that specified investor). Also the company abandons after an investor a right for the pre-schedule closing (cancellations) of contract at appeal in the company, giving to video or photo (screen-shot) confirmative violations the trader of terms by contract. If a trader executed right all terms by contract, he gets a percentage from an income on this offer, that was indicated in the conditions of contract, on the account of Real. Facilities on this account are accessible for trade and subsequent conclusion on pay essential elements (from that a deposit was brought in) only after verification of account.</p>
+                
+                <p>Unverified accounts are limited to the number of Offer, available to them to fulfill one offer with a maximum payment of up to 45%.</p>
+                <p>Verified accounts are not limited to the number of available execution offers.</p>
+                
+                <p>The contract for trust management (Offer), have the right to issue all verified trader who has the status of 'Investor''.</p>
+                <p>The status of 'Investor' verified assigned to traders who fund your account in an amount not less than $ 2000,00 .</p>
+            </div>
+        </div>
+        
+        <div class="element">
+            <div class="title">Procedure of verification:</div>
+            
+            <div class="line"></div>
+            <div class="info">
+                <p>Procedure of verification of account is obligatory for all new clients of the company and takes place automatically after addition to the account on a minimum sum. The minimum sum of addition is indicated in a division 'Deposit' after authorizing on the web-site of the company and can change at different actions or change terms of deposit's minimum sum.</p>
+            </div>
+        </div>
+    </div>
+</div>        
+        <style>
+    #contacts{
+        width:100%;
+        height:115px;
+        background: url('/images/contacts_bg.jpg') no-repeat center center;
+        background-size: cover;
+        display:none;
+    }
+    #contacts .phone_ico{
+        display: inline-block;
+        vertical-align: middle;
+        margin-right:20px;
+        width:98px;
+        height:59px;
+        background: url('/images/contact_icons.png');
+        background-position: 0px 0px;
+    }
+    #contacts .mail_ico{
+        display:inline-block;
+        vertical-align: middle;
+        margin-right:20px;
+        width:77px;
+        height:59px;
+        background: url('/images/contact_icons.png');
+        background-position: -130px -4px;
+    }
+</style>
+<div id='contacts'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-sm-4' style='font-size:23px; font-weight:bolder; padding-top:40px;'>
+                You can contact us            </div>
+            <div class='col-sm-4' style='font-size:22px; font-weight:bolder;padding-top:26px;'>
+                            </div>
+            <div class='col-sm-4' style='font-size: 18px; font-weight:bolder;padding-top:26px;'>
+                <div class='mail_ico'></div>
+                support@platformail.com            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #footer{
+        padding-top:40px;
+        height:auto;
+        width:100%;
+        background: #f3f3f1;
+    }            
+    #footer .logo{
+        background: url('/images/logo.png');
+        width:283px;
+        height:48px;
+        margin-bottom:20px;
+    }
+    #footer .menu ul{
+        padding-left:0px;
+    }
+    #footer .menu li{
+        margin-bottom:12px;
+    }
+    #footer .menu li a{
+        
+        font-size:16px;
+        font-weight: bolder;
+        color:#1d242b ;
+    }
+    #footer .menu li.sub{
+        margin-bottom:8px;
+    }
+    #footer .menu li.sub a{
+        margin-bottom:8px;
+        font-size:13px;
+        font-weight: normal;
+    }
+    #footer .bottom{
+        margin-top:40px;
+        padding-top:25px;
+        border-top:1px solid #c7c9c9;
+        font-size:12px;
+    }
+    #footer .bottom .copyrights{
+        font-size:13px;
+        font-weight: bolder;
+    }
+</style>
+<div id="footer">
+    <div class='container'>
+        <div class='top'>
+            <div class='row'>
+                <div class='col-sm-4'>
+                    <div class='logo'></div>
+                    <p>For all questions please contact customer support:<br><a style="margin-bottom:14px;display:block;" href='mailto:support@platformail.com'>support@platformail.com</a></p>
+                </div>
+                <div class='col-sm-8'>
+                    <div class='row menu'>
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/'>HOME</a></li>
+                                <li><a href='/termsandconditions/'>RULES</a></li>
+                                <li><a href='/faq/'>FAQ</a></li>                                
+                            </ul>   
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>                                
+                                <li><a href='/aboutus/'>ABOUT US</a></li>
+                                <li><a href='/faq/bonus/'>BONUS</a></li>                                
+                            </ul>   
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/faq/'>INFO</a></li>
+                                <li class='sub'><a href='/faq/glossary/'>GLOSSARY</a></li>
+                                <li class='sub'><a href='/faq/disclaimer/'>DISCLAIMER</a></li>
+                                <li class='sub'><a href='/faq/privacy/'>PRIVACY</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/trade/'>TRADE</a></li>
+                                <li class='sub'><a href='/trade/'>60 Seconds</a></li>
+                            </ul>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='bottom'>
+            <p>You haven`t made any investments in Option builder tool yet. To make an investment you should: Choose the asset you want to trade with, enter your current investment amount. And choose how will asset behavior: if it will rise - press HIGH button, other way press LOW button. Select the profit and the pay off level. Confirm your deal with the Confirmal button. Due to different time zones at the worldwide stocks, some assets could be inactive or might has limited availability. If the asset`s value didn`t change sinse made an investment, the full investment price will be returned to investor.</p>
+            <p>Legal: cryptgates.com is a trading name of CryptGates, registration number: IBC 2015 (Suite 305, Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
+            <div class='copyrights'>© 2025 | CryptGates - All rights reserved</div>
+        </div>
+<a href="https://freekassa.ru" target="_blank" rel="noopener noreferrer">
+  <img src="/images/freekasa.png" title="Прием платежей на сайте">
+</a>
+    </div>
+</div><script src="/js/global.js"></script>    </body>
+</html>

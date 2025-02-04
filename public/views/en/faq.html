@@ -1,0 +1,1216 @@
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:; default-src *; style-src * 'self' 'unsafe-inline' 'unsafe-eval'; script-src * 'self' 'unsafe-inline' 'unsafe-eval';">
+        <meta charset="UTF-8">
+        <meta name="Keywords" content="Форекс, Биржа Форекс, Бинарные Опционы, торговля акциями, Биржа">
+        <meta name="description" content="Надежная торговая платформа бинарных опционов с доходностью до 76%. Доступные инструменты для ведения торговли, обучающие материалы и простой в использовании интерфейс. "/>
+        <link rel="icon" type='image/png' href="/images/small-logo.png">
+        <title>FAQ | CryptGates</title>
+        <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/css/main.css?v4" rel="stylesheet" type="text/css" />        <script src="/js/jquery.js" type="text/javascript" /></script><script src="/js/bootstrap.min.js" type="text/javascript" /></script><script src="/js/main.js" type="text/javascript" /></script><meta name="frog" content="b4f134ae336d927bcf8206d38534bf79" />
+    </head>
+    <body ng-app="app">
+            <script>
+
+    </script>
+    <style>
+        #loginModal .label{
+            color: black;
+        }
+            
+        #loginModal .modal-dialog{
+            width:370px;
+        }
+        
+        #loginModal .modal-content{
+            padding:0px 30px;
+            border-radius: 0px;
+            border:1px solid #374057;
+            /*background: url('/images/auth_form_bg.jpg') no-repeat center center;
+            background-size:cover;*/
+            background: #2a3143;
+        }
+        #loginModal .modal-body{
+            padding:15px 0px;
+        }
+        #loginModal .modal-header{
+            padding-left:0px;
+            padding-right:0px;
+        }
+        #loginModal .modal-title{
+            height: 37px;
+            
+            font-size:18px;
+            color:white;
+            font-weight:bolder;            
+            text-align: left;
+            border-radius: 5px;
+        }
+        #loginModal input[type=text],#loginModal input[type=password]{
+            border-radius: 0px;
+        }
+        #loginModal input[type=submit]{
+            /*background: #fec307;*/
+            background: #6cbb2c;
+            color: #0e1322;
+            font-weight:bolder;
+            border:none;
+        }
+        #loginModal .modal-header{            
+            border-bottom: 1px solid #2c3039;
+        }
+        #loginModal .modal-header .close{
+            color:#f2f2f0;
+            opacity: 1;
+             text-shadow: 0 1px 0 #f4ae01;
+        }
+        
+        #loginModal .modal-body a.forgot{
+            color:#9da3b1;
+            font-weight:bolder;
+            font-size:12px;
+            margin-top:8px;
+            display:block;
+        }
+        #loginModal .error{
+            font-weight:bolder;
+            font-size:13px;
+            color: red;
+        }
+    </style>
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title font-header">AUTHORIZATION</h4>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <div class="row">                                
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" placeholder="E-mail" name='email'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input type="password" class="form-control" placeholder='Password' name='password'>
+                                <div class="error"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="border-bottom: 1px solid #444f6b; padding-bottom:30px;">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!--<a href="#forgotModal" data-target="#forgotModal" data-toggle="modal" class="forgot">Forgot your password?</a>-->
+                                <a href="/signin/forgot/" class="forgot">Forgot your password?</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="submit" class="btn btn-primary pull-right" value="Login">
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top:15px;">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="label" style="color: white; font-size:14px; font-weight:normal;">You dont have account?</div>
+                                <a href="/registration/" style="color:#6cbb2c;" class="pull-right">Open account</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>        <style>
+    #personal{
+        background: #31394d;
+        height: 44px;
+        width:100%;
+        border-bottom:1px solid #363f54;
+        margin-bottom: -1px;
+        z-index: 10;
+        position:relative;
+    }
+    #personal ul li{
+        letter-spacing:normal;  
+        vertical-align: top;
+        height:44px;;
+    }
+    #personal .balance{
+        font-weight:bold;
+        font-size: 17px;
+        color: #fec307;
+        margin-left:15px;
+        margin-right:15px;
+        display:inline-block;
+        vertical-align: middle;
+    }
+    #personal .modes{
+        cursor:pointer;
+        padding:12px 20px;
+        color: #a9acb4;
+        font-size:14px;
+        font-weight: bolder;
+        margin:0px;
+        border-left: 1px solid #3c455e;
+        border-right: 1px solid #3c455e;
+    }
+    #personal .modes a{
+        text-decoration: none;
+        color: #a9acb4;
+    }
+
+    #personal .modes .status{
+        margin-top:-3px;
+        margin-right:10px;
+        display:inline-block;
+        vertical-align: middle;
+        background: url('/images/acc-buttons.png');
+        width:17px;
+        height:17px;
+    }
+    #personal .modes .status{
+        background-position: -23px -66px;
+    }
+    #personal .modes:hover .status{
+        background-position: -3px -65px;
+    }
+    #personal .modes.active .status{
+        background-position: -1px -47px;
+    }
+    
+    #personal .modes.active,#personal .modes:hover{
+        background: #3c455e;
+        color: #f3f3f1;
+    }
+    #personal .info{
+        padding:10px 10px;
+    }
+    #personal .info .ico{
+        margin-top:-3px;
+        margin-right:10px;        
+        width:19px;
+        height:20px;
+        background:url('/images/acc-buttons.png');
+        background-position:-59px 0px;
+        display:inline-block; 
+        vertical-align: middle;
+    }
+    #personal .info .username{
+        line-height: 10px;
+        text-transform: uppercase;
+        color: #f3f3f1;
+        font-size:12px;
+        font-weight:bolder;
+    }
+    #personal .info .email{
+        color:#a9acb4;
+        font-size:10px;
+        font-weight:bold;
+    }
+    #personal .logout{
+        padding:12px;
+        
+    }
+    #personal .logout a{
+        color:#f3f3f1;
+        font-size:12px;
+        font-weight:900;
+    }
+    #personal .logout .ico{
+        margin-top:-2px;
+        display:inline-block;
+        vertical-align: middle;
+        width:29px;
+        height:20px;
+        background:url('/images/acc-buttons.png');
+        background-position:-59px -23px;
+        margin-right:5px;
+    }
+</style>
+<nav class="navbar navbar-default " id="header" style="display: none">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#headerMenu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            <a class="navbar-brand logo" href="/"></a>
+        </div>
+<style>
+    #header #headerMenu .language{
+        margin-top:12px;
+        margin-left:10px;        
+    }
+    #header #headerMenu .language .current_language{
+        background:#f3f3f1;
+    }
+    #header #headerMenu .language .current_language .lang{
+        color: #384259;
+    }
+    #header #headerMenu .language .current_language .lang .caret{
+        color: #384259;
+    }
+    #header #headerMenu .language .list a{
+        height:26px;
+        font-size:14px;
+    }
+</style>
+        <ul class="nav navbar-nav navbar-collapse collapse " id="headerMenu">
+                        <li class="active">
+                <a type="button" class="contacts_link" href="/faq/" data-toggle="collapse" data-target="#subMenu1" onclick="return false">
+                    Info                </a>
+                
+                <style>                    
+                    #header #headerMenu .submenu{
+                        
+                        top:75px;
+                        left:0px;
+                        margin-left:-70px;
+                        z-index:101;
+                        padding:0px;
+                        position:absolute;
+                        background: #3c455e;
+                        text-decoration: none;
+                        width:220px;
+                    }
+                    #header #headerMenu .submenu:after{
+                        display:block;
+                        position:absolute;
+                        top:-14px;
+                        left:50%;
+                        margin-left:-7px;
+                        content: ' ';
+                        border: 7px solid transparent; 
+                        border-bottom: 7px solid #3c455e;
+                        width:14px;
+                        height:14px;
+                        background: transparent;
+                    }
+                    
+                    #header #headerMenu .submenu li a{
+                        text-decoration: none;
+                        padding:12px 20px;
+                        display: block;
+                        color: #e0e0e2;
+                        font-size:14px;
+                        border-bottom: 1px solid #414b66;
+                        height:42px;
+                    }
+                    #header #headerMenu .submenu li a:last-child{
+                        border-bottom: none;
+                    }
+                    #header #headerMenu .submenu li a:hover{
+                        background: #2a3142;
+                    }
+                    
+                </style>
+                <ul class="collapse submenu" id="subMenu1">
+                    
+                    <li><a href="/faq/">FAQ</a></li>
+                    <li><a href="/faq/privacy/">Privacy</a></li>                    
+                    <li><a href="/faq/glossary/">Glossary</a></li>                    
+                    <li><a href="/termsandconditions/">Terms and Conditions</a></li>
+                </ul>
+            </li>
+                        <li class=""><a class="oustaff_link" href="/aboutus/">About Us</a></li>
+            <li class=""><a class="oustaff_link" href="/faq/bonus/">Bonus</a></li>
+                    </ul>
+        
+        <style>
+            #header .control_menu{
+                padding-top:20px;
+            }
+            #header .control_menu li{
+                margin-right:20px;
+                vertical-align: middle;
+            }
+            #header .control_menu li:last-child{
+                margin-right:0px;
+            }
+            #header.main .control_menu li a{
+                color:#13161c;
+            }
+            .control_menu li a{
+                font-size: 12px;
+                font-weight:900;
+                
+                color:#e0e0e2;
+            }
+            #header .control_menu .reg_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:0px -23px;
+                display:inline-block;
+                width:27px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .reg_icon{
+                background-position:0px 0px;
+            }
+            #header .control_menu .login_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:-32px -23px;
+                display:inline-block;
+                width:23px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .login_icon{
+                background-position:-32px 0px;
+            }
+            
+            #header .language{
+                margin-top:-3px;
+                position:relative;
+            }
+            #header .language .current_language{
+                cursor:pointer;
+                padding:6px 10px;
+                text-align: center;
+                background: #384259;
+                height: 30px;
+                border-radius: 5px;
+            }
+            #header .language .current_language .lang{
+                font-size:12px;
+                font-weight:900;
+                color: white;
+            }
+            #header .language .current_language .lang .caret{
+                margin-left:5px;
+                color: white;
+            }
+        </style>
+                <ul class="pull-right control_menu list-inline">
+            
+                <li class="pull-left">
+                    <a href="/registration/" class=""><span class="reg_icon"></span>REGISTRATION</a>
+                </li>
+                                <li class="pull-left">
+                    <a href="" data-toggle="modal" data-target="#loginModal"><span class="login_icon"></span>LOGIN</a>
+                </li>
+            
+
+            <li class="pull-left">
+                 <div class="language">
+                    <div class="current_language dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                                                    <div class="ico en"></div>
+                            <div class="lang">EN<div class="caret"></div></div>
+                                                    
+                    </div>
+
+                    <ul class="list collapse dropdown-menu" aria-expanded="false">
+                        <li>
+                            <a href="/en/faq/privacy/">
+                                <div class="ico en"></div>
+                                <div class="lang">English</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/ru/faq/privacy/">
+                            <div class="ico ru"></div>
+                            <div class="lang">Русский</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+            </div>
+</nav>
+<div id='personal'>
+    <div class='container'>
+        <ul class='list-inline pull-right' style='font-size:0px;letter-spacing:-1px;'>
+            <li style='padding-top:6px;'>
+	                            <a href='/account/deposit/card-fk/' class='btn btn-grey' style='display:inline-block; vertical-align: middle;'>Deposit</a>
+	                            <span class='balance'>$1,079.60</span>
+            </li>
+                                                                <li class="modes active">   
+                        <a href="/switch/?account=250239">
+                            <div class='status'></div>
+                            Demo                        </a>
+                    </li>
+                                                                                <li class="modes ">   
+                        <a href="/switch/?account=250240">
+                            <div class='status'></div>
+                            Real                        </a>
+                    </li>
+                                        
+            <!--<li class="modes">
+                <div class='status'></div>
+                Demo
+            </li><li class="modes active">
+                <div class='status'></div>
+                Real
+            </li>-->
+            <li class='info'>
+                <div class='ico'></div>
+                <div style='display:inline-block; vertical-align: middle;'>
+                    <div class='username'>Саня Верняев</div>
+                    <div class='email'>olegmongol99812@gmail.com</div>
+                </div>
+            </li>
+            <li class='logout'>
+                <a href="/en/logout">
+                    <div class='ico'></div>
+                    Logout                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    #header{        
+        margin:0px;
+        padding-top:5px;
+        height: 80px;
+        border:none;
+        background: white;
+        border-radius: 0px;
+    }
+    #header.main{
+        background:transparent;
+        border-top:1px solid transparent;
+    }
+    #header .logo{
+        position:relative;
+        top:10px;
+        width:283px;
+        height:48px;
+        background: url('/images/logo2.png');
+    }
+
+    #header.main .logo{
+        background: url('/images/logo.png');
+    }
+    
+    #header #headerMenu{
+        margin-top:5px;
+    }
+    
+    #header #headerMenu li a{
+        height:45px;
+        color: #e0e0e2;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    #header.main #headerMenu li a{
+        color:#13161c;
+    }
+    #header #headerMenu li.active a{        
+        background: none;
+        border-bottom: 3px solid #ff4b00;
+    }
+    
+    #header{
+        border-top:1px solid #6dba2e;
+        background:#2a3142;
+    }
+</style>
+
+<nav class="navbar navbar-default " id="header" style="display: none">
+    <div class='container'>
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#headerMenu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            <a class="navbar-brand logo" href="/"></a>
+        </div>
+<style>
+    #header #headerMenu .language{
+        margin-top:12px;
+        margin-left:10px;        
+    }
+    #header #headerMenu .language .current_language{
+        background:#f3f3f1;
+    }
+    #header #headerMenu .language .current_language .lang{
+        color: #384259;
+    }
+    #header #headerMenu .language .current_language .lang .caret{
+        color: #384259;
+    }
+    #header #headerMenu .language .list a{
+        height:26px;
+        font-size:14px;
+    }
+</style>
+        <ul class="nav navbar-nav navbar-collapse collapse pull-right" id="headerMenu">
+                            <li class=""><a href="/account/history/">Analytics</a></li>
+                        <li class="active">
+                <a type="button" class="contacts_link" href="/faq/" data-toggle="collapse" data-target="#subMenu1" onClick="return false">
+                    Info                </a>
+                
+                <style>                    
+                    #header #headerMenu .submenu{
+                        
+                        top:75px;
+                        left:0px;
+                        margin-left:-70px;
+                        z-index:101;
+                        padding:0px;
+                        position:absolute;
+                        background: #3c455e;
+                        text-decoration: none;
+                        width:220px;
+                    }
+                    #header #headerMenu .submenu:after{
+                        display:block;
+                        position:absolute;
+                        top:-14px;
+                        left:50%;
+                        margin-left:-7px;
+                        content: ' ';
+                        border: 7px solid transparent; 
+                        border-bottom: 7px solid #3c455e;
+                        width:14px;
+                        height:14px;
+                        background: transparent;
+                    }
+                    
+                    #header #headerMenu .submenu li a{
+                        text-decoration: none;
+                        padding:12px 20px;
+                        display: block;
+                        color: #e0e0e2;
+                        font-size:14px;
+                        border-bottom: 1px solid #414b66;
+                        height:42px;
+                    }
+                    #header #headerMenu .submenu li a:last-child{
+                        border-bottom: none;
+                    }
+                    #header #headerMenu .submenu li a:hover{
+                        background: #2a3142;
+                    }
+                    
+                </style>
+                <ul class="collapse submenu" id="subMenu1">
+                    
+                    <li><a href="/faq/">FAQ</a></li>
+                    <li><a href="/faq/privacy/">Privacy</a></li>                    
+                    <li><a href="/faq/glossary/">Glossary</a></li>                    
+                    <li><a href="/termsandconditions/">Terms and Conditions</a></li>
+                </ul>
+            </li>
+                            <li class=""><a class="oustaff_link" href="/trade/">Trade</a></li>
+                        <li class=""><a class="oustaff_link" href="/aboutus/">About Us</a></li>
+            <li class=""><a class="oustaff_link" href="/faq/bonus/">Bonus</a></li>
+                        <li class=""><a class="oustaff_link" href="/account/personalinfo/">Personal Info</a></li>
+            <li>
+                <div class='language'>
+                    <div class='current_language dropdown-toggle'  data-toggle="dropdown" href="#" aria-expanded="false">
+                                                    <div class='ico en'></div>
+                            <div class='lang'>EN<div class='caret'></div></div>
+                                                    
+                    </div>
+
+                    <ul class='list collapse dropdown-menu' aria-expanded="false">
+                        <li>
+                            <a href='/en/faq/'>
+                                <div class='ico en'></div>
+                                <div class='lang'>English</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href='/ru/faq/'>
+                            <div class='ico ru'></div>
+                            <div class='lang'>Русский</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+                    </ul>
+        
+        <style>
+            #header .control_menu{
+                padding-top:20px;
+            }
+            #header .control_menu li{
+                margin-right:20px;
+                vertical-align: middle;
+            }
+            #header .control_menu li:last-child{
+                margin-right:0px;
+            }
+            #header.main .control_menu li a{
+                color:#13161c;
+            }
+            .control_menu li a{
+                font-size: 12px;
+                font-weight:900;
+                
+                color:#e0e0e2;
+            }
+            #header .control_menu .reg_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:0px -23px;
+                display:inline-block;
+                width:27px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .reg_icon{
+                background-position:0px 0px;
+            }
+            #header .control_menu .login_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:-32px -23px;
+                display:inline-block;
+                width:23px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .login_icon{
+                background-position:-32px 0px;
+            }
+            
+            #header .language{
+                margin-top:-3px;
+                position:relative;
+            }
+            #header .language .current_language{
+                cursor:pointer;
+                padding:6px 10px;
+                text-align: center;
+                background: #384259;
+                height: 30px;
+                border-radius: 5px;
+            }
+            #header .language .current_language .lang{
+                font-size:12px;
+                font-weight:900;
+                color: white;
+            }
+            #header .language .current_language .lang .caret{
+                margin-left:5px;
+                color: white;
+            }
+        </style>
+            </div>
+</nav>
+    <style>
+        #submenu{
+            
+            margin-bottom:0px;
+            height: 46px;
+            background: #6dba2e;
+        }
+        #submenu .table{
+            height: 46px;;
+        }
+
+        #submenu .table td{
+            padding:0px;
+            vertical-align: middle;
+            text-align: center;
+            border:none;
+            border-left:1px solid #63a82a;
+        }
+        #submenu .table td:last-child{
+            border-right:1px solid #63a82a;
+        }
+        #submenu .table td.active,#submenu .table td:hover{
+            background: #63a82a;
+        }
+
+        #submenu a{
+            padding:10px;
+            width:100%;
+            height:46px;
+            display:block;
+            color: white;
+            font-size:15px;
+            font-weight:bolder;
+        }
+        #submenu a:hover{
+            text-decoration: none;
+        }
+
+    </style>
+    <div id="submenu" style="display: none">
+  <div class="container">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td class="">
+            <a href="/trade/">Trade</a>
+          </td>
+          <td class="">
+            <a href="/autotrade/">Robot</a>
+          </td>
+          <td class="">
+            <a href="/account/deposit/card-fk/">Deposit</a>
+          </td>
+          <td class="">
+            <a href="/account/withdrawal/cc">Withdrawal</a>
+          </td>
+          <td class="">
+            <a href="/account/transactions/">Transactions</a>
+          </td>
+          <td class="">
+            <a href="/account/bonuses/">Bonuses</a>
+          </td>
+          <td class="active">
+            <a href="/account/history/">History</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+                <script>
+    $('document').ready(function () {
+        //$('.faq .element').not('.active').click(function(){
+        $('.faq .element').click(function () {
+            if ($(this).attr('class').indexOf('active') != -1)
+                return;
+            $('.faq .element').removeClass('active');
+            $(this).addClass('active');
+        });
+    });
+</script>
+<div class="container">
+    <div class="pagetitle">Frequently asked Questions.</div>
+<style>
+    .tabs-faq{
+        float:right;
+        margin-top:40px;
+    }
+    .tabs-faq li{
+        margin-left:15px;
+    }
+    .tabs-faq a{
+        font-size:16px;
+        color: #13161c;
+        font-weight: bolder;
+        
+    }
+    .tabs-faq a:hover{
+        text-decoration: none;
+    }
+    .tabs-faq li.active a{
+        padding-bottom:10px;
+        border-bottom: 2px dashed #13161c;
+    }
+    
+</style>
+    <ul class="tabs-faq list-inline" role="tablist">
+        <li class="tab active" role="presentation">
+            <a aria-expanded="true" aria-controls="home" class="tab-title" data-toggle="tab" href="#tab-content-1" role="tab">Public Answers</a>
+        </li>
+        <li class="tab" role="presentation">
+            <a aria-expanded="false" aria-controls="home" class="tab-title" data-toggle="tab" href="#tab-content-2" role="tab">Finance</a>
+        </li>
+        <li class="tab" role="presentation">
+            <a aria-expanded="false" aria-controls="home" class="tab-title" data-toggle="tab" href="#tab-content-3" role="tab">Trading</a>
+        </li>
+    </ul>
+
+    <div class='faq tab-content'>
+        <div class="tab-pane active" id="tab-content-1" role="tabpanel">
+            <div class="element">
+                <div class="title">What are binary options?</div>
+                <div class="line"></div>
+
+                <div class="info">
+                    <p>Is an option with a fixed profit, where payout is determined at the onset of the contract. It pays a fixed amount of cash if the option expires in-the-money, independent of themagnitude by which the price of the underlying asset moves.</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">What is a "Call" option?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>An option that provides the holder with a profit when the underlying asset increases in price compared with the level it was purchased at.</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">What is a put options?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>An option that provides the holder with a profit when the underlying asset depreciates relative to the purchase level.</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">What return will I get for a successful investment?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>A successful investment will result in a guaranteed return indicated on the site for the underlying asset that you selected..</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">How long does the deal last?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>The deal lasts untill expiration time, that has being chosen before</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">Could i finish the deal before expiration time?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>After confirming the deal, expiration time couldn`t be changed.</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">What return will I get in the event that the option expires out-of-the-money?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>In the event that the option expires out-of-the-money, you`ll recieve a refund, depending of selected profit/refund level (Available in options builder only). For example: investment with a 60/20% profit means, that you will recieve your investment and the 60% of investment if you`ll win, otherway you will get a 20% refund of investment. However refund in lost options are not available in "60 seconds" and "Classic binary options" because of high profit level. </p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">What is expiration time</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>The expiration time is the time and date on which an option expires.</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">Do I have to download software in order to trade with CryptGates?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>There is absolutely no need for you to download anything before you can start trading with CryptGates. All you need to do is register and deposit funds into your account and you`ll be ready to start trading binary options for yourself.</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">How does the company recieve quotes?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>Stock provides binary options with current price of different assets regularly.</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">What does an Underlying Asset means?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>It means the option you create using a commodity, index, stock, currency pair or any other financial asset.</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">How to invest?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>Investment is easy: choose your asset to trade and choose "call" or a "put" option by clicking on it. Clicking on the call/put button will open a quick investment window where you need to type in the amount you wish to invest and approve execution. Keep in mind that rates keep updating in the investment sheet.</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">How could i cancel the deal if i did not push a "Submit" button?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>The deal will not apply until you push a "Submit" button. So You can choose another asset or just select another trading tool.</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">What is the expiry level?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>The expiry level is the level of the underlying asset at the time of expiry of the asset according to Stock.</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">What happens if the expiry level of a given underlying asset is identical to the level at which the transaction was made?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>In case of expiry at an identical level to the transaction level, the amount of the investment is returned to the customer.</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">Why can`t I make an investment?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>Investments in all assets can be made during market trading hours, Outside market trading hours, the asset will not be displayed. Further reason might be a lack of funds in your account for the requested investment. In any other case please contact our support team at support@CryptGates.com</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">Why do assets are not displayed sometimes?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    Only active assets open for trading are available for making an investment.                </div>
+            </div>
+
+
+            <div class="element">
+                <div class="title">Do i have to make a deposit to register?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>Registration does not require deposit and absolutely free</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">What is the difference between stock and binary options?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>Classic "vanilla" stock options has a much bigger expire time and uknown profit. Binary options may last even one minute and has a fixed profit level.</p>
+                </div>
+            </div>
+
+
+            <div class="element">
+                <div class="title">How many time needed to transfer funds to my account?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>As rule less than one minute.</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">How many time needed for withdrawal operation?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>As rule from one to three days.</p>
+                </div>
+            </div>
+            <div class="element">
+                <div class="title">How can I access my transaction history?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>Just click on your "Account" section and view all of your deposits, withdrawals and history.</p>
+                </div>
+            </div>
+            <div class="element">
+                <div class="title">How can I deposit money?</div>
+
+                <div class="line"></div>
+                <div class="info">                
+                    <p>Please refer to "Deposit" page in Your account profile. We accept all major credit cards (Visa, MasterCard etc.), Maestro debit cards, wire transfers and Moneybookers e-wallet</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">When could i make a deal?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>In a 60-second options you can make a deal in a minute before the option will expire. Other binary options investments could be made not less than 5 minutes before expire time.</p>
+                </div>
+            </div>
+
+            <div class="element">
+                <div class="title">How fast can I start trading?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>You should register and make a deposit. Than you will be able to make an investments.</p>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="tab-content-2" role="tabpanel">
+            <div class="element">
+                <div class="title">How fast can I start trading?</div>
+
+                <div class="line"></div>
+                <div class="info">
+                    <p>You should register and make a deposit. Than you will be able to make an investments.</p>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane active" id="tab-content-3" role="tabpanel">
+        </div>
+    </div>
+</div>        
+        <style>
+    #contacts{
+        width:100%;
+        height:115px;
+        background: url('/images/contacts_bg.jpg') no-repeat center center;
+        background-size: cover;
+        display:none;
+    }
+    #contacts .phone_ico{
+        display: inline-block;
+        vertical-align: middle;
+        margin-right:20px;
+        width:98px;
+        height:59px;
+        background: url('/images/contact_icons.png');
+        background-position: 0px 0px;
+    }
+    #contacts .mail_ico{
+        display:inline-block;
+        vertical-align: middle;
+        margin-right:20px;
+        width:77px;
+        height:59px;
+        background: url('/images/contact_icons.png');
+        background-position: -130px -4px;
+    }
+</style>
+<div id='contacts'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-sm-4' style='font-size:23px; font-weight:bolder; padding-top:40px;'>
+                You can contact us            </div>
+            <div class='col-sm-4' style='font-size:22px; font-weight:bolder;padding-top:26px;'>
+                            </div>
+            <div class='col-sm-4' style='font-size: 18px; font-weight:bolder;padding-top:26px;'>
+                <div class='mail_ico'></div>
+                support@platformail.com            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #footer{
+        padding-top:40px;
+        height:auto;
+        width:100%;
+        background: #f3f3f1;
+    }            
+    #footer .logo{
+        background: url('/images/logo.png');
+        width:283px;
+        height:48px;
+        margin-bottom:20px;
+    }
+    #footer .menu ul{
+        padding-left:0px;
+    }
+    #footer .menu li{
+        margin-bottom:12px;
+    }
+    #footer .menu li a{
+        
+        font-size:16px;
+        font-weight: bolder;
+        color:#1d242b ;
+    }
+    #footer .menu li.sub{
+        margin-bottom:8px;
+    }
+    #footer .menu li.sub a{
+        margin-bottom:8px;
+        font-size:13px;
+        font-weight: normal;
+    }
+    #footer .bottom{
+        margin-top:40px;
+        padding-top:25px;
+        border-top:1px solid #c7c9c9;
+        font-size:12px;
+    }
+    #footer .bottom .copyrights{
+        font-size:13px;
+        font-weight: bolder;
+    }
+</style>
+<div id="footer">
+    <div class='container'>
+        <div class='top'>
+            <div class='row'>
+                <div class='col-sm-4'>
+                    <div class='logo'></div>
+                    <p>For all questions please contact customer support:<br><a style="margin-bottom:14px;display:block;" href='mailto:support@platformail.com'>support@platformail.com</a></p>
+                </div>
+                <div class='col-sm-8'>
+                    <div class='row menu'>
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/'>HOME</a></li>
+                                <li><a href='/termsandconditions/'>RULES</a></li>
+                                <li><a href='/faq/'>FAQ</a></li>                                
+                            </ul>   
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>                                
+                                <li><a href='/aboutus/'>ABOUT US</a></li>
+                                <li><a href='/faq/bonus/'>BONUS</a></li>                                
+                            </ul>   
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/faq/'>INFO</a></li>
+                                <li class='sub'><a href='/faq/glossary/'>GLOSSARY</a></li>
+                                <li class='sub'><a href='/faq/disclaimer/'>DISCLAIMER</a></li>
+                                <li class='sub'><a href='/faq/privacy/'>PRIVACY</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/trade/'>TRADE</a></li>
+                                <li class='sub'><a href='/trade/'>60 Seconds</a></li>
+                            </ul>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='bottom'>
+            <p>You haven`t made any investments in Option builder tool yet. To make an investment you should: Choose the asset you want to trade with, enter your current investment amount. And choose how will asset behavior: if it will rise - press HIGH button, other way press LOW button. Select the profit and the pay off level. Confirm your deal with the Confirmal button. Due to different time zones at the worldwide stocks, some assets could be inactive or might has limited availability. If the asset`s value didn`t change sinse made an investment, the full investment price will be returned to investor.</p>
+            <p>Legal: cryptgates.com is a trading name of CryptGates, registration number: IBC 2015 (Suite 305, Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
+            <div class='copyrights'>© 2025 | CryptGates - All rights reserved</div>
+        </div>
+<a href="https://freekassa.ru" target="_blank" rel="noopener noreferrer">
+  <img src="/images/freekasa.png" title="Прием платежей на сайте">
+</a>
+    </div>
+</div> <script src="/js/global.js"></script>   </body>
+</html>

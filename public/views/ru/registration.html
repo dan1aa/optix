@@ -1,0 +1,1242 @@
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:; default-src *; style-src * 'self' 'unsafe-inline' 'unsafe-eval'; script-src * 'self' 'unsafe-inline' 'unsafe-eval';">
+        <meta charset="UTF-8">
+        <meta name="Keywords" content="Форекс, Биржа Форекс, Бинарные Опционы, торговля акциями, Биржа">
+        <meta name="description" content="Надежная торговая платформа бинарных опционов с доходностью до 76%. Доступные инструменты для ведения торговли, обучающие материалы и простой в использовании интерфейс. "/>
+        <link rel="icon" type='image/png' href="/images/small-logo.png">
+        <title>Регистрация  | CryptGates</title>
+        <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/css/main.css?v4" rel="stylesheet" type="text/css" />        <script src="/js/jquery.js" type="text/javascript" /></script><script src="/js/bootstrap.min.js" type="text/javascript" /></script><script src="/js/main.js" type="text/javascript" /></script><meta name="frog" content="b4f134ae336d927bcf8206d38534bf79" />
+    </head>
+    <body ng-app="app">
+            <script>
+
+    </script>
+    <style>
+        #loginModal .label{
+            color: black;
+        }
+            
+        #loginModal .modal-dialog{
+            width:370px;
+        }
+        
+        #loginModal .modal-content{
+            padding:0px 30px;
+            border-radius: 0px;
+            border:1px solid #374057;
+            /*background: url('/images/auth_form_bg.jpg') no-repeat center center;
+            background-size:cover;*/
+            background: #2a3143;
+        }
+        #loginModal .modal-body{
+            padding:15px 0px;
+        }
+        #loginModal .modal-header{
+            padding-left:0px;
+            padding-right:0px;
+        }
+        #loginModal .modal-title{
+            height: 37px;
+            
+            font-size:18px;
+            color:white;
+            font-weight:bolder;            
+            text-align: left;
+            border-radius: 5px;
+        }
+        #loginModal input[type=text],#loginModal input[type=password]{
+            border-radius: 0px;
+        }
+        #loginModal input[type=submit]{
+            /*background: #fec307;*/
+            background: #6cbb2c;
+            color: #0e1322;
+            font-weight:bolder;
+            border:none;
+        }
+        #loginModal .modal-header{            
+            border-bottom: 1px solid #2c3039;
+        }
+        #loginModal .modal-header .close{
+            color:#f2f2f0;
+            opacity: 1;
+             text-shadow: 0 1px 0 #f4ae01;
+        }
+        
+        #loginModal .modal-body a.forgot{
+            color:#9da3b1;
+            font-weight:bolder;
+            font-size:12px;
+            margin-top:8px;
+            display:block;
+        }
+        #loginModal .error{
+            font-weight:bolder;
+            font-size:13px;
+            color: red;
+        }
+    </style>
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title font-header">АВТОРИЗАЦИЯ</h4>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <div class="row">                                
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" placeholder="E-mail" name='email'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input type="password" class="register-pass form-control" placeholder='Пароль' name='password'>
+                                <div class="error"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="border-bottom: 1px solid #444f6b; padding-bottom:30px;">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!--<a href="#forgotModal" data-target="#forgotModal" data-toggle="modal" class="forgot">Забыли пароль?</a>-->
+                                <a href="/signin/forgot/" class="forgot">Забыли пароль?</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="submit" class="btn btn-primary pull-right" value="Войти">
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top:15px;">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="label" style="color: white; font-size:14px; font-weight:normal;">У вас нет аккаунта?</div>
+                                <a href="/registration/" style="color:#6cbb2c;" class="pull-right">Зарегистрируйтесь</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>        
+<style>
+    #header{        
+        margin:0px;
+        padding-top:5px;
+        height: 80px;
+        border:none;
+        background: white;
+        border-radius: 0px;
+    }
+    #header.main{
+        background:transparent;
+        border-top:1px solid transparent;
+    }
+    #header .logo{
+        position:relative;
+        top:10px;
+        width:283px;
+        height:48px;
+        background: url('/images/logo2.png');
+    }
+
+    #header.main .logo{
+        background: url('/images/logo.png');
+    }
+    
+    #header #headerMenu{
+        margin-top:5px;
+    }
+    
+    #header #headerMenu li a{
+        height:45px;
+        color: #e0e0e2;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    #header.main #headerMenu li a{
+        color:#13161c;
+    }
+    #header #headerMenu li.active a{        
+        background: none;
+        border-bottom: 3px solid #ff4b00;
+    }
+    
+    #header{
+        border-top:1px solid #6dba2e;
+        background:#2a3142;
+    }
+</style>
+
+<nav class="navbar navbar-default " id="header" style="display: none">
+    <div class='container'>
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#headerMenu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            <a class="navbar-brand logo" href="/"></a>
+        </div>
+<style>
+    #header #headerMenu .language{
+        margin-top:12px;
+        margin-left:10px;        
+    }
+    #header #headerMenu .language .current_language{
+        background:#f3f3f1;
+    }
+    #header #headerMenu .language .current_language .lang{
+        color: #384259;
+    }
+    #header #headerMenu .language .current_language .lang .caret{
+        color: #384259;
+    }
+    #header #headerMenu .language .list a{
+        height:26px;
+        font-size:14px;
+    }
+</style>
+        <ul class="nav navbar-nav navbar-collapse collapse " id="headerMenu">
+                        <li class="">
+                <a type="button" class="contacts_link" href="/faq/" data-toggle="collapse" data-target="#subMenu1" onClick="return false">
+                    Инфо                </a>
+                
+                <style>                    
+                    #header #headerMenu .submenu{
+                        
+                        top:75px;
+                        left:0px;
+                        margin-left:-70px;
+                        z-index:101;
+                        padding:0px;
+                        position:absolute;
+                        background: #3c455e;
+                        text-decoration: none;
+                        width:220px;
+                    }
+                    #header #headerMenu .submenu:after{
+                        display:block;
+                        position:absolute;
+                        top:-14px;
+                        left:50%;
+                        margin-left:-7px;
+                        content: ' ';
+                        border: 7px solid transparent; 
+                        border-bottom: 7px solid #3c455e;
+                        width:14px;
+                        height:14px;
+                        background: transparent;
+                    }
+                    
+                    #header #headerMenu .submenu li a{
+                        text-decoration: none;
+                        padding:12px 20px;
+                        display: block;
+                        color: #e0e0e2;
+                        font-size:14px;
+                        border-bottom: 1px solid #414b66;
+                        height:42px;
+                    }
+                    #header #headerMenu .submenu li a:last-child{
+                        border-bottom: none;
+                    }
+                    #header #headerMenu .submenu li a:hover{
+                        background: #2a3142;
+                    }
+                    
+                </style>
+                <ul class="collapse submenu" id="subMenu1">
+                    
+                    <li><a href="/faq/">FAQ</a></li>
+                    <li><a href="/faq/privacy/">Конфиденциальность</a></li>                    
+                    <li><a href="/faq/glossary/">Словарь Терминов</a></li>                    
+                    <li><a href="/termsandconditions/">Условия и положения</a></li>
+                </ul>
+            </li>
+                        <li class=""><a class="oustaff_link" href="/aboutus/">О нас</a></li>
+            <li class=""><a class="oustaff_link" href="/faq/bonus/">Бонус</a></li>
+                    </ul>
+        
+        <style>
+            #header .control_menu{
+                padding-top:20px;
+            }
+            #header .control_menu li{
+                margin-right:20px;
+                vertical-align: middle;
+            }
+            #header .control_menu li:last-child{
+                margin-right:0px;
+            }
+            #header.main .control_menu li a{
+                color:#13161c;
+            }
+            .control_menu li a{
+                font-size: 12px;
+                font-weight:900;
+                
+                color:#e0e0e2;
+            }
+            #header .control_menu .reg_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:0px -23px;
+                display:inline-block;
+                width:27px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .reg_icon{
+                background-position:0px 0px;
+            }
+            #header .control_menu .login_icon{
+                background: url('/images/acc-buttons.png');
+                background-position:-32px -23px;
+                display:inline-block;
+                width:23px;
+                height:20px;
+                vertical-align: middle;
+                margin-right:10px;
+            }
+            #header.main .control_menu .login_icon{
+                background-position:-32px 0px;
+            }
+            
+            #header .language{
+                margin-top:-3px;
+                position:relative;
+            }
+            #header .language .current_language{
+                cursor:pointer;
+                padding:6px 10px;
+                text-align: center;
+                background: #384259;
+                height: 30px;
+                border-radius: 5px;
+            }
+            #header .language .current_language .lang{
+                font-size:12px;
+                font-weight:900;
+                color: white;
+            }
+            #header .language .current_language .lang .caret{
+                margin-left:5px;
+                color: white;
+            }
+        </style>
+                <ul class="pull-right control_menu list-inline">
+            
+                <li class="pull-left">
+                    <a href="/registration/" class=""><span class="reg_icon"></span>РЕГИСТРАЦИЯ</a>
+                </li>
+                                <li class="pull-left">
+                    <a  href="" data-toggle="modal" data-target="#loginModal"><span class="login_icon"></span>ВХОД</a>
+                </li>
+            
+
+            <li class="pull-left">
+                 <div class='language'>
+                    <div class='current_language dropdown-toggle'  data-toggle="dropdown" href="#" aria-expanded="false">
+                                                    <div class='ico ru'></div>
+                            <div class='lang'>RU<div class='caret'></div></div>
+                                                    
+                    </div>
+
+                    <ul class='list collapse dropdown-menu' aria-expanded="false">
+                        <li>
+                            <a href='/en/registration/'>
+                                <div class='ico en'></div>
+                                <div class='lang'>English</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href='/ru/registration/'>
+                            <div class='ico ru'></div>
+                            <div class='lang'>Русский</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+            </div>
+</nav>
+                <style>
+    #registration{        
+        padding:30px;
+        background: #f3f3f1;
+        margin-bottom:30px;
+    }
+    #registration input[type=text],#registration select{
+        border-radius:0px;
+    }        
+    #registration.form .label{
+        color: black;
+        font-size:14px;
+        font-weight:bolder;
+    }
+    /*.form .error{
+        color: #de4242;
+        font-weight:normal;
+        font-size:13px;
+    }
+    .registration .form{
+        color: #989da6;
+    }
+    .registration .form .form-group{
+        margin-bottom:25px;
+    }
+    .registration .form .form-control{
+        border-radius: 0px;
+        background:#37404f;
+        border: 1px solid #787878;
+        color: #989da6;
+    }
+    
+    */
+</style>
+<script>
+    $('document').ready(function(){        
+        $('.form select[name=country]').change(function(){            
+            $('.form input[name=phone_code]').val($('option:selected',this).attr('code'));
+        });
+    });
+</script>
+
+<script>
+    $('document').ready(function(){
+        var x = new Date()
+        var currentTimeZoneOffsetInHours = -x.getTimezoneOffset()/60;
+        
+        if(currentTimeZoneOffsetInHours > 0){
+            currentTimeZoneOffsetInHours = '+'+Math.abs(currentTimeZoneOffsetInHours);
+        }else{
+            currentTimeZoneOffsetInHours = '-'+Math.abs(currentTimeZoneOffsetInHours);
+        }
+        
+        $('select[name=timezone] option[value="'+currentTimeZoneOffsetInHours+'"]').attr('selected','selected');
+    });
+</script>
+<style>
+    #registration_form .form-group{
+        position:relative;
+    }
+    
+    #registration_form .form-group.error_status::after{
+        position:absolute;
+        right:-25px;
+        top:28px;
+        content:'';
+        background: red;
+        width:14px;
+        height:14px;
+        background: url('/images/sprite.png');
+        background-position:-29px -94px;
+    }
+    #registration_form .form-group.success_status::after{
+        position:absolute;
+        right:-25px;
+        top:28px;
+        content:'';
+        background: red;
+        width:15px;
+        height:12px;
+        background: url('/images/sprite.png');
+        background-position:-7px -96px;
+    }
+</style>
+
+    <div class="container" style="width:550px">
+        <div style="margin-left:30px;" class="pagetitle">РЕГИСТРАЦИЯ</div>
+        <p style="font-size:12px;margin-left:30px;"><span style="color:#f84c28">*</span> Для регистрации на нашем сайте вам нужно заполнить все поля</p>
+                <form class="form" id="registration">
+                    <div class="form-group ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="label">Имя</div>
+                                <div class="error pull-right"></div>
+                            </div>
+                            <div class="col-sm-12">
+                                <input name='firstname' type="text" class="form-control" placeholder="Имя" value=''>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="label">Фамилия</div>
+                                <div class="error pull-right"></div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <input name='lastname' type="text" class="form-control" placeholder="Фамилия" value=''>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="label">Дата рождения</div>
+                                <div class="error pull-right"></div>
+                            </div>
+                            <div class="col-sm-4">
+                                <select class="form-control" name="year">
+                                    <option value="">ГОД</option>
+                                                                            <option value="2007"  >2007</option>
+                                                                            <option value="2006"  >2006</option>
+                                                                            <option value="2005"  >2005</option>
+                                                                            <option value="2004"  >2004</option>
+                                                                            <option value="2003"  >2003</option>
+                                                                            <option value="2002"  >2002</option>
+                                                                            <option value="2001"  >2001</option>
+                                                                            <option value="2000"  >2000</option>
+                                                                            <option value="1999"  >1999</option>
+                                                                            <option value="1998"  >1998</option>
+                                                                            <option value="1997"  >1997</option>
+                                                                            <option value="1996"  >1996</option>
+                                                                            <option value="1995"  >1995</option>
+                                                                            <option value="1994"  >1994</option>
+                                                                            <option value="1993"  >1993</option>
+                                                                            <option value="1992"  >1992</option>
+                                                                            <option value="1991"  >1991</option>
+                                                                            <option value="1990"  >1990</option>
+                                                                            <option value="1989"  >1989</option>
+                                                                            <option value="1988"  >1988</option>
+                                                                            <option value="1987"  >1987</option>
+                                                                            <option value="1986"  >1986</option>
+                                                                            <option value="1985"  >1985</option>
+                                                                            <option value="1984"  >1984</option>
+                                                                            <option value="1983"  >1983</option>
+                                                                            <option value="1982"  >1982</option>
+                                                                            <option value="1981"  >1981</option>
+                                                                            <option value="1980"  >1980</option>
+                                                                            <option value="1979"  >1979</option>
+                                                                            <option value="1978"  >1978</option>
+                                                                            <option value="1977"  >1977</option>
+                                                                            <option value="1976"  >1976</option>
+                                                                            <option value="1975"  >1975</option>
+                                                                            <option value="1974"  >1974</option>
+                                                                            <option value="1973"  >1973</option>
+                                                                            <option value="1972"  >1972</option>
+                                                                            <option value="1971"  >1971</option>
+                                                                            <option value="1970"  >1970</option>
+                                                                            <option value="1969"  >1969</option>
+                                                                            <option value="1968"  >1968</option>
+                                                                            <option value="1967"  >1967</option>
+                                                                            <option value="1966"  >1966</option>
+                                                                            <option value="1965"  >1965</option>
+                                                                            <option value="1964"  >1964</option>
+                                                                            <option value="1963"  >1963</option>
+                                                                            <option value="1962"  >1962</option>
+                                                                            <option value="1961"  >1961</option>
+                                                                            <option value="1960"  >1960</option>
+                                                                            <option value="1959"  >1959</option>
+                                                                            <option value="1958"  >1958</option>
+                                                                            <option value="1957"  >1957</option>
+                                                                            <option value="1956"  >1956</option>
+                                                                            <option value="1955"  >1955</option>
+                                                                            <option value="1954"  >1954</option>
+                                                                            <option value="1953"  >1953</option>
+                                                                            <option value="1952"  >1952</option>
+                                                                            <option value="1951"  >1951</option>
+                                                                            <option value="1950"  >1950</option>
+                                                                            <option value="1949"  >1949</option>
+                                                                            <option value="1948"  >1948</option>
+                                                                            <option value="1947"  >1947</option>
+                                                                            <option value="1946"  >1946</option>
+                                                                            <option value="1945"  >1945</option>
+                                                                            <option value="1944"  >1944</option>
+                                                                            <option value="1943"  >1943</option>
+                                                                            <option value="1942"  >1942</option>
+                                                                            <option value="1941"  >1941</option>
+                                                                            <option value="1940"  >1940</option>
+                                                                            <option value="1939"  >1939</option>
+                                                                            <option value="1938"  >1938</option>
+                                                                            <option value="1937"  >1937</option>
+                                                                            <option value="1936"  >1936</option>
+                                                                            <option value="1935"  >1935</option>
+                                                                            <option value="1934"  >1934</option>
+                                                                            <option value="1933"  >1933</option>
+                                                                            <option value="1932"  >1932</option>
+                                                                            <option value="1931"  >1931</option>
+                                                                            <option value="1930"  >1930</option>
+                                                                            <option value="1929"  >1929</option>
+                                                                            <option value="1928"  >1928</option>
+                                                                            <option value="1927"  >1927</option>
+                                                                            <option value="1926"  >1926</option>
+                                                                            <option value="1925"  >1925</option>
+                                                                    </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <select class="form-control" name="month">
+                                    <option value="">ММ</option>
+                                                                            <option value="1" >1</option>
+                                                                            <option value="2" >2</option>
+                                                                            <option value="3" >3</option>
+                                                                            <option value="4" >4</option>
+                                                                            <option value="5" >5</option>
+                                                                            <option value="6" >6</option>
+                                                                            <option value="7" >7</option>
+                                                                            <option value="8" >8</option>
+                                                                            <option value="9" >9</option>
+                                                                            <option value="10" >10</option>
+                                                                            <option value="11" >11</option>
+                                                                            <option value="12" >12</option>
+                                            
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <select class="form-control" name="day" >
+                                    <option value="">ДД</option>
+                                                                            <option value="1" >1</option>
+                                                                            <option value="2" >2</option>
+                                                                            <option value="3" >3</option>
+                                                                            <option value="4" >4</option>
+                                                                            <option value="5" >5</option>
+                                                                            <option value="6" >6</option>
+                                                                            <option value="7" >7</option>
+                                                                            <option value="8" >8</option>
+                                                                            <option value="9" >9</option>
+                                                                            <option value="10" >10</option>
+                                                                            <option value="11" >11</option>
+                                                                            <option value="12" >12</option>
+                                                                            <option value="13" >13</option>
+                                                                            <option value="14" >14</option>
+                                                                            <option value="15" >15</option>
+                                                                            <option value="16" >16</option>
+                                                                            <option value="17" >17</option>
+                                                                            <option value="18" >18</option>
+                                                                            <option value="19" >19</option>
+                                                                            <option value="20" >20</option>
+                                                                            <option value="21" >21</option>
+                                                                            <option value="22" >22</option>
+                                                                            <option value="23" >23</option>
+                                                                            <option value="24" >24</option>
+                                                                            <option value="25" >25</option>
+                                                                            <option value="26" >26</option>
+                                                                            <option value="27" >27</option>
+                                                                            <option value="28" >28</option>
+                                                                            <option value="29" >29</option>
+                                                                            <option value="30" >30</option>
+                                                                            <option value="31" >31</option>
+                                     
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="label">Страна</div>
+                                <div class="error pull-right"></div>
+                            </div>
+                            <div class="col-sm-12">
+                                <select class="form-control" name='country'>
+                                    <option value="0">Страна</option>
+                                                                            <option code="7" value="20">Российская Федерация</option>
+                                        <option code="7" value="16">Казахстан</option>
+                                        <option code="380" value="112">Украина</option>
+                                        <option code="375" value="113">Беларусь</option>
+                                        <option code="996" value="210">Кыргызстан</option>
+                                        <option code="994" value="153">Азербайджан</option>
+                                        <option code="374" value="126">Армения</option>
+                                        <option code="373" value="138">Молдова</option>
+                                        <option code="992" value="135">Таджикистан</option>
+                                        <option code="993" value="209">Туркменистан</option>
+                                        <option code="998" value="152">Узбекистан</option>
+                                        <option code="0" value="0" disabled="disabled">----------</option>
+                                                                                                                <option  code="61" value="1">Австралия</option>
+                                                                            <option  code="43" value="127">Австрия</option>
+                                                                            <option  code="994" value="153">Азербайджан</option>
+                                                                            <option  code="358" value="143">Аландские острова</option>
+                                                                            <option  code="355" value="128">Албания</option>
+                                                                            <option  code="213" value="100">Алжир</option>
+                                                                            <option  code="0" value="192">Американское Самоа</option>
+                                                                            <option  code="244" value="70">Ангола</option>
+                                                                            <option  code="1264" value="203">Ангуилья</option>
+                                                                            <option  code="376" value="218">Андорра</option>
+                                                                            <option  code="672" value="219">Антарктида</option>
+                                                                            <option  code="1268" value="146">Антигуа и Барбуда</option>
+                                                                            <option  code="599" value="165">Антильские острова</option>
+                                                                            <option  code="54" value="40">Аргентина</option>
+                                                                            <option  code="374" value="126">Армения</option>
+                                                                            <option  code="297" value="197">Арулько</option>
+                                                                            <option  code="93" value="53">Афганистан</option>
+                                                                            <option  code="1242" value="36">Багамские острова</option>
+                                                                            <option  code="880" value="54">Бангладеш</option>
+                                                                            <option  code="1246" value="176">Барбадос</option>
+                                                                            <option  code="973" value="151">Бахрейн</option>
+                                                                            <option  code="375" value="113">Беларусь</option>
+                                                                            <option  code="501" value="57">Белиз</option>
+                                                                            <option  code="32" value="56">Бельгия</option>
+                                                                            <option  code="229" value="74">Бенин</option>
+                                                                            <option  code="1441" value="26">Бермуды</option>
+                                                                            <option  code="359" value="121">Болгария</option>
+                                                                            <option  code="591" value="31">Боливия</option>
+                                                                            <option  code="387" value="141">Босния и Герцеговина</option>
+                                                                            <option  code="267" value="77">Ботсвана</option>
+                                                                            <option  code="55" value="58">Бразилия</option>
+                                                                            <option  code="246" value="220">Британская территория в Индийском океане</option>
+                                                                            <option  code="1284" value="167">Британские Виргинские острова</option>
+                                                                            <option  code="673" value="131">Бруней</option>
+                                                                            <option  code="47" value="178">Буве</option>
+                                                                            <option  code="226" value="87">Буркина Фасо</option>
+                                                                            <option  code="257" value="208">Бурунди</option>
+                                                                            <option  code="975" value="212">Бутан</option>
+                                                                            <option  code="678" value="201">Вануату</option>
+                                                                            <option  code="39" value="196">Ватикан</option>
+                                                                            <option  code="44" value="21">Великобритания</option>
+                                                                            <option  code="36" value="118">Венгрия</option>
+                                                                            <option  code="58" value="175">Венесуэла</option>
+                                                                            <option  code="0" value="28">Виргинские Острова США</option>
+                                                                            <option  code="0" value="158">Внешние малые острова США</option>
+                                                                            <option  code="670" value="228">Восточный Тимор</option>
+                                                                            <option  code="84" value="11">Вьетнам</option>
+                                                                            <option  code="241" value="72">Габон</option>
+                                                                            <option  code="509" value="155">Гаити</option>
+                                                                            <option  code="592" value="198">Гайана</option>
+                                                                            <option  code="220" value="82">Гамбия</option>
+                                                                            <option  code="233" value="66">Гана</option>
+                                                                            <option  code="590" value="205">Гваделупа</option>
+                                                                            <option  code="502" value="172">Гватемала</option>
+                                                                            <option  code="224" value="96">Гвинея</option>
+                                                                            <option  code="245" value="222">Гвинея-Бисау</option>
+                                                                            <option  code="49" value="29">Германия</option>
+                                                                            <option  code="44" value="207">Гернси</option>
+                                                                            <option  code="350" value="181">Гибралтар</option>
+                                                                            <option  code="504" value="164">Гондурас</option>
+                                                                            <option  code="0" value="8">Гонконг</option>
+                                                                            <option  code="1473" value="171">Гренада</option>
+                                                                            <option  code="299" value="221">Гренландия</option>
+                                                                            <option  code="30" value="18">Греция</option>
+                                                                            <option  code="995" value="124">Грузия</option>
+                                                                            <option  code="1671" value="156">Гуам</option>
+                                                                            <option  code="45" value="22">Дания</option>
+                                                                            <option  code="243" value="91">Демократическая Республика Конго</option>
+                                                                            <option  code="44" value="217">Джерси</option>
+                                                                            <option  code="253" value="103">Джибути</option>
+                                                                            <option  code="1767" value="41">Доминика</option>
+                                                                            <option  code="1809" value="170">Доминиканская республика</option>
+                                                                            <option  code="0" value="134">Европейский Союз</option>
+                                                                            <option  code="20" value="61">Египет</option>
+                                                                            <option  code="260" value="64">Замбия</option>
+                                                                            <option  code="212" value="245">Западная Сахара</option>
+                                                                            <option  code="263" value="90">Зимбабве</option>
+                                                                            <option  code="972" value="34">Израиль</option>
+                                                                            <option  code="0" value="6">Индия</option>
+                                                                            <option  code="62" value="45">Индонезия</option>
+                                                                            <option  code="962" value="191">Иордания</option>
+                                                                            <option  code="0" value="136">Ирак</option>
+                                                                            <option  code="0" value="30">Иран</option>
+                                                                            <option  code="353" value="55">Ирландия</option>
+                                                                            <option  code="354" value="116">Исландия</option>
+                                                                            <option  code="34" value="35">Испания</option>
+                                                                            <option  code="39" value="13">Италия</option>
+                                                                            <option  code="967" value="166">Йемен</option>
+                                                                            <option  code="238" value="79">Кабо-Верде</option>
+                                                                            <option  code="7" value="16">Казахстан</option>
+                                                                            <option  code="1345" value="162">Каймановы острова</option>
+                                                                            <option  code="855" value="49">Камбоджа</option>
+                                                                            <option  code="237" value="68">Камерун</option>
+                                                                            <option  code="1" value="24">Канада</option>
+                                                                            <option  code="974" value="190">Катар</option>
+                                                                            <option  code="254" value="71">Кения</option>
+                                                                            <option  code="357" value="117">Кипр</option>
+                                                                            <option  code="686" value="233">Кирибати</option>
+                                                                            <option  code="86" value="4">Китай</option>
+                                                                            <option  code="61" value="244">Кокосовые острова</option>
+                                                                            <option  code="57" value="163">Колумбия</option>
+                                                                            <option  code="269" value="105">Коморские острова</option>
+                                                                            <option  code="242" value="85">Конго</option>
+                                                                            <option  code="0" value="241">Корейская Народно-Демократическая Республика</option>
+                                                                            <option  code="506" value="173">Коста-Рика</option>
+                                                                            <option  code="225" value="239">Кот-д'Ивуар</option>
+                                                                            <option  code="0" value="226">Куба</option>
+                                                                            <option  code="965" value="142">Кувейт</option>
+                                                                            <option  code="996" value="210">Кыргызстан</option>
+                                                                            <option  code="856" value="240">Лаос</option>
+                                                                            <option  code="371" value="111">Латвия</option>
+                                                                            <option  code="266" value="83">Лесото</option>
+                                                                            <option  code="231" value="97">Либерия</option>
+                                                                            <option  code="961" value="137">Ливан</option>
+                                                                            <option  code="0" value="78">Ливия</option>
+                                                                            <option  code="370" value="144">Литва</option>
+                                                                            <option  code="423" value="213">Лихтенштейн</option>
+                                                                            <option  code="352" value="145">Люксембург</option>
+                                                                            <option  code="230" value="84">Маврикий</option>
+                                                                            <option  code="222" value="101">Мавритания</option>
+                                                                            <option  code="261" value="75">Мадагаскар</option>
+                                                                            <option  code="269" value="237">Майотта</option>
+                                                                            <option  code="0" value="50">Макау</option>
+                                                                            <option  code="389" value="147">Македония</option>
+                                                                            <option  code="265" value="69">Малави</option>
+                                                                            <option  code="60" value="2">Малайзия</option>
+                                                                            <option  code="223" value="73">Мали</option>
+                                                                            <option  code="960" value="52">Мальдивские острова</option>
+                                                                            <option  code="356" value="149">Мальта</option>
+                                                                            <option  code="212" value="99">Марокко</option>
+                                                                            <option  code="596" value="216">Мартиника</option>
+                                                                            <option  code="692" value="179">Маршалловы острова</option>
+                                                                            <option  code="52" value="25">Мексика</option>
+                                                                            <option  code="691" value="159">Микронезия</option>
+                                                                            <option  code="258" value="81">Мозамбик</option>
+                                                                            <option  code="373" value="138">Молдова</option>
+                                                                            <option  code="377" value="154">Монако</option>
+                                                                            <option  code="976" value="195">Монголия</option>
+                                                                            <option  code="1664" value="32">Монтсеррат</option>
+                                                                            <option  code="95" value="211">Мьянма</option>
+                                                                            <option  code="264" value="102">Намибия</option>
+                                                                            <option  code="674" value="236">Науру</option>
+                                                                            <option  code="977" value="43">Непал</option>
+                                                                            <option  code="227" value="92">Нигер</option>
+                                                                            <option  code="0" value="62">Нигерия</option>
+                                                                            <option  code="31" value="33">Нидерланды</option>
+                                                                            <option  code="505" value="169">Никарагуа</option>
+                                                                            <option  code="683" value="234">Ниуэ</option>
+                                                                            <option  code="64" value="48">Новая Зеландия</option>
+                                                                            <option  code="687" value="39">Новая Каледония</option>
+                                                                            <option  code="47" value="125">Норвегия</option>
+                                                                            <option  code="672" value="235">Норфолк</option>
+                                                                            <option  code="971" value="14">Объединенные Арабские Эмираты</option>
+                                                                            <option  code="968" value="122">Оман</option>
+                                                                            <option  code="44" value="200">Остров Мэн</option>
+                                                                            <option  code="290" value="243">Остров Святой Елены</option>
+                                                                            <option  code="682" value="180">Острова Кука</option>
+                                                                            <option  code="92" value="46">Пакистан</option>
+                                                                            <option  code="680" value="189">Палау</option>
+                                                                            <option  code="970" value="115">Палестина</option>
+                                                                            <option  code="507" value="130">Панама</option>
+                                                                            <option  code="675" value="51">Папуа Новая Гвинея</option>
+                                                                            <option  code="595" value="182">Парагвай</option>
+                                                                            <option  code="51" value="161">Перу</option>
+                                                                            <option  code="872" value="238">Питкэрн</option>
+                                                                            <option  code="48" value="110">Польша</option>
+                                                                            <option  code="351" value="17">Португалия</option>
+                                                                            <option  code="1787" value="27">Пуэрто Рико</option>
+                                                                            <option  code="0" value="3">Республика Корея</option>
+                                                                            <option  code="262" value="106">Реюньон</option>
+                                                                            <option  code="7" value="20">Российская Федерация</option>
+                                                                            <option  code="250" value="80">Руанда</option>
+                                                                            <option  code="40" value="123">Румыния</option>
+                                                                            <option  code="503" value="174">Сальвадор</option>
+                                                                            <option  code="685" value="184">Самоа</option>
+                                                                            <option  code="378" value="148">Сан-Марино</option>
+                                                                            <option  code="239" value="229">Сан-Томе и Принсипи</option>
+                                                                            <option  code="966" value="19">Саудовская Аравия</option>
+                                                                            <option  code="268" value="94">Свазиленд</option>
+                                                                            <option  code="47" value="242">Свальбард и Ян-Майен</option>
+                                                                            <option  code="1758" value="194">Святая Люсия</option>
+                                                                            <option  code="0" value="188">Северные Марианские острова</option>
+                                                                            <option  code="248" value="98">Сейшеллы</option>
+                                                                            <option  code="0" value="206">Сен-Мартен</option>
+                                                                            <option  code="508" value="204">Сен-Пьер и Микелон</option>
+                                                                            <option  code="221" value="65">Сенегал</option>
+                                                                            <option  code="1869" value="185">Сент Китс и Невис</option>
+                                                                            <option  code="381" value="120">Сербия</option>
+                                                                            <option  code="65" value="42">Сингапур</option>
+                                                                            <option  code="963" value="168">Сирия</option>
+                                                                            <option  code="421" value="119">Словакия</option>
+                                                                            <option  code="386" value="129">Словения</option>
+                                                                            <option  code="677" value="231">Соломоновы острова</option>
+                                                                            <option  code="252" value="89">Сомали</option>
+                                                                            <option  code="249" value="67">Судан</option>
+                                                                            <option  code="597" value="199">Суринам</option>
+                                                                            <option  code="0" value="23">США</option>
+                                                                            <option  code="232" value="88">Сьерра-Леоне</option>
+                                                                            <option  code="992" value="135">Таджикистан</option>
+                                                                            <option  code="66" value="9">Таиланд</option>
+                                                                            <option  code="886" value="7">Тайвань</option>
+                                                                            <option  code="255" value="63">Танзания</option>
+                                                                            <option  code="228" value="95">Того</option>
+                                                                            <option  code="690" value="47">Токелау</option>
+                                                                            <option  code="676" value="227">Тонга</option>
+                                                                            <option  code="1868" value="177">Тринидад и Тобаго</option>
+                                                                            <option  code="688" value="232">Тувалу</option>
+                                                                            <option  code="216" value="108">Тунис</option>
+                                                                            <option  code="993" value="209">Туркменистан</option>
+                                                                            <option  code="1649" value="193">Туркс и Кейкос</option>
+                                                                            <option  code="0" value="109">Турция</option>
+                                                                            <option  code="256" value="86">Уганда</option>
+                                                                            <option  code="998" value="152">Узбекистан</option>
+                                                                            <option  code="380" value="112">Украина</option>
+                                                                            <option  code="681" value="224">Уоллис и Футуна</option>
+                                                                            <option  code="598" value="187">Уругвай</option>
+                                                                            <option  code="298" value="214">Фарерские острова</option>
+                                                                            <option  code="679" value="186">Фиджи</option>
+                                                                            <option  code="63" value="44">Филиппины</option>
+                                                                            <option  code="358" value="139">Финляндия</option>
+                                                                            <option  code="500" value="150">Фолклендские острова</option>
+                                                                            <option  code="0" value="12">Франция</option>
+                                                                            <option  code="0" value="230">Французская Гвинея</option>
+                                                                            <option  code="0" value="225">Французская Полинезия</option>
+                                                                            <option  code="385" value="202">Хорватия</option>
+                                                                            <option  code="236" value="93">Центрально-Африканская Республика</option>
+                                                                            <option  code="235" value="76">Чад</option>
+                                                                            <option  code="382" value="133">Черногория</option>
+                                                                            <option  code="420" value="114">Чехия</option>
+                                                                            <option  code="56" value="38">Чили</option>
+                                                                            <option  code="41" value="59">Швейцария</option>
+                                                                            <option  code="46" value="15">Швеция</option>
+                                                                            <option  code="94" value="132">Шри-Ланка</option>
+                                                                            <option  code="593" value="160">Эквадор</option>
+                                                                            <option  code="240" value="107">Экваториальная Гвинея</option>
+                                                                            <option  code="291" value="223">Эритрея</option>
+                                                                            <option  code="0" value="140">Эстония</option>
+                                                                            <option  code="251" value="215">Эфиопия</option>
+                                                                            <option  code="27" value="60">Южно-Африканская Республика</option>
+                                                                            <option  code="0" value="247">Южный Судан</option>
+                                                                            <option  code="1876" value="157">Ямайка</option>
+                                                                            <option  code="81" value="5">Япония</option>
+                                                                    </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group " style="display:none">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="label">Номер мобильного телефона</div>
+                                <div class="error pull-right"></div>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" placeholder="код" class="form-control" name="phone_code" value=''>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" placeholder="мобильный" class="form-control" name="phone" value=''>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="label">Ваш E-mail</div>
+                                <div class="error pull-right"></div>
+                            </div>
+                            <div class="col-sm-12">
+                                <input type="text" class="registration-email form-control" name="email" placeholder='E-mail' value=''>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="label">Telegram</div>
+                                <div class="error pull-right"></div>
+                            </div>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" name="telegram" placeholder='Telegram' value=''>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="label">Введите пароль</div>
+                                <div class="error pull-right"></div>
+                            </div>
+                            <div class="col-sm-12">
+                                <input type="password" class="form-control" name="password" placeholder='Пароль'>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="label">Введите пароль снова</div>
+                                <div class="error pull-right"></div>
+                            </div>
+                            <div class="col-sm-12">
+                                <input type="password" class="form-control" name="conf_password" placeholder="Введите пароль снова">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="label">Часовой пояс</div>
+                                <div class="error pull-right"></div>
+                            </div>
+                            <div class="col-sm-12">
+                                <select class="form-control" name="timezone">
+                                                                                                                                        
+                                        <option  value="-11">-11 Samoa</option>
+                                                                                                                                        
+                                        <option  value="-10">-10 Hawaii</option>
+                                                                                                                                        
+                                        <option  value="-9">-9 Alaska</option>
+                                                                                                                                        
+                                        <option  value="-8">-8 United States and Canada</option>
+                                                                                                                                        
+                                        <option  value="-7">-7 Mexico</option>
+                                                                                                                                        
+                                        <option  value="-6">-6 Central Time (USA & Canada)</option>
+                                                                                                                                        
+                                        <option  value="-5">-5 Eastern Time</option>
+                                                                                                                                        
+                                        <option  value="-4">-4 Atlantic time</option>
+                                                                                                                                        
+                                        <option  value="-3.5">-3:30 Newfoundland</option>
+                                                                                                                                        
+                                        <option  value="-3">-3 South American Eastern Time</option>
+                                                                                                                                        
+                                        <option  value="-2">-2 Mid-Atlantic</option>
+                                                                                                                                        
+                                        <option  value="-1">-1 Azores, Cape Verde</option>
+                                                                                                                                        
+                                        <option  value="+0">+0 Western European Time</option>
+                                                                                                                                        
+                                        <option  value="+1">+1 Central European Time</option>
+                                                                                                                                        
+                                        <option  value="+2">+2 Eastern European Time</option>
+                                                                                                                                        
+                                        <option  value="+3">+3 Moscow time</option>
+                                                                                                                                        
+                                        <option  value="+3.5">+3:30 Iran</option>
+                                                                                                                                        
+                                        <option  value="+4">+4 Samara time</option>
+                                                                                                                                        
+                                        <option  value="+4.5">+4:30 Afghanistan</option>
+                                                                                                                                        
+                                        <option  value="+5">+5 Western Asian time</option>
+                                                                                                                                        
+                                        <option  value="+5.5">+5:30 India</option>
+                                                                                                                                        
+                                        <option  value="+5.7">+5:45 Nepal</option>
+                                                                                                                                        
+                                        <option  value="+6">+6 Novosibirsk</option>
+                                                                                                                                        
+                                        <option  value="+6.5">+6:30 Myanmar</option>
+                                                                                                                                        
+                                        <option  value="+7">+7 Southeast Asia</option>
+                                                                                                                                        
+                                        <option  value="+8">+8 Irkutsk time</option>
+                                                                                                                                        
+                                        <option  value="+9">+9 Yakut time</option>
+                                                                                                                                        
+                                        <option  value="+9.5">+9:30 Central Australian time</option>
+                                                                                                                                        
+                                        <option  value="+10">+10 Vladivostok time</option>
+                                                                                                                                        
+                                        <option  value="+11">+11 Magadan time</option>
+                                                                                                                                        
+                                        <option  value="+12">+12 Kamchatka time</option>
+                                                                                                                                        
+                                        <option  value="+13">+13 Tonga</option>
+                                                                                                                                        
+                                        <option  value="+14">+14 Line Islands</option>
+                                                                    </select>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div style="display:inline-block;" class="label">Пол:</div>
+                                
+                                <div style="display:inline-block; margin-right: 15px;"><label>Муж.: <input checked type="radio" name='gender' value="0"></label></div>
+                                <div style="display:inline-block;"><label>Жен.: <input type="radio" name='gender' value="1"></label></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="pull-left">
+                                    <input style="display:inline-block; width:20px; vertical-align: top;" checked="checked" name="tac" id="acceptTerms" class="acceptTerms" value="1" type="checkbox">
+                                    <div style="display:inline-block; vertical-align: top;margin-top:8px;">Примите наши <a style="color:#3498db;margin-left:5px;" href="/termsandconditions/">Условия и положения</a></div>
+                                    <div class="error"></div>
+                                </div>
+                                
+                                <input type="submit" class="registrate-input btn btn-orange pull-right" value="Зарегистрироваться">
+                                <input type="hidden" value="" name="campaign_code" />
+                            </div>
+                        </div>
+                        <span class="user-exist-message" style="display: none; font-size: 14px; font-weight: bold; color: #f84c28">
+                            Пользователь с таким адресом электронной почты уже существует <br/>
+                        </span>
+                        <span class="pass-match-message" style="display: none; font-size: 14px; font-weight: bold; color: #f84c28">
+                            Пароли не совпадают <br/>
+                        </span>
+                        <span class="all-fields-message" style="display: none; font-size: 14px; font-weight: bold; color: #f84c28">
+                            Пожалуйста, заполните все поля <br/>
+                        </span>
+                    </div>
+                </form>
+    
+</div>        
+        <style>
+    #contacts{
+        width:100%;
+        height:115px;
+        background: url('/images/contacts_bg.jpg') no-repeat center center;
+        background-size: cover;
+        display:none;
+    }
+    #contacts .phone_ico{
+        display: inline-block;
+        vertical-align: middle;
+        margin-right:20px;
+        width:98px;
+        height:59px;
+        background: url('/images/contact_icons.png');
+        background-position: 0px 0px;
+    }
+    #contacts .mail_ico{
+        display:inline-block;
+        vertical-align: middle;
+        margin-right:20px;
+        width:77px;
+        height:59px;
+        background: url('/images/contact_icons.png');
+        background-position: -130px -4px;
+    }
+</style>
+<div id='contacts'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-sm-4' style='font-size:23px; font-weight:bolder; padding-top:40px;'>
+                Вы можете связаться с нами            </div>
+            <div class='col-sm-4' style='font-size:22px; font-weight:bolder;padding-top:26px;'>
+                                <div class='phone_ico'></div>
+                +X (XX) XXX-XX-XX
+                            </div>
+            <div class='col-sm-4' style='font-size: 18px; font-weight:bolder;padding-top:26px;'>
+                <div class='mail_ico'></div>
+                support@platformail.com            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #footer{
+        padding-top:40px;
+        height:auto;
+        width:100%;
+        background: #f3f3f1;
+    }            
+    #footer .logo{
+        background: url('/images/logo.png');
+        width:283px;
+        height:48px;
+        margin-bottom:20px;
+    }
+    #footer .menu ul{
+        padding-left:0px;
+    }
+    #footer .menu li{
+        margin-bottom:12px;
+    }
+    #footer .menu li a{
+        
+        font-size:16px;
+        font-weight: bolder;
+        color:#1d242b ;
+    }
+    #footer .menu li.sub{
+        margin-bottom:8px;
+    }
+    #footer .menu li.sub a{
+        margin-bottom:8px;
+        font-size:13px;
+        font-weight: normal;
+    }
+    #footer .bottom{
+        margin-top:40px;
+        padding-top:25px;
+        border-top:1px solid #c7c9c9;
+        font-size:12px;
+    }
+    #footer .bottom .copyrights{
+        font-size:13px;
+        font-weight: bolder;
+    }
+</style>
+<div id="footer">
+    <div class='container'>
+        <div class='top'>
+            <div class='row'>
+                <div class='col-sm-4'>
+                    <div class='logo'></div>
+                    <p>По всем вопросам обращайтесь в службу поддержки:<br><a style="margin-bottom:14px;display:block;" href='mailto:support@platformail.com'>support@platformail.com</a></p>
+                </div>
+                <div class='col-sm-8'>
+                    <div class='row menu'>
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/'>ГЛАВНАЯ</a></li>
+                                <li><a href='/termsandconditions/'>ПРАВИЛА</a></li>
+                                <li><a href='/faq/'>FAQ</a></li>                                
+                            </ul>   
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>                                
+                                <li><a href='/aboutus/'>О НАС</a></li>
+                                <li><a href='/faq/bonus/'>БОНУС</a></li>                                
+                            </ul>   
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/faq/'>ИНФО</a></li>
+                                <li class='sub'><a href='/faq/glossary/'>СЛОВАРЬ ТЕРМИНОВ</a></li>
+                                <li class='sub'><a href='/faq/disclaimer/'>ПРЕДУПРЕЖДЕНИЕ</a></li>
+                                <li class='sub'><a href='/faq/privacy/'>КОНФИДЕНЦИАЛЬНОСТЬ</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class='col-sm-3'>
+                            <ul>
+                                <li><a href='/trade/'>ТОРГОВАТЬ</a></li>
+                                <li class='sub'><a href='/trade/'>60 Секунд</a></li>
+                            </ul>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='bottom'>
+            <p>You haven`t made any investments in Option builder tool yet. To make an investment you should: Choose the asset you want to trade with, enter your current investment amount. And choose how will asset behavior: if it will rise - press HIGH button, other way press LOW button. Select the profit and the pay off level. Confirm your deal with the Confirmal button. Due to different time zones at the worldwide stocks, some assets could be inactive or might has limited availability. If the asset`s value didn`t change sinse made an investment, the full investment price will be returned to investor.</p>
+            <p>Legal: cryptgates.com is a trading name of CryptGates, registration number: IBC 2015 (Suite 305, Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
+            <div class='copyrights'>© 2025 | CryptGates - All rights reserved</div>
+        </div>
+<a href="https://freekassa.ru" target="_blank" rel="noopener noreferrer">
+  <img src="/images/freekasa.png" title="Прием платежей на сайте">
+</a>
+    </div>
+</div>    
+<script src="/js/registration.js"></script>
+<script src="/js/global.js"></script>
+</body>
+</html>
