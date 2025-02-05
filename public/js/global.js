@@ -1,6 +1,5 @@
-window.onload = function() {
 
-    fetch('/en/me')
+fetch('/en/me')
     .then(res => res.json())
     .then(response => {
         console.log(response)
@@ -17,33 +16,33 @@ window.onload = function() {
         }
     })
 
-    const loginModal = document.querySelector('#loginModal');
-    const lang = window.location.pathname.split('/')[1];
-    
-    if (loginModal) {
-        const emailInput = loginModal.querySelector('input[name="email"]')
-        const passwordInput = loginModal.querySelector('input[name="password"]')
-        const loginButton = loginModal.querySelector('input[type="submit"]')
-        const error = loginModal.querySelector('.error')
+const loginModal = document.querySelector('#loginModal');
+const lang = window.location.pathname.split('/')[1];
 
-        loginButton.onclick = function(e) {
-            e.preventDefault();
-            const email = emailInput.value.trim();
-            const password = passwordInput.value.trim();
+if (loginModal) {
+    const emailInput = loginModal.querySelector('input[name="email"]')
+    const passwordInput = loginModal.querySelector('input[name="password"]')
+    const loginButton = loginModal.querySelector('input[type="submit"]')
+    const error = loginModal.querySelector('.error')
 
-            if (!password || !email) return;
+    loginButton.onclick = function (e) {
+        e.preventDefault();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
 
-            fetch('/en/login', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email,
-                    password
-                }),
-                credentials: 'include'
-            })
+        if (!password || !email) return;
+
+        fetch('/en/login', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email,
+                password
+            }),
+            credentials: 'include'
+        })
             .then(res => res.json())
             .then(response => {
                 if (response.notFound) {
@@ -54,6 +53,5 @@ window.onload = function() {
                     window.location.reload();
                 }
             })
-        }
     }
 }

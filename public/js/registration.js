@@ -16,7 +16,6 @@ window.onload = function() {
     const passMatchMessage = document.querySelector('.pass-match-message');
     const alreadyExistMessage = document.querySelector('.user-exist-message');
 
-
     registrateBtn.onclick = function(e) {
         e.preventDefault()
         allFieldsMessage.style.display = 'none';
@@ -59,6 +58,7 @@ window.onload = function() {
             })
             .then(res => res.json())
             .then(response => {
+                console.log(response)
                 if (response.exist) {
                     alreadyExistMessage.style.display = 'inline'
                 }
