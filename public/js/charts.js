@@ -288,63 +288,10 @@ var Chart = (function (_super) {
         $('.header-nav .balance').text('$'+(amount/100).toFixed(2));
     }*/
     Chart.prototype.onCloseOption = function (json) {
-        /*for(var key in json.deals){
-            //this.updateBalance(json.deals[key].balance);
 
-            $('.bid_history .element[data-id='+key+'] .expire').remove();
-            if(json.deals[key].status == 2){
-                $('.bid_history .element[data-id='+key+']').addClass('win');
-                $('.bid_history .element[data-id='+key+'] .bottom .price').text('+ $'+(json.deals[key].win_amount/100).toFixed(2));
-            }else if(json.deals[key].status == 3){
-                $('.bid_history .element[data-id='+key+']').addClass('lose');
-                $('.bid_history .element[data-id='+key+'] .bottom .price').text('- $'+(json.deals[key].amount/100).toFixed(2));
-            }else if(json.deals[key].status == 4){
-                $('.bid_history .element[data-id='+key+'] .bottom .price').text('+ $'+(json.deals[key].amount/100).toFixed(2));
-            }
-        }
-        */
-        //        this.closeDeal(json.deals);
     };
     Chart.prototype.onCreateOption = function (json) {
-        /*if(json.status == 'error'){ //если ошибка
-            //this.optionError(json.id);
-            return false;
-        }else{
-            $('.trading aside .error').empty();
-        }*/
-        //this.updateBalance(json.balance);
-        //$('.page .page-container').animate({"padding-top":'182px'},400);
-        //$('.bid_history .last_deals').animate({"height":'65px'},400);
-        //this.incomeDeal(json);
-        /*var d:any = new Date(json.opentime*1000);
-        var month:any = d.getMonth()+1;
-        month = month < 10?'0'+month:month;
-        var year:any = d.getYear()+1900;
-        var minutes:any = d.getMinutes();
-        minutes = minutes < 10?'0'+minutes:minutes;
-        var seconds:any = d.getSeconds();
-        seconds = seconds < 10?'0'+seconds:seconds;
-        var time = month+'-'+year+' '+minutes+':'+seconds;
-
-        var asset = $('#asset_list li[data-id='+json.quote_id+'] .name').text();
-        var position = json.position == 1?'up':'down';
-        var amount = (json.amount/100).toFixed(2);
-
-        var expire = json.closetime - this.parent.serverTime;
-
-        $('.bid_history .last_deals').prepend(
-            '<div class="element" data-id="'+json.id+'">'
-                +'<div class="content">'
-                    +'<div class="date">'+time+'</div>'
-                    +'<div class="expire">'+expire+'</div>'
-                    +'<div class="bottom">'
-                        +'<div class="quote">'+asset+'<div class="icon '+position+'_arr"></div></div>'
-                        +'<div class="price">$'+amount+'</div>'
-                    +'</div>'
-                +'</div>'
-                +'<div class="tail"></div>'
-            +'</div>'
-        );*/
+        
     };
     return Chart;
 }(ChartsMain));

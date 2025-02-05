@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const db = require('../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authenticateToken = require('../middlewares/authenticateToken');
+const User = require('../models/User');
+const checkNoAuth = require('../middlewares/checkNoAuth');
 const saltRounds = 10;
+
 
 const getLangFromUrl = (req) => {
     const lang = req.params.lang;
@@ -16,92 +18,61 @@ const getLangFromUrl = (req) => {
 };
 
 
-router.get('/:lang/registration', (req, res) => {
+router.get('/:lang/registration', checkNoAuth, (req, res) => {
     const lang = getLangFromUrl(req)
     res.sendFile(path.join(__dirname, '..', `public/views/${lang}`, 'registration.html'));
 });
 
-router.post('/:lang/registration', (req, res) => {
-    const {
-        firstname,
-        lastname,
-        year,
-        month,
-        day,
-        country,
-        email,
-        telegram,
-        password,
-        timezone,
-        gender
-    } = req.body;
+router.post('/:lang/registration', async (req, res) => {
+    try {
+        const { firstname, lastname, year, month, day, country, email, telegram, password, timezone, gender } = req.body;
+        console.log(firstname, month)
+        const birthDate = new Date(`${year}-${month}-${day}`);
 
-    const birthDate = `${year}-${month}-${day}`;
-
-    const checkUserQuery = `SELECT id FROM user WHERE email = ?`;
-
-    db.query(checkUserQuery, [email], (err, results) => {
-        if (err) {
-            console.error("Error checking user:", err);
-            return res.status(500).json({ message: "Database error", success: false });
-        }
-
-        if (results.length > 0) {
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
             return res.status(400).json({ message: "User with this email already exists", exist: true, success: false });
         }
 
-        bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
-            if (err) {
-                console.error("Error hashing password:", err);
-                return res.status(500).json({ message: "Error hashing password", success: false });
-            }
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-            const insertQuery = `
-                INSERT INTO user (name, surname, birth, country, email, telegram, pass, timezone, gender)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            `;
-
-            const values = [
-                firstname,
-                lastname,
-                birthDate,
-                country,
-                email,
-                telegram,
-                hashedPassword,
-                timezone,
-                gender
-            ];
-
-            db.query(insertQuery, values, (err, _) => {
-                if (err) {
-                    console.error("Error inserting data:", err);
-                    return res.status(500).json({ message: "Error inserting data", success: false });
-                }
-                res.status(200).json({ message: "User registered successfully", success: true });
-            });
+        const newUser = new User({
+            name: firstname,
+            surname: lastname,
+            birth: birthDate,
+            country,
+            email,
+            telegram,
+            pass: hashedPassword,
+            timezone,
+            gender
         });
-    });
+
+        await newUser.save();
+
+        res.status(200).json({ message: "User registered successfully", success: true });
+
+    } catch (error) {
+        console.error("Error registering user:", error);
+        res.status(500).json({ message: "Server error", success: false });
+    }
 });
 
-router.post('/:lang/login', (req, res) => {
-    const { email, password } = req.body;
-    console.log(email, password)
+router.post('/:lang/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
 
-    const query = 'SELECT * FROM user WHERE email = ?';
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: 'User not found', notFound: true });
+        }
 
-    db.query(query, [email], (err, results) => {
-        if (err) return res.status(500).json({ message: 'Database error' });
-
-        if (results.length === 0) return res.status(400).json({ message: 'User not found', notFound: true });
-
-        const user = results[0];
-
-        if (!bcrypt.compareSync(password, user.pass)) {
+        const isMatch = await bcrypt.compare(password, user.pass);
+        if (!isMatch) {
             return res.status(400).json({ message: 'Invalid password', invalidPassword: true });
         }
 
-        const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '7d' });
+        const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
         res.cookie('token', token, {
             httpOnly: true,
@@ -111,8 +82,12 @@ router.post('/:lang/login', (req, res) => {
         });
 
         res.json({ message: 'Logged in successfully', success: true });
-    });
-})
+
+    } catch (error) {
+        console.error("Login error:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+});
 
 
 

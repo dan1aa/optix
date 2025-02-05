@@ -27,12 +27,12 @@ router.get('/:lang/account/history', checkAuth, (req, res) => {
     res.sendFile(path.join(__dirname, '..', `public/views/${lang}`, 'analytics.html'));
 });
 
-router.get('/:lang/account/deposit/card-fk', checkAuth, (req, res) => {
+router.get('/:lang/account/deposit/:payment', checkAuth, (req, res) => {
     const lang = getLangFromUrl(req)
     res.sendFile(path.join(__dirname, '..', `public/views/${lang}`, 'deposit.html'));
 });
 
-router.get('/:lang/account/withdrawal/cc', checkAuth, (req, res) => {
+router.get('/:lang/account/withdrawal/:payment', checkAuth, (req, res) => {
     const lang = getLangFromUrl(req)
     res.sendFile(path.join(__dirname, '..', `public/views/${lang}`, 'withdrawal.html'));
 });

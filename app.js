@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
+const mongoose = require('mongoose');
 const port = 3000;
 
 
@@ -38,6 +39,18 @@ app.use('/', account);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
-});
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URI);
+        
+        app.listen(port, () => {
+            console.log(`Server is running at http://localhost:${port}`);
+        });
+
+        console.log('MongoDB connected successfully');
+    } catch (error) {
+        console.error('MongoDB connection error:', error);
+    }
+};
+connectDB();
+
