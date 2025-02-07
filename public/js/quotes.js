@@ -1,11 +1,6 @@
 ///<reference path="./charts.ts"/>
 var $;
-//var canvas_width:number = 1800;
-//var canvas_height:number = 800;
-/*var canvas_width:number = 690;//690
-var canvas_height:number = 450;*/
 var Canvas = (function () {
-    //constructor(block:string = 'canvas'){
     function Canvas(obj) {
         this.lang = 'ru';
         this.skin_name = 'light';
@@ -17,7 +12,7 @@ var Canvas = (function () {
         this.max_zoom = 0;
         this.indicators = {
             statusSMA: 0
-        }; //ÐºÐ»Ð°ÑÑ Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ñ Ð¸Ð½Ð´Ð¸ÐºÐ°Ñ‚Ð¾Ñ€Ð°Ð¼Ð¸
+        }; 
         this.charts = [];
         this.deals = {}; //ÑÐ´ÐµÐ»ÐºÐ¸
         var block = obj.block;
@@ -38,8 +33,6 @@ var Canvas = (function () {
     Canvas.prototype.resize = function (width, height) {
         this.width = width;
         this.height = height;
-        //this.ws.width = this.width;
-        //this.ws.height = this.height;
         $('#canvas #grafic').attr('width', (width + this.right_padding) + 'px').attr('height', (height + 40) + 'px');
         $('#canvas #bets').attr('width', (width + this.right_padding) + 'px').attr('height', (height + 40) + 'px');
         ;
@@ -51,6 +44,7 @@ var Canvas = (function () {
         }
     };
     Canvas.prototype.render = function () {
+        console.log("FAKE RENDER")
         if (this.data == undefined)
             return;
         this.getMaxZoom();
@@ -79,7 +73,6 @@ var Canvas = (function () {
     Canvas.prototype.initZoom = function () {
         var self = this;
         $('#canvas')[0].addEventListener("mousewheel", function (e) {
-            //e.detail < 0 ? self.zoomUp():self.zoomDown();
             e.deltaY < 0 ? self.zoomUp() : self.zoomDown();
             e.preventDefault();
         }, false);
@@ -292,7 +285,6 @@ var Canvas = (function () {
     };
     Canvas.prototype.setExpirationTime = function () {
         if (this.activeDeals == false) {
-            //Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÑÐµÐ¼ Ð³Ñ€Ð°Ð½Ð¸Ñ†Ñ‹ Ð·Ð°Ð²ÐµÑ€Ñ‰ÐµÐ½Ð¸Ñ ÑÑ‚Ð°Ð²ÐºÐ¸ Ð¸ Ð·Ð°Ð²ÐµÑ€ÑˆÐµÐ½Ð¸Ðµ Ð¿Ð¾ÐºÑƒÐ¿ÐºÐ¸ ÑÑ‚Ð°Ð²ÐºÐ¸
             var d = new Date(this.serverTime * 1000);
             var seconds = d.getSeconds();
             if (seconds < 30) {

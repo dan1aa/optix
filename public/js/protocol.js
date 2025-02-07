@@ -1,10 +1,9 @@
 var Protocol = function(grafic,asset,ssid,account,error){
     try{
-        this.socket = new WebSocket('https:' == location.protocol ? 'wss://'+location.hostname+'/websocket' : 'ws://'+location.hostname+'/websocket');
+        this.socket = new WebSocket('ws://localhost:8080');
     }catch(e){
         error();
         return;
-//        alert('!!!!!!');
     }
         this.grafic = grafic;
         this.asset = asset;
@@ -15,17 +14,14 @@ var Protocol = function(grafic,asset,ssid,account,error){
         this.ssid = ssid;
         this.account = account;
 
-//        console.log('Account: '+this.account);
         var self = this;
         this.socket.onopen = function(){
+            console.log("Поточний тип графіка (при підключенні):", self.grafic);
             self.onOpen();
         }
 
         this.socket.onerror  = error;
-        
-/*        this.socket.onerror  = function(){
-            $('#connectionModal').modal('show');
-        }*/
+    
 
         this.socket.onmessage = function(event){
             self.onMessage(event);
@@ -39,7 +35,6 @@ var Protocol = function(grafic,asset,ssid,account,error){
 
     Protocol.prototype = {
         socket:null,
-        //asset:null,
         timerange:30,
         mode:2, //режим ... билдер классик итд
         account:0,
@@ -50,16 +45,12 @@ var Protocol = function(grafic,asset,ssid,account,error){
             //this.socket.send('quotesLine');   //авторизируемся  
 
             //отправляем запрос для получения данных графика
-            //console.log('optionChartData '+this.ssid+' '+this.asset+' '+this.timerange+' '+this.mode+' '+this.account);
             this.socket.send('optionChartData '+this.ssid+' '+this.asset+' '+this.timerange+' '+this.mode+' '+this.account);
             //optionChartData ae7445415f000104804af4ce9283ad68 13 60 2 0
         },
 
         submit:function(position,amount){
             console.log(position);
-
-            //var amount = $('#bet_amount').val();
-            //var amount = $('#bet_amount').val()*100;
             var data = this.asset+' '+this.mode+' '+amount+' '+position+' '+this.account;
             console.log('createOption '+this.ssid+' '+data);
             this.socket.send('createOption '+this.ssid+' '+data);
@@ -92,7 +83,7 @@ var Protocol = function(grafic,asset,ssid,account,error){
         },
         onOpen: function(){
             console.log("Соединение установлено.");
-
+            console.log("Grafic Object:", this.grafic);
             this.socket.send('getAmountList '+this.account);   //список значений ставок
 
             var self = this;
@@ -102,9 +93,7 @@ var Protocol = function(grafic,asset,ssid,account,error){
             
             console.log('getDeals '+this.ssid+' '+this.mode +' '+this.account);
             self.socket.send('getDeals '+this.ssid+' '+this.mode +' '+this.account);
-            //self.socket.send('quotesLine');   //авторизируемся  
 
-            //this.setActives([this.asset]);  //устанавливаем котировки значения которых нам будут приходить
             this.setActives();
             this.engine();
         },
@@ -134,18 +123,54 @@ var Protocol = function(grafic,asset,ssid,account,error){
             if(this.closeOptionCallback == undefined) return;
             this.closeOptionCallback(json);            
         },
-        addNewPosition:function(json){
-            if(this.newChartDataCallback == undefined) return;
-            //console.log(json);
-            var element = new Object();
-            element.date = json.time;
-            element.amount = json.value;
-            element.asset = json.id;
+        addNewPosition: function(json) {
+            if (this.newChartDataCallback == undefined) return;
+        
+            var element = {
+                date: json.time,
+                open: json.open,
+                high: json.high,
+                low: json.low,
+                close: json.close,
+                asset: json.id || 0
+            };
+        
             this.newChartDataCallback(element);
-            /*if(json.id == this.asset){
-                this.newChartDataCallback(element);
-            }*/
+        
+            if (this.grafic) {
+                if (this.grafic.charts && this.grafic.charts.length > 0) {
+                    let chart = this.grafic.charts[0];
+        
+                    if (!chart.aData) {
+                        chart.aData = [];
+                    }
+        
+                    let newPoint = {
+                        date: json.time,
+                        open: json.open,
+                        high: json.high,
+                        low: json.low,
+                        close: json.close,
+                        asset: json.id || 0
+                    };
+        
+                    chart.aData.push(newPoint);
+        
+                    console.log("📊 Оновлені aData:", chart.aData);
+        
+                    // Оновіть aData без використання parent
+                    chart.aData = chart.generateAData(chart.aData);
+        
+                    console.log("Генерація нових даних:", chart.aData);
+        
+                    console.log("Примусовий рендеринг графіка...");
+                    chart.render(chart.aData);  // викликаємо render, передаючи нові aData
+                } else {
+                    console.warn("⚠ Немає charts у grafic, не можемо оновити дані.");
+                }
+            }
         },
+        
         setAssetList:function(data){        //добавляем елементы в список ассетов
             if(this.assetCallback == undefined) return;
             this.assetCallback(data,this.asset);            
@@ -178,10 +203,9 @@ var Protocol = function(grafic,asset,ssid,account,error){
         },
         onMessage:function(event){
             var json = JSON.parse(event.data);  
-            //console.log(json);
             for(var key in json){
-                switch(json[key].name){
-                    case 'newChartData': this.addNewPosition(json[key]);break;
+                switch(key){
+                    case 'newChartData': {this.addNewPosition(json[key]);}break;
                     case 'timeSync': this.timeSync(json[key]);break;
                     case 'optionChartData': this.initGrafic(json[key]);break;
                     case 'createOption': this.createOption(json[key]);break;    //делаем ставку
@@ -191,33 +215,9 @@ var Protocol = function(grafic,asset,ssid,account,error){
                     case 'quotesLine':this.quotesLine(json[key]);break;
                     case 'AmountList':this.setAmountList(json[key]);break;
 
-                    default: console.log(json[key]);
+                    // default: console.log(json[key]);
                 }
             }
         },
         
-        
-        
-        /*optionError:function(error){
-            $('.trading aside .error').text($('#errorList #_'+error).text());
-        },*/
-        
-        onClose:function(event){
-        },
-        
-        /*setActives:function(assets){
-            var ids = '';
-
-            for(var key in assets){
-                ids += assets[key]+',';
-            }
-            ids = ids.substr(0, ids.length-1);   //убираем последнюю кому
-
-            this.socket.send('setActives '+ids);
-        }*/
-        /*
-            App.protocol.socket.send('getDeals '+App.protocol.get('ssid')+' '+App.protocol.get('mode') +' '+App.protocol.get('account'));   //авторизируемся
-            App.protocol.socket.send('getQuotesList 1');   //авторизируемся    //0 Выключить
-            App.protocol.socket.send('quotesLine');   //авторизируемся  
-        */
     }
