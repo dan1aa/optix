@@ -6,14 +6,53 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 const mongoose = require('mongoose');
+const WebSocket = require('ws')
 const port = 3000;
+const { startMarketData, getHistoricalData, generateInitialCandles } = require('./marketData');
+
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); 
 
 app.use(cors());
-app.use(cookieParser())
+app.use(express.json());
+app.use(cookieParser());
+
+generateInitialCandles();
+
+app.get('/en/candles', (req, res) => {
+    res.json(getHistoricalData());
+});
+
+const wss = new WebSocket.Server({ port: 8080 });
+console.log("WebSocket сервер запущений на порту 8080");
+
+// Обробка підключень
+wss.on('connection', (ws) => {
+    console.log('Новий клієнт підключився');
+
+    const interval = setInterval(() => {
+        const candle = startMarketData();
+        
+        const formattedCandle = {
+            'newChartData': {
+                time: candle.time,
+                open: candle.open,
+                high: candle.high,
+                low: candle.low,
+                close: 100
+            }
+        };
+    
+        ws.send(JSON.stringify(formattedCandle));
+    }, 1000);
+
+    ws.on('close', () => {
+        console.log('Клієнт відключився');
+        clearInterval(interval);
+    });
+});
 
 const home = require('./routes/home');
 const about = require('./routes/about');

@@ -26,7 +26,6 @@ router.get('/:lang/registration', checkNoAuth, (req, res) => {
 router.post('/:lang/registration', async (req, res) => {
     try {
         const { firstname, lastname, year, month, day, country, email, telegram, password, timezone, gender } = req.body;
-        console.log(firstname, month)
         const birthDate = new Date(`${year}-${month}-${day}`);
 
         const existingUser = await User.findOne({ email });

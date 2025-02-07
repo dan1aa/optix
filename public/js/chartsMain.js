@@ -2,10 +2,6 @@ var ChartsMain = (function () {
     function ChartsMain() {
         this.skin_name = 'light';
         this.type = 'normal';
-        //seconds_left:number = 0;
-        /*zoom:number = 0  //TODO
-        max_zoom:number = 0;
-        zoom_step:number = 30;   //на сколько увеличиваеться каждая еденица зума*/
         this.max_amount = 0;
         this.min_amount = 0;
         this.max_time = 0;
@@ -14,13 +10,9 @@ var ChartsMain = (function () {
         this.amount_padding_bottom = 60;
         this.time_padding = 15; //в процентном отношение
         this.bottom_padding = 40;
-        //end_expiration:number;
         this.amount_range = 0;
         this.amount_coef = 0;
         this.digits = 0;
-        //serverTime:number = 0;
-        //stop_expiration:number =0;  //время до которого можно поставить ставку
-        //activeDeals: boolean = false;   //показывает или есть текущая активная 
         this.save_range = 5; //время в секундах через которое сохраняет котировку на графике
         this.defaultAllowedTimeToShowQuotes = 300;
     }
@@ -29,17 +21,10 @@ var ChartsMain = (function () {
         if (obj.type != undefined) {
             this.type = obj.type;
         }
-        /*if(obj.time != undefined){
-            this.serverTime = obj.time;
-        }*/
-        /*if(obj.data != undefined){
-            this.data = obj.data;
-        }*/
         this.skin_name = obj.skin != undefined ? obj.skin : 'default';
         this.skin = Skins.get(this.skin_name);
         this.x = obj.x;
         this.y = obj.y;
-        //this.width = this.parent.width-this.parent.right_padding;        
         this.width = obj.width - this.parent.right_padding;
         this.height = obj.height - this.bottom_padding;
         this.ctx = obj.context;
@@ -53,7 +38,6 @@ var ChartsMain = (function () {
         this.ctx.fill();
         this.ctx.closePath();
         this.ctx.restore();
-        //console.log(this.width);
         //контур вокруг графика
         this.ctx.save();
         this.ctx.beginPath();
@@ -72,8 +56,6 @@ var ChartsMain = (function () {
             this.parent.activeDeals = false;
             return false;
         }
-        //var x_coef:number = this.parent.width/$('canvas#mouse').width();
-        //var y_coef:number = this.parent.height/$('canvas#mouse').height();
         var x = this.getX(deal.opentime) + this.x;
         var y = this.getY(deal.openprice) + this.y;
         var start_x = x;
@@ -170,36 +152,62 @@ var ChartsMain = (function () {
         var step = 14;
         var width;
         var blocks = (this.max_time - this.min_time) / step;
-        //определяем ширину Свечи
-        width = (this.width - (this.width / 100 * this.time_padding)) / blocks; //ширину на количество блоков
-        width = width - width / 100 * 30; // отнимаем от ширины блока немного что бы были не впритык
+        
+        // Перевірка, чи є дані у this.aData
+        console.log("this.aData:", this.aData);
+    
+        // визначаємо ширину Свечи
+        width = (this.width - (this.width / 100 * this.time_padding)) / blocks; //ширину на кількість блоків
+        width = width - width / 100 * 30; // віднімаємо від ширини блока трохи, щоб свічки не були впритул
         var start = parseInt(this.aData[0].date);
         var end = parseInt(this.aData[this.aData.length - 1].date);
         var i = 0;
         var arr = new Object();
+        
+        // Перевірка перед циклом для arr[start]
+        console.log("arr before loop:", arr);
+    
         while (start < end) {
+            
             arr[start] = new Array();
+            
             if (arr[start - step] != undefined) {
                 arr[start].push(arr[start - step][arr[start - step].length - 1]);
             }
+            
+            // Перевірка, чи є дані в aData для поточного діапазону часу
+            console.log("Checking aData for date range", start, start + step);
+    
             for (key in this.aData) {
                 if (this.aData[key].date > start && this.aData[key].date < start + step) {
                     arr[start].push(this.aData[key].amount);
                 }
             }
+    
             i++;
             start += step;
         }
-        //var package = new Object();
+    
+        // Перевірка, чи містить arr всі дані для кожної свічки
+        console.log("arr after loop:", arr);
+    
         this.candleData = new Object();
+    
+        // Перевірка перед малюванням свічок
+        console.log("this.candleData before drawing:", this.candleData);
+    
         for (key in arr) {
             key = parseInt(key);
             this.candleData[key + step / 2] = new Array();
-            //получаем значиние на начало на конец, максимальное и минимальное.
+    
+            // Перевірка, чи містять дані для свічки (старт, кінець, максимуми та мінімуми)
+            console.log("Processing candle data for key:", key);
+    
             this.candleData[key + step / 2].start = arr[key][0];
             this.candleData[key + step / 2].end = arr[key][arr[key].length - 1];
             this.candleData[key + step / 2].max = 0;
             this.candleData[key + step / 2].min = 0;
+    
             for (var key2 in arr[key]) {
                 if (this.candleData[key + step / 2].max == 0 || arr[key][key2] > this.candleData[key + step / 2].max) {
                     this.candleData[key + step / 2].max = arr[key][key2];
@@ -209,41 +217,44 @@ var ChartsMain = (function () {
                 }
             }
         }
-        //отрисовываем
+    
+        // Перевірка після збору всіх даних
+        console.log("this.candleData after processing:", this.candleData);
+    
+        // Тепер малюємо свічки
         for (key in this.candleData) {
-            //package[key].x = parseInt((parseInt(key) - this.min_time)*this.time_coef);
             this.candleData[key].x = this.getX(key);
             this.candleData[key].y_start = this.getY(this.candleData[key].start);
             this.candleData[key].y_end = this.getY(this.candleData[key].end);
             this.candleData[key].y_max = this.getY(this.candleData[key].max);
             this.candleData[key].y_min = this.getY(this.candleData[key].min);
-            //рисуем линию начала и конца
+    
+            // Малюємо лінії
             this.ctx.save();
             this.ctx.lineWidth = 1;
             if (this.candleData[key].y_start != this.candleData[key].y_end) {
                 if (this.candleData[key].y_start > this.candleData[key].y_end) {
                     this.ctx.fillStyle = "#57c580";
-                    ;
                     this.ctx.strokeStyle = "#57c580";
-                }
-                else {
+                } else {
                     this.ctx.fillStyle = "#e57878";
-                    ;
                     this.ctx.strokeStyle = "#e57878";
                 }
-                //MIN MAX
+    
+                // Малюємо мінімум і максимум
                 this.ctx.beginPath();
                 this.ctx.moveTo(this.candleData[key].x + this.x, this.candleData[key].y_max + this.y);
                 this.ctx.lineTo(this.candleData[key].x + this.x, this.candleData[key].y_min + this.y);
                 this.ctx.closePath();
                 this.ctx.stroke();
-                //Block
+    
+                // Малюємо блок (свічку)
                 this.ctx.rect(this.candleData[key].x - width / 2 + this.x, this.candleData[key].y_start + this.y, width, this.candleData[key].y_end - this.candleData[key].y_start);
                 this.ctx.fill();
-            }
-            else {
+            } else {
                 this.ctx.strokeStyle = "#e57878";
-                //NO CHANGES
+    
+                // Якщо немає зміни
                 this.ctx.beginPath();
                 this.ctx.moveTo(this.candleData[key].x + this.x - width / 2, this.candleData[key].y_start + this.y);
                 this.ctx.lineTo(this.candleData[key].x + this.x + width / 2, this.candleData[key].y_start + this.y);
@@ -332,7 +343,6 @@ var ChartsMain = (function () {
     };
     ChartsMain.prototype.getTime = function (x) {
         return Math.floor(x / this.time_coef + this.min_time);
-        //return Math.floor((Math.floor(time) - this.min_time)*this.time_coef)+0.5;
     };
     ChartsMain.prototype.getX = function (time) {
         return Math.floor((Math.floor(time) - this.min_time) * this.time_coef) + 0.5;
@@ -463,7 +473,7 @@ var ChartsMain = (function () {
     ChartsMain.prototype.buildTimeGrid = function () {
         var hours, minutes, seconds, d, text, length;
         //получаем первый елемент    и смотрим время
-        var time = this.aData[0].date;
+        var time = this.aData.date;
         var date = new Date(time * 1000);
         date.setSeconds(0); //обнуляем секунды
         var start = date.getTime() / 1000; //начальное число
@@ -544,6 +554,7 @@ var ChartsMain = (function () {
         }
     };
     ChartsMain.prototype.countDigits = function (data) {
+        console.log(data)
         var amount = data[0].amount;
         var string = amount.toString();
         var total = string.length; //считаем всего символ
@@ -607,45 +618,44 @@ var ChartsMain = (function () {
         }
     };
     ChartsMain.prototype.generateAData = function (data) {
-		if (data == undefined)return;
-        if (data[0] == undefined)
-            return;
-        //var deal = this.getLastDeal();
-        var aData = new Array();
+        if (data == undefined) return;
+        if (data[0] == undefined) return;
+    
+        var aData = [];
         var time;
-        //получаем последний елемент что бы получить его время и отнять диапазон допустимого времени
+    
+        // отримуємо час для порівняння
         if (this.newAsset) {
-            time = (this.newAsset.date - this.defaultAllowedTimeToShowQuotes) - (this.parent.zoom * this.parent.zoom_step);
+            time = (this.newAsset.date - this.defaultAllowedTimeToShowQuotes) - (this.zoom * this.zoom_step);
+        } else {
+            time = (data[data.length - 1].date - this.defaultAllowedTimeToShowQuotes) - (this.zoom * this.zoom_step);
         }
-        else {
-            time = (data[data.length - 1].date - this.defaultAllowedTimeToShowQuotes) - (this.parent.zoom * this.parent.zoom_step);
-        }
+    
         var i = 0;
         for (var key in data) {
             if (data[key].date < time) {
                 continue;
             }
-            aData[i] = new Object();
+            aData[i] = {};
             for (var key2 in data[key]) {
                 aData[i][key2] = data[key][key2];
             }
             i++;
         }
+    
         if (this.newAsset) {
             aData.push(this.newAsset);
-            //проверяем или можно добавлять в основной массив данных
             if (this.newAsset.temp === true || this.newAsset.temp === false) {
                 if (this.newAsset.temp == false) {
                     data.push(this.newAsset);
                 }
-            }
-            else {
+            } else {
                 if (this.newAsset.date - data[data.length - 1].date >= this.save_range) {
                     data.push(this.newAsset);
                 }
             }
-//            this.newAsset = null;
         }
+    
         return aData;
     };
     return ChartsMain;
@@ -750,7 +760,6 @@ var Skins = (function () {
         backgroundColor: "#202731",
         graficBorderColor: "#4a5362",
         currentAmountPositionDotColor: '#24a65e',
-        //currentAmountPositionDotColor:'red',
         currentAmountPositionLineColor: "#26a560",
         currentAmountPositionBackgroundColor: "#26a560",
         currentAmountPositionBorderColor: "#26a560",

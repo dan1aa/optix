@@ -7,19 +7,16 @@ var __extends = (this && this.__extends) || function (d, b) {
 ///<reference path="./service.ts"/>
 var Chart = (function (_super) {
     __extends(Chart, _super);
-    //statusSampleSMA: boolean = false;
     function Chart(obj) {
         _super.call(this);
         this.hoverPut = false;
         this.hoverCall = false;
         this.deleted = false;
         this.setParams(obj);
-        //this.initZoom();
         this.hover = new Hover(this);
         this.forms = new Forms(this);
         this.mouse = new Mouse(this);
         this.indicators = new Indicators(this, this.ctx);
-        //if(this.data != undefined)this.render();
     }
     Chart.prototype.setX = function (x) {
         this.x = x;
@@ -35,7 +32,6 @@ var Chart = (function (_super) {
     };
     Chart.prototype.buildDealDots = function () {
         for (var key in this.parent.deals) {
-            //console.log(this.parent.deals[key]);
             if (this.parent.deals[key].status == 1)
                 continue;
             var x_open = this.getX(this.parent.deals[key].opentime);
@@ -92,8 +88,7 @@ var Chart = (function (_super) {
         this.buildAmountGrid();
         this.graficBackground();
         this.buildLines();
-        //this.buildDealDots();
-        //Indicators
+
         if (this.indicators.statusBolinger == true)
             this.indicators.bolingerBands();
         if (this.indicators.statusSampleSMA == true)
@@ -120,9 +115,9 @@ var Chart = (function (_super) {
             this.hover.clear();
         }
     };
-    Chart.prototype.renderCandles = function () {
-        this.setMinMaxAmount(this.aData);
-        this.setDataCoords(this.aData); //устанавливаем координаты
+    Chart.prototype.renderCandles = function (aData) {
+        this.setMinMaxAmount(aData);
+        this.setDataCoords(aData); //устанавливаем координаты
         this.buildAmountGrid();
         this.buildTimeGrid();
         this.buildCandles();
@@ -149,22 +144,10 @@ var Chart = (function (_super) {
         this.setMinMaxAmount(this.aData);
         this.setDataCoords(this.aData); //устанавливаем координаты
         this.buildTimeGrid();
-        //this.buildLines(); 
-        //переопределяем
-        //this.setMinMaxAmount(this.data);
         var amount = this.getAVGAmount(this.aData);
         this.drawAVGLine(amount);
         this.buildPositions(amount, this.aData);
         this.buildTimeGrid();
-        /*this.setDataCoords(this.aData); //устанавливаем координаты
-        //this.buildLines();
-        
-        //this.buildAmountGrid();
-        
-        var data = this.indicators.sampleSMA();
-        this.indicators.buildRSILines(data);
-        
-        this.forms.TimeToExpirate();*/
     };
     Chart.prototype.renderRSI = function () {
         //переопределяем
@@ -242,26 +225,28 @@ var Chart = (function (_super) {
             this.ctx.rect(this.x + x + 0.5, this.y + middle_y + 0.5, 6, y - middle_y);
             this.ctx.closePath();
             this.ctx.fill();
-            //this.ctx.stroke();
             this.ctx.restore();
             start += 3;
         }
     };
-    Chart.prototype.render = function () {
-        this.aData = this.generateAData(this.parent.data);
-		if(this.aData == undefined)return; 
-		if(this.aData.length == 0) return;
-        //this.getMaxZoom();
+    Chart.prototype.render = function (aData) {
+        console.log('RENDER', aData);
+        
+        // Якщо aData не передано або воно порожнє, вийдемо з функції
+        if (!aData || aData.length === 0) return;
+    
+        this.aData = aData;  // Якщо потрібно, можна присвоїти значення в this.aData
+    
         this.background();
         this.setMinMaxTime(this.aData);
-        //this.setDataCoords(this.aData); //устанавливаем координаты
-        this.countDigits(this.aData); //считаем знаки после запятой
+        // this.countDigits(this.aData); // Считаем знаки после запятой
+        this.type = 'candles'
         switch (this.type) {
             case 'normal':
                 this.renderNormal();
                 break;
             case 'candles':
-                this.renderCandles();
+                this.renderCandles(this.aData);
                 break;
             case 'macd':
                 this.renderMACD();
@@ -270,10 +255,6 @@ var Chart = (function (_super) {
                 this.renderRSI();
                 break;
         }
-        /*
-        this.checkIndicators();
-
-        */
     };
     Chart.prototype.closeDeal = function (data) {
         if (!this.deals)
@@ -284,9 +265,7 @@ var Chart = (function (_super) {
             this.render();
         }
     };
-    /*updateBalance(amount){
-        $('.header-nav .balance').text('$'+(amount/100).toFixed(2));
-    }*/
+
     Chart.prototype.onCloseOption = function (json) {
 
     };
