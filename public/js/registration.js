@@ -58,9 +58,10 @@ window.onload = function() {
             })
             .then(res => res.json())
             .then(response => {
-                console.log(response)
                 if (response.exist) {
                     alreadyExistMessage.style.display = 'inline'
+                } else {
+                    alert('Registration successful! Please, Log in')
                 }
             })
           } else {

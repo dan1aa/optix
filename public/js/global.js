@@ -1,15 +1,20 @@
 
 fetch('/en/me')
     .then(res => res.json())
-    .then(response => {
-        console.log(response)
+    .then(user => {
         const personal = document.querySelector('#personal');
         const headers = document.querySelectorAll('#header');
         const submenu = document.querySelector('#submenu');
-        console.log(headers)
-        if (response.user) {
+        console.log(user)
+        if (!user.message) {
             if (submenu) submenu.style.display = 'block'
             if (headers[1]) headers[1].style.display = 'block'
+            const username = document.querySelector('.username');
+            const email = document.querySelector('.email');
+            const balance = document.querySelector('.balance');
+            username.textContent = `${user.name} ${user.surname}`
+            email.textContent = user.email;
+            balance.textContent = `$${user.demoBalance}`;
         } else {
             if (personal) personal.style.display = 'none'
             if (headers[0]) headers[0].style.display = 'block'

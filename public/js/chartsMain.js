@@ -153,9 +153,6 @@ var ChartsMain = (function () {
         var width;
         var blocks = (this.max_time - this.min_time) / step;
         
-        // Перевірка, чи є дані у this.aData
-        console.log("this.aData:", this.aData);
-    
         // визначаємо ширину Свечи
         width = (this.width - (this.width / 100 * this.time_padding)) / blocks; //ширину на кількість блоків
         width = width - width / 100 * 30; // віднімаємо від ширини блока трохи, щоб свічки не були впритул
@@ -164,8 +161,6 @@ var ChartsMain = (function () {
         var i = 0;
         var arr = new Object();
         
-        // Перевірка перед циклом для arr[start]
-        console.log("arr before loop:", arr);
     
         while (start < end) {
             
@@ -175,8 +170,6 @@ var ChartsMain = (function () {
                 arr[start].push(arr[start - step][arr[start - step].length - 1]);
             }
             
-            // Перевірка, чи є дані в aData для поточного діапазону часу
-            console.log("Checking aData for date range", start, start + step);
     
             for (key in this.aData) {
                 if (this.aData[key].date > start && this.aData[key].date < start + step) {
@@ -188,20 +181,14 @@ var ChartsMain = (function () {
             start += step;
         }
     
-        // Перевірка, чи містить arr всі дані для кожної свічки
-        console.log("arr after loop:", arr);
     
         this.candleData = new Object();
     
-        // Перевірка перед малюванням свічок
-        console.log("this.candleData before drawing:", this.candleData);
     
         for (key in arr) {
             key = parseInt(key);
             this.candleData[key + step / 2] = new Array();
     
-            // Перевірка, чи містять дані для свічки (старт, кінець, максимуми та мінімуми)
-            console.log("Processing candle data for key:", key);
     
             this.candleData[key + step / 2].start = arr[key][0];
             this.candleData[key + step / 2].end = arr[key][arr[key].length - 1];
@@ -218,8 +205,6 @@ var ChartsMain = (function () {
             }
         }
     
-        // Перевірка після збору всіх даних
-        console.log("this.candleData after processing:", this.candleData);
     
         // Тепер малюємо свічки
         for (key in this.candleData) {
@@ -554,7 +539,6 @@ var ChartsMain = (function () {
         }
     };
     ChartsMain.prototype.countDigits = function (data) {
-        console.log(data)
         var amount = data[0].amount;
         var string = amount.toString();
         var total = string.length; //считаем всего символ

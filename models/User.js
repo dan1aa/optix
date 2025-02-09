@@ -9,7 +9,10 @@ const UserSchema = new mongoose.Schema({
     telegram: { type: String },
     pass: { type: String, required: true },
     timezone: { type: String, required: true },
-    gender: { type: String, required: true }
+    gender: { type: String, required: true },
+    demoBalance: {type: Number, required: true},
+    realBalance: {type: Number, required: true},
+    phone: {type: String}
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', UserSchema);
