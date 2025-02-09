@@ -44,7 +44,10 @@ router.post('/:lang/registration', async (req, res) => {
             telegram,
             pass: hashedPassword,
             timezone,
-            gender
+            gender,
+            demoBalance: 0,
+            realBalance: 0,
+            phone: ""
         });
 
         await newUser.save();
@@ -90,8 +93,11 @@ router.post('/:lang/login', async (req, res) => {
 
 
 
-router.get('/:lang/me', authenticateToken, (req, res) => {
-    res.json({ user: req.user });
+router.get('/:lang/me', authenticateToken, async (req, res) => {
+    const id = req.user.id;
+
+    const user = await User.findOne({_id: id});
+    return res.json(user)
 });
 
 router.get('/:lang/logout', (req, res) => {

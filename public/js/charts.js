@@ -230,7 +230,6 @@ var Chart = (function (_super) {
         }
     };
     Chart.prototype.render = function (aData) {
-        console.log('RENDER', aData);
         
         // Якщо aData не передано або воно порожнє, вийдемо з функції
         if (!aData || aData.length === 0) return;

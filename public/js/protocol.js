@@ -10,13 +10,11 @@ var Protocol = function(grafic,asset,ssid,account,error){
         
         this.assets = new Array();
         this.assets.push(asset);
-        
         this.ssid = ssid;
         this.account = account;
 
         var self = this;
         this.socket.onopen = function(){
-            console.log("Поточний тип графіка (при підключенні):", self.grafic);
             self.onOpen();
         }
 
@@ -28,7 +26,6 @@ var Protocol = function(grafic,asset,ssid,account,error){
         } 
         
         this.socket.onclose = function(event){
-//            self.onClose();
             setInterval(function(){error();},5000);
         }
     }
@@ -83,7 +80,6 @@ var Protocol = function(grafic,asset,ssid,account,error){
         },
         onOpen: function(){
             console.log("Соединение установлено.");
-            console.log("Grafic Object:", this.grafic);
             this.socket.send('getAmountList '+this.account);   //список значений ставок
 
             var self = this;
@@ -156,14 +152,11 @@ var Protocol = function(grafic,asset,ssid,account,error){
         
                     chart.aData.push(newPoint);
         
-                    console.log("📊 Оновлені aData:", chart.aData);
         
                     // Оновіть aData без використання parent
                     chart.aData = chart.generateAData(chart.aData);
         
-                    console.log("Генерація нових даних:", chart.aData);
         
-                    console.log("Примусовий рендеринг графіка...");
                     chart.render(chart.aData);  // викликаємо render, передаючи нові aData
                 } else {
                     console.warn("⚠ Немає charts у grafic, не можемо оновити дані.");
@@ -215,7 +208,7 @@ var Protocol = function(grafic,asset,ssid,account,error){
                     case 'quotesLine':this.quotesLine(json[key]);break;
                     case 'AmountList':this.setAmountList(json[key]);break;
 
-                    // default: console.log(json[key]);
+                    default: console.log(json[key]);
                 }
             }
         },
