@@ -5,8 +5,8 @@ fetch('/en/me')
         const personal = document.querySelector('#personal');
         const headers = document.querySelectorAll('#header');
         const submenu = document.querySelector('#submenu');
-        console.log(user)
         if (!user.message) {
+            const accountType = localStorage.getItem('account_type');
             if (submenu) submenu.style.display = 'block'
             if (headers[1]) headers[1].style.display = 'block'
             const username = document.querySelector('.username');
@@ -14,7 +14,21 @@ fetch('/en/me')
             const balance = document.querySelector('.balance');
             username.textContent = `${user.name} ${user.surname}`
             email.textContent = user.email;
-            balance.textContent = `$${user.demoBalance}`;
+            balance.textContent = `$${accountType == 'demo' ? user.demoBalance : user.realBalance}`;
+            const balanceModes = document.querySelectorAll('li.modes');
+            
+            balanceModes.forEach(mode => {
+                mode.classList.remove('active');
+                if (accountType == 'demo') balanceModes[0].classList.add('active')
+                    else balanceModes[1].classList.add('active')
+            })
+            
+            const notActiveBalanceMode = document.querySelector('li.modes:not(.active)');
+            notActiveBalanceMode.onclick = function () {
+                const val = this.querySelector('a').textContent.trim();
+                localStorage.setItem('account_type', val == 'Real' ? 'real' : 'demo')
+                window.location.reload();
+            }
         } else {
             if (personal) personal.style.display = 'none'
             if (headers[0]) headers[0].style.display = 'block'
@@ -55,6 +69,7 @@ if (loginModal) {
                 } else if (response.invalidPassword) {
                     error.textContent = lang == 'en' ? 'Invalid password' : 'Неверный пароль';
                 } else {
+                    localStorage.setItem('account_type', 'demo');
                     window.location.reload();
                 }
             })
