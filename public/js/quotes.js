@@ -313,7 +313,6 @@ var Canvas = (function () {
         else {
             position_time = this.stop_expiration;
         }
-        ///var x = (position_time - this.parent.min_time)*this.parent.time_coef; 
         if (!position_time || !this.serverTime)
             return;
         this.seconds_left = position_time - this.serverTime;
