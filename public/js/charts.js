@@ -89,12 +89,6 @@ var Chart = (function (_super) {
         this.graficBackground();
         this.buildLines();
 
-        if (this.indicators.statusBolinger == true)
-            this.indicators.bolingerBands();
-        if (this.indicators.statusSampleSMA == true)
-            this.indicators.sampleSMA();
-        if (this.indicators.statusAlligator == true)
-            this.indicators.alligator();
         if (this.parent.activeDeals == false) {
             this.buildExpirationLines();
         }
@@ -140,55 +134,6 @@ var Chart = (function (_super) {
             this.hover.clear();
         }
     };
-    Chart.prototype.renderMACD = function () {
-        this.setMinMaxAmount(this.aData);
-        this.setDataCoords(this.aData); //устанавливаем координаты
-        this.buildTimeGrid();
-        var amount = this.getAVGAmount(this.aData);
-        this.drawAVGLine(amount);
-        this.buildPositions(amount, this.aData);
-        this.buildTimeGrid();
-    };
-    Chart.prototype.renderRSI = function () {
-        //переопределяем
-        this.setMinMaxAmount(this.parent.data);
-        this.setDataCoords(this.aData); //устанавливаем координаты
-        this.buildTimeGrid();
-        var data = this.indicators.sampleSMA(this.indicators.colorSMA, this.indicators.periodRSI);
-        this.indicators.buildRSILines(data);
-    };
-    Chart.prototype.getAVGAmount = function (data) {
-        var sum = 0;
-        var cnt = 0;
-        for (var key in data) {
-            sum += data[key].amount * 1;
-            cnt++;
-        }
-        var avg = sum / cnt;
-        return avg;
-    };
-    Chart.prototype.drawAVGLine = function (amount) {
-        var y = this.getY(amount);
-        //рисуем отметки 
-        //ВЕРХНЯЯ ПОЗИЦИЯ
-        this.ctx.save();
-        this.ctx.lineWidth = 1;
-        this.ctx.strokeStyle = this.skin.amountStripesColor;
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.x + 0.5, this.y + y + 0.5);
-        this.ctx.lineTo(this.x + this.width + 0.5 + 5, this.y + y + 0.5);
-        this.ctx.closePath();
-        this.ctx.stroke();
-        this.ctx.restore();
-        //надпись
-        this.ctx.save();
-        this.ctx.fillStyle = this.skin.amountTextColor;
-        this.ctx.font = "normal 12px Tahoma";
-        var text = amount;
-        this.ctx.textAlign = "left";
-        this.ctx.fillText(text, this.x + this.width + 0.5 + 7, this.y + y + 0.5 + 4);
-        this.ctx.restore();
-    };
     Chart.prototype.buildPositions = function (amount, data) {
         var x, y;
         var middle_y = this.getY(amount);
@@ -231,27 +176,16 @@ var Chart = (function (_super) {
     };
     Chart.prototype.render = function (aData) {
         
-        // Якщо aData не передано або воно порожнє, вийдемо з функції
-        if (!aData || aData.length === 0) return;
-    
-        this.aData = aData;  // Якщо потрібно, можна присвоїти значення в this.aData
-    
         this.background();
         this.setMinMaxTime(this.aData);
-        // this.countDigits(this.aData); // Считаем знаки после запятой
-        this.type = 'candles'
+        console.log(this.type)
+        this.countDigits(this.aData); // Считаем знаки после запятой
         switch (this.type) {
             case 'normal':
                 this.renderNormal();
                 break;
             case 'candles':
                 this.renderCandles(this.aData);
-                break;
-            case 'macd':
-                this.renderMACD();
-                break;
-            case 'rsi':
-                this.renderRSI();
                 break;
         }
     };
