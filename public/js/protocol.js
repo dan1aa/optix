@@ -37,13 +37,10 @@ var Protocol = function(grafic,asset,ssid,account,error){
         account:0,
 
         engine:function(){
-            //this.socket.send('getQuotesList 1');   //авторизируемся    //0 Выключить    //для получения каждый секунду значений ВСЕХ катеровок.. для списка
             this.socket.send('getAssets '+this.mode+' '+this.account);  //запрос на получение списка активных катеровок для данного режима
-            //this.socket.send('quotesLine');   //авторизируемся  
 
             //отправляем запрос для получения данных графика
             this.socket.send('optionChartData '+this.ssid+' '+this.asset+' '+this.timerange+' '+this.mode+' '+this.account);
-            //optionChartData ae7445415f000104804af4ce9283ad68 13 60 2 0
         },
 
         submit:function(position,amount){

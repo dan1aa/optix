@@ -153,7 +153,6 @@ var ChartsMain = (function () {
         var width;
         var blocks = (this.max_time - this.min_time) / step;
         
-        // визначаємо ширину Свечи
         width = (this.width - (this.width / 100 * this.time_padding)) / blocks; //ширину на кількість блоків
         width = width - width / 100 * 30; // віднімаємо від ширини блока трохи, щоб свічки не були впритул
         var start = parseInt(this.aData[0].date);
@@ -275,14 +274,12 @@ var ChartsMain = (function () {
         this.ctx.fillStyle = this.skin.currentAmountPositionTextColor;
         this.ctx.font = "bold 12px Tahoma";
         var text = element.amount;
-        //var length = this.ctx.measureText(text);
         this.ctx.textAlign = "left";
         this.ctx.fillText(text, this.width + this.x + 10, element.y + this.y + 4);
         this.ctx.restore();
         //рисуем линию
         this.ctx.save();
         this.ctx.lineWidth = 1;
-        //this.ctx.strokeStyle = "#8ed3a8";
         this.ctx.strokeStyle = this.skin.currentAmountPositionLineColor;
         this.ctx.beginPath();
         this.ctx.moveTo(start_x + this.x + 0.5, element.y + this.y + 0.5);
@@ -297,12 +294,6 @@ var ChartsMain = (function () {
         this.ctx.save();
         this.ctx.beginPath();
         this.ctx.fillStyle = this.skin.currentAmountPositionDotColor;
-        /*if(this.grafic.candles){
-            for(var key in this.grafic.candleData){}    //получаем последний елемент объекта
-            this.ctx.arc( this.grafic.candleData[key].x, element.y, radius, 0, 2 * Math.PI, false );
-        }else{
-            this.ctx.arc( element.x, element.y, radius, 0, 2 * Math.PI, false );
-        }*/
         this.ctx.arc(element.x + this.x, element.y + this.y, radius, 0, 2 * Math.PI, false);
         this.ctx.closePath();
         this.ctx.fill();
@@ -465,7 +456,6 @@ var ChartsMain = (function () {
         var end = Math.floor((this.width / this.time_coef) + Math.floor(this.min_time));
         //определяем через сколько секунд будут промежутки
         var positions = Math.floor((end - start) / 30);
-        //var interval = canvas_width / positions;
         var interval = this.parent.width / positions;
         var step = 0;
         if (interval > 60) {
@@ -589,7 +579,6 @@ var ChartsMain = (function () {
         this.max_time = this.parent.end_expiration; //определяем максимальное время
         this.time_range = this.max_time - this.min_time;
         this.time_coef = (this.width - (this.width - this.parent.right_padding) / 100 * this.time_padding) / this.time_range;
-        //this.time_coef = (this.width-(this.time_range/100*this.time_padding)    ) / this.time_range;
     };
     ChartsMain.prototype.getLastDeal = function () {
         if (this.deals) {
