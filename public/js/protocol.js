@@ -71,10 +71,7 @@ var Protocol = function(grafic,asset,ssid,account,error){
             if(this.assets.indexOf(asset) != -1) return;
             this.assets.push(asset);
         },
-        
-        removeAsset: function(){
-            
-        },
+
         onOpen: function(){
             console.log("Соединение установлено.");
             this.socket.send('getAmountList '+this.account);   //список значений ставок
@@ -84,7 +81,6 @@ var Protocol = function(grafic,asset,ssid,account,error){
                 self.socket.send("ping "+self.ssid);   //отправляем пинг и получаем таймстамп
             },60000);
             
-            console.log('getDeals '+this.ssid+' '+this.mode +' '+this.account);
             self.socket.send('getDeals '+this.ssid+' '+this.mode +' '+this.account);
 
             this.setActives();
@@ -116,49 +112,14 @@ var Protocol = function(grafic,asset,ssid,account,error){
             if(this.closeOptionCallback == undefined) return;
             this.closeOptionCallback(json);            
         },
-        addNewPosition: function(json) {
-            if (this.newChartDataCallback == undefined) return;
-        
-            var element = {
-                date: json.time,
-                open: json.open,
-                high: json.high,
-                low: json.low,
-                close: json.close,
-                asset: json.id || 0
-            };
-        
+        addNewPosition:function(json){
+            if(this.newChartDataCallback == undefined) return;
+            console.log(json);
+            var element = new Object();
+            element.date = json.time;
+            element.amount = json.value;
+            element.asset = json.id;
             this.newChartDataCallback(element);
-        
-            if (this.grafic) {
-                if (this.grafic.charts && this.grafic.charts.length > 0) {
-                    let chart = this.grafic.charts[0];
-        
-                    if (!chart.aData) {
-                        chart.aData = [];
-                    }
-        
-                    let newPoint = {
-                        date: json.time,
-                        open: json.open,
-                        high: json.high,
-                        low: json.low,
-                        close: json.close,
-                        asset: json.id || 0
-                    };
-        
-                    chart.aData.push(newPoint);
-        
-        
-                    // Оновіть aData без використання parent
-                    chart.aData = chart.generateAData(chart.aData);
-        
-        
-                    chart.render(chart.aData);  // викликаємо render, передаючи нові aData
-                } else {
-                    console.warn("⚠ Немає charts у grafic, не можемо оновити дані.");
-                }
-            }
         },
         
         setAssetList:function(data){        //добавляем елементы в список ассетов
