@@ -10,9 +10,6 @@ var Canvas = (function () {
         this.zoom_step = 60;
         this.zoom = 0;
         this.max_zoom = 0;
-        this.indicators = {
-            statusSMA: 0
-        }; 
         this.charts = [];
         this.deals = {}; //ÑÐ´ÐµÐ»ÐºÐ¸
         var block = obj.block;
@@ -44,7 +41,6 @@ var Canvas = (function () {
         }
     };
     Canvas.prototype.render = function () {
-        console.log("FAKE RENDER")
         if (this.data == undefined)
             return;
         this.getMaxZoom();

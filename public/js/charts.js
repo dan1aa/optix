@@ -1,3 +1,176 @@
+(function () {
+    class KrakenWebSocket {
+        constructor(pair = "BTC/USD", interval = 1) {
+            if (!KrakenWebSocket.instance) {
+                this.wsUrl = "wss://ws.kraken.com";
+                this.pair = pair;  // ініціалізація пари
+                this.interval = interval;
+                this.socket = null;
+                this.ohlcData = [];
+                this.currentCandle = null;
+                this.reconnectTimeout = 5000;
+    
+                this.onTradeCallback = null;
+                this.onOHLCUpdateCallback = null;
+    
+                this.connect(); 
+                KrakenWebSocket.instance = this;
+    
+                // Оновлюємо свічку кожні 3 секунди
+                setInterval(() => this.updateCandleManually(), 3000);
+            }
+            return KrakenWebSocket.instance;
+        }
+    
+        // Підключення WebSocket
+        connect() {
+            this.socket = new WebSocket(this.wsUrl);
+    
+            this.socket.onopen = () => {
+                console.log("✅ Підключено до Kraken WebSocket");
+                this.subscribeToTrade();
+                this.subscribeToOHLC();
+            };
+    
+            this.socket.onmessage = (event) => this.handleMessage(event);
+    
+            this.socket.onclose = () => {
+                console.warn("⚠ WebSocket відключено! Перепідключення...");
+                setTimeout(() => this.connect(), this.reconnectTimeout);
+            };
+    
+            this.socket.onerror = (error) => {
+                console.error("❌ Помилка WebSocket:", error);
+            };
+        }
+    
+        // Підписка на торгівлю
+        subscribeToTrade() {
+            const message = {
+                event: "subscribe",
+                pair: [this.pair],
+                subscription: { name: "trade" },
+            };
+            this.socket.send(JSON.stringify(message));
+        }
+    
+        // Підписка на OHLC
+        subscribeToOHLC() {
+            const message = {
+                event: "subscribe",
+                pair: [this.pair],
+                subscription: { name: "ohlc", interval: this.interval },
+            };
+            this.socket.send(JSON.stringify(message));
+        }
+    
+        // Обробка повідомлень від WebSocket
+        handleMessage(event) {
+            const data = JSON.parse(event.data);
+    
+            if (Array.isArray(data) && data[2] === "trade") {
+                for (const trade of data[1]) {
+                    this.updateCurrentCandle(trade);
+                }
+            }
+    
+            if (Array.isArray(data) && data[1] === `ohlc-${this.interval}`) {
+                this.addNewCandle(data[2]);
+            }
+        }
+    
+        // Оновлення поточної свічки
+        updateCurrentCandle(trade) {
+            const price = parseFloat(trade[0]);
+            const timestamp = Math.floor(parseFloat(trade[2]));
+            const intervalTime = Math.floor(timestamp / (this.interval * 60)) * (this.interval * 60);
+    
+            if (!this.currentCandle || this.currentCandle.time !== intervalTime) {
+                if (this.currentCandle) {
+                    this.ohlcData.push(this.currentCandle);
+                    if (this.onOHLCUpdateCallback) {
+                        this.onOHLCUpdateCallback(this.currentCandle);
+                    }
+                }
+    
+                this.currentCandle = {
+                    time: intervalTime,
+                    open: price,
+                    high: price,
+                    low: price,
+                    close: price,
+                };
+            } else {
+                this.currentCandle.high = Math.max(this.currentCandle.high, price);
+                this.currentCandle.low = Math.min(this.currentCandle.low, price);
+                this.currentCandle.close = price;
+            }
+        }
+    
+        // Оновлення свічки вручну
+        updateCandleManually() {
+            if (!this.currentCandle) return;
+    
+            // Якщо time змінився, створюємо нову свічку
+            if (!this.lastSentCandle || this.currentCandle.time !== this.lastSentCandle.time) {
+                console.log("🆕 Створюємо нову свічку:", this.currentCandle);
+                if (this.onTradeCallback) {
+                    this.onTradeCallback(this.currentCandle);
+                }
+                this.lastSentCandle = { ...this.currentCandle }; // Запам'ятовуємо нову свічку
+                return;
+            }
+    
+            // Якщо змінився один з OHLC (але не time), оновлюємо поточну свічку
+            const keysToCheck = ["open", "high", "low", "close"];
+            const isDifferent = keysToCheck.some(key => this.currentCandle[key] !== this.lastSentCandle[key]);
+    
+            if (isDifferent) {
+                if (this.onTradeCallback) {
+                    this.onTradeCallback(this.currentCandle);
+                }
+                this.lastSentCandle = { ...this.currentCandle }; 
+            }
+        }
+    
+        // Додавання нової свічки
+        addNewCandle(data) {
+            const newCandle = {
+                time: parseInt(data[0]),
+                open: parseFloat(data[1]),
+                high: parseFloat(data[2]),
+                low: parseFloat(data[3]),
+                close: parseFloat(data[4]),
+            };
+    
+            this.ohlcData.push(newCandle);
+            this.currentCandle = newCandle;
+    
+            if (this.onOHLCUpdateCallback) {
+                this.onOHLCUpdateCallback(newCandle);
+            }
+        }
+    
+        // Методи для підписки на оновлення
+        onOHLCUpdate(callback) {
+            this.onOHLCUpdateCallback = callback;
+        }
+    
+        onTradeUpdate(callback) {
+            this.onTradeCallback = callback;
+        }
+    
+        // Метод для зміни пари
+        setPair(newPair) {
+            this.pair = newPair;
+            this.socket.close();  // Закриваємо старе з'єднання
+            this.connect(); // Перепідключаємося з новою парою
+        }
+    }
+
+    window.krakenWS = new KrakenWebSocket();
+})();
+
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -16,7 +189,6 @@ var Chart = (function (_super) {
         this.hover = new Hover(this);
         this.forms = new Forms(this);
         this.mouse = new Mouse(this);
-        this.indicators = new Indicators(this, this.ctx);
     }
     Chart.prototype.setX = function (x) {
         this.x = x;
@@ -178,7 +350,6 @@ var Chart = (function (_super) {
         
         this.background();
         this.setMinMaxTime(this.aData);
-        console.log(this.type)
         this.countDigits(this.aData); // Считаем знаки после запятой
         switch (this.type) {
             case 'normal':

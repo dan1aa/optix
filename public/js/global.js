@@ -1,4 +1,9 @@
 
+window.krakenWS.setPair("ETH/USD");
+window.krakenWS.onTradeUpdate((candle) => {
+    console.log("🔥 Оновлення свічки:", candle);
+});
+
 fetch('/en/me')
     .then(res => res.json())
     .then(user => {

@@ -114,7 +114,6 @@ var Protocol = function(grafic,asset,ssid,account,error){
         },
         addNewPosition:function(json){
             if(this.newChartDataCallback == undefined) return;
-            console.log(json);
             var element = new Object();
             element.date = json.time;
             element.amount = json.value;
@@ -142,7 +141,6 @@ var Protocol = function(grafic,asset,ssid,account,error){
             this.optionChartDataCallback(json);
         },
         quotesLine:function(json){
-            console.log(json);
         },
 
         onAmountList:function(callback){

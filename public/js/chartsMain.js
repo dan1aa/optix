@@ -593,11 +593,9 @@ var ChartsMain = (function () {
     ChartsMain.prototype.generateAData = function (data) {
         if (data == undefined) return;
         if (data[0] == undefined) return;
-    
         var aData = [];
         var time;
     
-        // отримуємо час для порівняння
         if (this.newAsset) {
             time = (this.newAsset.date - this.defaultAllowedTimeToShowQuotes) - (this.zoom * this.zoom_step);
         } else {
