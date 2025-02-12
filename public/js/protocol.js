@@ -1,3 +1,33 @@
+async function getOHLCData(pair, count) {
+    const url = `/en/ohlc?pair=${pair}`;
+    
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.error && data.error.length > 0) {
+            console.error("Error getting data:", data.error);
+            return [];
+        }
+
+        const ohlcData = data.result[pair];
+        let lastCandles = ohlcData.slice(-count);
+        
+        lastCandles = lastCandles.map(candle => ({
+            date: parseInt(candle[0]),
+            open: parseFloat(candle[1]),
+            high: parseFloat(candle[2]),
+            low: parseFloat(candle[3]),
+            close: parseFloat(candle[4]),
+            amount: parseFloat(candle[4])
+        }));
+        return lastCandles
+    } catch (error) {
+        console.error("Request error:", error);
+        return [];
+    }
+}
+
 var Protocol = function(grafic,asset,ssid,account,error){
     try{
         this.socket = new WebSocket('ws://localhost:8080');
@@ -112,13 +142,16 @@ var Protocol = function(grafic,asset,ssid,account,error){
             if(this.closeOptionCallback == undefined) return;
             this.closeOptionCallback(json);            
         },
-        addNewPosition:function(json){
+        addNewPosition: async function(json){
             if(this.newChartDataCallback == undefined) return;
             var element = new Object();
             element.date = json.time;
             element.amount = json.value;
             element.asset = json.id;
             this.newChartDataCallback(element);
+            const chart = this.grafic.charts[0];
+            const data = await getOHLCData('ETH/USD', 50)
+            chart.render(data)
         },
         
         setAssetList:function(data){        //добавляем елементы в список ассетов

@@ -147,53 +147,41 @@ var ChartsMain = (function () {
         this.ctx.stroke();
         this.ctx.restore();
     };
-    ChartsMain.prototype.buildCandles = function () {
+    ChartsMain.prototype.buildCandles = function (aData) {
+        this.aData = aData;
         var key;
         var step = 14;
         var width;
+        this.max_time = 0;
         var blocks = (this.max_time - this.min_time) / step;
-        
-        width = (this.width - (this.width / 100 * this.time_padding)) / blocks; //ширину на кількість блоків
-        width = width - width / 100 * 30; // віднімаємо від ширини блока трохи, щоб свічки не були впритул
+        width = (this.width - (this.width / 100 * this.time_padding)) / blocks; 
+        width = width - width / 100 * 30; 
         var start = parseInt(this.aData[0].date);
         var end = parseInt(this.aData[this.aData.length - 1].date);
         var i = 0;
         var arr = new Object();
-        
-    
+
         while (start < end) {
-            
             arr[start] = new Array();
-            
-            if (arr[start - step] != undefined) {
+            if (arr[start - step] != undefined && arr[start - step][arr[start - step].length - 1]) {
                 arr[start].push(arr[start - step][arr[start - step].length - 1]);
             }
-            
-    
             for (key in this.aData) {
                 if (this.aData[key].date > start && this.aData[key].date < start + step) {
                     arr[start].push(this.aData[key].amount);
                 }
             }
-    
             i++;
             start += step;
         }
-    
-    
         this.candleData = new Object();
-    
-    
         for (key in arr) {
             key = parseInt(key);
             this.candleData[key + step / 2] = new Array();
-    
-    
             this.candleData[key + step / 2].start = arr[key][0];
             this.candleData[key + step / 2].end = arr[key][arr[key].length - 1];
             this.candleData[key + step / 2].max = 0;
             this.candleData[key + step / 2].min = 0;
-    
             for (var key2 in arr[key]) {
                 if (this.candleData[key + step / 2].max == 0 || arr[key][key2] > this.candleData[key + step / 2].max) {
                     this.candleData[key + step / 2].max = arr[key][key2];
@@ -203,42 +191,38 @@ var ChartsMain = (function () {
                 }
             }
         }
-    
-    
-        // Тепер малюємо свічки
         for (key in this.candleData) {
             this.candleData[key].x = this.getX(key);
             this.candleData[key].y_start = this.getY(this.candleData[key].start);
             this.candleData[key].y_end = this.getY(this.candleData[key].end);
             this.candleData[key].y_max = this.getY(this.candleData[key].max);
             this.candleData[key].y_min = this.getY(this.candleData[key].min);
-    
-            // Малюємо лінії
             this.ctx.save();
             this.ctx.lineWidth = 1;
             if (this.candleData[key].y_start != this.candleData[key].y_end) {
                 if (this.candleData[key].y_start > this.candleData[key].y_end) {
                     this.ctx.fillStyle = "#57c580";
+                    ;
                     this.ctx.strokeStyle = "#57c580";
-                } else {
+                }
+                else {
                     this.ctx.fillStyle = "#e57878";
+                    ;
                     this.ctx.strokeStyle = "#e57878";
                 }
-    
-                // Малюємо мінімум і максимум
+                //MIN MAX
                 this.ctx.beginPath();
                 this.ctx.moveTo(this.candleData[key].x + this.x, this.candleData[key].y_max + this.y);
                 this.ctx.lineTo(this.candleData[key].x + this.x, this.candleData[key].y_min + this.y);
                 this.ctx.closePath();
                 this.ctx.stroke();
-    
-                // Малюємо блок (свічку)
-                this.ctx.rect(this.candleData[key].x - width / 2 + this.x, this.candleData[key].y_start + this.y, width, this.candleData[key].y_end - this.candleData[key].y_start);
+                //Block
+                this.ctx.rect(this.candleData[key].x - width / 2 + this.x, this.candleData[key].y_start + this.y, 4, this.candleData[key].y_end - this.candleData[key].y_start);
                 this.ctx.fill();
-            } else {
+            }
+            else {
                 this.ctx.strokeStyle = "#e57878";
-    
-                // Якщо немає зміни
+                //NO CHANGES
                 this.ctx.beginPath();
                 this.ctx.moveTo(this.candleData[key].x + this.x - width / 2, this.candleData[key].y_start + this.y);
                 this.ctx.lineTo(this.candleData[key].x + this.x + width / 2, this.candleData[key].y_start + this.y);
@@ -321,6 +305,7 @@ var ChartsMain = (function () {
         return Math.floor(x / this.time_coef + this.min_time);
     };
     ChartsMain.prototype.getX = function (time) {
+        this.time_coef = (this.width - (this.width - this.parent.right_padding) / 100 * this.time_padding) / this.time_range;
         return Math.floor((Math.floor(time) - this.min_time) * this.time_coef) + 0.5;
     };
     ChartsMain.prototype.getY = function (amount) {
@@ -446,7 +431,8 @@ var ChartsMain = (function () {
             start -= step;
         }
     };
-    ChartsMain.prototype.buildTimeGrid = function () {
+    ChartsMain.prototype.buildTimeGrid = function (aData) {
+        this.aData = aData;
         var hours, minutes, seconds, d, text, length;
         //получаем первый елемент    и смотрим время
         var time = this.aData.date;
@@ -576,8 +562,7 @@ var ChartsMain = (function () {
                 this.min_time = data[key].date;
             }
         }
-        this.max_time = this.parent.end_expiration; //определяем максимальное время
-        this.time_range = this.max_time - this.min_time;
+        this.time_range = this.max_time - this.min_time || 0;
         this.time_coef = (this.width - (this.width - this.parent.right_padding) / 100 * this.time_padding) / this.time_range;
     };
     ChartsMain.prototype.getLastDeal = function () {

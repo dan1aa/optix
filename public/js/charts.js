@@ -1,6 +1,8 @@
+
+
 (function () {
     class KrakenWebSocket {
-        constructor(pair = "BTC/USD", interval = 1) {
+        constructor(pair = "ETH/USD", interval = 1) {
             if (!KrakenWebSocket.instance) {
                 this.wsUrl = "wss://ws.kraken.com";
                 this.pair = pair;  // ініціалізація пари
@@ -17,7 +19,7 @@
                 KrakenWebSocket.instance = this;
     
                 // Оновлюємо свічку кожні 3 секунди
-                setInterval(() => this.updateCandleManually(), 3000);
+                setInterval(() => this.updateCandleManually(), 7000);
             }
             return KrakenWebSocket.instance;
         }
@@ -99,11 +101,13 @@
                     high: price,
                     low: price,
                     close: price,
+                    amount: price
                 };
             } else {
                 this.currentCandle.high = Math.max(this.currentCandle.high, price);
                 this.currentCandle.low = Math.min(this.currentCandle.low, price);
                 this.currentCandle.close = price;
+                this.currentCandle.amount = price;
             }
         }
     
@@ -113,7 +117,6 @@
     
             // Якщо time змінився, створюємо нову свічку
             if (!this.lastSentCandle || this.currentCandle.time !== this.lastSentCandle.time) {
-                console.log("🆕 Створюємо нову свічку:", this.currentCandle);
                 if (this.onTradeCallback) {
                     this.onTradeCallback(this.currentCandle);
                 }
@@ -141,6 +144,7 @@
                 high: parseFloat(data[2]),
                 low: parseFloat(data[3]),
                 close: parseFloat(data[4]),
+                amount: parseFloat(data[4])
             };
     
             this.ohlcData.push(newCandle);
@@ -176,8 +180,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-///<reference path="./chartsMain.ts"/>
-///<reference path="./service.ts"/>
+
 var Chart = (function (_super) {
     __extends(Chart, _super);
     function Chart(obj) {
@@ -282,11 +285,13 @@ var Chart = (function (_super) {
         }
     };
     Chart.prototype.renderCandles = function (aData) {
+
+        
         this.setMinMaxAmount(aData);
         this.setDataCoords(aData); //устанавливаем координаты
         this.buildAmountGrid();
-        this.buildTimeGrid();
-        this.buildCandles();
+        this.buildTimeGrid(aData);
+        this.buildCandles(aData);
         if (this.parent.activeDeals == false) {
             this.buildExpirationLines();
         }
@@ -347,17 +352,19 @@ var Chart = (function (_super) {
         }
     };
     Chart.prototype.render = function (aData) {
-        
         this.background();
-        this.setMinMaxTime(this.aData);
-        this.countDigits(this.aData); // Считаем знаки после запятой
-        switch (this.type) {
-            case 'normal':
-                this.renderNormal();
-                break;
-            case 'candles':
-                this.renderCandles(this.aData);
-                break;
+        this.type = 'candles'
+        this.setMinMaxTime(aData);
+        this.countDigits(aData); // Считаем знаки после запятой
+        if (aData) {
+            switch (this.type) {
+                case 'normal':
+                    this.renderNormal();
+                    break;
+                case 'candles':
+                    this.renderCandles(aData);
+                    break;
+            }
         }
     };
     Chart.prototype.closeDeal = function (data) {
