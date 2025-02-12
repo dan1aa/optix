@@ -43,6 +43,8 @@ var Protocol = function(grafic,asset,ssid,account,error){
         this.ssid = ssid;
         this.account = account;
 
+        this.historyData()
+
         var self = this;
         this.socket.onopen = function(){
             self.onOpen();
@@ -142,16 +144,19 @@ var Protocol = function(grafic,asset,ssid,account,error){
             if(this.closeOptionCallback == undefined) return;
             this.closeOptionCallback(json);            
         },
-        addNewPosition: async function(json){
+        historyData: async function() {
+            const chart = this.grafic.charts[0];
+            const data = await getOHLCData('ETH/USD', 50)
+            chart.render(data)
+        },
+        addNewPosition: function(json){
             if(this.newChartDataCallback == undefined) return;
             var element = new Object();
             element.date = json.time;
             element.amount = json.value;
             element.asset = json.id;
             this.newChartDataCallback(element);
-            const chart = this.grafic.charts[0];
-            const data = await getOHLCData('ETH/USD', 50)
-            chart.render(data)
+            // WEBSOCKET HERE?
         },
         
         setAssetList:function(data){        //добавляем елементы в список ассетов
