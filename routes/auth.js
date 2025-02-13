@@ -1,12 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authenticateToken = require('../middlewares/authenticateToken');
 const User = require('../models/User');
 const checkNoAuth = require('../middlewares/checkNoAuth');
-const saltRounds = 10;
 
 
 const getLangFromUrl = (req) => {
@@ -33,7 +31,6 @@ router.post('/:lang/registration', async (req, res) => {
             return res.status(400).json({ message: "User with this email already exists", exist: true, success: false });
         }
 
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         const newUser = new User({
             name: firstname,
@@ -42,7 +39,7 @@ router.post('/:lang/registration', async (req, res) => {
             country,
             email,
             telegram,
-            pass: hashedPassword,
+            pass: password,
             timezone,
             gender,
             demoBalance: 0,
@@ -69,8 +66,7 @@ router.post('/:lang/login', async (req, res) => {
             return res.status(400).json({ message: 'User not found', notFound: true });
         }
 
-        const isMatch = await bcrypt.compare(password, user.pass);
-        if (!isMatch) {
+        if (password != user.pass) {
             return res.status(400).json({ message: 'Invalid password', invalidPassword: true });
         }
 
@@ -82,6 +78,9 @@ router.post('/:lang/login', async (req, res) => {
             maxAge: 7 * 24 * 60 * 60 * 1000,
             sameSite: 'Strict'
         });
+
+        const userIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+        console.log(`User ${email} logged in from IP: ${userIP}`);
 
         res.json({ message: 'Logged in successfully', success: true });
 

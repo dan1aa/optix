@@ -1154,8 +1154,6 @@
                         });
 
                         $scope.protocol.onUpdate(function (element) {
-                            //console.log(element);
-                            //console.log($scope.current_asset == element.asset);
                             if($scope.updatePause == true) return;
 
                             $scope.quotes[element.asset] = element.amount;

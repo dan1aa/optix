@@ -152,7 +152,8 @@ var ChartsMain = (function () {
         var key;
         var step = 14;
         var width;
-        this.max_time = 0;
+        this.max_time = Math.max(...this.aData.map(d => d.date));
+        this.min_time = Math.min(...this.aData.map(d => d.date));
         var blocks = (this.max_time - this.min_time) / step;
         width = (this.width - (this.width / 100 * this.time_padding)) / blocks; 
         width = width - width / 100 * 30; 
@@ -217,7 +218,7 @@ var ChartsMain = (function () {
                 this.ctx.closePath();
                 this.ctx.stroke();
                 //Block
-                this.ctx.rect(this.candleData[key].x - width / 2 + this.x, this.candleData[key].y_start + this.y, 4, this.candleData[key].y_end - this.candleData[key].y_start);
+                this.ctx.rect(this.candleData[key].x - width / 2 + this.x, this.candleData[key].y_start + this.y, 3, this.candleData[key].y_end - this.candleData[key].y_start);
                 this.ctx.fill();
             }
             else {

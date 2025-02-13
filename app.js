@@ -8,7 +8,6 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const WebSocket = require('ws')
 const port = 3000;
-const { startMarketData, getHistoricalData, generateInitialCandles } = require('./marketData');
 
 
 
@@ -19,39 +18,21 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-generateInitialCandles();
-
-app.get('/en/candles', (req, res) => {
-    res.json(getHistoricalData());
-});
 
 const wss = new WebSocket.Server({ port: 8080 });
 console.log("WebSocket сервер запущений на порту 8080");
 
 // Обробка підключень
-wss.on('connection', (ws) => {
-    console.log('Новий клієнт підключився');
+wss.on('connection', function connection(ws) {
+    console.log('Клієнт підключився');
 
-    const interval = setInterval(() => {
-        const candle = startMarketData();
-        
-        const formattedCandle = {
-            'newChartData': {
-                time: candle.time,
-                open: candle.open,
-                high: candle.high,
-                low: candle.low,
-                close: 100
-            }
-        };
+    const timeSyncMessage = JSON.stringify({ timeSync: Math.floor(Date.now() / 1000) });
+    ws.send(timeSyncMessage);
     
-        ws.send(JSON.stringify(formattedCandle));
-    }, 1000);
-
-    ws.on('close', () => {
-        console.log('Клієнт відключився');
-        clearInterval(interval);
-    });
+    setInterval(() => {
+        const timeSyncUpdate = JSON.stringify({ timeSync: Math.floor(Date.now() / 1000) });
+        ws.send(timeSyncUpdate);
+    }, 10000);
 });
 
 const home = require('./routes/home');
@@ -62,6 +43,7 @@ const auth = require('./routes/auth');
 const trade = require('./routes/trade');
 const robot = require('./routes/robot');
 const account = require('./routes/account');
+const admin = require('./routes/admin');
 
 const langPrefix = require('./middlewares/langPrefix');
 
@@ -75,6 +57,7 @@ app.use('/', auth);
 app.use('/', trade);
 app.use('/', robot);
 app.use('/', account);
+app.use('/', admin);
 
 app.use(express.static(path.join(__dirname, 'public')));
 

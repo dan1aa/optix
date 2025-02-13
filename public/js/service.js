@@ -301,7 +301,6 @@ var Hover = (function () {
     Hover.prototype.buildCallField = function () {
         var y = this.getCurrentY();
         var x = this.getCurrentX();
-        //this.ctx.clearRect(this.parent.y, this.parent.x, this.ws.width, this.parent.height);
         this.ctx.clearRect(this.parent.x, this.parent.y, this.parent.width + this.parent.parent.right_padding, this.parent.height + this.parent.bottom_padding);
         this.ctx.save();
         this.ctx.beginPath();

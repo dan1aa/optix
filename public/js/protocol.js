@@ -28,6 +28,8 @@ async function getOHLCData(pair, count) {
     }
 }
 
+
+
 var Protocol = function(grafic,asset,ssid,account,error){
     try{
         this.socket = new WebSocket('ws://localhost:8080');
@@ -60,6 +62,10 @@ var Protocol = function(grafic,asset,ssid,account,error){
         this.socket.onclose = function(event){
             setInterval(function(){error();},5000);
         }
+
+        window.krakenWS.onTradeUpdate((candle) => {
+                console.log(candle)
+        });
     }
 
     Protocol.prototype = {
@@ -121,8 +127,13 @@ var Protocol = function(grafic,asset,ssid,account,error){
         onDataReceive:function(callback){
             this.optionChartDataCallback = callback;
         },
-        onTimeSync:function(callback){
+        onTimeSync: function(callback) {
             this.timeSyncCallback = callback;
+            this.timeSync = function (time) {
+                if (this.timeSyncCallback) {
+                    this.timeSyncCallback(time);
+                }
+            };
         },
         onUpdate:function(callback){
             this.newChartDataCallback = callback;
@@ -153,10 +164,9 @@ var Protocol = function(grafic,asset,ssid,account,error){
             if(this.newChartDataCallback == undefined) return;
             var element = new Object();
             element.date = json.time;
-            element.amount = json.value;
-            element.asset = json.id;
+            element.amount = json.close;
+            element.asset = 1;
             this.newChartDataCallback(element);
-            // WEBSOCKET HERE?
         },
         
         setAssetList:function(data){        //добавляем елементы в список ассетов
