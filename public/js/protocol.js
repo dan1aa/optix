@@ -1,3 +1,9 @@
+const currAsset = assetsData.filter(e => e.id == +pairQuery)[0]
+const asset = currAsset.id;
+const assetName = currAsset.name;
+
+const accountType = localStorage.getItem('account_type');
+
 async function getOHLCData(pair, count) {
     const url = `/en/ohlc?pair=${pair}`;
     
@@ -30,7 +36,7 @@ async function getOHLCData(pair, count) {
 
 
 
-var Protocol = function(grafic,asset,ssid,account,error){
+var Protocol = function(grafic,ssid,error){
     try{
         this.socket = new WebSocket('ws://localhost:8080');
     }catch(e){
@@ -43,7 +49,6 @@ var Protocol = function(grafic,asset,ssid,account,error){
         this.assets = new Array();
         this.assets.push(asset);
         this.ssid = ssid;
-        this.account = account;
 
         this.historyData()
 
@@ -62,70 +67,30 @@ var Protocol = function(grafic,asset,ssid,account,error){
         this.socket.onclose = function(event){
             setInterval(function(){error();},5000);
         }
-
-        window.krakenWS.onTradeUpdate((candle) => {
-                console.log(candle)
-        });
     }
 
     Protocol.prototype = {
         socket:null,
-        timerange:30,
         mode:2, //режим ... билдер классик итд
-        account:0,
 
         engine:function(){
-            this.socket.send('getAssets '+this.mode+' '+this.account);  //запрос на получение списка активных катеровок для данного режима
-
-            //отправляем запрос для получения данных графика
-            this.socket.send('optionChartData '+this.ssid+' '+this.asset+' '+this.timerange+' '+this.mode+' '+this.account);
+            this.socket.send('getAssets '+this.mode);  //запрос на получение списка активных катеровок для данного режима
         },
 
         submit:function(position,amount){
-            console.log(position);
-            var data = this.asset+' '+this.mode+' '+amount+' '+position+' '+this.account;
-            console.log('createOption '+this.ssid+' '+data);
+            var data = this.asset+' '+this.mode+' '+amount+' '+position+' '+accountType+' '+assetName;
             this.socket.send('createOption '+this.ssid+' '+data);
-        },
-
-        changeAsset:function(asset){
-            this.asset = asset;
-            this.addAsset(asset);
-            
-            this.setActives();
-            
-            this.socket.send('optionChartData '+this.ssid+' '+this.asset+' '+this.timerange+' '+this.mode+' '+this.account);
-        },
-        setActives : function(){
-            var str = '';
-            for(var key in this.assets){
-                str += this.assets[key]+',';
-            }
-            str = str.substr(0,str.length-1);
-            
-            this.socket.send('setActives '+str);
-        },
-        addAsset: function(asset){
-            if(this.assets.indexOf(asset) != -1) return;
-            this.assets.push(asset);
         },
 
         onOpen: function(){
             console.log("Соединение установлено.");
-            this.socket.send('getAmountList '+this.account);   //список значений ставок
+            this.socket.send('getAmountList');   //список значений ставок
 
             var self = this;
-            setInterval(function(){ //PING
-                self.socket.send("ping "+self.ssid);   //отправляем пинг и получаем таймстамп
-            },60000);
             
-            self.socket.send('getDeals '+this.ssid+' '+this.mode +' '+this.account);
+            self.socket.send('getDeals '+this.ssid+' '+this.mode);
 
-            this.setActives();
             this.engine();
-        },
-        onDataReceive:function(callback){
-            this.optionChartDataCallback = callback;
         },
         onTimeSync: function(callback) {
             this.timeSyncCallback = callback;
@@ -134,9 +99,6 @@ var Protocol = function(grafic,asset,ssid,account,error){
                     this.timeSyncCallback(time);
                 }
             };
-        },
-        onUpdate:function(callback){
-            this.newChartDataCallback = callback;
         },
         onAsset:function(callback){
             this.assetCallback = callback;
@@ -157,16 +119,10 @@ var Protocol = function(grafic,asset,ssid,account,error){
         },
         historyData: async function() {
             const chart = this.grafic.charts[0];
-            const data = await getOHLCData('ETH/USD', 50)
+            const data = await getOHLCData(currAsset.name, 50)
+            const currPriceInput = document.querySelector('.curr-price-input');
+            if (currPriceInput) currPriceInput.value = data[data.length - 1].close;
             chart.render(data)
-        },
-        addNewPosition: function(json){
-            if(this.newChartDataCallback == undefined) return;
-            var element = new Object();
-            element.date = json.time;
-            element.amount = json.close;
-            element.asset = 1;
-            this.newChartDataCallback(element);
         },
         
         setAssetList:function(data){        //добавляем елементы в список ассетов
@@ -184,12 +140,6 @@ var Protocol = function(grafic,asset,ssid,account,error){
             if(this.timeSyncCallback == undefined) return;
             this.timeSyncCallback(json.time);
         },
-        initGrafic:function(json){
-            if(this.optionChartDataCallback == undefined) return;
-            this.optionChartDataCallback(json);
-        },
-        quotesLine:function(json){
-        },
 
         onAmountList:function(callback){
             this.amountListCallback = callback;
@@ -202,15 +152,12 @@ var Protocol = function(grafic,asset,ssid,account,error){
             var json = JSON.parse(event.data);  
             for(var key in json){
                 switch(key){
-                    case 'newChartData': {this.addNewPosition(json[key]);}break;
-                    case 'timeSync': this.timeSync(json[key]);break;
-                    case 'optionChartData': this.initGrafic(json[key]);break;
-                    case 'createOption': this.createOption(json[key]);break;    //делаем ставку
-                    case 'closeOption': this.closeOption(json[key]);break;    //ответ о закрытие опциона
-                    case 'Assets': this.setAssetList(json[key].data); break;     //список катеровок для списка выбора 
-                    case 'getDeals': this.setGetDeals(json[key]); break;     //список катеровок для списка выбора 
-                    case 'quotesLine':this.quotesLine(json[key]);break;
-                    case 'AmountList':this.setAmountList(json[key]);break;
+                    case 'timeSync': this.timeSync(json[key]);break; //done
+                    case 'createOption': this.createOption(json[key]);break;
+                    case 'closeOption': this.closeOption(json[key]);break;  
+                    case 'Assets': this.setAssetList(json[key].data); break; //done 
+                    case 'getDeals': this.setGetDeals(json[key]); break;     
+                    case 'AmountList':this.setAmountList(json[key]);break; // done
 
                     default: console.log(json[key]);
                 }

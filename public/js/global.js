@@ -13,7 +13,7 @@ fetch('/en/me')
             const balance = document.querySelector('.balance');
             username.textContent = `${user.name} ${user.surname}`
             email.textContent = user.email;
-            balance.textContent = `$${accountType == 'demo' ? user.demoBalance : user.realBalance}`;
+            balance.textContent = `$${accountType == 'demo' ? +user.demoBalance.toFixed(2) : +user.realBalance.toFixed(2)}`;
             const balanceModes = document.querySelectorAll('li.modes');
             
             balanceModes.forEach(mode => {

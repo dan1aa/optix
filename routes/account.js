@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require('path');
 const checkAuth = require('../middlewares/checkAuth');
 const User = require('../models/User')
+const { getOpenBets } = require('../controllers/betsController');
 
 const getLangFromUrl = (req) => {
     const lang = req.params.lang;
@@ -83,7 +84,7 @@ router.post('/:lang/account/change-data', async (req, res) => {
     }
 });
 
-router.post('/en/account/change-pass', async (req, res) => {
+router.post('/:lang/account/change-pass', async (req, res) => {
     const { currPass, newPass, id } = req.body;
 
     const user = await User.findOne({_id: id});
@@ -98,5 +99,13 @@ router.post('/en/account/change-pass', async (req, res) => {
 
     res.json({ message: 'User updated successfully' });
 })
+
+router.get('/:lang/account/open-bets/:sessionId', async (req, res) => {
+    const sessionId = req.params.sessionId;
+    if (!sessionId) return res.status(400).json({ error: "Session ID is required" });
+
+    const openBets = await getOpenBets(sessionId);
+    res.json(openBets);
+});
 
 module.exports = router;

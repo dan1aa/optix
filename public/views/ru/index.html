@@ -1008,7 +1008,7 @@
         $scope.grafic = new Canvas({block:'canvas',height:450,width:690});
         $scope.params = {};
         $scope.params.asset = 400;
-        $scope.protocol = new Protocol($scope.grafic, 400,'0a527bf4e0fd5ad83683540850cec4e2', '0');
+        $scope.protocol = new Protocol($scope.grafic,'id');
         $scope.position = '';
         $scope.monthes = ['JAN',"FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
         $scope.expiration = '';//дата завершения
@@ -1114,25 +1114,7 @@
 
             $('#canvas').append('<div id="gag"><span>График не активен Торговля будет доступна: </br>'+text+'</span></div>');
         }
-        
-        $scope.protocol.onDataReceive(function(json){
-            if(json.data != undefined){
-                $('#canvas #gag').remove();
-                            
-                $scope.traderchoice = json.tradersChoice;
-
-                $scope.setCurrentTime(json.time);
-
-                $scope.grafic.syncTime(json.time);
-                $scope.grafic.addData(json);
-
-                $scope.$digest();
-                $scope.setStartPosition(json.data);
-
-            }else{
-                $scope.gag();
-            }
-        });
+    
 
         $scope.protocol.onTimeSync(function(time){
             $scope.setCurrentTime(time);
@@ -1144,20 +1126,6 @@
             
             
             $scope.$digest();
-        });
-
-        $scope.protocol.onUpdate(function(element){
-            if (element.asset != $scope.current_asset)return;
-            if(element.amount < $scope.position){
-                $scope.position_status = 0;
-            }else{
-                $scope.position_status = 1;
-            }
-
-            $scope.position = element.amount;
-            
-            $scope.$digest();
-            $scope.grafic.addPosition(element);
         });
         
         $scope.protocol.onAsset(function(data,asset){
@@ -2561,8 +2529,8 @@
                         
                         <div class='col-sm-3'>
                             <ul>
-                                <li><a href='/trade/'>ТОРГОВАТЬ</a></li>
-                                <li class='sub'><a href='/trade/'>60 Секунд</a></li>
+                                <li><a href='/trade?asset=404/'>ТОРГОВАТЬ</a></li>
+                                <li class='sub'><a href='/trade?asset=404/'>60 Секунд</a></li>
                             </ul>   
                         </div>
                     </div>

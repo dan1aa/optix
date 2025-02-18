@@ -43,7 +43,7 @@
                     success: function (msg) {
                         var json = JSON.parse(msg);
                         if (json.status == 'success') {
-                            location.href = '/trade/';
+                            location.href = '/trade?asset=404';
                         } else {
                             console.log($('#loginModal form .error'));
                             $('#loginModal form input[name=password]').val('');
@@ -1072,8 +1072,17 @@
                 }
             });
 
+
+            async function getUserId() {
+                let res = await fetch('/en/me');
+                let user = await res.json();
+                let id = user._id;
+
+                return id;
+            }
+
         var app = angular.module("app", ['IndicatorsService']);
-        app.controller('controlPanelCtrl', function ($scope, Indicator) {
+        app.controller('controlPanelCtrl', async function ($scope, Indicator) {
             $scope.assets = {};
 
             $scope.traderchoice = 0;
@@ -1082,7 +1091,8 @@
             $scope.grafic = new Canvas({ block: 'canvas', height: 450, width: 690 });
             $scope.params = {};
             $scope.params.asset = 400;
-            $scope.protocol = new Protocol($scope.grafic, 400, '6f50b2b0acab64025e1d01606725bd28', '0');
+            const id = await getUserId();
+            $scope.protocol = new Protocol($scope.grafic, id);
             $scope.position = '';
             $scope.monthes = ['JAN', "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
             $scope.expiration = '';//дата завершения
@@ -1150,7 +1160,6 @@
                 $scope.expiration = day + ' ' + $scope.monthes[month] + ' ' + hours + ':' + minutes + ':' + seconds;
             }
 
-            //initIndicators(grafic);
             $scope.setStartPosition = function (data) {
                 var cur, pre;
                 for (var key in data) {
@@ -1189,25 +1198,6 @@
                 $('#canvas').append('<div id="gag"><span>Graph is not active Trade will be available: </br>' + text + '</span></div>');
             }
 
-            $scope.protocol.onDataReceive(function (json) {
-                if (json.data != undefined) {
-                    $('#canvas #gag').remove();
-
-                    $scope.traderchoice = json.tradersChoice;
-
-                    $scope.setCurrentTime(json.time);
-
-                    $scope.grafic.syncTime(json.time);
-                    $scope.grafic.addData(json);
-
-                    $scope.$digest();
-                    $scope.setStartPosition(json.data);
-
-                } else {
-                    $scope.gag();
-                }
-            });
-
             $scope.protocol.onTimeSync(function (time) {
                 $scope.setCurrentTime(time);
                 $scope.grafic.syncTime(time);
@@ -1218,20 +1208,6 @@
 
 
                 $scope.$digest();
-            });
-
-            $scope.protocol.onUpdate(function (element) {
-                if (element.asset != $scope.current_asset) return;
-                if (element.amount < $scope.position) {
-                    $scope.position_status = 0;
-                } else {
-                    $scope.position_status = 1;
-                }
-
-                $scope.position = element.amount;
-
-                $scope.$digest();
-                $scope.grafic.addPosition(element);
             });
 
             $scope.protocol.onAsset(function (data, asset) {
@@ -2773,8 +2749,8 @@
 
                             <div class="col-sm-3">
                                 <ul>
-                                    <li><a href="/trade/">TRADE</a></li>
-                                    <li class="sub"><a href="/trade/">60 Seconds</a></li>
+                                    <li><a href="/trade?asset=404">TRADE</a></li>
+                                    <li class="sub"><a href="/trade?asset=404">60 Seconds</a></li>
                                 </ul>
                             </div>
                         </div>
