@@ -2207,14 +2207,14 @@
                     <tr ng-repeat="(key,deal) in deals" data-id="{{key}}">
                         <td>{{deal.quotename}}</td>
                         <td style='font-weight:bolder'>{{deal.amount|currency:'$':2 }}</td>
-                        <td>{{deal.payout}}%</td>
+                        <td>76%</td>
                         <td>{{deal.createdAt * 1000|date:'MMM dd HH:mm:ss'}}</td>
                         <td>{{deal.expiredAt * 1000|date:'MMM dd HH:mm:ss'}}</td>
                         <td class="{{deal.position == 1?'green':'red'}}">{{deal.openPrice}}</td>
                         <td style='padding:0px;vertical-align: middle;' class="">
                             <span ng-hide='deal.closePrice == 0' class='closeprice'>{{deal.closePrice ? deal.closePrice : null}}</span>
                         </td>
-                        <td>{{deal.profit > 0 ? (deal.profit | currency:'$':2) : null}}</td>
+                        <td>{{deal.profit > 0 ? (deal.profit + deal.amount | currency:'$':2) : null}}</td>
                     </tr>
                 </tbody>
             </table>

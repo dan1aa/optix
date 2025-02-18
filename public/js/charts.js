@@ -154,7 +154,6 @@ class ChartWebSocketBridge {
         this.ws = window.krakenWS;
         this.ws.onTradeUpdate(this.updateChartData.bind(this));
         console.log("WebSocket Bridge initialized");
-
     }
 
     updateChartData(candle) {
@@ -163,61 +162,59 @@ class ChartWebSocketBridge {
     
         const timestamp = candle.time;
         const currPriceInput = document.querySelector('.curr-price-input');
-    
-        // Отримуємо попереднє значення
+
         const prevPrice = parseFloat(currPriceInput.value) || 0;
         const newPrice = candle.close;
-    
-        // Оновлюємо значення в полі
         currPriceInput.value = newPrice;
-    
-        // Змінюємо колір залежно від зміни ціни
         currPriceInput.style.color = newPrice > prevPrice ? "green" : newPrice < prevPrice ? "red" : currPriceInput.style.color;
-    
-        let existingCandle = this.chart.aData.find(c => c.date === timestamp);
-        const lastCandleIndex = this.chart.aData.length - 1;
-    
-        if (existingCandle) {
-            // Оновлюємо поточну свічку
-            existingCandle.high = Math.max(existingCandle.high, candle.high);
-            existingCandle.low = Math.min(existingCandle.low, candle.low);
-            existingCandle.close = newPrice;
-            existingCandle.amount = newPrice;
-    
-            // Синхронізуємо останній елемент у aData
-            this.chart.aData[lastCandleIndex] = { ...existingCandle };
-    
-            // Оновлюємо графік
-            this.chart.updateSingleCandle(existingCandle);
-        } else {
-            // Додаємо стару свічку в історію
-            const lastCandle = this.chart.aData[lastCandleIndex];
-            if (lastCandle) {
-                this.chart.aData.push({ ...lastCandle });
+
+        if (this.chart.type === "candles") {
+            let existingCandle = this.chart.aData.find(c => c.date === timestamp);
+            const lastCandleIndex = this.chart.aData.length - 1;
+
+            if (existingCandle) {
+                existingCandle.high = Math.max(existingCandle.high, candle.high);
+                existingCandle.low = Math.min(existingCandle.low, candle.low);
+                existingCandle.close = newPrice;
+                existingCandle.amount = newPrice;
+                this.chart.aData[lastCandleIndex] = { ...existingCandle };
+                this.chart.updateSingleCandle(existingCandle);
+            } else {
+                const lastCandle = this.chart.aData[lastCandleIndex];
+                if (lastCandle) {
+                    this.chart.aData.push({ ...lastCandle });
+                }
+                const newCandle = {
+                    date: timestamp,
+                    open: lastCandle ? lastCandle.close : candle.open,
+                    high: candle.high,
+                    low: candle.low,
+                    close: newPrice,
+                    amount: newPrice
+                };
+                this.chart.aData.push(newCandle);
+                this.chart.shiftChart();
+                this.chart.updateSingleCandle(newCandle);
             }
-    
-            // Створюємо нову поточну свічку
-            const newCandle = {
-                date: timestamp,
-                open: lastCandle ? lastCandle.close : candle.open,
-                high: candle.high,
-                low: candle.low,
-                close: newPrice,
-                amount: newPrice
-            };
-            this.chart.aData.push(newCandle);
-    
-            // Зсуваємо графік
-            this.chart.shiftChart();
-            this.chart.updateSingleCandle(newCandle);
+        } else if (this.chart.type === "normal") {
+            this.updateNormalChart(timestamp, newPrice);
         }
-    
-        // Викликаємо drawCurrentPositionElement лише один раз наприкінці
+
         this.chart.drawCurrentPositionElement();
     }
+
+    updateNormalChart(timestamp, price) {
+        const ctx = this.chart.ctx; // Контекст канвасу
+        ctx.clearRect(0, 0, this.chart.width, this.chart.height); // Очищуємо весь графік перед ререндером
     
+        this.chart.aData.push({ date: timestamp, amount: price });
     
+        if (this.chart.aData.length > 50) {
+            this.chart.aData.shift();
+        }
     
+        this.chart.renderNormal(this.chart.aData); // Малюємо оновлений графік
+    }
     
 }
 
@@ -444,7 +441,7 @@ var Chart = (function (_super) {
     };
     Chart.prototype.render = function (aData) {
         this.background();
-        this.type = 'candles'
+        this.type = 'normal'
         this.setMinMaxTime(aData);
         this.countDigits(aData);
         if (aData) {
