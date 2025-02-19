@@ -1,5 +1,22 @@
 var ChartsMain = (function () {
     function ChartsMain() {
+        this.getAData().then(aData => {
+            fetch('/en/me/')
+            .then(res => res.json())
+            .then(response => {
+                if (response._id) {
+                    fetch(`/en/account/open-bets/${response._id}`)
+                    .then(res => res.json())
+                    .then(response => {
+                        if (response.length) {
+                            this.setMinMaxTime(aData)
+                            this.renderOpenDeals(response)
+                        }
+                    })
+                }
+            })
+        });
+
         this.skin_name = 'light';
         this.type = 'normal';
         this.max_amount = 0;
@@ -47,22 +64,80 @@ var ChartsMain = (function () {
         this.ctx.closePath();
         this.ctx.restore();
     };
+    ChartsMain.prototype.getAData = function() {
+        return new Promise((resolve) => {
+            let aDataInterval = setInterval(() => {
+                if (this.aData) {
+                    clearInterval(aDataInterval);
+                    resolve(this.aData);
+                }
+            }, 100);
+        });
+    };
+    
+    ChartsMain.prototype.renderOpenDeals = function (openDeals) {
+        if (!openDeals || openDeals.length === 0) return;
+        openDeals.forEach(deal => {
+            console.log("RENDER DEALS")
+            var x = this.getX(deal.createdAt) + this.x;
+            var y = this.getY(deal.openPrice) + this.y;
+            var end_x = this.getX(deal.expiredAt);
+            this.ctx.save();
+            this.ctx.lineWidth = 2;
+            this.ctx.fillStyle = "#fdc100";
+            this.ctx.strokeStyle = "#6f5a11";
+    
+            this.ctx.beginPath();
+            this.ctx.moveTo(x - 9, y);
+            this.ctx.lineTo(x - 9 - 5, y - 10);
+            this.ctx.lineTo(x - 9 - 40, y - 10);
+            this.ctx.lineTo(x - 9 - 40, y + 10);
+            this.ctx.lineTo(x - 9 - 5, y + 10);
+            this.ctx.stroke();
+            this.ctx.fill();
+            this.ctx.fillStyle = "white";
+            this.ctx.font = "bolder 8pt Arial";
+            var text = (deal.amount / 100).toFixed(2) + "$";
+            this.ctx.fillText(text, x - 45, y + 3);
+            this.ctx.closePath();
+            this.ctx.restore();
+    
+            this.ctx.save();
+            this.ctx.fillStyle = "#fdc100";
+            this.ctx.beginPath();
+            this.ctx.moveTo(end_x, y - 1);
+            this.ctx.lineTo(end_x - 8, y - 1);
+            this.ctx.lineTo(end_x, y + 8 + 2);
+            this.ctx.lineTo(end_x + 8, y - 1);
+            this.ctx.closePath();
+            this.ctx.fill();
+            this.ctx.restore();
+    
+            this.ctx.save();
+            this.ctx.fillStyle = "#fdc100";
+            this.ctx.beginPath();
+            this.ctx.arc(x, y, 4, 0, 2 * Math.PI, false);
+            this.ctx.closePath();
+            this.ctx.fill();
+            this.ctx.restore();
+        });
+    };
     ChartsMain.prototype.buildDeals = function () {
         if (!this.parent.deals)
             return false;
         for (var key in this.parent.deals) { }
         var deal = this.parent.deals[key];
-        if (deal.closeprice) {
+        if (deal.closePrice) {
             this.parent.activeDeals = false;
             return false;
         }
-        var x = this.getX(deal.opentime) + this.x;
-        var y = this.getY(deal.openprice) + this.y;
+        var x = this.getX(deal.createdAt) + this.x;
+        var y = this.getY(deal.openPrice) + this.y;
         var start_x = x;
         var i = 0;
         var position = 0;
         var amount = deal.amount / 100;
-        var end_x = this.getX(deal.closetime);
+        var end_x = this.getX(deal.expiredAt);
         //ярлык с суммой ставки
         this.ctx.save();
         this.ctx.lineWidth = 2;
@@ -151,49 +226,37 @@ var ChartsMain = (function () {
         var key;
         var step = 14;
         var width;
+        this.max_time = Math.max(...this.aData.map(d => d.date));
+        this.min_time = Math.min(...this.aData.map(d => d.date));
         var blocks = (this.max_time - this.min_time) / step;
-        
-        width = (this.width - (this.width / 100 * this.time_padding)) / blocks; //ширину на кількість блоків
-        width = width - width / 100 * 30; // віднімаємо від ширини блока трохи, щоб свічки не були впритул
+        width = (this.width - (this.width / 100 * this.time_padding)) / blocks; 
+        width = width - width / 100 * 30; 
         var start = parseInt(this.aData[0].date);
         var end = parseInt(this.aData[this.aData.length - 1].date);
         var i = 0;
         var arr = new Object();
-        
-    
+
         while (start < end) {
-            
             arr[start] = new Array();
-            
-            if (arr[start - step] != undefined) {
+            if (arr[start - step] != undefined && arr[start - step][arr[start - step].length - 1]) {
                 arr[start].push(arr[start - step][arr[start - step].length - 1]);
             }
-            
-    
             for (key in this.aData) {
                 if (this.aData[key].date > start && this.aData[key].date < start + step) {
                     arr[start].push(this.aData[key].amount);
                 }
             }
-    
             i++;
             start += step;
         }
-    
-    
         this.candleData = new Object();
-    
-    
         for (key in arr) {
             key = parseInt(key);
             this.candleData[key + step / 2] = new Array();
-    
-    
             this.candleData[key + step / 2].start = arr[key][0];
             this.candleData[key + step / 2].end = arr[key][arr[key].length - 1];
             this.candleData[key + step / 2].max = 0;
             this.candleData[key + step / 2].min = 0;
-    
             for (var key2 in arr[key]) {
                 if (this.candleData[key + step / 2].max == 0 || arr[key][key2] > this.candleData[key + step / 2].max) {
                     this.candleData[key + step / 2].max = arr[key][key2];
@@ -203,42 +266,38 @@ var ChartsMain = (function () {
                 }
             }
         }
-    
-    
-        // Тепер малюємо свічки
         for (key in this.candleData) {
             this.candleData[key].x = this.getX(key);
             this.candleData[key].y_start = this.getY(this.candleData[key].start);
             this.candleData[key].y_end = this.getY(this.candleData[key].end);
             this.candleData[key].y_max = this.getY(this.candleData[key].max);
             this.candleData[key].y_min = this.getY(this.candleData[key].min);
-    
-            // Малюємо лінії
             this.ctx.save();
             this.ctx.lineWidth = 1;
             if (this.candleData[key].y_start != this.candleData[key].y_end) {
                 if (this.candleData[key].y_start > this.candleData[key].y_end) {
                     this.ctx.fillStyle = "#57c580";
+                    ;
                     this.ctx.strokeStyle = "#57c580";
-                } else {
+                }
+                else {
                     this.ctx.fillStyle = "#e57878";
+                    ;
                     this.ctx.strokeStyle = "#e57878";
                 }
-    
-                // Малюємо мінімум і максимум
+                //MIN MAX
                 this.ctx.beginPath();
                 this.ctx.moveTo(this.candleData[key].x + this.x, this.candleData[key].y_max + this.y);
                 this.ctx.lineTo(this.candleData[key].x + this.x, this.candleData[key].y_min + this.y);
                 this.ctx.closePath();
                 this.ctx.stroke();
-    
-                // Малюємо блок (свічку)
-                this.ctx.rect(this.candleData[key].x - width / 2 + this.x, this.candleData[key].y_start + this.y, width, this.candleData[key].y_end - this.candleData[key].y_start);
+                //Block
+                this.ctx.rect(this.candleData[key].x - width / 2 + this.x, this.candleData[key].y_start + this.y, 3, this.candleData[key].y_end - this.candleData[key].y_start);
                 this.ctx.fill();
-            } else {
+            }
+            else {
                 this.ctx.strokeStyle = "#e57878";
-    
-                // Якщо немає зміни
+                //NO CHANGES
                 this.ctx.beginPath();
                 this.ctx.moveTo(this.candleData[key].x + this.x - width / 2, this.candleData[key].y_start + this.y);
                 this.ctx.lineTo(this.candleData[key].x + this.x + width / 2, this.candleData[key].y_start + this.y);
@@ -253,18 +312,19 @@ var ChartsMain = (function () {
         var height = 20;
         var arrow = 15;
         var start_x = this.width - 40;
+        var priceY = this.getY(element.close);
         //рисуем стрелочку для текста
         this.ctx.save();
         this.ctx.lineWidth = 1;
         this.ctx.strokeStyle = this.skin.currentAmountPositionBorderColor;
         this.ctx.fillStyle = this.skin.currentAmountPositionBackgroundColor;
         this.ctx.beginPath();
-        this.ctx.moveTo(start_x + this.x + 0.5, element.y + this.y + 0.5);
-        this.ctx.lineTo(start_x + this.x + arrow + 0.5, element.y + this.y - height / 2 + 0.5);
-        this.ctx.lineTo(this.width + this.parent.right_padding + this.x + 0.5, element.y + this.y - height / 2 + 0.5);
-        this.ctx.lineTo(this.width + this.parent.right_padding + this.x + 0.5, element.y + this.y + height / 2 + 0.5);
-        this.ctx.lineTo(start_x + this.x + arrow, element.y + this.y + height / 2);
-        this.ctx.lineTo(start_x + this.x, element.y + this.y);
+        this.ctx.moveTo(start_x + this.x + 0.5, priceY + this.y + 0.5);
+        this.ctx.lineTo(start_x + this.x + arrow + 0.5, priceY + this.y - height / 2 + 0.5);
+        this.ctx.lineTo(this.width + this.parent.right_padding + this.x + 0.5, priceY + this.y - height / 2 + 0.5);
+        this.ctx.lineTo(this.width + this.parent.right_padding + this.x + 0.5, priceY + this.y + height / 2 + 0.5);
+        this.ctx.lineTo(start_x + this.x + arrow, priceY + this.y + height / 2);
+        this.ctx.lineTo(start_x + this.x, priceY + this.y);
         this.ctx.closePath();
         this.ctx.stroke();
         this.ctx.fill();
@@ -275,15 +335,15 @@ var ChartsMain = (function () {
         this.ctx.font = "bold 12px Tahoma";
         var text = element.amount;
         this.ctx.textAlign = "left";
-        this.ctx.fillText(text, this.width + this.x + 10, element.y + this.y + 4);
+        this.ctx.fillText(text, this.width + this.x + 10, priceY + this.y + 4);
         this.ctx.restore();
         //рисуем линию
         this.ctx.save();
         this.ctx.lineWidth = 1;
         this.ctx.strokeStyle = this.skin.currentAmountPositionLineColor;
         this.ctx.beginPath();
-        this.ctx.moveTo(start_x + this.x + 0.5, element.y + this.y + 0.5);
-        this.ctx.lineTo(this.x + 0.5, element.y + this.y + 0.5);
+        this.ctx.moveTo(start_x + this.x + 0.5, priceY + this.y + 0.5);
+        this.ctx.lineTo(this.x + 0.5, priceY + this.y + 0.5);
         this.ctx.closePath();
         this.ctx.stroke();
         this.ctx.restore();
@@ -321,6 +381,7 @@ var ChartsMain = (function () {
         return Math.floor(x / this.time_coef + this.min_time);
     };
     ChartsMain.prototype.getX = function (time) {
+        this.time_coef = (this.width - (this.width - this.parent.right_padding) / 100 * this.time_padding) / this.time_range;
         return Math.floor((Math.floor(time) - this.min_time) * this.time_coef) + 0.5;
     };
     ChartsMain.prototype.getY = function (amount) {
@@ -348,7 +409,7 @@ var ChartsMain = (function () {
         this.ctx.textAlign = "left";
         this.ctx.fillText(text, length.width * -1 - 5, -5.5);
         this.ctx.restore();
-        x = this.getX(this.parent.stop_expiration);
+        x -= 7;
         var start_y = this.height;
         var step = 3;
         var i = 1;
@@ -372,18 +433,18 @@ var ChartsMain = (function () {
         }
         this.ctx.restore();
     };
-    ChartsMain.prototype.buildLines = function () {
+    ChartsMain.prototype.buildLines = function (aData) {
         this.ctx.save();
         this.ctx.lineWidth = 1;
         this.ctx.strokeStyle = this.skin.graficLinesColor;
         var key;
-        for (key in this.aData) {
+        for (key in aData) {
             key *= 1; //to INT
-            if (this.aData[key + 1] == undefined)
+            if (aData[key + 1] == undefined)
                 break;
             this.ctx.beginPath();
-            this.ctx.moveTo(this.aData[key].x + this.x + 0.5, this.aData[key].y + this.y + 0.5);
-            this.ctx.lineTo(this.aData[key + 1].x + this.x + 0.5, this.aData[key + 1].y + this.y + 0.5);
+            this.ctx.moveTo(aData[key].x + this.x + 0.5, aData[key].y + this.y + 0.5);
+            this.ctx.lineTo(aData[key + 1].x + this.x + 0.5, aData[key + 1].y + this.y + 0.5);
             this.ctx.closePath();
             this.ctx.stroke();
         }
@@ -446,15 +507,14 @@ var ChartsMain = (function () {
             start -= step;
         }
     };
-    ChartsMain.prototype.buildTimeGrid = function () {
+    ChartsMain.prototype.buildTimeGrid = function (aData) {
+        this.aData = aData;
         var hours, minutes, seconds, d, text, length;
-        //получаем первый елемент    и смотрим время
-        var time = this.aData.date;
+        var time = aData[0].date;
         var date = new Date(time * 1000);
         date.setSeconds(0); //обнуляем секунды
         var start = date.getTime() / 1000; //начальное число
         var end = Math.floor((this.width / this.time_coef) + Math.floor(this.min_time));
-        //определяем через сколько секунд будут промежутки
         var positions = Math.floor((end - start) / 30);
         var interval = this.parent.width / positions;
         var step = 0;
@@ -576,60 +636,8 @@ var ChartsMain = (function () {
                 this.min_time = data[key].date;
             }
         }
-        this.max_time = this.parent.end_expiration; //определяем максимальное время
-        this.time_range = this.max_time - this.min_time;
+        this.time_range = this.max_time - this.min_time || 0;
         this.time_coef = (this.width - (this.width - this.parent.right_padding) / 100 * this.time_padding) / this.time_range;
-    };
-    ChartsMain.prototype.getLastDeal = function () {
-        if (this.deals) {
-            for (var key in this.deals) { }
-            ;
-            var deal = this.deals[key];
-        }
-        else {
-            return null;
-        }
-    };
-    ChartsMain.prototype.generateAData = function (data) {
-        if (data == undefined) return;
-        if (data[0] == undefined) return;
-    
-        var aData = [];
-        var time;
-    
-        // отримуємо час для порівняння
-        if (this.newAsset) {
-            time = (this.newAsset.date - this.defaultAllowedTimeToShowQuotes) - (this.zoom * this.zoom_step);
-        } else {
-            time = (data[data.length - 1].date - this.defaultAllowedTimeToShowQuotes) - (this.zoom * this.zoom_step);
-        }
-    
-        var i = 0;
-        for (var key in data) {
-            if (data[key].date < time) {
-                continue;
-            }
-            aData[i] = {};
-            for (var key2 in data[key]) {
-                aData[i][key2] = data[key][key2];
-            }
-            i++;
-        }
-    
-        if (this.newAsset) {
-            aData.push(this.newAsset);
-            if (this.newAsset.temp === true || this.newAsset.temp === false) {
-                if (this.newAsset.temp == false) {
-                    data.push(this.newAsset);
-                }
-            } else {
-                if (this.newAsset.date - data[data.length - 1].date >= this.save_range) {
-                    data.push(this.newAsset);
-                }
-            }
-        }
-    
-        return aData;
     };
     return ChartsMain;
 }());

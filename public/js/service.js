@@ -8,7 +8,7 @@ var Forms = (function () {
     }
     Forms.prototype.initImages = function () {
         this.clock_blue = new Image(); //часики на таймере
-        this.clock_blue.src = '/images/clock_blue.png';
+        this.clock_blue.src = '../images/clock_blue.png';
     };
     Forms.prototype.betText = function () {
         if (!this.parent.parent.deals)
@@ -62,31 +62,29 @@ var Forms = (function () {
     Forms.prototype.TimeToExpirate = function () {
         var position_time;
         if (this.parent.parent.activeDeals && this.parent.parent.deals) {
-            //получаем поеследнюю сделку
             for (var key in this.parent.parent.deals)
                 var deal = this.parent.parent.deals[key];
-            position_time = deal.closetime;
+            position_time = deal.expiredAt;
+        } else {
+            position_time = this.parent.parent.end_expiration - 30;
         }
-        else {
-            position_time = this.parent.parent.stop_expiration;
-        }
-        //var position_time = this.parent.parent.stop_expiration;
+    
         var x = (position_time - this.parent.min_time) * this.parent.time_coef;
-        if (!position_time || !this.parent.parent.serverTime)
+        if (!position_time || !this.parent.parent.serverTime) 
             return;
-        //var seconds:any = position_time - this.parent.serverTime;
-        var seconds = this.parent.parent.seconds_left;
-        var minutes = Math.floor(seconds / 60);
-        //this.parent.seconds_left = seconds;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        seconds = seconds - (minutes * 60);
-        seconds = seconds < 10 ? '0' + seconds : seconds;
+    
+        var serverTime = new Date((this.parent.parent.serverTime + 1) * 1000);
+        var seconds = serverTime.getSeconds();
+    
+        var remainingSeconds = (seconds >= 30) ? 60 - (seconds - 30) : 30 - seconds;
+    
         var width = 190;
         var height = 60;
         var padding_top = 20;
         var padding_right = 10;
+    
         this.ctx.save();
-        this.ctx.translate(this.parent.x + x - width - padding_right, this.parent.y + 0.5);
+        this.ctx.translate(50, this.parent.y + 0.5);
         this.ctx.beginPath();
         this.ctx.lineWidth = 1;
         this.ctx.fillStyle = this.parent.skin.expirationFormBackgroundColor;
@@ -94,28 +92,38 @@ var Forms = (function () {
         this.ctx.closePath();
         this.ctx.fill();
         this.ctx.restore();
+    
         this.ctx.save();
-        this.ctx.translate(this.parent.x + x - width - padding_right, this.parent.y + 0.5);
+        this.ctx.translate(50, this.parent.y + 0.5);
         this.ctx.fillStyle = this.parent.skin.expirationFormTextColor;
         this.ctx.font = "bold 22px Tahoma";
-        var text = minutes + ':' + seconds;
+    
+        var text = '00:' + (remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds);
         this.ctx.textAlign = "left";
         this.ctx.fillText(text, 70 + 0.5, 47);
         this.ctx.restore();
+    
         this.ctx.save();
-        this.ctx.translate(this.parent.x + x - width - padding_right, this.parent.y + 0.5);
+        this.ctx.translate(50, this.parent.y + 0.5);
         this.ctx.fillStyle = this.parent.skin.expirationFormTextColor;
         this.ctx.font = "bold 12px Tahoma";
-        //var text = deal ? this.local[this.localisation].timeToClose : this.local[this.localisation].timeToBie;
         var text = this.local.timetoexpirate;
         this.ctx.textAlign = "left";
         this.ctx.fillText(text, 15 + 0.5, 67);
         this.ctx.restore();
+    
         this.ctx.save();
-        this.ctx.translate(this.parent.x + x - width - padding_right, this.parent.y + 0.5);
-        this.ctx.drawImage(this.clock_blue, width - 40, 33);
-        this.ctx.restore();
+        // this.ctx.translate(this.parent.x + x - width - padding_right, this.parent.y + 0.5);
+        // this.ctx.drawImage(this.clock_blue, width - 40, 33);
+        // this.ctx.restore();
+    
+        // Оновлення таймера рівно через 1 секунду
+        setTimeout(() => {
+            this.parent.parent.serverTime = Math.floor(Date.now() / 1000);
+            this.TimeToExpirate();
+        }, 1000);
     };
+    
     return Forms;
 }());
 var Mouse = (function () {
@@ -301,7 +309,6 @@ var Hover = (function () {
     Hover.prototype.buildCallField = function () {
         var y = this.getCurrentY();
         var x = this.getCurrentX();
-        //this.ctx.clearRect(this.parent.y, this.parent.x, this.ws.width, this.parent.height);
         this.ctx.clearRect(this.parent.x, this.parent.y, this.parent.width + this.parent.parent.right_padding, this.parent.height + this.parent.bottom_padding);
         this.ctx.save();
         this.ctx.beginPath();

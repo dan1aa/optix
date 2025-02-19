@@ -10,9 +10,6 @@ var Canvas = (function () {
         this.zoom_step = 60;
         this.zoom = 0;
         this.max_zoom = 0;
-        this.indicators = {
-            statusSMA: 0
-        }; 
         this.charts = [];
         this.deals = {}; //ÑÐ´ÐµÐ»ÐºÐ¸
         var block = obj.block;
@@ -44,14 +41,13 @@ var Canvas = (function () {
         }
     };
     Canvas.prototype.render = function () {
-        console.log("FAKE RENDER")
         if (this.data == undefined)
             return;
         this.getMaxZoom();
         this.clear();
         this.setExpirationTime();
         for (var key in this.charts)
-            this.charts[key].render();
+            this.charts[key].render(this.charts[0].aData);
     };
     Canvas.prototype.init = function (block) {
         this.ws = $('#grafic', '#' + block)[0];
@@ -114,22 +110,23 @@ var Canvas = (function () {
         this.render();
     };
     Canvas.prototype.setPutOnHover = function () {
+        console.log(this.charts[0].aData)
         for (var key in this.charts) {
             this.charts[key].hoverPut = true;
-            this.charts[key].render();
+            this.charts[key].render(this.charts[0].aData);
         }
     };
     Canvas.prototype.setCallOnHover = function () {
         for (var key in this.charts) {
             this.charts[key].hoverCall = true;
-            this.charts[key].render();
+            this.charts[key].render(this.charts[0].aData);
         }
     };
     Canvas.prototype.unsetOnHover = function () {
         for (var key in this.charts) {
             this.charts[key].hoverPut = false;
             this.charts[key].hoverCall = false;
-            this.charts[key].render();
+            this.charts[key].render(this.charts[0].aData);
         }
     };
     Canvas.prototype.digitFix = function (data) {
@@ -158,22 +155,23 @@ var Canvas = (function () {
         }
         else {
             for (var key in this.deals) { }
-            this.end_expiration = parseInt(this.deals[key].closetime);
+            this.end_expiration = parseInt(this.deals[key].expiredAt);
         }
     };
     Canvas.prototype.getSecondsLeft = function () {
-        var position_time;
-        if (this.activeDeals) {
-            for (var key in this.deals)
-                var deal = this.deals[key];
-            position_time = deal.closetime;
+        // Отримуємо поточний час
+        var now = new Date();
+        var seconds = now.getSeconds();
+        var targetTime = 30; // півхвилини (30 секунд)
+    
+        // Якщо зараз більше ніж 30 секунд, ми маємо порахувати залишок до наступної півхвилини
+        if (seconds >= targetTime) {
+            this.seconds_left = 60 - seconds + targetTime; // залишок до наступної півхвилини
+        } else {
+            this.seconds_left = targetTime - seconds; // залишок до поточної півхвилини
         }
-        else {
-            position_time = this.stop_expiration;
-        }
-        if (!position_time || !this.serverTime)
-            return;
-        this.seconds_left = position_time - this.serverTime;
+    
+        return this.seconds_left;
     };
     Canvas.prototype.countDigits = function (amount) {
         var string = amount.toString();
@@ -186,9 +184,10 @@ var Canvas = (function () {
         return digits;
     };
     Canvas.prototype.updateBalance = function (amount) {
-        $('#personal .balance').text('$' + (amount / 100).toFixed(2));
+        $('#personal .balance').text('$' + (amount).toFixed(2));
     };
     Canvas.prototype.onCreateOption = function (json) {
+
         if (json.status == 'error') {
             console.log(json.msg);
             return;
@@ -198,30 +197,27 @@ var Canvas = (function () {
         this.render();
     };
     Canvas.prototype.onCloseOption = function (json) {
-        for (var key in json.deals) {
-            this.updateBalance(json.deals[key].balance);
-        }
+        this.updateBalance(json.balance);
+        console.log(this.deals)
         if (!this.deals)
             return;
         for (var key in this.deals) { }
-        if (json.deals[key]) {
-            this.activeDeals = false;
-        }
+        this.activeDeals = false;
         this.render();
         //for (var key in this.charts) this.charts[key].onCloseOption(json);
     };
     Canvas.prototype.addPosition = function (element) {
+        console.log(1)
         for (var key in this.charts)
             this.charts[key].newAsset = element;
-        //this.setExpirationTime();
-        //this.charts.render();
+        this.setExpirationTime();
         this.render();
     };
     Canvas.prototype.pushDealsToData = function (deals, data) {
         for (var key in deals) {
             for (var key2 in data) {
-                if (data[key2].date > deals[key].opentime) {
-                    data.splice(key2, 0, { "amount": deals[key].openprice, "date": deals[key].opentime });
+                if (data[key2].date > deals[key].createdAt) {
+                    data.splice(key2, 0, { "amount": deals[key].openPrice, "date": deals[key].createdAt });
                     break;
                 }
             }
@@ -251,7 +247,6 @@ var Canvas = (function () {
             this.charts[key].newAsset = null;
         this.checkActiveDeal();
         //this.setExpirationTime();        
-        //for(var key in this.charts)this.charts[key].addData(this.data,json.deals);
         this.render();
         //this.initZoom();
     };
@@ -259,15 +254,16 @@ var Canvas = (function () {
         if (!this.deals)
             return;
         for (var key in this.deals) { }
-        if (this.deals[key].closetime > this.serverTime) {
+        if (this.deals[key].expiredAt > this.serverTime) {
             this.activeDeals = true;
         }
     };
     Canvas.prototype.incomeDeal = function (data) {
         if (!this.deals)
-            this.deals = new Object();
+            this.deals = [];
         this.deals[data.id] = data;
-        this.data.push({ 'amount': data.openprice, 'date': data.opentime });
+        if (!this.data) this.data = [];
+        this.data.push({ 'amount': data.openPrice, 'date': data.createdAt });
         this.activeDeals = true;
     };
     Canvas.prototype.syncTime = function (time) {
@@ -275,7 +271,6 @@ var Canvas = (function () {
         this.getSecondsLeft();
         for (var key in this.charts) {
             var d = new Date(this.end_expiration * 1000);
-            //var d = new Date(this.charts[key].end_expiration * 1000);
             var hours = d.getHours();
             hours = hours < 10 ? '0' + hours : hours;
             var minutes = d.getMinutes();
