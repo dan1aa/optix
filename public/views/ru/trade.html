@@ -915,7 +915,8 @@
 
                    const params = new URLSearchParams(pageUrl.search);
 
-                   const pairQuery = params.get('asset');
+                   const pairQuery = params.get('asset') || '404';
+
 
                        $scope.current_asset = +pairQuery;
                        $scope.current_select_asset = $scope.current_asset+'';
@@ -2038,7 +2039,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-12">
-                                <input style="width:126px; height:32px; font-weight:bolder; text-align: center; margin:auto; color:{{position_status == 1 ? 'green':'red'}}" type="text" class="form-control" value="{{position}}">
+                                <input style="width:126px; height:32px; font-weight:bolder; text-align: center; margin:auto; color:{{position_status == 1 ? 'green':'red'}}" type="text" class="form-control curr-price-input" value="{{position}}">
                             </div>                        
                         </div>
                     </div>

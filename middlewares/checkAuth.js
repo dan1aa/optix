@@ -9,7 +9,7 @@ function checkAuth(req, res, next) {
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
-            return res.redirect('/en');
+            return res.redirect('/en?asset=404');
         }
 
         req.user = decoded;

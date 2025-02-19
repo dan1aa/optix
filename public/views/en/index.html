@@ -434,14 +434,14 @@
 
                         <ul class="list collapse dropdown-menu" aria-expanded="false">
                             <li>
-                                <a href="/en/">
+                                <a href="/en?asset=404">
                                     <div class="ico en"></div>
                                     <div class="lang">English</div>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="/ru/">
+                                <a href="/ru?asset=404">
                                     <div class="ico ru"></div>
                                     <div class="lang">Русский</div>
                                 </a>
@@ -811,8 +811,8 @@
                             <div class="form-group">
                                 <div class="row">
                                         <div class="col-sm-12">
-                                            <input type="submit" value="OPEN AN ACCOUNT" class="btn btn-default"
-                                                style="float:right">
+                                            <a href="/en/registration"><input type="submit" value="OPEN AN ACCOUNT" class="btn btn-default"
+                                                style="float:right"></a>
                                         </div>
                                 </div>
                             </div>
@@ -1116,18 +1116,18 @@
             ////////////////////////
 
             $scope.setCurrentTime = function (timestamp) {
-                var d = new Date(timestamp * 1000);
+                            var d = new Date(timestamp * 1000);
+                            $scope.servertime = timestamp;
+                            var hours = d.getHours();
+                            hours = hours < 10 ? '0' + hours : hours;
+                            var minutes = d.getMinutes();
+                            minutes = minutes < 10 ? '0' + minutes : minutes;
+                            var seconds = d.getSeconds();
+                            seconds = seconds < 10 ? '0' + seconds : seconds;
 
-                var hours = d.getHours();
-                hours = hours < 10 ? '0' + hours : hours;
-                var minutes = d.getMinutes();
-                minutes = minutes < 10 ? '0' + minutes : minutes;
-                var seconds = d.getSeconds();
-                seconds = hours < 10 ? '0' + seconds : seconds;
-
-                $scope.time = hours + ':' + minutes + ':' + seconds;
-                $scope.$digest();
-            }
+                            $scope.time = hours + ':' + minutes + ':' + seconds;
+                            $scope.$digest();
+                        }
 
             $scope.setPayout = function () {
                 $scope.payouts = ((parseInt($scope.investments) / 100 * 76) + parseInt($scope.investments)).toFixed(2);
@@ -1135,30 +1135,36 @@
             $scope.setPayout();
 
             $scope.setSecondsLeft = function (seconds) {
-                var minutes = Math.floor(seconds / 60);
-                var seconds = seconds - (minutes * 60);
+                            var minutes = Math.floor(seconds / 60);
+                            var seconds = seconds - (minutes * 60);
 
-                minutes = minutes < 10 ? '0' + minutes : minutes;
-                seconds = seconds < 10 ? '0' + seconds : seconds;
+                            minutes = minutes < 10 ? '0' + minutes : minutes;
+                            seconds = seconds < 10 ? '0' + seconds : seconds;
 
-                $scope.seconds_left = minutes + ':' + seconds;
-            }
+                            $scope.seconds_left = minutes + ':' + seconds;
+                        }
 
-            $scope.setExpirationDate = function (time) {
-                var d = new Date(time * 1000);
+                        $scope.setExpirationDate = function (time) {
+                            if(time == undefined) return;
+                            var d = new Date(time * 1000);
 
-                var day = d.getDate();
-                day = day < 10 ? '0' + day : day;
-                var month = d.getMonth();
-                var hours = d.getHours();
-                hours = hours < 10 ? '0' + hours : hours;
-                var minutes = d.getMinutes();
-                minutes = minutes < 10 ? '0' + minutes : minutes;
-                var seconds = d.getSeconds();
-                seconds = seconds < 10 ? '0' + seconds : seconds;
+                            var day = d.getDate();
+                            day = day < 10 ? '0' + day : day;
+                            var month = d.getMonth();
+                            var hours = d.getHours();
+                            hours = hours < 10 ? '0' + hours : hours;
+                            var minutes = d.getMinutes();
+                            minutes = minutes < 10 ? '0' + minutes : minutes;
+                            var seconds = d.getSeconds();
+                            seconds = seconds < 10 ? '0' + seconds : seconds;
 
-                $scope.expiration = day + ' ' + $scope.monthes[month] + ' ' + hours + ':' + minutes + ':' + seconds;
-            }
+                            $scope.expiration = day + ' ' + $scope.monthes[month] + ' ' + hours + ':' + minutes + ':' + seconds;
+                        }
+
+                        document.querySelector('.type').onclick = function() {
+                            $scope.grafic.charts[0].type = $scope.grafic.charts[0].type == 'candles' ? 'normal' : 'candles'
+                            $scope.grafic.charts[0].render($scope.grafic.charts[0].aData)
+                        }
 
             $scope.setStartPosition = function (data) {
                 var cur, pre;
@@ -1199,30 +1205,54 @@
             }
 
             $scope.protocol.onTimeSync(function (time) {
-                $scope.setCurrentTime(time);
-                $scope.grafic.syncTime(time);
-                //console.log($scope.grafic.getSecondsLeft());
+                            $scope.setCurrentTime(time);
+                            $scope.grafic.syncTime(time);
 
-                $scope.setSecondsLeft($scope.grafic.seconds_left);
-                $scope.setExpirationDate($scope.grafic.end_expiration);
+                            if ($scope.grafic.activeDeals == false) {
+                                var d = new Date($scope.grafic.serverTime * 1000);
+                                var seconds = d.getSeconds();
+                                if (seconds < 30) {
+                                    d.setSeconds(0);
+                                    $scope.grafic.end_expiration = Math.floor(d.getTime() / 1000) + 60;
+                                }
+                                else {
+                                    d.setSeconds(0);
+                                    $scope.grafic.end_expiration = Math.floor(d.getTime() / 1000) + 120;
+                                }
+                            }
+                            $scope.setSecondsLeft($scope.grafic.seconds_left);
+                            $scope.setExpirationDate($scope.grafic.end_expiration);
 
+                            $scope.$digest();
+                        });
 
-                $scope.$digest();
-            });
+                        $scope.protocol.onAsset(function (data, asset) {
+                            $scope.params.asset = asset;
+                            $scope.assets = data;
 
-            $scope.protocol.onAsset(function (data, asset) {
-                $scope.params.asset = asset;
-                $scope.assets = data;
+                            $scope.$digest();
+                        });
+                        $scope.protocol.onGetDeals(function (deals) {
+                            $scope.deals = deals;
+                            $scope.$digest();
+                        });
 
-                $scope.$digest();
-            });
+                        $scope.changeAsset = function (asset) {
+                            if (asset == undefined) {
+                                asset = parseInt($scope.current_select_asset);
+                            }
 
-            $scope.changeAsset = function (asset) {
-                if (asset == undefined) {
-                    asset = parseInt($scope.current_asset);
-                }
-                $scope.protocol.changeAsset(asset);
-            }
+                            $scope.updatePause = true;
+                            $scope.current_asset = asset;
+
+                            const newUrl = window.location.origin + window.location.pathname + "?asset=" + asset;
+                            
+                            history.pushState({foo: "bar"}, "page2", newUrl);
+
+                            window.location.href = newUrl;
+
+                            $scope.protocol.changeAsset(asset);
+                        }
 
 
             $scope.trade = function (event) {
@@ -2021,29 +2051,13 @@
                                 <div class="col-sm-6">
                                     <label style="color:white;">Assets</label>
 
-                                    <select style="height:26px; padding: 0px 5px;" class="form-control"
-                                        ng-model="current_asset" ng-click="changeAsset()">
-                                        <option value="opt1">opt1</option>
-                                        <option value="opt1">opt1</option>
-                                        <option value="opt1">opt1</option>
-                                        <option value="opt1">opt1</option>
-                                        <option value="opt1">opt1</option>
-                                        <option value="opt1">opt1</option>
-                                        <option value="opt1">opt1</option>
-                                        <option value="opt1">opt1</option>
-                                        <option value="opt1">opt1</option>
-                                        <option value="opt1">opt1</option>
-                                        <option value="opt1">opt1</option>
-                                        <option value="opt1">opt1</option>
-                                        <option value="opt1">opt1</option>
-                                        <option value="opt1">opt1</option>
-                                        <option value="opt1">opt1</option>
-                                        <option value="opt1">opt1</option>
+                                    <select style="height:26px; padding: 0px 5px;" class='form-control' ng-model="current_select_asset" ng-change="changeAsset()">
+                                        <option ng-repeat="(key,item) in assets" value="{{key}}" data-start="{{item[3]}}" data-end="{{item[4]}}">{{item[1]}}</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6">
                                     <label style="color:white;">Assets</label>
-                                    <input style="height:26px;" type="text" class="form-control" value=" ">
+                                    <input style="height:26px;" type="text" class="form-control" value="{{seconds_left}}">
                                 </div>
                             </div>
                         </div>
@@ -2053,7 +2067,7 @@
                                 <div class="col-sm-12">
                                     <input
                                         style="width:126px; height:32px; font-weight:bolder; text-align: center; margin:auto; color:{{position_status == 1 ? 'green':'red'}}"
-                                        type="text" class="form-control" value="">
+                                        type="text" class="form-control curr-price-input" value="">
                                 </div>
                             </div>
                         </div>

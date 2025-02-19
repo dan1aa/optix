@@ -97,7 +97,7 @@ var ChartsMain = (function () {
             this.ctx.fill();
             this.ctx.fillStyle = "white";
             this.ctx.font = "bolder 8pt Arial";
-            var text = (deal.amount / 100).toFixed(2) + "$";
+            var text = (deal.amount).toFixed(2) + "$";
             this.ctx.fillText(text, x - 45, y + 3);
             this.ctx.closePath();
             this.ctx.restore();
@@ -136,7 +136,7 @@ var ChartsMain = (function () {
         var start_x = x;
         var i = 0;
         var position = 0;
-        var amount = deal.amount / 100;
+        var amount = deal.amount;
         var end_x = this.getX(deal.expiredAt);
         //ярлык с суммой ставки
         this.ctx.save();
@@ -308,46 +308,35 @@ var ChartsMain = (function () {
         }
     };
     ChartsMain.prototype.drawCurrentPositionElement = function () {
+        var ctx = this.ctx;
         var element = this.aData[this.aData.length - 1];
-        var height = 20;
-        var arrow = 15;
-        var start_x = this.width - 40;
+        if (!element) return;
+    
         var priceY = this.getY(element.close);
-        //рисуем стрелочку для текста
-        this.ctx.save();
-        this.ctx.lineWidth = 1;
-        this.ctx.strokeStyle = this.skin.currentAmountPositionBorderColor;
-        this.ctx.fillStyle = this.skin.currentAmountPositionBackgroundColor;
-        this.ctx.beginPath();
-        this.ctx.moveTo(start_x + this.x + 0.5, priceY + this.y + 0.5);
-        this.ctx.lineTo(start_x + this.x + arrow + 0.5, priceY + this.y - height / 2 + 0.5);
-        this.ctx.lineTo(this.width + this.parent.right_padding + this.x + 0.5, priceY + this.y - height / 2 + 0.5);
-        this.ctx.lineTo(this.width + this.parent.right_padding + this.x + 0.5, priceY + this.y + height / 2 + 0.5);
-        this.ctx.lineTo(start_x + this.x + arrow, priceY + this.y + height / 2);
-        this.ctx.lineTo(start_x + this.x, priceY + this.y);
-        this.ctx.closePath();
-        this.ctx.stroke();
-        this.ctx.fill();
-        this.ctx.restore();
-        //пишем текст в значение стрелочки
-        this.ctx.save();
-        this.ctx.fillStyle = this.skin.currentAmountPositionTextColor;
-        this.ctx.font = "bold 12px Tahoma";
-        var text = element.amount;
-        this.ctx.textAlign = "left";
-        this.ctx.fillText(text, this.width + this.x + 10, priceY + this.y + 4);
-        this.ctx.restore();
-        //рисуем линию
-        this.ctx.save();
-        this.ctx.lineWidth = 1;
-        this.ctx.strokeStyle = this.skin.currentAmountPositionLineColor;
-        this.ctx.beginPath();
-        this.ctx.moveTo(start_x + this.x + 0.5, priceY + this.y + 0.5);
-        this.ctx.lineTo(this.x + 0.5, priceY + this.y + 0.5);
-        this.ctx.closePath();
-        this.ctx.stroke();
-        this.ctx.restore();
+    
+        // 🔵 Малюємо горизонтальну лінію ціни
+        ctx.save();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = this.skin.currentAmountPositionLineColor;
+        ctx.beginPath();
+        ctx.moveTo(0, priceY);
+        ctx.lineTo(this.width, priceY);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.restore();
+    
+        // 🔵 Малюємо блок з ціною праворуч
+        ctx.save();
+        ctx.fillStyle = this.skin.currentAmountPositionBackgroundColor;
+        ctx.fillRect(this.width - 50, priceY - 10, 50, 20);
+        
+        ctx.fillStyle = this.skin.currentAmountPositionTextColor;
+        ctx.font = "bold 12px Tahoma";
+        ctx.textAlign = "center";
+        ctx.fillText(element.amount, this.width - 25, priceY + 5);
+        ctx.restore();
     };
+    
     ChartsMain.prototype.currentPositionDot = function () {
         var element = this.aData[this.aData.length - 1];
         var radius = 3;
@@ -464,6 +453,7 @@ var ChartsMain = (function () {
         return period;
     };
     ChartsMain.prototype.buildAmountGrid = function () {
+        // this.ctx.clearRect(this.width, 0, this.parent.right_padding, this.height);
         var start = (this.height / this.amount_coef) + this.min_amount * 1;
         var end = 0 / this.amount_coef + this.min_amount;
         var step = this.getAmountStep(start, end);
@@ -508,6 +498,7 @@ var ChartsMain = (function () {
         }
     };
     ChartsMain.prototype.buildTimeGrid = function (aData) {
+        // this.ctx.clearRect(0, this.height, this.width, this.bottom_padding);
         this.aData = aData;
         var hours, minutes, seconds, d, text, length;
         var time = aData[0].date;

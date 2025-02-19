@@ -25,7 +25,7 @@ npm run start
 public - all front-end files , including vanilla js, css and html<br/>
 en/ru - same pages , however with different languages<br/>
 routes - back-end logic, every file is responsible for specific route<br/>
-app.js - root file, where whole web-site started<br/>
+index.js - root file, where whole web-site started<br/>
 
 ### 4. Technologies
 

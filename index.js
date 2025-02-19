@@ -89,11 +89,13 @@ wss.on('connection', function connection(ws) {
 
             case 'getDeals':
                 const bets = await getDeals(ssid);
-                let betsCopy = bets.map(bet => ({
-                    ...bet.toObject(),  // Видаляємо метадані Mongoose
-                    quotename: displayAssets.find(d => d.id == +bet.asset)?.name || "Unknown"
-                }));
-                ws.send(JSON.stringify({ getDeals: { deals: betsCopy } }));
+                if (bets) {
+                    let betsCopy = bets.map(bet => ({
+                        ...bet.toObject(),  // Видаляємо метадані Mongoose
+                        quotename: displayAssets.find(d => d.id == +bet.asset)?.name || "Unknown"
+                    }));
+                    ws.send(JSON.stringify({ getDeals: { deals: betsCopy } }));
+                }
                 break;
         }
     });

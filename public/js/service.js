@@ -16,8 +16,8 @@ var Forms = (function () {
         for (var key in this.parent.parent.deals) { }
         var deal = this.parent.parent.deals[key];
         var amount = deal.amount;
-        var profit = (((amount / 100) * 76 + amount) / 100).toFixed(2);
-        amount = (amount / 100).toFixed(2);
+        var profit = (((amount / 100) * 76 + amount)).toFixed(2);
+        amount = (amount).toFixed(2);
         var x = 50.5;
         var y = 50.5;
         //сумма ставки
@@ -73,7 +73,7 @@ var Forms = (function () {
         if (!position_time || !this.parent.parent.serverTime) 
             return;
     
-        var serverTime = new Date((this.parent.parent.serverTime + 1) * 1000);
+        var serverTime = new Date((this.parent.parent.serverTime) * 1000);
         var seconds = serverTime.getSeconds();
     
         var remainingSeconds = (seconds >= 30) ? 60 - (seconds - 30) : 30 - seconds;
@@ -84,7 +84,7 @@ var Forms = (function () {
         var padding_right = 10;
     
         this.ctx.save();
-        this.ctx.translate(50, this.parent.y + 0.5);
+        this.ctx.translate(500, this.parent.y + 0.5);
         this.ctx.beginPath();
         this.ctx.lineWidth = 1;
         this.ctx.fillStyle = this.parent.skin.expirationFormBackgroundColor;
@@ -94,7 +94,7 @@ var Forms = (function () {
         this.ctx.restore();
     
         this.ctx.save();
-        this.ctx.translate(50, this.parent.y + 0.5);
+        this.ctx.translate(500, this.parent.y + 0.5);
         this.ctx.fillStyle = this.parent.skin.expirationFormTextColor;
         this.ctx.font = "bold 22px Tahoma";
     
@@ -104,7 +104,7 @@ var Forms = (function () {
         this.ctx.restore();
     
         this.ctx.save();
-        this.ctx.translate(50, this.parent.y + 0.5);
+        this.ctx.translate(500, this.parent.y + 0.5);
         this.ctx.fillStyle = this.parent.skin.expirationFormTextColor;
         this.ctx.font = "bold 12px Tahoma";
         var text = this.local.timetoexpirate;
