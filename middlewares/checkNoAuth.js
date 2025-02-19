@@ -6,7 +6,7 @@ function checkNoAuth(req, res, next) {
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if (!err) {
-                return res.redirect('/en/trade');
+                return res.redirect('/en/trade?asset=404');
             }
             return next(); 
         });

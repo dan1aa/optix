@@ -27,7 +27,8 @@ const pageUrl = new URL(window.location.href);
 
 const params = new URLSearchParams(pageUrl.search);
 
-const pairQuery = params.get('asset');
+const pairQuery = params.get('asset') || '404';
+
 
 (function () {
     class KrakenWebSocket {
@@ -162,46 +163,59 @@ class ChartWebSocketBridge {
     
         const timestamp = candle.time;
         const currPriceInput = document.querySelector('.curr-price-input');
-
-        const prevPrice = parseFloat(currPriceInput.value) || 0;
-        const newPrice = candle.close;
-        currPriceInput.value = newPrice;
-        currPriceInput.style.color = newPrice > prevPrice ? "green" : newPrice < prevPrice ? "red" : currPriceInput.style.color;
-
-        if (this.chart.type === "candles") {
-            let existingCandle = this.chart.aData.find(c => c.date === timestamp);
-            const lastCandleIndex = this.chart.aData.length - 1;
-
-            if (existingCandle) {
-                existingCandle.high = Math.max(existingCandle.high, candle.high);
-                existingCandle.low = Math.min(existingCandle.low, candle.low);
-                existingCandle.close = newPrice;
-                existingCandle.amount = newPrice;
-                this.chart.aData[lastCandleIndex] = { ...existingCandle };
-                this.chart.updateSingleCandle(existingCandle);
-            } else {
-                const lastCandle = this.chart.aData[lastCandleIndex];
-                if (lastCandle) {
-                    this.chart.aData.push({ ...lastCandle });
-                }
-                const newCandle = {
-                    date: timestamp,
-                    open: lastCandle ? lastCandle.close : candle.open,
-                    high: candle.high,
-                    low: candle.low,
-                    close: newPrice,
-                    amount: newPrice
-                };
-                this.chart.aData.push(newCandle);
-                this.chart.shiftChart();
-                this.chart.updateSingleCandle(newCandle);
-            }
-        } else if (this.chart.type === "normal") {
-            this.updateNormalChart(timestamp, newPrice);
+    
+        if (currPriceInput) {
+            const prevPrice = parseFloat(currPriceInput.value) || 0;
+            const newPrice = candle.close;
+            currPriceInput.value = newPrice;
+            currPriceInput.style.color = newPrice > prevPrice ? "green" : newPrice < prevPrice ? "red" : currPriceInput.style.color;
         }
-
-        this.chart.drawCurrentPositionElement();
+    
+        let lastCandleIndex = this.chart.aData.length - 1;
+        let existingCandle = this.chart.aData[lastCandleIndex]; // Остання свічка в масиві
+        let newCandle = false;
+    
+        if (!existingCandle || timestamp >= existingCandle.date + 60) { 
+            // 🔹 Якщо це нова свічка, додаємо її в `aData`
+            newCandle = true;
+            existingCandle = {
+                date: timestamp,
+                open: candle.open,
+                high: candle.high,
+                low: candle.low,
+                close: candle.close,
+                amount: candle.amount
+            };
+            this.chart.aData.push(existingCandle);
+            this.chart.shiftChart(); // 🔴 Завжди зсуваємо графік при новій свічці
+        } else {
+            // 🔹 Оновлюємо поточну свічку
+            existingCandle.high = Math.max(existingCandle.high, candle.high);
+            existingCandle.low = Math.min(existingCandle.low, candle.low);
+            existingCandle.close = candle.close;
+            existingCandle.amount = candle.amount;
+            this.chart.aData[lastCandleIndex] = { ...existingCandle };
+        }
+    
+        // 🔄 Передаємо оновлену копію `aData`, включаючи поточну свічку
+        let updatedData = [...this.chart.aData];
+    
+        if (!newCandle) {
+            // Якщо свічка ще не закрилась, додаємо її копію до `aData`, щоб вона малювалася
+            updatedData.push({
+                ...existingCandle,
+                date: timestamp + 1 // Мінімальна зміна часу, щоб відобразити її на графіку
+            });
+        }
+    
+        this.chart.render(updatedData); // 🔹 Використовуємо оновлений `aData`
+    
+        // 🔄 Оновлюємо часові та цінові значення (з прозорістю)
+        this.chart.fadeTimeAndPriceLabels();
     }
+    
+    
+    
 
     updateNormalChart(timestamp, price) {
         const ctx = this.chart.ctx; // Контекст канвасу
@@ -346,6 +360,28 @@ var Chart = (function (_super) {
             this.ctx.restore();
         }
     };
+    Chart.prototype.fadeTimeAndPriceLabels = function () {
+        this.fadeTimeLabels();
+        this.fadePriceLabels();
+    };
+    
+    // 🔹 Функція для затемнення старих часових міток
+    Chart.prototype.fadeTimeLabels = function () {
+        var ctx = this.ctx;
+        ctx.save();
+        ctx.globalAlpha = 0.1; // Робимо прозорість старих міток
+        this.buildTimeGrid(this.aData); // Перемальовуємо часові значення
+        ctx.restore();
+    };
+    
+    // 🔹 Функція для затемнення старих цінових міток
+    Chart.prototype.fadePriceLabels = function () {
+        var ctx = this.ctx;
+        ctx.save();
+        ctx.globalAlpha = 0.1; // Робимо прозорість старих міток
+        this.buildAmountGrid(); // Перемальовуємо цінові значення
+        ctx.restore();
+    };
     Chart.prototype.renderNormal = function (aData) {
         this.setMinMaxAmount(aData);
         this.setDataCoords(aData); //устанавливаем координаты
@@ -441,7 +477,6 @@ var Chart = (function (_super) {
     };
     Chart.prototype.render = function (aData) {
         this.background();
-        this.type = 'normal'
         this.setMinMaxTime(aData);
         this.countDigits(aData);
         if (aData) {

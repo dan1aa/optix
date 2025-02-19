@@ -96,7 +96,8 @@ async function createBet(ssid, [asset, mode, amount, position, type, assetName])
 
 
 async function closeBet(userId, [betId, closePrice]) {
-    const bet = await Bet.findById(betId);
+    if (userId != 'undefined') {
+        const bet = await Bet.findById(betId);
     if (!bet) return { error: "Ставка не знайдена" };
     if (bet.result !== 'pending') return { error: "Ставка вже закрита" };
     let isWin;
@@ -128,16 +129,19 @@ async function closeBet(userId, [betId, closePrice]) {
 
     return { id: betId, result: bet.result, profit, closePrice: bet.closePrice,
            status: bet.position == 'call' ? 1 : 0, balance: bet.accType == 'demo' ? user.demoBalance : user.realBalance };
+    }
 }
 
 
 
 async function getDeals(sessionId) {
-    return await Bet.find({ ssid: sessionId }).sort({ createdAt: -1 });
+    if (sessionId != 'undefined') {
+        return await Bet.find({ ssid: sessionId }).sort({ createdAt: -1 });
+    }
 }
 
 async function getOpenBets(sessionId) {
-    return await Bet.find({ ssid: sessionId, result: 'pending' }).sort({ createdAt: -1 });
+    if (sessionId != 'undefined') return await Bet.find({ ssid: sessionId, result: 'pending' }).sort({ createdAt: -1 });
 }
 
 

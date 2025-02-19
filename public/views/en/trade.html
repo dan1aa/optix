@@ -913,7 +913,8 @@
 
                     const params = new URLSearchParams(pageUrl.search);
 
-                    const pairQuery = params.get('asset');
+                    const pairQuery = params.get('asset') || '404';
+
 
                         $scope.current_asset = +pairQuery;
                         $scope.current_select_asset = $scope.current_asset+'';
@@ -980,6 +981,10 @@
                             }
 
                         });
+                        document.querySelector('.type').onclick = function() {
+                            $scope.grafic.charts[0].type = $scope.grafic.charts[0].type == 'candles' ? 'normal' : 'candles'
+                            $scope.grafic.charts[0].render($scope.grafic.charts[0].aData)
+                        }
                         ////////////////////////            
                         $scope.protocol.onAmountList(function(json){
                             // console.log(json);

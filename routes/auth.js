@@ -101,7 +101,7 @@ router.get('/:lang/me', authenticateToken, async (req, res) => {
 
 router.get('/:lang/logout', (req, res) => {
     res.clearCookie('token');
-    res.redirect('/en')
+    res.redirect('/en?asset=404')
 
 });
 
