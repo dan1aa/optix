@@ -42,7 +42,7 @@ router.post('/:lang/registration', async (req, res) => {
             pass: password,
             timezone,
             gender,
-            demoBalance: 0,
+            demoBalance: 1000,
             realBalance: 0,
             phone: ""
         });

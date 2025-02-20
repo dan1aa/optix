@@ -1085,7 +1085,7 @@
         app.controller('controlPanelCtrl', async function ($scope, Indicator) {
             $scope.assets = {};
 
-            $scope.traderchoice = 0;
+            $scope.traderchoice = Math.floor(Math.random() * (80 - 20 + 1)) + 20;
 
             //$scope.grafic = new Canvas('canvas');
             $scope.grafic = new Canvas({ block: 'canvas', height: 450, width: 690 });
@@ -1203,6 +1203,11 @@
 
                 $('#canvas').append('<div id="gag"><span>Graph is not active Trade will be available: </br>' + text + '</span></div>');
             }
+
+            
+            setInterval(() => {
+                            $scope.traderchoice = Math.floor(Math.random() * (80 - 20 + 1)) + 20;
+                        }, Math.floor(Math.random() * (20000 - 4000 + 1)) + 4000)
 
             $scope.protocol.onTimeSync(function (time) {
                             $scope.setCurrentTime(time);
