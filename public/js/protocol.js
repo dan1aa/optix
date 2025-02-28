@@ -38,7 +38,7 @@ async function getOHLCData(pair, count) {
 
 var Protocol = function(grafic,ssid,error){
     try{
-        this.socket = new WebSocket('ws://localhost:8080');
+        this.socket = new WebSocket('ws://optigates.com/ws');
     }catch(e){
         error();
         return;

@@ -1011,7 +1011,7 @@
     app.controller('controlPanelCtrl', async function ($scope, Indicator) {
         $scope.assets = {};
 
-        $scope.traderchoice = 0;
+        $scope.traderchoice = Math.floor(Math.random() * (80 - 20 + 1)) + 20;
 
         //$scope.grafic = new Canvas('canvas');
         $scope.grafic = new Canvas({ block: 'canvas', height: 450, width: 690 });
@@ -1054,6 +1054,10 @@
                         $scope.time = hours + ':' + minutes + ':' + seconds;
                         $scope.$digest();
                     }
+
+                    setInterval(() => {
+                            $scope.traderchoice = Math.floor(Math.random() * (80 - 20 + 1)) + 20;
+                        }, Math.floor(Math.random() * (20000 - 4000 + 1)) + 4000)
 
         $scope.setPayout = function () {
             $scope.payouts = ((parseInt($scope.investments) / 100 * 76) + parseInt($scope.investments)).toFixed(2);

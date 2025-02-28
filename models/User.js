@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
     pass: { type: String, required: true },
     timezone: { type: String, required: true },
     gender: { type: String, required: true },
-    demoBalance: {type: Number, required: true},
+    demoBalance: {type: Number, required: true, default: 1000},
     realBalance: {type: Number, required: true},
     phone: {type: String}
 }, { timestamps: true });
