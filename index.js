@@ -114,6 +114,7 @@ const robot = require('./routes/robot');
 const account = require('./routes/account');
 const admin = require('./routes/admin');
 const payment = require('./routes/payment');
+const topUp = require('./routes/topUpRoutes')
 
 const langPrefix = require('./middlewares/langPrefix');
 
@@ -129,6 +130,7 @@ app.use('/', robot);
 app.use('/', account);
 app.use('/', admin);
 app.use('/', payment);
+app.use('/',topUp);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
