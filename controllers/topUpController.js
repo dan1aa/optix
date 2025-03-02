@@ -51,7 +51,7 @@ async function createTopUp(req, res) {
 
 async function createWithdrawalRequest(req, res) {
   const userId = req.user.id;
-  const { amount, currency, paymentSystemId, account } = req.body
+  const { amount, currency, paymentSystemId, account } = req.body;
   try {
     const user = await User.findById(userId);
     if (!user) {

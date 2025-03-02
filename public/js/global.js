@@ -37,6 +37,7 @@ fetch('/en/me')
 const loginModal = document.querySelector('#loginModal');
 const lang = window.location.pathname.split('/')[1];
 
+
 if (loginModal) {
     const emailInput = loginModal.querySelector('input[name="email"]')
     const passwordInput = loginModal.querySelector('input[name="password"]')
@@ -69,6 +70,7 @@ if (loginModal) {
                     error.textContent = lang == 'en' ? 'Invalid password' : 'Неверный пароль';
                 } else {
                     localStorage.setItem('account_type', 'demo');
+                    localStorage.setItem('token', response.token)
                     window.location.reload();
                 }
             })

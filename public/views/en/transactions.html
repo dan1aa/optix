@@ -786,7 +786,7 @@
       </table>
     </div>
   </div>
-                <div class='container'>
+       <div class='container'>
     <div class='pagetitle'>Транзакции</div>
             <table class='table table-hover table-striped deals_table'>
             <thead>
@@ -801,22 +801,43 @@
             </thead>
 
             <tbody>
-                                        <tr>
-                            <td>deposit</td>
-                            <td>50.00$</td>
-                            <td>Visa/Mastercard/Maestro/Mir</td>
-                            <td>
-                                Processed
-                            </td>
-                            <td>03 Feb 11:41:02</td>
-                        </tr>
+
                           
             </tbody>
         </table>
         <p>More financial information You can find <a style="color:#3498db" href="/faq/termsandconditions/">here.</a></p>
     <p style='margin-bottom:30px;'>If you`ve got any questions about deposit or withdrawal operations, please contact out support team at <a style="color:#3498db" href="mailto:support@platformail.com">support@platformail.com</a></p>    
 </div>
+<script>
+    const transactions = document.querySelector('.deals_table');
+    console.log(transactions)
+    
+    fetch('/en/payments', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json()).then(response => {
 
+        const { payments } = response;
+        console.log(payments)
+        payments.forEach(payment => {
+            transactions.innerHTML += `<tr>
+                            <td>${payment.transactionType == 'topUp' ? 'deposit' : payment.transactionType}</td>
+                            <td>${payment.amount}</td>
+                            <td>Visa/Mastercard/Maestro/Mir</td>
+                            <td>
+                                ${payment.status}
+                            </td>
+                            <td>${new Date(payment.createdAt).toISOString().split('T')[0]}</td>
+                        </tr>`
+        })
+
+    })
+
+  </script>
+           
         
         <style>
     #contacts{

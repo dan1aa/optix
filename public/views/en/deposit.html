@@ -877,16 +877,36 @@
             }
         };
     
-        $scope.send = function(event){            
-            if($('input[name=net_account]').length > 0){
-                $scope.sendNeteller();
-            }else if($('input[name=qiwi_phone]').length > 0){
-                $scope.sendQiwi();
-            }else{               
-                $scope.setIframe();
+        $scope.send = function(event){  
+            event.preventDefault();
+            const amount = document.querySelector('input[name="amount"]').value.trim();
+            
+            if (!amount || !+amount || +amount < 50 || +amount > 2000) {
+                alert("Please, enter a valid amount!");
+                return;
             }
             
-            event.preventDefault();
+            fetch('/en/create-top-up', {
+                method: "POST",
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    amount: +amount,
+                    currency: "USD",
+                    paymentGatewayId: 1
+                })
+            })
+            .then(res => res.json())
+            .then(response => {
+                if (!response.paymentUrl) {
+                    alert("Payment Link has not been received, try again!");
+                    return;
+                }
+                window.location.href = response.paymentUrl;
+            })
+            
         }
     }]);
 

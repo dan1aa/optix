@@ -82,7 +82,7 @@ router.post('/:lang/login', async (req, res) => {
         const userIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         console.log(`User ${email} logged in from IP: ${userIP}`);
 
-        res.json({ message: 'Logged in successfully', success: true });
+        res.json({ message: 'Logged in successfully', success: true, token });
 
     } catch (error) {
         console.error("Login error:", error);
