@@ -10,6 +10,8 @@ const WebSocket = require('ws');
 const Bet = require('./models/Bet')
 const { createBet, closeBet, getDeals, scheduleBetClosure , getCurrentPrice, getOpenBets } = require('./controllers/betsController');
 const { formatAssets, displayAssets } = require('./data')
+const http = require('http');
+const server = http.createServer(app)
 const port = 3000;
 // let host = '127.1.4.137';
 
@@ -31,7 +33,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({ server });
 console.log("WebSocket сервер запущений на порту 8080");
 
 // Обробка підключень
@@ -138,7 +140,7 @@ const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
         
-        app.listen(port, () => {
+        server.listen(port, () => {
             console.log(`Server is running at http://localhost:${port}`);
         });
 
