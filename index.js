@@ -11,7 +11,7 @@ const Bet = require('./models/Bet')
 const { createBet, closeBet, getDeals, scheduleBetClosure , getCurrentPrice, getOpenBets } = require('./controllers/betsController');
 const { formatAssets, displayAssets } = require('./data')
 const port = 3000;
-let host = '127.1.4.137';
+// let host = '127.1.4.137';
 
 
 async function restorePendingBets() {
@@ -138,7 +138,7 @@ const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
         
-        app.listen(port,host, () => {
+        app.listen(port, () => {
             console.log(`Server is running at http://localhost:${port}`);
         });
 

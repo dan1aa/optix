@@ -8,6 +8,7 @@ const FK_API_URL = 'https://api.fk.life/v1';
 const SHOP_ID = process.env.merchant_id;
 const SECRET_KEY = process.env.freekassa_secret1;
 
+
 function generateOrderId() {
   return Math.random().toString(36).substr(2, 16) + Date.now().toString(36).substr(2, 8);
 }
@@ -98,20 +99,18 @@ async function proceed(AMOUNT, MERCHANT_ORDER_ID) {
 
 async function createWithdrawalRequest(userId, amount, currency, paymentSystemId, account) {
   try {
-
-
     const requestData = {
       shopId: SHOP_ID,
       nonce: Date.now(),
       paymentId: generateOrderId(),
-      i: paymentSystemId,
+      i: String(paymentSystemId),
       account,
       amount,
       currency
     };
     requestData.signature = generateSignature(requestData);
-
-    const response = await axios.post(PAYMENT_API_URL + "/withdrawals/create", requestData);
+    console.log(requestData)
+    const response = await axios.post(FK_API_URL + "/withdrawals/create", requestData);
 
     if (response.data.type !== 'success') {
       throw new Error(response.data.message || 'Ошибка при создании заявки');

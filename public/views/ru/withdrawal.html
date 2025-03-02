@@ -741,7 +741,7 @@
                         
                                                  <div class="row">
                             <div class='col-sm-4'>
-                                <label>
+                                <label class="method-label">
         	                                                        Номер банковской карты                                                                </label>
                                 <input type='text' class='form-control' name="purse" ng-init="form.purse=''" ng-model="form.purse">
                                 <div class="error"></div>
@@ -753,14 +753,20 @@
                             </div>
                             <div class='col-sm-4'>
                                 <label style="display:block">&nbsp;</label>
-                                <input class='btn btn-orange' type='submit' value='Заявка на вывод средств'>
+                                <input class='btn btn-orange request-withdrawal-btn type='submit' value='Заявка на вывод средств'>
                             </div>
                         </div>
                         
                         <script>
                             $('document').ready(function(){
-                                var comission = 0.03 * 100;
-                                var comission_static = 2;
+                                const method = window.location.href.split('/').filter(val => val).at(-1);
+                                if (method == 'trc20') {
+                                    document.querySelector('.method-label').textContent = 'Address Tether TRC-20';
+                                }
+
+                                var comission = method != 'trc20' ? 0.03 * 100 : 0;
+                                var comission_static = method != 'trc20' ? 2 : 1;
+                                document.querySelector('.exhange-commision-text').textContent = method != 'trc20' ? 'Комиссия 3% + USD 2' : 'Комиссия 0% + USD 1'
                                 
                                 function countTotalAmount(amount){
                                     amount = parseFloat(amount);
@@ -777,12 +783,53 @@
                                     var amount = countTotalAmount($(e.target).val());
                                     $('#totalAmount').text(amount);
                                 })
+
+                                document.querySelector('.request-withdrawal-btn').onclick = function(e) {
+                                    e.preventDefault()
+                                    const amount = +document.querySelector('input[name="amount"]').value.trim();
+                                    const account = +document.querySelector('input[name="purse"]').value.trim();
+
+                                    fetch('/en/me')
+                                    .then(res => res.json())
+                                    .then(user => {
+                                        if (!amount || amount < 200 || amount > 15000 || +user.realBalance < amount) {
+                                            alert("Пожалуйста, введите правильную сумму!");
+                                            return;
+                                        }
+                                        if (!account) {
+                                            alert("Пожалуйста, введите свой акаунт!")
+                                        }
+                                        // fetch('/en/withdraw', {
+                                        //     method: 'POST',
+                                        //     headers: {
+                                        //         'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                                        //         'Content-Type': 'application/json'
+                                        //     },
+                                        //     body: JSON.stringify({
+                                        //         amount,
+                                        //         currency: method == 'trc20' ? 'USDT' : 'USD',
+                                        //         paymentSystemId: method == 'trc20' ? 15 : 6,
+                                        //         account
+                                        //     })
+                                        // })
+                                        // .then(res => res.json())
+                                        // .then(response => {
+                                        //     if (response.success) {
+                                        //         alert(`Your withdrawal request with id ${response.withdrawalId} was successfully created!`);
+                                        //     } else {
+                                        //         alert("An error has occured, try again!");
+                                        //     }
+                                        // })
+                                    })
+                                    
+
+                                }
                             });
                         </script>
 
                         <div class="row">
                             <div class="col-sm-12" style="margin-top:10px;">
-                                <div style="font-weight: bolder; font-size:12px;">
+                                <div style="font-weight: bolder; font-size:12px;" class="exhange-commision-text">
                                     Комиссия                                    3% + USD 2                                 </div>
                                 <div style="font-weight: bolder; font-size:12px;">
                                     Вы получите следующую сумму: 
@@ -944,5 +991,8 @@
   <img src="/images/freekasa.png" title="Прием платежей на сайте">
 </a>
     </div>
-</div>    </body>
+</div>  
+<script src="/js/global.js"></script>
+
+</body>
 </html>
