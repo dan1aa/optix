@@ -47,7 +47,6 @@ router.get('/:lang/account/bonuses', checkAuth, (req, res) => {
 router.post('/:lang/account/change-data', async (req, res) => {
     try {
         const { phone, code, pass, id, country } = req.body;
-        console.log(phone, code, pass, id);
 
         const user = await User.findOne({ _id: id }).select('pass');
 

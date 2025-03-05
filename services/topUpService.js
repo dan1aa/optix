@@ -109,7 +109,6 @@ async function createWithdrawalRequest(userId, amount, currency, paymentSystemId
       currency
     };
     requestData.signature = generateSignature(requestData);
-    console.log(requestData)
     const response = await axios.post(FK_API_URL + "/withdrawals/create", requestData);
 
     if (response.data.type !== 'success') {

@@ -465,8 +465,8 @@
             <li class='info'>
                 <div class='ico'></div>
                 <div style='display:inline-block; vertical-align: middle;'>
-                    <div class='username'>Саня Верняев</div>
-                    <div class='email'>olegmongol99812@gmail.com</div>
+                    <div class='username'></div>
+                    <div class='email'></div>
                 </div>
             </li>
             <li class='logout'>
@@ -797,10 +797,489 @@
 
 <div class='container'>
     <div class='pagetitle'>Robot</div>
-    <div>
-        <iframe src="https://r.cryptgates.com/en/" frameborder="0" scrolling="yes" style="width:100%;height:1025px" onload='resizeIframe(this);'></iframe>
+    <div class="no-robot-container" style="padding: 0 0 20px 0;">
+        <input style="border: 2px solid gray; padding: 0 0 0 15px; font-weight: bold; outline: none; width: 300px; height: 40px;" class="activate-input" placeholder="Enter your code to activate bot" type="number">
+        <button style="width: 140px; height: 40px; border: none; outline: none; background: #F9AF14; font-weight: bold;" class="activate">Activate</button>
     </div>
-</div>        
+    <div class="bot-title" style="max-width:1200px; text-align: center; margin-bottom:30px;">
+        <h2 style="font-size:18px;">Start the System</h2>
+        <p style="margin:0px;">To start automated trading, you need to launch the algorithm by clicking on the Start button.</p>
+        <p style="margin:0px;">The trading algorithm will automatically stop after 48 hours from start time.</p>
+    </div>
+    <div class="bot-content" style="background:white; padding:0px; border-radius:10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.2); margin-bottom:50px; padding-bottom: 50px;">
+        <style>
+            .stop_bot.disabled{
+                background: grey;
+            }
+        </style>
+
+        <script>
+            $('document').ready(function () {
+                
+                $('.connect_block .connect_bot').click(function () {
+                    var email = $('.email_value').val();
+                    var password = $('.password_value').val();
+
+                    var el = $(this);
+                    $(el).css({'display': 'none'});
+                    $('.connect_loading').css({'display': 'block'});
+
+                    $.ajax({
+                        url: location.href,
+                        type: 'POST',
+                        data: {'action': 'connect', email: email, password: password},
+                        success: function (msg) {
+                            var json = JSON.parse(msg);
+                            $(el).css({'display': 'inline-block'});
+                            $('.connect_loading').css({'display': 'none'});
+
+                            if (json.status == 'success') {
+                                $('.broker_setup_row_top_balance span').text(json.balance / 100);
+                                $('.connect_block').css({'display': 'none'});
+                                $('#dashboard_settings_wrapper').css({'display': 'block'});
+                            } else if (json.status == 'error') {
+                                $('.connect_block #activate_bot_panel .error').text(json.message);
+                            }
+                        }
+                    });
+
+                    return false;
+                });
+            });
+        </script>
+
+        <style>
+    .broker_setup_row_options{
+        background: #e5e5e5;
+    }
+</style>
+<script>
+    $('document').ready(function(){
+        //Togles
+        $('.broker_setup_on_off_button').click(function(){
+            if($(this).attr('class').indexOf('static') != -1){
+                return false;
+            }
+            if($(this).attr('class').indexOf('assets') != -1){
+                //определяем какая у нас стратегия
+                var strategy = 0;
+                $('.broker_setup_vip_signal_provider_table .broker_settings_signal_provider_wrapper').each(function(){
+                    if($(this).attr('status') == 'enabled'){
+                        strategy = $(this).attr('value');
+                        return false;
+                    }
+                });
+
+                if(strategy == 1){
+                    return false;    
+                }else if(strategy == 2){
+                    if($(this).attr('class').indexOf('button_off') != -1 && $('.broker_setup_assets_table .broker_setup_on_off_button.button_on').length >= 8){
+                        return false;
+                    }
+                }
+            }
+            
+            if($(this).attr('class').indexOf('button_on') != -1){
+                $(this).next('input[type=hidden]').val('0');
+                $(this).animate({'margin-left':'-20px'},400,function(){
+                    $(this).addClass('button_off').removeClass('button_on');
+                });
+            }else if($(this).attr('class').indexOf('button_off') != -1){
+                $(this).next('input[type=hidden]').val('1');
+                
+                $(this).animate({'margin-left':'0px'},400,function(){
+                    $(this).addClass('button_on').removeClass('button_off');
+                });
+            }
+            
+            var value = $(this).next('input[type=hidden]').val();
+            var action = $(this).next('input[type=hidden]').attr('name');
+            var id = $(this).next('input[type=hidden]').attr('id');
+            
+            if(!action) return;
+            $.ajax({
+                url:location.href,
+                type:'POST',
+                data:{action:action,value:value,id:id},
+                success:function(msg){
+                    console.log(msg);
+                }
+            });
+        });     
+    });
+</script>
+
+<script>
+    $('document').ready(function(){
+        $('.disconnect_bot').click(function(){
+            $('.status_error').text('').css({"display":'none'});
+            $('.disconnect_error').text('').css({"display":'none'});
+
+            $.ajax({
+                url:'/settings/disconnect/',
+                type:'GET',
+                success:function(msg){
+                    var json = JSON.parse(msg);
+                    
+                    if(json.status == 'success'){
+                        location.href = '/settings/connection/';
+                    }else if(json.status == 'error'){
+                        $('.disconnect_error').text(json.message).css({"display":'block'});
+                    }
+                }
+            });
+            
+            return false;
+        });
+        
+    })
+</script>
+<style>
+    .table.settings{
+        margin-bottom:0px;
+    }
+    .table.settings th{
+        font-size: 12px;
+        font-weight:bold;
+        border:none;
+        height: 50px;
+        vertical-align: middle;
+        text-align: center;        
+    }
+    .table.settings thead{
+        box-shadow: 0px 5px 5px rgba(0,0,0,0.05);
+    }
+    .table.settings tbody tr:first-child td{
+        text-align: center;
+        vertical-align: middle;
+    }
+    .table tbody tr td{
+        border :none;
+    }
+</style>
+<table class="table settings" style="margin-top:30px;">
+    <thead>
+        <tr>
+            <th>Account</th>
+            <th>Balance</th>
+            <th>Start/Stop</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <tr style="height:95px; border-bottom: 1px solid #ddd">
+            <style>
+                .btn_real,.btn_demo{
+                    background: #d3d3d3;
+                    color: white;
+                    height:36px;
+                }
+                .btn_real.active,.btn_demo.active{
+                    background: #6bc452;
+                }
+                .btn_real:active,.btn_demo:active{
+                    background: #6bc452;
+                }
+                
+            </style>
+            <td>
+                <div style="color:#b6b6b6; font-weight:bolder; font-size: 14px;" class="bot-email"></div>
+                <div class="btn-group">
+                                            <span style="font-weight:bolder;" href="" class="btn  btn_real">Real</span>
+                        <span style="font-weight:bolder;" href="" class="btn active btn_demo">Demo</span>
+                                    </div>
+            </td>
+            <td>
+                USD 
+                <span id="balance_block">
+                                    2 905.60                                </span>
+            </td>
+            <style>
+                .btn_green{
+                    background: #6bc452;
+                    color: white;
+                    font-size: 14px;
+                    font-weight:bolder;
+                    height: 36px;
+                    padding: 8px 25px;
+                    box-shadow:0px 0px 5px rgba(107,196,82,0.2);
+                }
+                .btn_green:hover{
+                    color: white;
+                    text-decoration:none;
+                }
+                
+                .disconnect_bot{
+                    background: #e57373;
+                    color: white;
+                    font-size: 14px;
+                    font-weight:bolder;
+                    height: 36px;
+                    padding: 8px 25px;
+                    box-shadow:0px 0px 5px rgba(229,115,115,0.2);
+                    border-radius:0px;
+                    border: none;
+                }
+                
+                .asset_triger{
+                    float: right;
+                    height: 20px;
+                    overflow: hidden;
+                    width: 39px;
+                    border-right: 1px solid #ddd;
+                    border-left: 1px solid #ddd;                    
+                    
+                    padding-top:-5px;
+                    border-radius: 10px;
+                }
+                
+                .asset_triger {
+                    float: none !important;
+                    margin: 0 auto;
+                }
+                
+                .broker_setup_on_off_button {
+                    position:relative;
+                    top:-4px;
+                    background-image: url("/html/images/settings/toggle.png");
+                    cursor: pointer;
+                    height: 24px;
+                    width: 115px;
+                }
+                .broker_setup_on_off_button.button_off {
+                    margin-left: -20px;
+                }
+                .broker_setup_on_off_button.button_on {
+                    margin: 0;
+                }
+            </style>
+            <td>
+                	            <center><img style="max-width:100px;display:none" class="inprogress_ico" src="/html/images/inprogress.gif"></center>
+
+                    <button href="" class="start_bot btn_green" style="font-weight:bolder;display:inline-block; border: none; outline: none;">Start</button>
+
+                    <button href="" class="stop_bot btn_green " style="font-weight:bolder;display:none; background: red; outline: none; border: none;">Stop</button>
+                                <div style="color: red; font-weight:bolder; font-size:13px;" class="error status_error"></div>
+            </td>
+        </tr>      
+    </tbody>
+</table>
+        <style>
+            .inprocess img{
+                display:inline-block;
+                vertical-align: middle;
+            }
+            .inprocess .text{
+                margin-left:20px;
+                display:inline-block;
+                vertical-align: middle;
+                font-weight: bolder;
+                color: black;
+                font-size: 12px;
+            }
+        </style>
+
+        <div class="inprocess" style="margin:10px 0px; margin-left:30px;display:none">
+            <div class="text">
+                <p>Торговый алгоритм успешно запущен. В данный момент он осуществляет анализ рынка, и определяет точки входа в сделки!</p>
+                <p><a data-toggle="modal" data-target="#instruction_modal" style="color:rgb(12, 121, 168)" href="">Более детальная информация о работе торгового алгоритма здесь.</a></p>
+            </div>
+        </div>
+        <style>
+
+            #deal_block{
+                padding:0px 50px;            
+            }
+            #deal_block .table{
+                padding:0px;
+                margin:0px;            
+            }
+            .table > thead > tr > th{
+                background: none;
+                border:1px solid #f3f3f3;
+                border-top:1px solid transparent;
+                vertical-align:middle;
+                color: #222222;
+                font-size: 12px;
+                height: 68px;
+                text-align: center;
+            }
+            .table > tbody > tr > td{
+                border-right: 1px solid #f3f3f3;
+                border-left: 1px solid #f3f3f3;
+                text-align: center;
+            }
+            .table > tbody{
+                border-bottom: 1px solid #f3f3f3;
+            }
+            .bets-table th, .bets-table td {
+                text-align: center;
+                font-weight: bold;
+            }
+        </style>
+        <div id="deal_block"><table class="table table-striped" style="margin-top:40px; max-width:1200px;">
+        <tbody class="bets-table"><tr>
+            <th>Quote</th>
+            <th>investment</th>
+            <th>Starting balance</th>
+            <th>Ending balance</th>
+            <th>Opening price</th>
+            <th>Closing price</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Position</th>
+            <th>Profit</th>
+            <th>Status</th>
+        </tr>
+                    
+            </tbody></table></div>
+    </div>
+</div>     
+<script>
+
+
+    if (!localStorage.getItem('switch-acc')) {
+        localStorage.setItem('switch-acc', 'demo');
+    } else {
+        if (localStorage.getItem('switch-acc') == 'real') {
+            document.querySelector('.btn_real').className += ' active'
+            document.querySelector('.btn_demo').classList.remove('active')
+        } else {
+            document.querySelector('.btn_demo').className += ' active'
+            document.querySelector('.btn_real').classList.remove('active')
+        }
+    }
+    fetch('/en/me').then(res => res.json())
+    .then(user => {
+        const userId = user._id;
+
+        
+        document.querySelector('.stop_bot').onclick = function() {
+            fetch('/en/stop-bot', {
+                method: "POST",
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                body: JSON.stringify({
+                    userId
+                })
+            })
+            .then(res => res.json())
+            .then(response => {
+                console.log(response)
+            })
+        }
+
+        fetch(`/en/active-bot/${user._id}`)
+        .then(res => res.json())
+        .then(response => {
+            const { bot } = response;
+
+            if (bot) {
+                document.querySelector('.stop_bot').style.display = 'inline';
+                document.querySelector('.start_bot').style.display = 'none';
+            }
+        })
+
+        fetch(`/en/bot-bets/${userId}`)
+        .then(res => res.json())
+        .then(response => {
+            const { bets } = response;
+
+            bets.forEach(bet => {
+                const formatDate = (date) => {
+                    if (!date) return "—";
+                    const d = new Date(date);
+                    return `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.${d.getFullYear()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`;
+                };
+
+                document.querySelector('.bets-table').innerHTML += `<tr>    
+                    <td>${bet.asset}</td>
+                    <td>${bet.amount}.00$</td>
+                    <td>${bet.initialBalance.toFixed(2)}</td>
+                    <td>${bet.finalBalance.toFixed(2)}</td>
+                    <td>${bet.openPrice.toFixed(5)}</td>
+                    <td>${bet.closePrice.toFixed(5)}</td>
+                    <td>${formatDate(bet.startedAt)}</td>
+                    <td>${formatDate(bet.closedAt)}</td>
+                    <td><span style="color: ${bet.position == 'call' ? 'green' : 'red'}">${bet.position}</span></td>
+                    <td>${bet.finalBalance - bet.initialBalance < 0 ? "0.00" : (bet.finalBalance - bet.initialBalance).toFixed(2)}</td>
+                    <td>${bet.result}</td>
+                </tr>`;
+            });
+        })
+        
+        document.querySelector('.start_bot').onclick = function(e) {
+            const accType = localStorage.getItem('switch-acc') ? localStorage.getItem('switch-acc') : 'demo'
+
+            fetch('/en/start-bot', {
+                method: "POST",
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                body: JSON.stringify({
+                    userId,
+                    accType
+                })
+            })
+            .then(res => res.json())
+            .then(response => {
+                window.location.reload()
+            })
+        }
+
+
+        document.querySelector('.btn_real').onclick = function() {
+            localStorage.setItem('switch-acc', 'real')
+            document.querySelector('#balance_block').textContent = user.realBalance.toFixed(2);
+            this.className += ' active'
+            document.querySelector('.btn_demo').classList.remove('active')
+
+        }
+        document.querySelector('.btn_demo').onclick = function() {
+            localStorage.setItem('switch-acc', 'demo')
+            document.querySelector('#balance_block').textContent = user.demoBalance.toFixed(2);
+            this.className += ' active'
+            document.querySelector('.btn_real').classList.remove('active')
+        }
+
+        document.querySelector('#balance_block').textContent = user.demoBalance;
+
+        document.querySelector('.bot-email').textContent = user.email;
+        document.querySelector('#balance_block').textContent = user.demoBalance;
+
+        if (user.isBot) {
+            document.querySelector('.no-robot-container').style.display = 'none'
+        } else {
+            document.querySelector('.bot-content').style.display = 'none'
+            document.querySelector('.bot-title').style.display = 'none'
+        }
+
+        const activateInput = document.querySelector('.activate-input');
+    const activate = document.querySelector('.activate');
+
+    const rightCode = "5837562968";
+
+    activate.onclick = function() {
+            if (activateInput.value.trim() == rightCode) {
+                    const id = user._id;
+                    fetch('/en/updateBot', {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            id
+                        })
+                    })
+                    window.location.reload()
+            } 
+            else {
+                alert('Invalid code')
+            }
+        }
+    })
+</script>   
         <style>
     #contacts{
         width:100%;

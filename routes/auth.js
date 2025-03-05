@@ -6,6 +6,16 @@ const authenticateToken = require('../middlewares/authenticateToken');
 const User = require('../models/User');
 const checkNoAuth = require('../middlewares/checkNoAuth');
 
+async function updateUserIP(user, userIP) {
+    if (!user.ips.includes(userIP)) { // Якщо IP ще нема у масиві
+        user.ips.push(userIP);
+        await user.save(); // Зберігаємо зміни
+        console.log(`✅ Новий IP додано: ${userIP}`);
+    } else {
+        console.log(`ℹ️ IP ${userIP} вже є у базі`);
+    }
+}
+
 
 const getLangFromUrl = (req) => {
     const lang = req.params.lang;
@@ -79,8 +89,14 @@ router.post('/:lang/login', async (req, res) => {
             sameSite: 'Strict'
         });
 
-        const userIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-        console.log(`User ${email} logged in from IP: ${userIP}`);
+        const userIP = req.headers['x-forwarded-for']?.split(',')[0] || // Якщо запит проходить через проксі
+        req.headers['cf-connecting-ip'] ||  // Cloudflare
+        req.headers['x-real-ip'] ||  // Nginx
+        req.connection?.remoteAddress ||  // Застарілий спосіб, але іноді працює
+        req.socket?.remoteAddress ||  // Стандартний спосіб
+        req.ip; // Express автоматично парсить IP
+
+        updateUserIP(user, userIP);
 
         res.json({ message: 'Logged in successfully', success: true, token });
 

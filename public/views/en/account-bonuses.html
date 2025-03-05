@@ -31,7 +31,6 @@
                         if(json.status == 'success'){
                             location.href = '/trade?asset=404';
                         }else{
-                            console.log($('#loginModal form .error'));
                             $('#loginModal form input[name=password]').val('');
                             $('#loginModal form .error').text(json.message);
                         }

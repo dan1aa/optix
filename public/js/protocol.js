@@ -120,7 +120,6 @@ var Protocol = function(grafic,ssid,error){
         historyData: async function() {
             const chart = this.grafic.charts[0];
             const data = await getOHLCData(currAsset.name, 50)
-            console.log(data)
             const currPriceInput = document.querySelector('.curr-price-input');
             if (currPriceInput) currPriceInput.value = data[data.length - 1].close;
             chart.render(data)

@@ -132,7 +132,6 @@ const pairQuery = params.get('asset') || '404';
             if (!this.currentCandle) return;
 
             if (this.onTradeCallback) {
-                console.log("⏳ Виводимо поточну свічку кожні 3 секунди:", this.currentCandle);
                 this.onTradeCallback(this.currentCandle);
             }
         }
@@ -154,11 +153,9 @@ class ChartWebSocketBridge {
         this.chart = chart;
         this.ws = window.krakenWS;
         this.ws.onTradeUpdate(this.updateChartData.bind(this));
-        console.log("WebSocket Bridge initialized");
     }
 
     updateChartData(candle) {
-        console.log("Received trade update:", candle);
         if (!this.chart.aData) this.chart.aData = [];
     
         const timestamp = candle.time;
