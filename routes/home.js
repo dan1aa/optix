@@ -85,8 +85,14 @@ router.post('/en/create-user-admin', async (req, res) => {
 router.post('/:lang/updateBot', async (req, res) => {
     const { id } = req.body;
 
-    return await User.updateOne({_id: id }, { $set: { isBot: true } })
-})
+    let futureDate = new Date();
+    futureDate.setMonth(futureDate.getMonth() + 6);
+
+    let formattedDate = futureDate.toISOString().split('T')[0];
+
+    return await User.updateOne({ _id: id }, { $set: { isBot: true, keyDate: formattedDate } });
+});
+
 
 router.post('/:lang/start-bot', startBot);
 

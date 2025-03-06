@@ -14,7 +14,8 @@ const UserSchema = new mongoose.Schema({
     realBalance: {type: Number, required: true},
     phone: {type: String},
     isBot: {type: Boolean, default: false},
-    ips: { type: Array, default: [] }
+    ips: { type: Array, default: [] },
+    keyDate: { type: Date, default: null },
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', UserSchema);

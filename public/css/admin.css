@@ -7,6 +7,7 @@
 .container {
     width: 100%;
     height: 100vh;
+    display: none;
 }
 .row {
     width: 100%;
@@ -26,4 +27,29 @@
 }
 .row div:not(:last-child) {
     border-right: 1px solid black;
+}
+.pass_wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.admin_password {
+    width: 300px;
+    height: 50px;
+    border: 1px solid gray;
+    padding-left: 15px;
+    outline: none;
+    margin-bottom: 10px;
+}
+.admin_login {
+    width: 300px;
+    height: 40px;
+    border: none;
+    outline: none;
+    background: #0993ca;
+    color: white;
+
 }

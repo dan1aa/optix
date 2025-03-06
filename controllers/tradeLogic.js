@@ -3,7 +3,7 @@ const BotSession = require('../models/BotSession');
 const { getCurrentPrice } = require('../controllers/betsController');
 const { activeBots } = require('./botManager'); 
 
-const ASSETS = ['XRPUSD', 'LTCUSD','BTCUSD', 'ETHUSD', 'EURUSD', 'GBPUSD'];
+const ASSETS = ['XRPUSD', 'LTCUSD','BTCUSD', 'ETHUSD'];
 
 
 async function tradeLoop(sessionId, user, accType) {

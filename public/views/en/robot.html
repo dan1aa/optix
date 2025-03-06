@@ -797,10 +797,185 @@
 
 <div class='container'>
     <div class='pagetitle'>Robot</div>
-    <div class="no-robot-container" style="padding: 0 0 20px 0;">
-        <input style="border: 2px solid gray; padding: 0 0 0 15px; font-weight: bold; outline: none; width: 300px; height: 40px;" class="activate-input" placeholder="Enter your code to activate bot" type="number">
-        <button style="width: 140px; height: 40px; border: none; outline: none; background: #F9AF14; font-weight: bold;" class="activate">Activate</button>
+    <div class="no-robot-container" style="padding: 0 0 20px 0; display: flex; flex-direction: column; align-items: center;">
+        <h2>I HAVE A KEY</h2>
+
+        <input style="border: 1px solid gray; padding: 0 0 0 15px; font-weight: bold; outline: none; width: 300px; height: 50px; margin-bottom: 10px;" class="activate-input" placeholder="Enter your code to activate bot" type="number">
+        <button style="width: 300px; height: 50px; border: none; outline: none; border:1px solid #6159AA; color: #6159AA; background: white; font-weight: bold; margin-bottom: 30px;" class="activate">Enter a key</button>
+        <h2>Purchase a new key</h2>
+        <div class="row ng-scope" ng-controller="productCtrl">
+            <div class="col-sm-12 text-center">
+                <div class="prices_block">
+                    <div class="element standart buy_code_btn" ng-click="">
+                        <div class="title">The best solution for novice traders</div>
+                        <div class="price">$200</div>
+                        <div class="terms">1-month key</div>
+    
+                        <div class="type">STANDARD KEY</div>
+    
+                        <div class="btn">BUY</div>
+                    </div>
+    
+                    <div class="element premium buy_code_btn" ng-click="">
+                        <div class="title">The best solution for advanced traders</div>
+                        <div class="price" style="margin-top:188px;">$500</div>
+                        <div class="terms">3-month key</div>
+    
+                        <div class="type">PREMIUM KEY</div>
+    
+                        <div class="btn">BUY</div>
+                    </div>
+    
+                    <div class="element vip buy_code_btn" ng-click="">
+                        <div class="title">The best solution for experienced traders</div>
+                        <div class="price">$1000</div>
+                        <div class="terms">12-month key</div>
+    
+                        <div class="type">VIP KEY<span></span></div>
+    
+                        <div class="btn">BUY</div>
+                    </div>
+                </div>
+    
+                <div class="depositForm"></div>
+            </div>
+        </div>
     </div>
+    <style>
+        .prices_block{
+             display:inline-block;
+             margin:auto;
+             font-size:0px;
+         }
+         .prices_block .element{            
+             display:inline-block;
+             width:308px;
+             height: 544px;
+            
+             background:#403d61 url('/images/element_bg.png') no-repeat top center;
+             vertical-align: middle;                                
+             position:relative;
+             color: white;
+             text-align: center;
+             
+             
+         }
+         .prices_block .element .title{
+             color: white;
+             text-align:center;
+             font-size: 14px;
+             width:200px;
+             margin:auto;
+             margin-top:20px;
+         }
+         .prices_block .element .btn{
+             position:absolute;
+             bottom:0px;
+             left:50%;
+             margin-left:-95px;
+             width:190px;
+             height:48px;
+             border:none;
+             color: white;
+             font-size:16px;
+             border-radius: 0px;
+             padding-top:12px;
+         }
+         .prices_block .element .price{
+             color: white;
+             font-weight:bolder;
+             font-size:58px;
+             margin-top:150px;
+             line-height: 54px;
+ 
+         }
+         .prices_block .element .terms{
+             
+             font-size:14px;
+             color: white;
+             margin-bottom: 87px;
+         }
+         .prices_block .element .type{
+             position:relative;
+             font-size:16px;
+         }
+ 
+         .element .type span{
+             width:14px;
+             height:10px;
+             background: url('/images/crown.png');
+             position:absolute;
+             display:block;
+             left:50%;
+             margin-left:-7px;
+             top:-12px;
+         }
+ 
+         .block4 .prices_block .element.standart{                
+             box-shadow: 0px 0px 17px rgba(97,89,170,0.4);
+             z-index:1;
+             background: url('/html/images/price2.png') no-repeat top center;
+         }
+ 
+         .prices_block .element.standart .btn{
+             background: #6159aa;
+         }
+ 
+         .prices_block .element.standart .type{
+             color:white;
+         }
+ 
+         .prices_block .element.premium{
+             box-shadow: 0px 0px 17px rgba(97,89,170,0.31);
+             z-index:10;
+             background: #6159aa url('/images/element_bg.png') no-repeat top left;
+             height:620px;
+             width:370px;               
+         }
+         .prices_block .element.premium .btn{
+             background: #8277eb;
+         }
+         .prices_block .element.premium .type{
+             color: white;
+         }
+         .prices_block .element.premium .terms{
+             margin-bottom:173px;
+         }
+         .prices_block .element.premium .price{
+             margin-top:245px;
+         }
+ 
+         .prices_block .element.vip{
+             box-shadow: 0px 0px 17px rgba(97,89,170,0.27);
+             z-index:1;
+             background: #413c74 url('/images/element_bg.png') no-repeat top left;
+         }
+         .prices_block .element.vip .btn{
+             background: #5951ae;
+         }
+         .prices_block .element.vip .type{
+             color: white;
+         }
+ 
+         .depositForm {
+             width: 75%;
+             margin: 0 auto;
+             text-align: center;
+         }
+ 
+     </style>
+     <div class="row">
+        <div class="col-md-9"></div>
+        <div class="col-md-3">
+    <div class="alert alert-info" role="alert" style="color: #333;">
+
+                    Your key <span class="label label-primary" style="font-size:14px;">
+            VIP</span>
+            is valid until <br/> <b class="key-date-until">23.11.2025 </b>           <p style="text-align:right;"><button type="button" class="btn btn-xs btn-warning">Change the key</button></p>
+            </div>
+
+        </div>
+      </div>
     <div class="bot-title" style="max-width:1200px; text-align: center; margin-bottom:30px;">
         <h2 style="font-size:18px;">Start the System</h2>
         <p style="margin:0px;">To start automated trading, you need to launch the algorithm by clicking on the Start button.</p>
@@ -855,6 +1030,11 @@
 </style>
 <script>
     $('document').ready(function(){
+        document.querySelectorAll('.buy_code_btn').forEach(b => {
+            b.onclick = function() {
+                alert("Sorry! Maintainance time")
+            }
+        })
         //Togles
         $('.broker_setup_on_off_button').click(function(){
             if($(this).attr('class').indexOf('static') != -1){
@@ -897,14 +1077,6 @@
             var id = $(this).next('input[type=hidden]').attr('id');
             
             if(!action) return;
-            $.ajax({
-                url:location.href,
-                type:'POST',
-                data:{action:action,value:value,id:id},
-                success:function(msg){
-                    console.log(msg);
-                }
-            });
         });     
     });
 </script>
@@ -934,6 +1106,7 @@
         
     })
 </script>
+
 <style>
     .table.settings{
         margin-bottom:0px;
@@ -992,7 +1165,7 @@
             <td>
                 USD 
                 <span id="balance_block">
-                                    2 905.60                                </span>
+                                    0.00                               </span>
             </td>
             <style>
                 .btn_green{
@@ -1041,7 +1214,7 @@
                 .broker_setup_on_off_button {
                     position:relative;
                     top:-4px;
-                    background-image: url("/html/images/settings/toggle.png");
+                    background-image: url("/images/toggle.png");
                     cursor: pointer;
                     height: 24px;
                     width: 115px;
@@ -1054,14 +1227,203 @@
                 }
             </style>
             <td>
-                	            <center><img style="max-width:100px;display:none" class="inprogress_ico" src="/html/images/inprogress.gif"></center>
+                	            <center><img style="max-width:100px;display:none" class="inprogress_ico" src="/images/inprogress.gif"></center>
 
                     <button href="" class="start_bot btn_green" style="font-weight:bolder;display:inline-block; border: none; outline: none;">Start</button>
+                    <div style="color: red; font-weight: bolder; font-size: 13px; display: none;" class="error Insufficient_balance status_error">Robot launch error: Insufficient funds in the balance.</div>
 
                     <button href="" class="stop_bot btn_green " style="font-weight:bolder;display:none; background: red; outline: none; border: none;">Stop</button>
                                 <div style="color: red; font-weight:bolder; font-size:13px;" class="error status_error"></div>
             </td>
-        </tr>      
+        </tr>  
+        <tr style="border-bottom: 1px solid #ddd">
+            <td colspan="6">
+                <div class="row" style="padding:15px">
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">AUD/JPY</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="1" class="assets broker_setup_on_off_button button_off"></div>
+                                    <input type="hidden" name="quote" id="1" value="0">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">AUD/USD</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="2" class="assets broker_setup_on_off_button button_off"></div>
+                                    <input type="hidden" name="quote" id="2" value="0">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">EUR/AUD</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="3" class="assets broker_setup_on_off_button button_off"></div>
+                                    <input type="hidden" name="quote" id="3" value="0">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">EUR/CAD</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="4" class="assets broker_setup_on_off_button button_off"></div>
+                                    <input type="hidden" name="quote" id="4" value="0">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">EUR/GBP</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="5" class="assets broker_setup_on_off_button button_off"></div>
+                                    <input type="hidden" name="quote" id="5" value="0">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">EUR/JPY</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="6" class="assets broker_setup_on_off_button button_off"></div>
+                                    <input type="hidden" name="quote" id="6" value="0">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">EUR/USD</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="7" class="assets broker_setup_on_off_button button_off"></div>
+                                    <input type="hidden" name="quote" id="7" value="0">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">GBP/JPY</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="8" class="assets broker_setup_on_off_button button_off"></div>
+                                    <input type="hidden" name="quote" id="8" value="0">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">GBP/USD</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="9" class="assets broker_setup_on_off_button button_off"></div>
+                                    <input type="hidden" name="quote" id="9" value="0">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">NZD/USD</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="10" class="assets broker_setup_on_off_button button_off"></div>
+                                    <input type="hidden" name="quote" id="10" value="0">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">USD/CAD</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="11" class="assets broker_setup_on_off_button button_off"></div>
+                                    <input type="hidden" name="quote" id="11" value="0">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">USD/CHF</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="12" class="assets broker_setup_on_off_button button_off"></div>
+                                    <input type="hidden" name="quote" id="12" value="0">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">USD/JPY</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="13" class="assets broker_setup_on_off_button button_off"></div>
+                                    <input type="hidden" name="quote" id="13" value="0">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">GBP/AUD</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="14" class="assets broker_setup_on_off_button button_off"></div>
+                                    <input type="hidden" name="quote" id="14" value="0">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">GBP/CAD</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="15" class="assets broker_setup_on_off_button button_off"></div>
+                                    <input type="hidden" name="quote" id="15" value="0">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">NZD/CHF</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="16" class="assets broker_setup_on_off_button button_off"></div>
+                                    <input type="hidden" name="quote" id="16" value="0">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">BTC/USD</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="400" class="assets broker_setup_on_off_button button_on"></div>
+                                    <input type="hidden" name="quote" id="400" value="1">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">LTC/USD</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="402" class="assets broker_setup_on_off_button button_on"></div>
+                                    <input type="hidden" name="quote" id="402" value="1">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">XRP/USD</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="407" class="assets broker_setup_on_off_button button_on"></div>
+                                    <input type="hidden" name="quote" id="407" value="1">
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-sm-3 text-center">
+                            <div class="element" style="margin-bottom:10px;">
+                                <div style="display:inline-block; vertical-align:middle;" class="asset">ETH/USD</div>
+                                <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                    <div asset-id="404" class="assets broker_setup_on_off_button button_on"></div>
+                                    <input type="hidden" name="quote" id="404" value="1">
+                                </div>
+                            </div>
+                        </div>
+                                        
+                    <!--<button data-toggle="modal" data-target="#instruction_modal" style='float:left; margin-left:80px;background:none; font-weight:bolder;color: rgb(12, 121, 168)' class="btn" data-action="modal" data-modal="custom">Информация о работе алгоритма.</button>-->
+                </div>
+            </td>
+        </tr>    
     </tbody>
 </table>
         <style>
@@ -1117,6 +1479,7 @@
                 font-weight: bold;
             }
         </style>
+        <button style="display:block;margin-left:35px;background:none; font-weight:bolder;color: rgb(12, 121, 168)" class="btn instruction_button" data-toggle="modal" data-target="#instruction_modal">How the algorithm works.</button>
         <div id="deal_block"><table class="table table-striped" style="margin-top:40px; max-width:1200px;">
         <tbody class="bets-table"><tr>
             <th>Quote</th>
@@ -1135,6 +1498,50 @@
             </tbody></table></div>
     </div>
 </div>     
+<div class="modal fade in" id="instruction_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; padding-right: 15px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title font-header"><p><strong>Instruction</strong></p></h4>
+            </div>
+
+            <div class="modal-body">
+                <h2>General information about the trading algorithm.</h2>
+
+                <p>The trading algorithm has previously been used and has proven itself in trading futures on the Chicago Mercantile Exchange (CME). It has several advantages over both live traders and other trading algorithms. Its main advantages over competitors are:</p>
+                <ul>
+                    <li>Speed: As the trading algorithm instantly reacts to changing market conditions, it opens a position immediately after identifying the entry point.</li>
+                    <li>Diversification: Trades different assets using proven algorithms. This makes it possible to distribute risks among several financial instruments and avoid significant losses.</li>
+                    <li>Rationality: Unlike novice traders whose assumptions and conclusions against the backdrop of accepted patterns are subjective, the trading algorithm works most efficiently and objectively based on pre-determined rules.</li>
+                    <li>Strict discipline: Discipline is maintained even in unstable market conditions by observing and executing trading rules.</li>
+                    <li>Consistency: Provides a systematic approach as it always trades automatically in accordance with the algorithm. For investing, it does not use more than 10% of your account balance (within the allowable rates provided by the broker). The trading mode on different account types (DEMO &amp; REAL) may differ, as for trading on DEMO accounts, it uses an investment size of at least $100.</li>
+                </ul>
+                <p>When trading on a REAL account, the investment size will vary depending on the balance. For example, if your balance is $400 and the broker provides investment sizes of $10, $25, $50, $100, $250, $500, and $1,000, the robot will open a trade with an investment size of $25 as this size will correspond to the Money &amp; Risk management rules followed by the trading algorithm.</p>
+                <p>Before launching the trading algorithm, make sure you have selected the correct account type: REAL/DEMO.</p>
+                <p>There are also differences in stopping the trading algorithm.</p>
+                <p>When trading on DEMO, trading is stopped after clicking the "STOP" button + 1 trade that will be executed within 15 minutes.</p>
+                <p>When trading on REAL, trading is stopped after clicking the "STOP" button + 10 trades that will be executed within 1 hour.</p>
+                <div style="text-align: center; margin-bottom:20px;">
+                    <a data-dismiss="modal" style="margin:auto;" class="link_to_broker" href="#">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('document').ready(function(){
+        $('.instruction_popup_btn').click(function(){
+            $('#instruction_modal').modal('show');
+            return false;
+        });
+    });
+</script>
+<style>
+    #instruction_modal .modal-dialog{
+        width: 1024px;
+    }
+</style>
 <script>
 
 
@@ -1152,6 +1559,9 @@
     fetch('/en/me').then(res => res.json())
     .then(user => {
         const userId = user._id;
+        const keyDate = user.keyDate;
+        
+        document.querySelector('.key-date-until').innerHTML = keyDate.split('T')[0];
 
         
         document.querySelector('.stop_bot').onclick = function() {
@@ -1166,7 +1576,7 @@
             })
             .then(res => res.json())
             .then(response => {
-                console.log(response)
+                window.location.reload()
             })
         }
 
@@ -1178,6 +1588,7 @@
             if (bot) {
                 document.querySelector('.stop_bot').style.display = 'inline';
                 document.querySelector('.start_bot').style.display = 'none';
+                document.querySelector('.inprogress_ico').style.display = 'inline'
             }
         })
 
@@ -1211,6 +1622,11 @@
         
         document.querySelector('.start_bot').onclick = function(e) {
             const accType = localStorage.getItem('switch-acc') ? localStorage.getItem('switch-acc') : 'demo'
+
+            if (accType == 'real' && user.realBalance < 2000) {
+                document.querySelector('.Insufficient_balance').style.display = 'block';
+                return;
+            }
 
             fetch('/en/start-bot', {
                 method: "POST",

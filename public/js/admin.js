@@ -1,6 +1,44 @@
 document.addEventListener("DOMContentLoaded", () => {
     const create = document.querySelector('.create-button');
 
+    fetch('/en/admin-key')
+    .then(res => res.json())
+    .then(response => {
+        const { key } = response;
+
+        fetch('/en/me')
+        .then(res => res.json())
+        .then(user => {
+            if (localStorage.getItem('admin') == key) {
+                document.querySelector('.container').style.display = 'block'
+                document.querySelector('.pass_wrapper').style.display = 'none'
+            }
+    
+            document.querySelector('.admin_login').onclick = function() {
+                const password = document.querySelector('.admin_password').value.trim();
+    
+                fetch('/en/admin-login', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        password
+                    })
+                })
+                .then(res => res.json())
+                .then(response => {
+                    if (response.success) {
+                        localStorage.setItem('admin', key);
+                        window.location.reload()
+                    } else {
+                        alert("Пароль не подходит")
+                    }
+                })
+            }
+        })
+    })
+
     if (!create) {
         console.error("Кнопка '.create-button' не знайдена!");
         return;
