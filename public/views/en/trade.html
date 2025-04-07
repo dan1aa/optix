@@ -7,7 +7,7 @@
         <meta name="Keywords" content="Форекс, Биржа Форекс, Бинарные Опционы, торговля акциями, Биржа">
         <meta name="description" content="Надежная торговая платформа бинарных опционов с доходностью до 76%. Доступные инструменты для ведения торговли, обучающие материалы и простой в использовании интерфейс. "/>
         <link rel="icon" type='image/png' href="/images/small-logo.png">
-        <title>Sixty Seconds - fastest binary options tool - CryptGates</title>
+        <title>Sixty Seconds - fastest binary options tool - Optigates</title>
         <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/css/main.css?v4" rel="stylesheet" type="text/css" />        <script src="/js/jquery.js" type="text/javascript" /></script><script src="/js/bootstrap.min.js" type="text/javascript" /></script><script src="/js/main.js" type="text/javascript" /></script><script src="/js/angular.min.js" type="text/javascript" /></script><script src="/js/jscolor.min.js" type="text/javascript" /></script><script src="/js/chartsMain.js" type="text/javascript" /></script><script src="/js/service.js" type="text/javascript" /></script><script src="/js/charts.js" type="text/javascript" /></script><script src="/js/quotes.js" type="text/javascript" /></script><script src="/js/protocol.js" type="text/javascript" /></script>                
     </head>
     <body ng-app="app">               
@@ -325,15 +325,15 @@
         <ul class='list-inline pull-right' style='font-size:0px;letter-spacing:-1px;'>
             <li style='padding-top:6px;'>
 	                            <a href='/account/deposit/card-fk/' class='btn btn-grey' style='display:inline-block; vertical-align: middle;'>Deposit</a>
-	                            <span class='balance'>$1,155.60</span>
+	                            <span class='balance'></span>
             </li>
                                                                 <li class="modes active">   
-                        <a href="/switch/?account=250239">
+                        <a href="">
                             <div class='status'></div>
                             Demo                        </a>
                     </li>
                                                                                 <li class="modes ">   
-                        <a href="/switch/?account=250240">
+                        <a href="">
                             <div class='status'></div>
                             Real                        </a>
                     </li>
@@ -380,6 +380,9 @@
         width:283px;
         height:48px;
         background: url('/images/logo2.png');
+                    background-size: 50%;
+            background-attachment: cover;
+            background-repeat: no-repeat;
     }
 
     #header.main .logo{
@@ -499,7 +502,7 @@
                     <li><a href="/termsandconditions/">Terms and Conditions</a></li>
                 </ul>
             </li>
-                            <li class="active"><a class="oustaff_link" href="/trade/">Trade</a></li>
+                            <li class="active"><a class="oustaff_link" href="/trade?asset=404">Trade</a></li>
                         <li class=""><a class="oustaff_link" href="/aboutus/">About Us</a></li>
             <li class=""><a class="oustaff_link" href="/faq/bonus/">Bonus</a></li>
                         <li class=""><a class="oustaff_link" href="/account/personalinfo/">Personal Info</a></li>
@@ -513,14 +516,14 @@
 
                     <ul class='list collapse dropdown-menu' aria-expanded="false">
                         <li>
-                            <a href='/en/trade/'>
+                            <a href='/en/trade?asset=404'>
                                 <div class='ico en'></div>
                                 <div class='lang'>English</div>
                             </a>
                         </li>
 
                         <li>
-                            <a href='/ru/trade/'>
+                            <a href='/ru/trade?asset=404'>
                             <div class='ico ru'></div>
                             <div class='lang'>Русский</div>
                             </a>
@@ -644,7 +647,7 @@
         <tbody>
           <tr>
             <td class="">
-              <a href="/trade/">Trade</a>
+              <a href="/trade?asset=404">Trade</a>
             </td>
             <td class="">
               <a href="/autotrade/">Robot</a>
@@ -823,13 +826,11 @@
 
 <div ng-controller="graficCtrl">    
     <script>
-        
          var IndicatorsService = angular.module('IndicatorsService', [])
         .service('Indicator', function () {
             //this.square = function (a) { return a*a};
             //console.log('SERVICE');
             this.submitRSI = function($scope,event){
-                console.log('RSI RSI');
                 var period = parseInt($('input[name=period]',event.target).val());
                 var overbought = parseInt($('input[name=overbought]',event.target).val());
                 var oversold = parseInt($('input[name=oversold]',event.target).val());
@@ -900,15 +901,30 @@
                 event.preventDefault();
             }
         });
+
+        async function getUserId() {
+            let res = await fetch('/en/me');
+            let user = await res.json();
+            let id = user._id;
+
+            return id;
+        }
             
                 var app = angular.module("app",['IndicatorsService']);
-                app.controller('graficCtrl', function ($scope,Indicator) {
-                        $scope.current_asset = 400;
+                app.controller('graficCtrl', async function ($scope,Indicator) {
+                    const pageUrl = new URL(window.location.href);
+
+                    const params = new URLSearchParams(pageUrl.search);
+
+                    const pairQuery = params.get('asset') || '404';
+
+
+                        $scope.current_asset = +pairQuery;
                         $scope.current_select_asset = $scope.current_asset+'';
                         $scope.assets = {};
                         $scope.quotes = {};
                         $scope.width = 0;
-                        $scope.traderchoice = 0;
+                        $scope.traderchoice = Math.floor(Math.random() * (80 - 20 + 1)) + 20;
                         $scope.table_interval = null;
 
                         $scope.updatePause = false;
@@ -931,8 +947,10 @@
                         });
 
                         $scope.params = {};
-                        $scope.params.asset = 400;
-                        $scope.protocol = new Protocol($scope.grafic, $scope.current_asset, '8986e518f8c6aeaa6c32f7620b803ec8', '250239',function(){
+                        $scope.params.asset = +pairQuery;
+                        const id = await getUserId();
+
+                        $scope.protocol = new Protocol($scope.grafic, id,function(){
                                                         if($('#canvas #gag').length == 0){
                                                             $('#canvas').append('<div id="gag"><span>Failed to connect to server, try again later </span></div>');
                                                         }
@@ -943,7 +961,7 @@
                         $scope.payment = 76;
                         $scope.payouts = '0';
                         $scope.investments = '10';
-                        $scope.deals = {};
+                        $scope.deals = [];
                         $scope.servertime = 0;
 
                         $scope.amounts = [];
@@ -966,9 +984,13 @@
                             }
 
                         });
+                        document.querySelector('.type').onclick = function() {
+                            $scope.grafic.charts[0].type = $scope.grafic.charts[0].type == 'candles' ? 'normal' : 'candles'
+                            $scope.grafic.charts[0].render($scope.grafic.charts[0].aData)
+                        }
                         ////////////////////////            
                         $scope.protocol.onAmountList(function(json){
-                            //console.log(json);
+                            // console.log(json);
                             $scope.amounts = json.data;
                             
                             $scope.$digest();
@@ -1049,45 +1071,40 @@
                             //console.log($scope.deals);                
                             $('.deals_table td.timer').each(function () {
                                 var id = $(this).closest('tr').attr('data-id');
-                                var time = $scope.deals[id].closetime - $scope.servertime;
+                                var time = $scope.deals[id].expiredAt - $scope.servertime;
                                 $scope.deals[id].timer = time;
                                 $scope.protocol.addAsset($scope.deals[id].quoteid);
 
                                 //$(this).text(time);
                             });
-                            $scope.protocol.setActives();
 
                             $scope.table_interval = setInterval(function () {
                                 for (var key in $scope.deals) {
-                                    if (!$scope.deals[key].closeprice) {
+                                    if (!$scope.deals[key].closePrice) {
                                       $scope.deals[key].timer--;
-                                        $scope.deals[key].percents = 100 - ($scope.deals[key].closetime - $scope.servertime) / (($scope.deals[key].closetime - $scope.deals[key].opentime) / 100);
+                                        $scope.deals[key].percents = 100 - ($scope.deals[key].expiredAt - $scope.servertime) / (($scope.deals[key].expiredAt - $scope.deals[key].createdAt) / 100);
                                         $scope.deals[key].quote = $scope.quotes[$scope.deals[key].quoteid];
                                         $scope.deals[key].current_status = 'green';
 
                                         //console.log($scope.deals[key].quoteid);
                                         //console.log($scope.deals[key]);
-                                        if ($scope.deals[key].openprice == $scope.deals[key].quote) {
+                                        if ($scope.deals[key].openPrice == $scope.deals[key].quote) {
                                             $scope.deals[key].current_status = 'orange';
                                         } else {
                                             if ($scope.deals[key].position == 1) {
-                                                if ($scope.deals[key].openprice < $scope.deals[key].quote) {
+                                                if ($scope.deals[key].openPrice < $scope.deals[key].quote) {
                                                     $scope.deals[key].current_status = 'green';
                                                 } else {
                                                     $scope.deals[key].current_status = 'red';
                                                 }
                                             } else {
-                                                if ($scope.deals[key].openprice < $scope.deals[key].quote) {
+                                                if ($scope.deals[key].openPrice < $scope.deals[key].quote) {
                                                     $scope.deals[key].current_status = 'red';
                                                 } else {
                                                     $scope.deals[key].current_status = 'green';
                                                 }
                                             }
                                         }
-                                        //console.log($scope.deals[key]);
-
-                                        //console.log(($scope.deals[key].closetime - $scope.servertime));
-                                        //console.log($scope.deals[key].percents);
                                     }
                                 }
                             }, 1000);
@@ -1116,60 +1133,32 @@
                              $('#canvas').append('<div id="gag"><span>Failed to connect to server, try again later </span></div>');
                         }
 
-                        $scope.protocol.onDataReceive(function (json) {
-                            $scope.updatePause = false;
+                        setInterval(() => {
+                            $scope.traderchoice = Math.floor(Math.random() * (80 - 20 + 1)) + 20;
+                        }, Math.floor(Math.random() * (20000 - 4000 + 1)) + 4000)
 
-                            if(json.data != undefined){
-                                console.log('onDataReceive');
-
-                                $('#canvas #gag').remove();
-                            
-                                $scope.traderchoice = json.tradersChoice;
-
-                                $scope.setCurrentTime(json.time);
-
-                                $scope.initTable();
-
-                                $scope.grafic.syncTime(json.time);
-                                $scope.grafic.addData(json);
-
-                                $scope.$digest();
-                                $scope.setStartPosition(json.data);
-                            }else{
-                                $scope.gag();
-                            }
-
-                        });
+                        
 
                         $scope.protocol.onTimeSync(function (time) {
                             $scope.setCurrentTime(time);
                             $scope.grafic.syncTime(time);
 
+                            if ($scope.grafic.activeDeals == false) {
+                                var d = new Date($scope.grafic.serverTime * 1000);
+                                var seconds = d.getSeconds();
+                                if (seconds < 30) {
+                                    d.setSeconds(0);
+                                    $scope.grafic.end_expiration = Math.floor(d.getTime() / 1000) + 60;
+                                }
+                                else {
+                                    d.setSeconds(0);
+                                    $scope.grafic.end_expiration = Math.floor(d.getTime() / 1000) + 120;
+                                }
+                            }
                             $scope.setSecondsLeft($scope.grafic.seconds_left);
                             $scope.setExpirationDate($scope.grafic.end_expiration);
 
                             $scope.$digest();
-                        });
-
-                        $scope.protocol.onUpdate(function (element) {
-                            //console.log(element);
-                            //console.log($scope.current_asset == element.asset);
-                            if($scope.updatePause == true) return;
-
-                            $scope.quotes[element.asset] = element.amount;
-                            //console.log($scope.quotes[element.asset]);
-                            if (element.asset != $scope.current_asset)
-                                return;
-
-                            if (element.amount < $scope.position) {
-                                $scope.position_status = 0;
-                            } else {
-                                $scope.position_status = 1;
-                            }
-                            $scope.position = element.amount;
-
-                            $scope.$digest();
-                            $scope.grafic.addPosition(element);
                         });
 
                         $scope.protocol.onAsset(function (data, asset) {
@@ -1179,23 +1168,53 @@
                             $scope.$digest();
                         });
                         $scope.protocol.onGetDeals(function (deals) {
-                            //console.log(deals);
                             $scope.deals = deals;
                             $scope.$digest();
                         });
 
-                        $scope.changeAsset = function (asset){
-                            if(asset == undefined){
+                        $scope.changeAsset = function (asset) {
+                            if (asset == undefined) {
                                 asset = parseInt($scope.current_select_asset);
                             }
-                            $scope.updatePause = true;
 
+                            $scope.updatePause = true;
                             $scope.current_asset = asset;
-                            history.pushState({foo: "bar"}, "page2", "?asset=" + asset);
+
+                            const newUrl = window.location.origin + window.location.pathname + "?asset=" + asset;
+                            
+                            history.pushState({foo: "bar"}, "page2", newUrl);
+
+                            window.location.href = newUrl;
+
                             $scope.protocol.changeAsset(asset);
                         }
-
                         $scope.protocol.onCreateOption(function (json) {
+                        let assetsData = [
+                            { id: 1, name: "AUD/CAD", start: 1739404800, end: 1739483940 },
+                            { id: 3, name: "AUD/JPY", start: 1739404800, end: 1739491140 },
+                            { id: 4, name: "AUD/NZD", start: 1739404800, end: 1739491140 },
+                            { id: 6, name: "AUD/USD", start: 1739404800, end: 1739491140 },
+                            { id: 7, name: "EUR/AUD", start: 1739404800, end: 1739491140 },
+                            { id: 8, name: "EUR/CAD", start: 1739404800, end: 1739491140 },
+                            { id: 10, name: "EUR/GBP", start: 1739404800, end: 1739491140 },
+                            { id: 11, name: "EUR/JPY", start: 1739404800, end: 1739491140 },
+                            { id: 13, name: "EUR/USD", start: 1739404800, end: 1739491140 },
+                            { id: 14, name: "GBP/AUD", start: 1739404800, end: 1739491140 },
+                            { id: 15, name: "GBP/CAD", start: 1739404800, end: 1739491140 },
+                            { id: 16, name: "GBP/CHF", start: 1739404800, end: 1739491140 },
+                            { id: 17, name: "GBP/JPY", start: 1739404800, end: 1739491140 },
+                            { id: 19, name: "GBP/USD", start: 1739404800, end: 1739491140 },
+                            { id: 21, name: "NZD/CHF", start: 1739404800, end: 1739491140 },
+                            { id: 23, name: "NZD/USD", start: 1739404800, end: 1739491140 },
+                            { id: 24, name: "USD/CAD", start: 1739404800, end: 1739491140 },
+                            { id: 25, name: "USD/CHF", start: 1739404800, end: 1739491140 },
+                            { id: 27, name: "USD/JPY", start: 1739404800, end: 1739491140 },
+                            { id: 400, name: "Bitcoin", start: 1739404800, end: 1739491140 },
+                            { id: 402, name: "Litecoin", start: 1739404800, end: 1739491140 },
+                            { id: 404, name: "Etherium", start: 1739404800, end: 1739491140 },
+                            { id: 407, name: "Ripple", start: 1739404800, end: 1739491140 }
+                        ]
+                            console.log(json)
                             $('#controls input[type=submit]').removeClass('put').removeClass('call');
                             $scope.bet_position = undefined;    //что бы повторно не делало ставку
 
@@ -1214,40 +1233,30 @@
 
 
                             json.payout = 76;
-                            json.quotename = $scope.assets[json.quote_id][1];
-                            json.quoteid = json.quote_id;
-                            //json.closeprice =  json.closetime - $scope.servertime; //выставляем время
-                            json.timer = json.closetime - $scope.servertime; //выставляем время
+                            const assetFilter = assetsData.find(d => d.id == +json.asset)
+                            json.quotename = assetFilter.name;
+                            json.quoteid = +json.asset;
+                            json.timer = 70; //выставляем время
 
                             var temp_deals = $scope.deals;  //закидываем вначало
-                            $scope.deals = {};
-                            $scope.deals[json.id + '_'] = json;
-                            for (var key in temp_deals) {
-                                $scope.deals[key] = temp_deals[key];
-                            }
+                            $scope.deals.push(json);
 
                             $scope.$digest();
                             $scope.grafic.onCreateOption(json);
                         });
 
                         $scope.protocol.onCloseOption(function (json) {
-                            for (var key in json.deals) {
-                                var id = key + '_';
-                                $scope.deals[id].closeprice = json.deals[key].closeprice;
-                                //$scope.deals[id].closeprice = '-666';
-                                $scope.deals[id].status = json.deals[key].status;
-                                $scope.deals[id].win_amount = json.deals[key].win_amount;
-                                console.log($scope.deals[id]);
-                            }
+                                var id = json.id;
+                                console.log($scope.deals)
+                                $scope.deals = $scope.deals.map(deal => 
+                                    deal._id === id 
+                                        ? { ...deal, closePrice: json.closePrice, status: json.status, profit: json.profit }
+                                        : deal
+                                );
+                                console.log($scope.deals);
                             $scope.grafic.onCloseOption(json);
                             $scope.$digest();
                         });
-
-
-
-                        /*$scope.message = function(){
-                         alert('Вы должны авторизироваться для совершения сделок');
-                         }*/
 
                         $scope.trade = function (event) {
                             if ($scope.bet_position == undefined) {
@@ -1255,7 +1264,7 @@
                                 return false;
                             }
 
-                            $scope.protocol.submit($scope.bet_position, $scope.investments * 100);
+                            $scope.protocol.submit($scope.bet_position, $scope.investments);
                             if (event) event.preventDefault();
                         }
                         $scope.call = function () {
@@ -1286,7 +1295,6 @@
 
                         $scope.setZoom = function ($event) {
                             var value = parseInt($($event.target).text());
-                            console.log(value);
                             $scope.grafic.setZoom(value);
                             $('.zoom_menu li').removeClass('active');
                             $($event.target).addClass('active');
@@ -2036,7 +2044,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-12">
-                                <input style="width:126px; height:32px; font-weight:bolder; text-align: center; margin:auto; color:{{position_status == 1 ? 'green':'red'}}" type="text" class="form-control" value="{{position}}">
+                                <input style="width:126px; height:32px; font-weight:bolder; text-align: center; margin:auto; color:{{position_status == 1 ? 'green':'red'}}" type="text" class="form-control curr-price-input" value="{{position}}">
                             </div>                        
                         </div>
                     </div>
@@ -2206,19 +2214,15 @@
                 <tbody>
                     <tr ng-repeat="(key,deal) in deals" data-id="{{key}}">
                         <td>{{deal.quotename}}</td>
-                        <td style='font-weight:bolder'>{{deal.amount / 100|currency:'$':2 }}</td>
-                        <td>{{deal.payout}}%</td>
-                        <td>{{deal.opentime * 1000|date:'MMM dd HH:mm:ss'}}</td>
-                        <td>{{deal.closetime * 1000|date:'MMM dd HH:mm:ss'}}</td>
-                        <td class="{{deal.position == 1?'green':'red'}}">{{deal.openprice}}</td>
-                        <td style='padding:0px;vertical-align: middle;' class="{{deal.status == 2?'green':(deal.status == 3?'red':(deal.status == 4?'orange':'timer'))}}">
-                            <div class='process {{deal.current_status}}' ng-show='deal.closeprice == 0'>
-                                <div class='inner' style='width:{{deal.percents ? deal.percents:0}}%'></div>
-                                <div class='text'>{{deal.quote}}</br>{{deal.timer}}</div>
-                            </div>
-                            <span ng-hide='deal.closeprice == 0' class='closeprice'>{{deal.closeprice ? deal.closeprice : deal.timer}}</span>
+                        <td style='font-weight:bolder'>{{deal.amount|currency:'$':2 }}</td>
+                        <td>76%</td>
+                        <td>{{deal.createdAt * 1000|date:'MMM dd HH:mm:ss'}}</td>
+                        <td>{{deal.expiredAt * 1000|date:'MMM dd HH:mm:ss'}}</td>
+                        <td class="{{deal.position == 1?'green':'red'}}">{{deal.openPrice}}</td>
+                        <td style='padding:0px;vertical-align: middle;' class="">
+                            <span ng-hide='deal.closePrice == 0' class='closeprice'>{{deal.closePrice ? deal.closePrice : null}}</span>
                         </td>
-                        <td>{{deal.win_amount > 0 ? (deal.win_amount / 100 | currency:'$':2) : null}}</td>
+                        <td>{{deal.profit > 0 ? (deal.profit + deal.amount | currency:'$':2) : null}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -2277,8 +2281,11 @@
     #footer .logo{
         background: url('/images/logo.png');
         width:283px;
-        height:48px;
+        height: 80px;
         margin-bottom:20px;
+                    background-size: 100%;
+            background-attachment: cover;
+            background-repeat: no-repeat;
     }
     #footer .menu ul{
         padding-left:0px;
@@ -2347,8 +2354,8 @@
                         
                         <div class='col-sm-3'>
                             <ul>
-                                <li><a href='/trade/'>TRADE</a></li>
-                                <li class='sub'><a href='/trade/'>60 Seconds</a></li>
+                                <li><a href='/trade?asset=404/'>TRADE</a></li>
+                                <li class='sub'><a href='/trade?asset=404/'>60 Seconds</a></li>
                             </ul>   
                         </div>
                     </div>
@@ -2357,8 +2364,8 @@
         </div>
         <div class='bottom'>
             <p>You haven`t made any investments in Option builder tool yet. To make an investment you should: Choose the asset you want to trade with, enter your current investment amount. And choose how will asset behavior: if it will rise - press HIGH button, other way press LOW button. Select the profit and the pay off level. Confirm your deal with the Confirmal button. Due to different time zones at the worldwide stocks, some assets could be inactive or might has limited availability. If the asset`s value didn`t change sinse made an investment, the full investment price will be returned to investor.</p>
-            <p>Legal: cryptgates.com is a trading name of CryptGates, registration number: IBC 2015 (Suite 305, Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
-            <div class='copyrights'>© 2025 | CryptGates - All rights reserved</div>
+            <p>Legal: Optigates.com is a trading name of Optigates, registration number: IBC 2015 (Suite 305, Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
+            <div class='copyrights'>© 2025 | Optigates - All rights reserved</div>
         </div>
 <a href="https://freekassa.ru" target="_blank" rel="noopener noreferrer">
   <img src="/images/freekasa.png" title="Прием платежей на сайте">

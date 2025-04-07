@@ -8,7 +8,7 @@
         <meta name="Keywords" content="Форекс, Биржа Форекс, Бинарные Опционы, торговля акциями, Биржа">
         <meta name="description" content="Надежная торговая платформа бинарных опционов с доходностью до 76%. Доступные инструменты для ведения торговли, обучающие материалы и простой в использовании интерфейс. "/>
         <link rel="icon" type='image/png' href="/images/small-logo.png">
-        <title>Personal information | CryptGates</title>
+        <title>Personal information | Optigates</title>
         <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/css/main.css?v4" rel="stylesheet" type="text/css" />        <script src="/js/jquery.js" type="text/javascript" /></script><script src="/js/bootstrap.min.js" type="text/javascript" /></script><script src="/js/main.js" type="text/javascript" /></script><meta name="frog" content="b4f134ae336d927bcf8206d38534bf79" />
     </head>
     <body ng-app="app">
@@ -442,15 +442,15 @@
         <ul class='list-inline pull-right' style='font-size:0px;letter-spacing:-1px;'>
             <li style='padding-top:6px;'>
 	                            <a href='/account/deposit/card-fk/' class='btn btn-grey' style='display:inline-block; vertical-align: middle;'>Deposit</a>
-	                            <span class='balance'>$1,155.60</span>
+	                            <span class='balance'></span>
             </li>
                                                                 <li class="modes active">   
-                        <a href="/switch/?account=250239">
+                        <a href="">
                             <div class='status'></div>
                             Demo                        </a>
                     </li>
                                                                                 <li class="modes ">   
-                        <a href="/switch/?account=250240">
+                        <a href="">
                             <div class='status'></div>
                             Real                        </a>
                     </li>
@@ -497,6 +497,9 @@
         width:283px;
         height:48px;
         background: url('/images/logo2.png');
+                    background-size: 50%;
+            background-attachment: cover;
+            background-repeat: no-repeat;
     }
 
     #header.main .logo{
@@ -616,7 +619,7 @@
                     <li><a href="/termsandconditions/">Terms and Conditions</a></li>
                 </ul>
             </li>
-                            <li class=""><a class="oustaff_link" href="/trade/">Trade</a></li>
+                            <li class=""><a class="oustaff_link" href="/trade?asset=404">Trade</a></li>
                         <li class=""><a class="oustaff_link" href="/aboutus/">About Us</a></li>
             <li class=""><a class="oustaff_link" href="/faq/bonus/">Bonus</a></li>
                         <li class="active"><a class="oustaff_link" href="/account/personalinfo/">Personal Info</a></li>
@@ -761,7 +764,7 @@
       <tbody>
         <tr>
           <td class="">
-            <a href="/trade/">Trade</a>
+            <a href="/trade?asset=404">Trade</a>
           </td>
           <td class="">
             <a href="/autotrade/">Robot</a>
@@ -1063,10 +1066,10 @@
                                 <strong>Phone</strong>
                             </div>
                             <div class="col-sm-2">
-                                <input type='text' class='form-control' placeholder='code' name='phone_code' value="380">
+                                <input type='text' class='form-control change-data-code' placeholder='code' name='phone_code' value="380">
                             </div>
                             <div class="col-sm-10">
-                                <input type='text' class='form-control' placeholder='mobile' name='phone' value="">
+                                <input type='text' class='form-control change-data-phone' placeholder='mobile' name='phone' value="">
                             </div>
                             <div class="error"></div>
                         </div>
@@ -1075,7 +1078,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-12">
-                                <strong>E-mail:</strong> olegmongol99812@gmail.com                            </div>                        
+                                <strong>E-mail:</strong>                           </div>                        
                         </div>
                     </div>
 
@@ -1085,7 +1088,7 @@
                                 <strong>Enter the password</strong>
                             </div>
                             <div class="col-sm-12">
-                                <input type='password' class='form-control' placeholder='Password' name='password'>
+                                <input type='password' class='form-control change-data-pass' placeholder='Password' name='password'>
                                 <div class="error"></div>
                             </div>
                         </div>
@@ -1093,7 +1096,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-12">
-                                <input type="submit" name='personal_form'  class="btn btn-orange pull-right" value="Изменить">
+                                <input type="submit" name='personal_form'  class="btn btn-orange pull-right change-data-submit" value="Изменить">
                             </div>
                         </div>
                     </div>
@@ -1116,7 +1119,7 @@
                                 <strong>Current password</strong>
                             </div>
                             <div class="col-sm-12">
-                                <input type='password' class='form-control' placeholder='' name="password">
+                                <input type='password' class='form-control curr-pass' placeholder='' name="password">
                                 <div class="error"></div>
                             </div>
                         </div>
@@ -1127,7 +1130,7 @@
                                 <strong>New password</strong>
                             </div>
                             <div class="col-sm-12">
-                                <input type='password' class='form-control' placeholder='' name="newpassword">
+                                <input type='password' class='form-control new-pass' placeholder='' name="newpassword">
                                 <div class="error"></div>
                             </div>
                         </div>
@@ -1138,7 +1141,7 @@
                                 <strong>Enter the password again</strong>
                             </div>
                             <div class="col-sm-12">
-                                <input type='password' class='form-control' placeholder='' name="confirm">
+                                <input type='password' class='form-control new-pass-submit' placeholder='' name="confirm">
                                 <div class="error"></div>
                                                             </div>
                         </div>
@@ -1146,7 +1149,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-12">
-                                <input type="submit" name='pass_form' class="btn btn-orange pull-right" value="Изменить">
+                                <input type="submit" name='pass_form' class="btn btn-orange pull-right change-password-submit" value="Изменить">
                             </div>
                         </div>
                     </div>
@@ -1210,8 +1213,11 @@
     #footer .logo{
         background: url('/images/logo.png');
         width:283px;
-        height:48px;
+        height: 80px;
         margin-bottom:20px;
+                    background-size: 100%;
+            background-attachment: cover;
+            background-repeat: no-repeat;
     }
     #footer .menu ul{
         padding-left:0px;
@@ -1280,8 +1286,8 @@
                         
                         <div class='col-sm-3'>
                             <ul>
-                                <li><a href='/trade/'>TRADE</a></li>
-                                <li class='sub'><a href='/trade/'>60 Seconds</a></li>
+                                <li><a href='/trade?asset=404/'>TRADE</a></li>
+                                <li class='sub'><a href='/trade?asset=404/'>60 Seconds</a></li>
                             </ul>   
                         </div>
                     </div>
@@ -1290,12 +1296,12 @@
         </div>
         <div class='bottom'>
             <p>You haven`t made any investments in Option builder tool yet. To make an investment you should: Choose the asset you want to trade with, enter your current investment amount. And choose how will asset behavior: if it will rise - press HIGH button, other way press LOW button. Select the profit and the pay off level. Confirm your deal with the Confirmal button. Due to different time zones at the worldwide stocks, some assets could be inactive or might has limited availability. If the asset`s value didn`t change sinse made an investment, the full investment price will be returned to investor.</p>
-            <p>Legal: cryptgates.com is a trading name of CryptGates, registration number: IBC 2015 (Suite 305, Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
-            <div class='copyrights'>© 2025 | CryptGates - All rights reserved</div>
+            <p>Legal: Optigates.com is a trading name of Optigates, registration number: IBC 2015 (Suite 305, Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
+            <div class='copyrights'>© 2025 | Optigates - All rights reserved</div>
         </div>
 <a href="https://freekassa.ru" target="_blank" rel="noopener noreferrer">
   <img src="/images/freekasa.png" title="Прием платежей на сайте">
 </a>
     </div>
-</div><script src="/js/global.js"></script>    </body>
+</div><script src="/js/global.js"></script> <script src="/js/personalinfo.js"></script>   </body>
 </html>

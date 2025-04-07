@@ -1,0 +1,70 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: none;
+}
+body::-webkit-scrollbar {
+    display: none; /* Приховуємо скролбар */
+}
+.row {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+.row div{
+    width: 12.5vw;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: lightgray;
+    word-wrap: break-word; /* Для старіших браузерів */
+    overflow-wrap: break-word; /* Сучасний спосіб */
+    white-space: normal; /* Дозволяє переносити текст */
+}
+.email-div {
+    width: 20vw !important;
+}
+.ourselves-div {
+    width: 5vw !important;
+}
+.row div:not(:last-child) {
+    border-right: 1px solid black;
+}
+.demo-input, .real-input {
+    max-width: 6vw;
+}
+.pass_wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.admin_password {
+    width: 300px;
+    height: 50px;
+    border: 1px solid gray;
+    padding-left: 15px;
+    outline: none;
+    margin-bottom: 10px;
+}
+.admin_login {
+    width: 300px;
+    height: 40px;
+    border: none;
+    outline: none;
+    background: #0993ca;
+    color: white;
+
+}

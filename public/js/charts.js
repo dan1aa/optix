@@ -1,25 +1,252 @@
+const assetsData = [
+    { id: 1, name: "AUD/CAD", start: 1739404800, end: 1739483940 },
+    { id: 3, name: "AUD/JPY", start: 1739404800, end: 1739491140 },
+    { id: 4, name: "AUD/NZD", start: 1739404800, end: 1739491140 },
+    { id: 6, name: "AUD/USD", start: 1739404800, end: 1739491140 },
+    { id: 7, name: "EUR/AUD", start: 1739404800, end: 1739491140 },
+    { id: 8, name: "EUR/CAD", start: 1739404800, end: 1739491140 },
+    { id: 10, name: "EUR/GBP", start: 1739404800, end: 1739491140 },
+    { id: 11, name: "EUR/JPY", start: 1739404800, end: 1739491140 },
+    { id: 13, name: "EUR/USD", start: 1739404800, end: 1739491140 },
+    { id: 14, name: "GBP/AUD", start: 1739404800, end: 1739491140 },
+    { id: 15, name: "GBP/CAD", start: 1739404800, end: 1739491140 },
+    { id: 16, name: "GBP/CHF", start: 1739404800, end: 1739491140 },
+    { id: 17, name: "GBP/JPY", start: 1739404800, end: 1739491140 },
+    { id: 19, name: "GBP/USD", start: 1739404800, end: 1739491140 },
+    { id: 21, name: "NZD/CHF", start: 1739404800, end: 1739491140 },
+    { id: 23, name: "NZD/USD", start: 1739404800, end: 1739491140 },
+    { id: 24, name: "USD/CAD", start: 1739404800, end: 1739491140 },
+    { id: 25, name: "USD/CHF", start: 1739404800, end: 1739491140 },
+    { id: 27, name: "USD/JPY", start: 1739404800, end: 1739491140 },
+    { id: 400, name: "BTC/USD", start: 1739404800, end: 1739491140 },
+    { id: 402, name: "LTC/USD", start: 1739404800, end: 1739491140 },
+    { id: 404, name: "ETH/USD", start: 1739404800, end: 1739491140 },
+    { id: 407, name: "XRP/USD", start: 1739404800, end: 1739491140 }
+]
+const pageUrl = new URL(window.location.href);
+
+const params = new URLSearchParams(pageUrl.search);
+
+const pairQuery = params.get('asset') || '404';
+
+
+(function () {
+    class KrakenWebSocket {
+        constructor(pair, interval = 1) {
+            if (!KrakenWebSocket.instance) {
+                this.wsUrl = "wss://ws.kraken.com";
+                this.pair = pair;  // Торгова пара
+                this.interval = interval;
+                this.socket = null;
+                this.ohlcData = [];
+                this.currentCandle = null;
+                this.reconnectTimeout = 5000;
+
+                this.onTradeCallback = null;
+                this.onOHLCUpdateCallback = null;
+
+                this.connect(); 
+                KrakenWebSocket.instance = this;
+
+                // 🔄 Оновлюємо свічку кожні 3 секунди без перевірок
+                setInterval(() => this.updateCandleManually(), 3000);
+            }
+            return KrakenWebSocket.instance;
+        }
+
+        // 📡 Підключення WebSocket
+        connect() {
+            this.socket = new WebSocket(this.wsUrl);
+
+            this.socket.onopen = () => {
+                console.log("✅ Підключено до Kraken WebSocket");
+                this.subscribeToTrade();
+            };
+
+            this.socket.onmessage = (event) => this.handleMessage(event);
+
+            this.socket.onclose = () => {
+                console.warn("⚠ WebSocket відключено! Перепідключення...");
+                setTimeout(() => this.connect(), this.reconnectTimeout);
+            };
+
+            this.socket.onerror = (error) => {
+                console.error("❌ Помилка WebSocket:", error);
+            };
+        }
+
+        // 📩 Підписка на торгові оновлення
+        subscribeToTrade() {
+            const message = {
+                event: "subscribe",
+                pair: [this.pair],
+                subscription: { name: "trade" },
+            };
+            this.socket.send(JSON.stringify(message));
+        }
+
+        // 📥 Обробка повідомлень від WebSocket
+        handleMessage(event) {
+            const data = JSON.parse(event.data);
+
+            if (Array.isArray(data) && data[2] === "trade") {
+                for (const trade of data[1]) {
+                    this.updateCurrentCandle(trade);
+                }
+            }
+        }
+
+        // 🔄 Оновлення поточної свічки
+        updateCurrentCandle(trade) {
+            const price = parseFloat(trade[0]);
+            const timestamp = Math.floor(parseFloat(trade[2]));
+            const intervalTime = Math.floor(timestamp / (this.interval * 60)) * (this.interval * 60);
+
+            if (!this.currentCandle || this.currentCandle.time !== intervalTime) {
+                if (this.currentCandle) {
+                    this.ohlcData.push(this.currentCandle);
+                    if (this.onOHLCUpdateCallback) {
+                        this.onOHLCUpdateCallback(this.currentCandle);
+                    }
+
+                }
+
+                this.currentCandle = {
+                    time: intervalTime,
+                    open: price,
+                    high: price,
+                    low: price,
+                    close: price,
+                    amount: price
+                };
+            } else {
+                this.currentCandle.high = Math.max(this.currentCandle.high, price);
+                this.currentCandle.low = Math.min(this.currentCandle.low, price);
+                this.currentCandle.close = price;
+                this.currentCandle.amount = price;
+            }
+        }
+
+        // 🔄 Оновлення свічки кожні 3 секунди без перевірок змін
+        updateCandleManually() {
+            if (!this.currentCandle) return;
+
+            if (this.onTradeCallback) {
+                this.onTradeCallback(this.currentCandle);
+            }
+        }
+
+        // 🔗 Підключення функції оновлення графіка
+        onTradeUpdate(callback) {
+            this.onTradeCallback = callback;
+        }
+    }
+
+    const currAsset = assetsData.filter(e => e.id == +pairQuery)[0]
+
+    window.krakenWS = new KrakenWebSocket(currAsset.name);
+    
+})();
+
+class ChartWebSocketBridge {
+    constructor(chart) {
+        this.chart = chart;
+        this.ws = window.krakenWS;
+        this.ws.onTradeUpdate(this.updateChartData.bind(this));
+    }
+
+    updateChartData(candle) {
+        if (!this.chart.aData) this.chart.aData = [];
+    
+        const timestamp = candle.time;
+        const currPriceInput = document.querySelector('.curr-price-input');
+    
+        if (currPriceInput) {
+            const prevPrice = parseFloat(currPriceInput.value) || 0;
+            const newPrice = candle.close;
+            currPriceInput.value = newPrice;
+            currPriceInput.style.color = newPrice > prevPrice ? "green" : newPrice < prevPrice ? "red" : currPriceInput.style.color;
+        }
+    
+        let lastCandleIndex = this.chart.aData.length - 1;
+        let existingCandle = this.chart.aData[lastCandleIndex]; // Остання свічка в масиві
+        let newCandle = false;
+    
+        if (!existingCandle || timestamp >= existingCandle.date + 60) { 
+            // 🔹 Якщо це нова свічка, додаємо її в `aData`
+            newCandle = true;
+            existingCandle = {
+                date: timestamp,
+                open: candle.open,
+                high: candle.high,
+                low: candle.low,
+                close: candle.close,
+                amount: candle.amount
+            };
+            this.chart.aData.push(existingCandle);
+            this.chart.shiftChart(); // 🔴 Завжди зсуваємо графік при новій свічці
+        } else {
+            // 🔹 Оновлюємо поточну свічку
+            existingCandle.high = Math.max(existingCandle.high, candle.high);
+            existingCandle.low = Math.min(existingCandle.low, candle.low);
+            existingCandle.close = candle.close;
+            existingCandle.amount = candle.amount;
+            this.chart.aData[lastCandleIndex] = { ...existingCandle };
+        }
+    
+        // 🔄 Передаємо оновлену копію `aData`, включаючи поточну свічку
+        let updatedData = [...this.chart.aData];
+    
+        if (!newCandle) {
+            // Якщо свічка ще не закрилась, додаємо її копію до `aData`, щоб вона малювалася
+            updatedData.push({
+                ...existingCandle,
+                date: timestamp + 1 // Мінімальна зміна часу, щоб відобразити її на графіку
+            });
+        }
+    
+        this.chart.render(updatedData); // 🔹 Використовуємо оновлений `aData`
+    
+        // 🔄 Оновлюємо часові та цінові значення (з прозорістю)
+        this.chart.fadeTimeAndPriceLabels();
+    }
+    
+    
+    
+
+    updateNormalChart(timestamp, price) {
+        const ctx = this.chart.ctx; // Контекст канвасу
+        ctx.clearRect(0, 0, this.chart.width, this.chart.height); // Очищуємо весь графік перед ререндером
+    
+        this.chart.aData.push({ date: timestamp, amount: price });
+    
+        if (this.chart.aData.length > 50) {
+            this.chart.aData.shift();
+        }
+    
+        this.chart.renderNormal(this.chart.aData); // Малюємо оновлений графік
+    }
+    
+}
+
+
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-///<reference path="./chartsMain.ts"/>
-///<reference path="./service.ts"/>
+
 var Chart = (function (_super) {
     __extends(Chart, _super);
-    //statusSampleSMA: boolean = false;
     function Chart(obj) {
         _super.call(this);
         this.hoverPut = false;
         this.hoverCall = false;
         this.deleted = false;
         this.setParams(obj);
-        //this.initZoom();
         this.hover = new Hover(this);
         this.forms = new Forms(this);
         this.mouse = new Mouse(this);
-        this.indicators = new Indicators(this, this.ctx);
-        //if(this.data != undefined)this.render();
     }
     Chart.prototype.setX = function (x) {
         this.x = x;
@@ -33,15 +260,60 @@ var Chart = (function (_super) {
     Chart.prototype.setHeight = function (height) {
         this.height = height - this.bottom_padding;
     };
+    Chart.prototype.updateSingleCandle = function (candle) {
+        const ctx = this.ctx;
+        const x = this.getX(candle.date);
+        const yOpen = this.getY(candle.open);
+        const yClose = this.getY(candle.close);
+        const yHigh = this.getY(candle.high);
+        const yLow = this.getY(candle.low);
+
+        ctx.clearRect(x - 6, yHigh - 6, 12, yLow - yHigh + 15);
+    
+        // Визначаємо колір
+        ctx.fillStyle = candle.close > candle.open ? "#57C580" : "#E57878";
+        ctx.strokeStyle = ctx.fillStyle;
+    
+        // Малюємо тінь (хвіст)
+        ctx.beginPath();
+        ctx.moveTo(x, yHigh);
+        ctx.lineTo(x, yLow);
+        ctx.stroke();
+    
+        // Малюємо тіло свічки
+        const candleWidth = 3;
+        ctx.fillRect(x - candleWidth / 2, yOpen, candleWidth, yClose - yOpen);
+    };
+    
+    
+    
+    Chart.prototype.shiftChart = function () {
+        if (this.aData.length > 50) { // Обмежуємо кількість відображених свічок
+            this.aData.shift();
+        }
+        this.setMinMaxTime(this.aData);
+        this.setMinMaxAmount(this.aData);
+        this.setDataCoords(this.aData);
+        this.ctx.clearRect(0, 0, this.width, this.height); // Очищуємо перед перемальовкою
+        this.renderCandles(this.aData);
+    };
+    Chart.prototype.addNewCandle = function (candle) {
+        console.log("Adding new candle to chart", candle);
+    
+        this.setMinMaxTime(this.aData);
+        this.setMinMaxAmount(this.aData);
+        this.setDataCoords(this.aData);
+    
+        this.updateSingleCandle(candle);
+    };
     Chart.prototype.buildDealDots = function () {
         for (var key in this.parent.deals) {
-            //console.log(this.parent.deals[key]);
             if (this.parent.deals[key].status == 1)
                 continue;
-            var x_open = this.getX(this.parent.deals[key].opentime);
-            var y_open = this.getY(this.parent.deals[key].openprice);
-            var x_close = this.getX(this.parent.deals[key].closetime);
-            var y_close = this.getY(this.parent.deals[key].closeprice);
+            var x_open = this.getX(this.parent.deals[key].createdAt);
+            var y_open = this.getY(this.parent.deals[key].openPrice);
+            var x_close = this.getX(this.parent.deals[key].expiredAt);
+            var y_close = this.getY(this.parent.deals[key].closePrice);
             var color;
             if (this.parent.deals[key].status == 2) {
                 color = 'green';
@@ -85,21 +357,36 @@ var Chart = (function (_super) {
             this.ctx.restore();
         }
     };
-    Chart.prototype.renderNormal = function () {
-        this.setMinMaxAmount(this.aData);
-        this.setDataCoords(this.aData); //устанавливаем координаты
-        this.buildTimeGrid();
+    Chart.prototype.fadeTimeAndPriceLabels = function () {
+        this.fadeTimeLabels();
+        this.fadePriceLabels();
+    };
+    
+    // 🔹 Функція для затемнення старих часових міток
+    Chart.prototype.fadeTimeLabels = function () {
+        var ctx = this.ctx;
+        ctx.save();
+        ctx.globalAlpha = 0.1; // Робимо прозорість старих міток
+        this.buildTimeGrid(this.aData); // Перемальовуємо часові значення
+        ctx.restore();
+    };
+    
+    // 🔹 Функція для затемнення старих цінових міток
+    Chart.prototype.fadePriceLabels = function () {
+        var ctx = this.ctx;
+        ctx.save();
+        ctx.globalAlpha = 0.1; // Робимо прозорість старих міток
+        this.buildAmountGrid(); // Перемальовуємо цінові значення
+        ctx.restore();
+    };
+    Chart.prototype.renderNormal = function (aData) {
+        this.setMinMaxAmount(aData);
+        this.setDataCoords(aData); //устанавливаем координаты
+        this.buildTimeGrid(aData);
         this.buildAmountGrid();
         this.graficBackground();
-        this.buildLines();
-        //this.buildDealDots();
-        //Indicators
-        if (this.indicators.statusBolinger == true)
-            this.indicators.bolingerBands();
-        if (this.indicators.statusSampleSMA == true)
-            this.indicators.sampleSMA();
-        if (this.indicators.statusAlligator == true)
-            this.indicators.alligator();
+        this.buildLines(aData);
+
         if (this.parent.activeDeals == false) {
             this.buildExpirationLines();
         }
@@ -120,11 +407,11 @@ var Chart = (function (_super) {
             this.hover.clear();
         }
     };
-    Chart.prototype.renderCandles = function () {
-        this.setMinMaxAmount(this.aData);
-        this.setDataCoords(this.aData); //устанавливаем координаты
+    Chart.prototype.renderCandles = function (aData) {
+        this.setMinMaxAmount(aData);
+        this.setDataCoords(aData); 
         this.buildAmountGrid();
-        this.buildTimeGrid();
+        this.buildTimeGrid(aData);
         this.buildCandles();
         if (this.parent.activeDeals == false) {
             this.buildExpirationLines();
@@ -144,67 +431,6 @@ var Chart = (function (_super) {
         else {
             this.hover.clear();
         }
-    };
-    Chart.prototype.renderMACD = function () {
-        this.setMinMaxAmount(this.aData);
-        this.setDataCoords(this.aData); //устанавливаем координаты
-        this.buildTimeGrid();
-        //this.buildLines(); 
-        //переопределяем
-        //this.setMinMaxAmount(this.data);
-        var amount = this.getAVGAmount(this.aData);
-        this.drawAVGLine(amount);
-        this.buildPositions(amount, this.aData);
-        this.buildTimeGrid();
-        /*this.setDataCoords(this.aData); //устанавливаем координаты
-        //this.buildLines();
-        
-        //this.buildAmountGrid();
-        
-        var data = this.indicators.sampleSMA();
-        this.indicators.buildRSILines(data);
-        
-        this.forms.TimeToExpirate();*/
-    };
-    Chart.prototype.renderRSI = function () {
-        //переопределяем
-        this.setMinMaxAmount(this.parent.data);
-        this.setDataCoords(this.aData); //устанавливаем координаты
-        this.buildTimeGrid();
-        var data = this.indicators.sampleSMA(this.indicators.colorSMA, this.indicators.periodRSI);
-        this.indicators.buildRSILines(data);
-    };
-    Chart.prototype.getAVGAmount = function (data) {
-        var sum = 0;
-        var cnt = 0;
-        for (var key in data) {
-            sum += data[key].amount * 1;
-            cnt++;
-        }
-        var avg = sum / cnt;
-        return avg;
-    };
-    Chart.prototype.drawAVGLine = function (amount) {
-        var y = this.getY(amount);
-        //рисуем отметки 
-        //ВЕРХНЯЯ ПОЗИЦИЯ
-        this.ctx.save();
-        this.ctx.lineWidth = 1;
-        this.ctx.strokeStyle = this.skin.amountStripesColor;
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.x + 0.5, this.y + y + 0.5);
-        this.ctx.lineTo(this.x + this.width + 0.5 + 5, this.y + y + 0.5);
-        this.ctx.closePath();
-        this.ctx.stroke();
-        this.ctx.restore();
-        //надпись
-        this.ctx.save();
-        this.ctx.fillStyle = this.skin.amountTextColor;
-        this.ctx.font = "normal 12px Tahoma";
-        var text = amount;
-        this.ctx.textAlign = "left";
-        this.ctx.fillText(text, this.x + this.width + 0.5 + 7, this.y + y + 0.5 + 4);
-        this.ctx.restore();
     };
     Chart.prototype.buildPositions = function (amount, data) {
         var x, y;
@@ -242,38 +468,24 @@ var Chart = (function (_super) {
             this.ctx.rect(this.x + x + 0.5, this.y + middle_y + 0.5, 6, y - middle_y);
             this.ctx.closePath();
             this.ctx.fill();
-            //this.ctx.stroke();
             this.ctx.restore();
             start += 3;
         }
     };
-    Chart.prototype.render = function () {
-        this.aData = this.generateAData(this.parent.data);
-		if(this.aData == undefined)return; 
-		if(this.aData.length == 0) return;
-        //this.getMaxZoom();
+    Chart.prototype.render = function (aData) {
         this.background();
-        this.setMinMaxTime(this.aData);
-        //this.setDataCoords(this.aData); //устанавливаем координаты
-        this.countDigits(this.aData); //считаем знаки после запятой
-        switch (this.type) {
-            case 'normal':
-                this.renderNormal();
-                break;
-            case 'candles':
-                this.renderCandles();
-                break;
-            case 'macd':
-                this.renderMACD();
-                break;
-            case 'rsi':
-                this.renderRSI();
-                break;
+        this.setMinMaxTime(aData);
+        this.countDigits(aData);
+        if (aData) {
+            switch (this.type) {
+                case 'normal':
+                    this.renderNormal(aData);
+                    break;
+                case 'candles':
+                    this.renderCandles(aData);
+                    break;
+            }
         }
-        /*
-        this.checkIndicators();
-
-        */
     };
     Chart.prototype.closeDeal = function (data) {
         if (!this.deals)
@@ -284,67 +496,22 @@ var Chart = (function (_super) {
             this.render();
         }
     };
-    /*updateBalance(amount){
-        $('.header-nav .balance').text('$'+(amount/100).toFixed(2));
-    }*/
-    Chart.prototype.onCloseOption = function (json) {
-        /*for(var key in json.deals){
-            //this.updateBalance(json.deals[key].balance);
 
-            $('.bid_history .element[data-id='+key+'] .expire').remove();
-            if(json.deals[key].status == 2){
-                $('.bid_history .element[data-id='+key+']').addClass('win');
-                $('.bid_history .element[data-id='+key+'] .bottom .price').text('+ $'+(json.deals[key].win_amount/100).toFixed(2));
-            }else if(json.deals[key].status == 3){
-                $('.bid_history .element[data-id='+key+']').addClass('lose');
-                $('.bid_history .element[data-id='+key+'] .bottom .price').text('- $'+(json.deals[key].amount/100).toFixed(2));
-            }else if(json.deals[key].status == 4){
-                $('.bid_history .element[data-id='+key+'] .bottom .price').text('+ $'+(json.deals[key].amount/100).toFixed(2));
-            }
-        }
-        */
-        //        this.closeDeal(json.deals);
+    Chart.prototype.initializeWebSocket = function () {
+        this.webSocketBridge = new ChartWebSocketBridge(this);
     };
-    Chart.prototype.onCreateOption = function (json) {
-        /*if(json.status == 'error'){ //если ошибка
-            //this.optionError(json.id);
-            return false;
-        }else{
-            $('.trading aside .error').empty();
-        }*/
-        //this.updateBalance(json.balance);
-        //$('.page .page-container').animate({"padding-top":'182px'},400);
-        //$('.bid_history .last_deals').animate({"height":'65px'},400);
-        //this.incomeDeal(json);
-        /*var d:any = new Date(json.opentime*1000);
-        var month:any = d.getMonth()+1;
-        month = month < 10?'0'+month:month;
-        var year:any = d.getYear()+1900;
-        var minutes:any = d.getMinutes();
-        minutes = minutes < 10?'0'+minutes:minutes;
-        var seconds:any = d.getSeconds();
-        seconds = seconds < 10?'0'+seconds:seconds;
-        var time = month+'-'+year+' '+minutes+':'+seconds;
-
-        var asset = $('#asset_list li[data-id='+json.quote_id+'] .name').text();
-        var position = json.position == 1?'up':'down';
-        var amount = (json.amount/100).toFixed(2);
-
-        var expire = json.closetime - this.parent.serverTime;
-
-        $('.bid_history .last_deals').prepend(
-            '<div class="element" data-id="'+json.id+'">'
-                +'<div class="content">'
-                    +'<div class="date">'+time+'</div>'
-                    +'<div class="expire">'+expire+'</div>'
-                    +'<div class="bottom">'
-                        +'<div class="quote">'+asset+'<div class="icon '+position+'_arr"></div></div>'
-                        +'<div class="price">$'+amount+'</div>'
-                    +'</div>'
-                +'</div>'
-                +'<div class="tail"></div>'
-            +'</div>'
-        );*/
+    
+    const originalChartConstructor = Chart;
+    Chart = function(obj) {
+        originalChartConstructor.call(this, obj);
+        console.log("Initializing WebSocket Bridge for Chart instance");
+        this.webSocketBridge = new ChartWebSocketBridge(this);
     };
+    Chart.prototype = originalChartConstructor.prototype;
+
     return Chart;
+
+    
 }(ChartsMain));
+
+

@@ -8,7 +8,7 @@ var Forms = (function () {
     }
     Forms.prototype.initImages = function () {
         this.clock_blue = new Image(); //часики на таймере
-        this.clock_blue.src = '/images/clock_blue.png';
+        this.clock_blue.src = '../images/clock_blue.png';
     };
     Forms.prototype.betText = function () {
         if (!this.parent.parent.deals)
@@ -16,8 +16,8 @@ var Forms = (function () {
         for (var key in this.parent.parent.deals) { }
         var deal = this.parent.parent.deals[key];
         var amount = deal.amount;
-        var profit = (((amount / 100) * 76 + amount) / 100).toFixed(2);
-        amount = (amount / 100).toFixed(2);
+        var profit = (((amount / 100) * 76 + amount)).toFixed(2);
+        amount = (amount).toFixed(2);
         var x = 50.5;
         var y = 50.5;
         //сумма ставки
@@ -62,31 +62,29 @@ var Forms = (function () {
     Forms.prototype.TimeToExpirate = function () {
         var position_time;
         if (this.parent.parent.activeDeals && this.parent.parent.deals) {
-            //получаем поеследнюю сделку
             for (var key in this.parent.parent.deals)
                 var deal = this.parent.parent.deals[key];
-            position_time = deal.closetime;
+            position_time = deal.expiredAt;
+        } else {
+            position_time = this.parent.parent.end_expiration - 30;
         }
-        else {
-            position_time = this.parent.parent.stop_expiration;
-        }
-        //var position_time = this.parent.parent.stop_expiration;
+    
         var x = (position_time - this.parent.min_time) * this.parent.time_coef;
-        if (!position_time || !this.parent.parent.serverTime)
+        if (!position_time || !this.parent.parent.serverTime) 
             return;
-        //var seconds:any = position_time - this.parent.serverTime;
-        var seconds = this.parent.parent.seconds_left;
-        var minutes = Math.floor(seconds / 60);
-        //this.parent.seconds_left = seconds;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        seconds = seconds - (minutes * 60);
-        seconds = seconds < 10 ? '0' + seconds : seconds;
+    
+        var serverTime = new Date((this.parent.parent.serverTime) * 1000);
+        var seconds = serverTime.getSeconds();
+    
+        var remainingSeconds = (seconds >= 30) ? 60 - (seconds - 30) : 30 - seconds;
+    
         var width = 190;
         var height = 60;
         var padding_top = 20;
         var padding_right = 10;
+    
         this.ctx.save();
-        this.ctx.translate(this.parent.x + x - width - padding_right, this.parent.y + 0.5);
+        this.ctx.translate(500, this.parent.y + 0.5);
         this.ctx.beginPath();
         this.ctx.lineWidth = 1;
         this.ctx.fillStyle = this.parent.skin.expirationFormBackgroundColor;
@@ -94,28 +92,38 @@ var Forms = (function () {
         this.ctx.closePath();
         this.ctx.fill();
         this.ctx.restore();
+    
         this.ctx.save();
-        this.ctx.translate(this.parent.x + x - width - padding_right, this.parent.y + 0.5);
+        this.ctx.translate(500, this.parent.y + 0.5);
         this.ctx.fillStyle = this.parent.skin.expirationFormTextColor;
         this.ctx.font = "bold 22px Tahoma";
-        var text = minutes + ':' + seconds;
+    
+        var text = '00:' + (remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds);
         this.ctx.textAlign = "left";
         this.ctx.fillText(text, 70 + 0.5, 47);
         this.ctx.restore();
+    
         this.ctx.save();
-        this.ctx.translate(this.parent.x + x - width - padding_right, this.parent.y + 0.5);
+        this.ctx.translate(500, this.parent.y + 0.5);
         this.ctx.fillStyle = this.parent.skin.expirationFormTextColor;
         this.ctx.font = "bold 12px Tahoma";
-        //var text = deal ? this.local[this.localisation].timeToClose : this.local[this.localisation].timeToBie;
         var text = this.local.timetoexpirate;
         this.ctx.textAlign = "left";
         this.ctx.fillText(text, 15 + 0.5, 67);
         this.ctx.restore();
+    
         this.ctx.save();
-        this.ctx.translate(this.parent.x + x - width - padding_right, this.parent.y + 0.5);
-        this.ctx.drawImage(this.clock_blue, width - 40, 33);
-        this.ctx.restore();
+        // this.ctx.translate(this.parent.x + x - width - padding_right, this.parent.y + 0.5);
+        // this.ctx.drawImage(this.clock_blue, width - 40, 33);
+        // this.ctx.restore();
+    
+        // Оновлення таймера рівно через 1 секунду
+        setTimeout(() => {
+            this.parent.parent.serverTime = Math.floor(Date.now() / 1000);
+            this.TimeToExpirate();
+        }, 1000);
     };
+    
     return Forms;
 }());
 var Mouse = (function () {
@@ -301,7 +309,6 @@ var Hover = (function () {
     Hover.prototype.buildCallField = function () {
         var y = this.getCurrentY();
         var x = this.getCurrentX();
-        //this.ctx.clearRect(this.parent.y, this.parent.x, this.ws.width, this.parent.height);
         this.ctx.clearRect(this.parent.x, this.parent.y, this.parent.width + this.parent.parent.right_padding, this.parent.height + this.parent.bottom_padding);
         this.ctx.save();
         this.ctx.beginPath();
@@ -330,244 +337,4 @@ var Hover = (function () {
         this.ctx.restore();
     };
     return Hover;
-}());
-var Indicators = (function () {
-    function Indicators(parent, context) {
-        this.alligatorJaw = [13, 8, 'FF0000'];
-        this.alligatorTeeth = [8, 5, '00FF00'];
-        this.alligatorLips = [5, 3, '0000FF'];
-        this.statusAlligator = false;
-        this.periodRSI = 14;
-        this.overboughtRSI = 80;
-        this.oversoldRSI = 20;
-        this.statusSampleSMA = false;
-        this.periodSMA = 10;
-        this.colorSMA = 'ff0000';
-        this.statusBolinger = false;
-        this.periodBolinger = 20;
-        this.deviationBolinger = 4;
-        this.colorsBolinger = ['ff0000', '00ff00', '0000ff'];
-        this.ctx = context;
-        this.parent = parent;
-    }
-    Indicators.prototype.alligator = function () {
-        this.sampleSMA(this.alligatorJaw[2], this.alligatorJaw[0]);
-        this.sampleSMA(this.alligatorJaw[2], this.alligatorJaw[0], this.alligatorJaw[1]);
-        this.sampleSMA(this.alligatorTeeth[2], this.alligatorTeeth[0]);
-        this.sampleSMA(this.alligatorTeeth[2], this.alligatorTeeth[0], this.alligatorTeeth[1]);
-        this.sampleSMA(this.alligatorLips[2], this.alligatorLips[0], this.alligatorLips[1]);
-        this.sampleSMA(this.alligatorLips[2], this.alligatorLips[0]);
-    };
-    Indicators.prototype.MACD = function () {
-        //var ctx = this.ctx;
-        //var ws = this.canvas.ws;
-        var height = 290;
-        var x = 0.5;
-        var y = this.parent.height + 40.5;
-        this.ctx.save();
-        this.ctx.beginPath();
-        this.ctx.strokeStyle = 'white';
-        this.ctx.fillStyle = 'white';
-        this.ctx.rect(x, y, this.parent.width, height);
-        this.ctx.closePath();
-        this.ctx.fill();
-        this.ctx.stroke();
-        this.ctx.restore();
-        //this.aData = this.generateAData(this.root.data);
-        var y = 0;
-        var x = 0;
-        var amount_coef = height / this.parent.amount_range;
-        var coords = new Object();
-        for (var i = 0; i < this.parent.aData.length; i++) {
-            coords[i] = height - ((this.parent.aData[i].amount - this.parent.min_amount) * amount_coef) + this.parent.height + 40;
-        }
-        //отрисовуем
-        this.ctx.save();
-        this.ctx.lineWidth = 1;
-        //ctx.strokeStyle = this.root.skin.graficLinesColor;
-        this.ctx.strokeStyle = 'red';
-        for (var i = 0; i < this.parent.aData.length; i++) {
-            if (this.parent.aData[i + 1] == undefined)
-                break;
-            this.ctx.beginPath();
-            this.ctx.moveTo(this.parent.aData[i].x + 0.5, coords[i] + 0.5);
-            this.ctx.lineTo(this.parent.aData[i + 1].x + 0.5, coords[i + 1] + 0.5);
-            this.ctx.closePath();
-            this.ctx.stroke();
-        }
-        this.ctx.restore();
-    };
-    Indicators.prototype.bolingerBands = function () {
-        var period = this.periodBolinger;
-        for (var i = 0; i < 3; i++) {
-            this.sampleSMA(this.colorsBolinger[i], period);
-            period += this.deviationBolinger;
-        }
-    };
-    Indicators.prototype.buildRSILines = function (data) {
-        var period = this.parent.max_amount - this.parent.min_amount;
-        var percent = period / 100;
-        var amount_top = this.overboughtRSI * percent + this.parent.min_amount * 1;
-        var amount_bottom = this.oversoldRSI * percent + this.parent.min_amount * 1;
-        var ytop = this.parent.getY(amount_top);
-        var ybottom = this.parent.getY(amount_bottom);
-        //находим значение которое ниже 20%
-        var key;
-        var while_key = 0;
-        var am, tm, entry_x, entry_y;
-        for (key in data) {
-            if (while_key * 1 > key * 1)
-                continue;
-            if (data[key].amount * 1 > amount_top) {
-                while_key = key;
-                this.ctx.save();
-                this.ctx.lineWidth = 1;
-                this.ctx.strokeStyle = 'green';
-                this.ctx.fillStyle = "rgba(185, 185, 185, 0.2)";
-                this.ctx.beginPath();
-                tm = this.parent.getX(data[key].date);
-                am = this.parent.getY(data[key].amount * 1);
-                this.ctx.moveTo(this.parent.x + tm + 0.5, this.parent.y + am + 0.5);
-                entry_x = tm;
-                entry_y = am;
-                if (data[while_key] == undefined)
-                    break;
-                while (data[while_key] != undefined && data[while_key].amount > amount_top) {
-                    if (data[while_key] == undefined)
-                        break;
-                    tm = this.parent.getX(data[while_key].date);
-                    am = this.parent.getY(data[while_key].amount);
-                    this.ctx.lineTo(this.parent.x + tm + 0.5, this.parent.y + am + 0.5);
-                    while_key = parseInt(while_key) + 1;
-                }
-                this.ctx.lineTo(this.parent.x + tm + 2.5, this.parent.y + this.parent.getY(amount_top) + 0.5);
-                this.ctx.lineTo(this.parent.x + entry_x - 2.5, this.parent.y + this.parent.getY(amount_top) + 0.5);
-                this.ctx.closePath();
-                //this.ctx.stroke();
-                this.ctx.fill();
-                this.ctx.restore();
-            }
-            else if (data[key].amount * 1 < amount_bottom) {
-                while_key = key;
-                this.ctx.save();
-                this.ctx.lineWidth = 1;
-                this.ctx.strokeStyle = 'green';
-                this.ctx.fillStyle = "rgba(185, 185, 185, 0.2)";
-                this.ctx.beginPath();
-                tm = this.parent.getX(data[key].date);
-                am = this.parent.getY(data[key].amount * 1);
-                this.ctx.moveTo(this.parent.x + tm + 0.5, this.parent.y + am + 0.5);
-                entry_x = tm;
-                entry_y = am;
-                while (data[while_key] != undefined && data[while_key].amount < amount_bottom) {
-                    tm = this.parent.getX(data[while_key].date);
-                    am = this.parent.getY(data[while_key].amount);
-                    this.ctx.lineTo(this.parent.x + tm + 0.5, this.parent.y + am + 0.5);
-                    while_key = parseInt(while_key) + 1;
-                }
-                this.ctx.lineTo(this.parent.x + tm + 2.5, this.parent.y + this.parent.getY(amount_bottom) + 0.5);
-                this.ctx.lineTo(this.parent.x + entry_x - 2.5, this.parent.y + this.parent.getY(amount_bottom) + 0.5);
-                this.ctx.closePath();
-                //this.ctx.stroke();
-                this.ctx.fill();
-                this.ctx.restore();
-            }
-        }
-        //рисуем отметки 
-        //ВЕРХНЯЯ ПОЗИЦИЯ
-        this.ctx.save();
-        this.ctx.lineWidth = 1;
-        this.ctx.strokeStyle = this.parent.skin.amountStripesColor;
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.parent.x + this.parent.width + 0.5, this.parent.y + ytop + 0.5);
-        this.ctx.lineTo(this.parent.x + this.parent.width + 0.5 + 5, this.parent.y + ytop + 0.5);
-        this.ctx.closePath();
-        this.ctx.stroke();
-        this.ctx.restore();
-        //надпись
-        this.ctx.save();
-        this.ctx.fillStyle = this.parent.skin.amountTextColor;
-        this.ctx.font = "normal 12px Tahoma";
-        var text = this.overboughtRSI;
-        //var length = this.ctx.measureText(text);
-        this.ctx.textAlign = "left";
-        this.ctx.fillText(text, this.parent.x + this.parent.width + 0.5 + 7, this.parent.y + ytop + 0.5 + 4);
-        this.ctx.restore();
-        //НИЖНЯЯ ПОЗИЦИЯ
-        this.ctx.save();
-        this.ctx.lineWidth = 1;
-        this.ctx.strokeStyle = this.parent.skin.amountStripesColor;
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.parent.x + this.parent.width + 0.5, this.parent.y + ybottom + 0.5);
-        this.ctx.lineTo(this.parent.x + this.parent.width + 0.5 + 5, this.parent.y + ybottom + 0.5);
-        this.ctx.closePath();
-        this.ctx.stroke();
-        this.ctx.restore();
-        //надпись
-        this.ctx.save();
-        this.ctx.fillStyle = this.parent.skin.amountTextColor;
-        this.ctx.font = "normal 12px Tahoma";
-        var text = this.oversoldRSI;
-        //var length = this.ctx.measureText(text);
-        this.ctx.textAlign = "left";
-        this.ctx.fillText(text, this.parent.x + this.parent.width + 0.5 + 7, this.parent.y + ybottom + 0.5 + 4);
-        this.ctx.restore();
-        //рисуем ограничивающие линии
-        this.ctx.save();
-        this.ctx.lineWidth = 2;
-        this.ctx.fillStyle = "#fdc100";
-        this.ctx.strokeStyle = "#6f5a11";
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.parent.x, ytop + this.parent.y);
-        this.ctx.lineTo(this.parent.x + this.parent.width, ytop + this.parent.y);
-        this.ctx.stroke();
-        this.ctx.fill();
-        this.ctx.closePath();
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.parent.x, ybottom + this.parent.y);
-        this.ctx.lineTo(this.parent.x + this.parent.width, ybottom + this.parent.y);
-        this.ctx.stroke();
-        this.ctx.fill();
-        this.ctx.closePath();
-        this.ctx.restore();
-    };
-    Indicators.prototype.sampleSMA = function (color, period, deviation) {
-        var result = new Array();
-        if (deviation == undefined)
-            deviation = 0;
-        if (color == undefined)
-            color = this.colorSMA;
-        if (period == undefined)
-            period = this.periodSMA;
-        var sum = 0;
-        var key;
-        for (key in this.parent.parent.data) {
-            if (this.parent.parent.data[parseInt(key) - period] == undefined)
-                continue;
-            sum = 0;
-            for (var i = key - period + 1; i <= key; i++) {
-                sum += parseFloat(this.parent.parent.data[i].amount);
-                result[key] = (sum / period).toFixed(this.parent.digits);
-            }
-        }
-        //отрисовуем пунктир
-        var x;
-        var data = [];
-        this.ctx.save();
-        this.ctx.lineWidth = 1;
-        this.ctx.strokeStyle = '#' + color;
-        this.ctx.beginPath();
-        this.ctx.moveTo(-100, 0); //начало за пределами
-        for (key in result) {
-            x = this.parent.getX(this.parent.parent.data[key].date) + this.parent.x + deviation;
-            data.push({ 'amount': result[key], 'date': this.parent.getTime(x) });
-            if (this.parent.getX(this.parent.parent.data[key].date) > 0) {
-                this.ctx.lineTo(x, this.parent.getY(result[key]) + this.parent.y);
-            }
-        }
-        this.ctx.stroke();
-        this.ctx.restore();
-        return data;
-    };
-    return Indicators;
 }());

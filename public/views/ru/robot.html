@@ -8,7 +8,7 @@
         <meta name="Keywords" content="Форекс, Биржа Форекс, Бинарные Опционы, торговля акциями, Биржа">
         <meta name="description" content="Надежная торговая платформа бинарных опционов с доходностью до 76%. Доступные инструменты для ведения торговли, обучающие материалы и простой в использовании интерфейс. "/>
         <link rel="icon" type='image/png' href="/images/small-logo.png">
-        <title>60 секундные бинарные опционы: самый быстрый инструмент торговли - CryptGates</title>
+        <title>60 секундные бинарные опционы: самый быстрый инструмент торговли - Optigates</title>
         <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/css/main.css?v4" rel="stylesheet" type="text/css" />        <script src="/js/jquery.js" type="text/javascript" /></script><script src="/js/bootstrap.min.js" type="text/javascript" /></script><script src="/js/main.js" type="text/javascript" /></script><meta name="frog" content="b4f134ae336d927bcf8206d38534bf79" />
     </head>
     <body ng-app="app">
@@ -445,12 +445,12 @@
 	                            <span class='balance'>$1,181.60</span>
             </li>
                                                                 <li class="modes active">   
-                        <a href="/switch/?account=250239">
+                        <a href="">
                             <div class='status'></div>
                             Demo                        </a>
                     </li>
                                                                                 <li class="modes ">   
-                        <a href="/switch/?account=250240">
+                        <a href="">
                             <div class='status'></div>
                             Real                        </a>
                     </li>
@@ -497,6 +497,9 @@
         width:283px;
         height:48px;
         background: url('/images/logo2.png');
+                    background-size: 50%;
+            background-attachment: cover;
+            background-repeat: no-repeat;
     }
 
     #header.main .logo{
@@ -616,7 +619,7 @@
                     <li><a href="/termsandconditions/">Условия и положения</a></li>
                 </ul>
             </li>
-                            <li class=""><a class="oustaff_link" href="/trade/">Торговля</a></li>
+                            <li class=""><a class="oustaff_link" href="/trade?asset=404">Торговля</a></li>
                         <li class=""><a class="oustaff_link" href="/aboutus/">О нас</a></li>
             <li class=""><a class="oustaff_link" href="/faq/bonus/">Бонус</a></li>
                         <li class=""><a class="oustaff_link" href="/account/personalinfo/">Личные данные</a></li>
@@ -761,7 +764,7 @@
             <table class="table">
                 <tbody><tr>
                     <td class="">
-                        <a href="/trade/">Торговля</a>
+                        <a href="/trade?asset=404">Торговля</a>
                     </td>
                     <td class="">
                         <a href="/autotrade/">Робот</a>
@@ -798,12 +801,983 @@
 </script>
 
 <div class='container'>
-    <div class='pagetitle'>Робот</div>
-    <div>
-        <iframe src="https://r.cryptgates.com/ru/" frameborder="0" scrolling="yes" style="width:100%;height:1025px" onload='resizeIframe(this);'></iframe>
+    <div class='pagetitle'>Robot</div>
+    <div class="no-robot-container" style="padding: 0 0 20px 0; display: flex; flex-direction: column; align-items: center;">
+        <h2>У МЕНЯ ЕСТЬ КЛЮЧ</h2>
+        <input style="border: 1px solid gray; padding: 0 0 0 15px; font-weight: bold; outline: none; width: 300px; height: 50px; margin-bottom: 10px;" class="activate-input" placeholder="Введите код для бота" type="number">
+        <button style="width: 300px; height: 50px; border: none; outline: none; border:1px solid #6159AA; color: #6159AA; background: white; font-weight: bold; margin-bottom: 30px;" class="activate">Ввести ключ</button>
+        <h2>Приобрести новый ключ</h2>
+        <div class="row ng-scope" ng-controller="productCtrl">
+            <div class="col-sm-12 text-center">
+                <div class="prices_block">
+                    <div class="element standart buy_code_btn" ng-click="">
+                        <div class="title">Лучшее решение для начинающих трейдеров</div>
+                        <div class="price">$200</div>
+                        <div class="terms">Ключ на 1 месяц</div>
+    
+                        <div class="type">STANDART КЛЮЧ</div>
+    
+                        <div class="btn">КУПИТЬ</div>
+                    </div>
+    
+                    <div class="element premium buy_code_btn" ng-click="">
+                        <div class="title">Лучшее решение для продвинутых трейдеров</div>
+                        <div class="price" style="margin-top:188px;">$500</div>
+                        <div class="terms">Ключ на 3 месяца</div>
+    
+                        <div class="type">PREMIUM КЛЮЧ</div>
+    
+                        <div class="btn">КУПИТЬ</div>
+                    </div>
+    
+                    <div class="element vip buy_code_btn" ng-click="">
+                        <div class="title">Лучшее решение для опытных трейдеров</div>
+                        <div class="price">$1000</div>
+                        <div class="terms">Ключ на 12 месяцев</div>
+    
+                        <div class="type">VIP КЛЮЧ<span></span></div>
+    
+                        <div class="btn">КУПИТЬ</div>
+                    </div>
+                </div>
+    
+                <div class="depositForm"></div>
+            </div>
+        </div>
     </div>
-</div>        
+    <style>
+        .prices_block{
+             display:inline-block;
+             margin:auto;
+             font-size:0px;
+         }
+         .prices_block .element{            
+             display:inline-block;
+             width:308px;
+             height: 544px;
+            
+             background:#403d61 url('/images/element_bg.png') no-repeat top center;
+             vertical-align: middle;                                
+             position:relative;
+             color: white;
+             text-align: center;
+             
+             
+         }
+         .prices_block .element .title{
+             color: white;
+             text-align:center;
+             font-size: 14px;
+             width:200px;
+             margin:auto;
+             margin-top:20px;
+         }
+         .prices_block .element .btn{
+             position:absolute;
+             bottom:0px;
+             left:50%;
+             margin-left:-95px;
+             width:190px;
+             height:48px;
+             border:none;
+             color: white;
+             font-size:16px;
+             border-radius: 0px;
+             padding-top:12px;
+         }
+         .prices_block .element .price{
+             color: white;
+             font-weight:bolder;
+             font-size:58px;
+             margin-top:150px;
+             line-height: 54px;
+ 
+         }
+         .prices_block .element .terms{
+             
+             font-size:14px;
+             color: white;
+             margin-bottom: 87px;
+         }
+         .prices_block .element .type{
+             position:relative;
+             font-size:16px;
+         }
+ 
+         .element .type span{
+             width:14px;
+             height:10px;
+             background: url('/images/crown.png');
+             position:absolute;
+             display:block;
+             left:50%;
+             margin-left:-7px;
+             top:-12px;
+         }
+ 
+         .block4 .prices_block .element.standart{                
+             box-shadow: 0px 0px 17px rgba(97,89,170,0.4);
+             z-index:1;
+             background: url('/html/images/price2.png') no-repeat top center;
+         }
+ 
+         .prices_block .element.standart .btn{
+             background: #6159aa;
+         }
+ 
+         .prices_block .element.standart .type{
+             color:white;
+         }
+ 
+         .prices_block .element.premium{
+             box-shadow: 0px 0px 17px rgba(97,89,170,0.31);
+             z-index:10;
+             background: #6159aa url('/images/element_bg.png') no-repeat top left;
+             height:620px;
+             width:370px;               
+         }
+         .prices_block .element.premium .btn{
+             background: #8277eb;
+         }
+         .prices_block .element.premium .type{
+             color: white;
+         }
+         .prices_block .element.premium .terms{
+             margin-bottom:173px;
+         }
+         .prices_block .element.premium .price{
+             margin-top:245px;
+         }
+ 
+         .prices_block .element.vip{
+             box-shadow: 0px 0px 17px rgba(97,89,170,0.27);
+             z-index:1;
+             background: #413c74 url('/images/element_bg.png') no-repeat top left;
+         }
+         .prices_block .element.vip .btn{
+             background: #5951ae;
+         }
+         .prices_block .element.vip .type{
+             color: white;
+         }
+ 
+         .depositForm {
+             width: 75%;
+             margin: 0 auto;
+             text-align: center;
+         }
+ 
+     </style>
+     <div class="row">
+        <div class="col-md-9"></div>
+        <div class="col-md-3 vip-key-info">
+    <div class="alert alert-info" role="alert" style="color: #333;">
+
+                    Ваш ключ <span class="label label-primary" style="font-size:14px;">
+            VIP</span>
+            действителен до <br/> <b class="key-date-until">23.11.2025</b>            <p style="text-align:right;"><button type="button" class="btn btn-xs btn-warning">Сменить ключ</button></p>
+            </div>
+
+        </div>
+      </div>
+    <div style="max-width:1200px; text-align: center; margin-bottom:30px;" class="bot-title">
+        <h2 style="font-size:18px;">Запустите Систему</h2>
+        <p style="margin:0px;">Для запуска автоматической торговли необходимо запустить алгоритм, нажав на кнопку Старт.</p>
+        <p style="margin:0px;">Торговый алгоритм остановится автоматически по истечению 48 часов з момента старта.</p>
+    </div>
+        <div class="bot-content" style="background:white; padding:0px; border-radius:10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.2); margin-bottom:50px; padding-bottom: 50px;">
+            <style>
+                .stop_bot.disabled{
+                    background: grey;
+                }
+            </style>
+    
+            <script>
+                $('document').ready(function () {
+                    
+                    document.querySelectorAll('.buy_code_btn').forEach(b => {
+                        b.onclick = function() {
+                            alert("Ведуться технические работы!")
+                        }
+                    })
+
+                    $('.connect_block .connect_bot').click(function () {
+                        var email = $('.email_value').val();
+                        var password = $('.password_value').val();
+    
+                        var el = $(this);
+                        $(el).css({'display': 'none'});
+                        $('.connect_loading').css({'display': 'block'});
+    
+                        $.ajax({
+                            url: location.href,
+                            type: 'POST',
+                            data: {'action': 'connect', email: email, password: password},
+                            success: function (msg) {
+                                var json = JSON.parse(msg);
+                                $(el).css({'display': 'inline-block'});
+                                $('.connect_loading').css({'display': 'none'});
+    
+                                if (json.status == 'success') {
+                                    $('.broker_setup_row_top_balance span').text(json.balance / 100);
+                                    $('.connect_block').css({'display': 'none'});
+                                    $('#dashboard_settings_wrapper').css({'display': 'block'});
+                                } else if (json.status == 'error') {
+                                    $('.connect_block #activate_bot_panel .error').text(json.message);
+                                }
+                            }
+                        });
+    
+                        return false;
+                    });
+                });
+            </script>
+    
+            <style>
+        .broker_setup_row_options{
+            background: #e5e5e5;
+        }
+    </style>
+    <script>
+        $('document').ready(function(){
+            //Togles
+            $('.broker_setup_on_off_button').click(function(){
+                if($(this).attr('class').indexOf('static') != -1){
+                    return false;
+                }
+                if($(this).attr('class').indexOf('assets') != -1){
+                    //определяем какая у нас стратегия
+                    var strategy = 0;
+                    $('.broker_setup_vip_signal_provider_table .broker_settings_signal_provider_wrapper').each(function(){
+                        if($(this).attr('status') == 'enabled'){
+                            strategy = $(this).attr('value');
+                            return false;
+                        }
+                    });
+    
+                    if(strategy == 1){
+                        return false;    
+                    }else if(strategy == 2){
+                        if($(this).attr('class').indexOf('button_off') != -1 && $('.broker_setup_assets_table .broker_setup_on_off_button.button_on').length >= 8){
+                            return false;
+                        }
+                    }
+                }
+                
+                if($(this).attr('class').indexOf('button_on') != -1){
+                    $(this).next('input[type=hidden]').val('0');
+                    $(this).animate({'margin-left':'-20px'},400,function(){
+                        $(this).addClass('button_off').removeClass('button_on');
+                    });
+                }else if($(this).attr('class').indexOf('button_off') != -1){
+                    $(this).next('input[type=hidden]').val('1');
+                    
+                    $(this).animate({'margin-left':'0px'},400,function(){
+                        $(this).addClass('button_on').removeClass('button_off');
+                    });
+                }
+                
+                var value = $(this).next('input[type=hidden]').val();
+                var action = $(this).next('input[type=hidden]').attr('name');
+                var id = $(this).next('input[type=hidden]').attr('id');
+                
+                if(!action) return;
+            });     
+        });
+    </script>
+    
+    <script>
+        $('document').ready(function(){
+            $('.disconnect_bot').click(function(){
+                $('.status_error').text('').css({"display":'none'});
+                $('.disconnect_error').text('').css({"display":'none'});
+    
+                $.ajax({
+                    url:'/settings/disconnect/',
+                    type:'GET',
+                    success:function(msg){
+                        var json = JSON.parse(msg);
+                        
+                        if(json.status == 'success'){
+                            location.href = '/settings/connection/';
+                        }else if(json.status == 'error'){
+                            $('.disconnect_error').text(json.message).css({"display":'block'});
+                        }
+                    }
+                });
+                
+                return false;
+            });
+            
+        });
+    </script>
+    <style>
+        .table.settings{
+            margin-bottom:0px;
+        }
+        .table.settings th{
+            font-size: 12px;
+            font-weight:bold;
+            border:none;
+            height: 50px;
+            vertical-align: middle;
+            text-align: center;        
+        }
+        .table.settings thead{
+            box-shadow: 0px 5px 5px rgba(0,0,0,0.05);
+        }
+        .table.settings tbody tr:first-child td{
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table tbody tr td{
+            border :none;
+        }
+    </style>
+    <table class="table settings" style="margin-top:30px;">
+        <thead>
+            <tr>
+                <th>Счет</th>
+                <th>Баланс</th>
+                <th>Старт/Стоп</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr style="height:95px; border-bottom: 1px solid #ddd">
+                <style>
+                    .btn_real,.btn_demo{
+                        background: #d3d3d3;
+                        color: white;
+                        height:36px;
+                    }
+                    .btn_real.active,.btn_demo.active{
+                        background: #6bc452;
+                    }
+                    .btn_real:active,.btn_demo:active{
+                        background: #6bc452;
+                    }
+                    
+                </style>
+                <td>
+                    <div style="color:#b6b6b6; font-weight:bolder; font-size: 14px;" class="bot-email"></div>
+                    <div class="btn-group">
+                                                <span style="font-weight:bolder;" href="" class="btn  btn_real">Real</span>
+                            <span style="font-weight:bolder;" href="" class="btn active btn_demo">Demo</span>
+                                        </div>
+                </td>
+                <td>
+                    USD 
+                    <span id="balance_block">
+                                        0.00                               </span>
+                </td>
+                <style>
+                    .btn_green{
+                        background: #6bc452;
+                        color: white;
+                        font-size: 14px;
+                        font-weight:bolder;
+                        height: 36px;
+                        padding: 8px 25px;
+                        box-shadow:0px 0px 5px rgba(107,196,82,0.2);
+                    }
+                    .btn_green:hover{
+                        color: white;
+                        text-decoration:none;
+                    }
+                    
+                    .disconnect_bot{
+                        background: #e57373;
+                        color: white;
+                        font-size: 14px;
+                        font-weight:bolder;
+                        height: 36px;
+                        padding: 8px 25px;
+                        box-shadow:0px 0px 5px rgba(229,115,115,0.2);
+                        border-radius:0px;
+                        border: none;
+                    }
+                    
+                    .asset_triger{
+                        float: right;
+                        height: 20px;
+                        overflow: hidden;
+                        width: 39px;
+                        border-right: 1px solid #ddd;
+                        border-left: 1px solid #ddd;                    
+                        
+                        padding-top:-5px;
+                        border-radius: 10px;
+                    }
+                    
+                    .asset_triger {
+                        float: none !important;
+                        margin: 0 auto;
+                    }
+                    
+                    .broker_setup_on_off_button {
+                        position:relative;
+                        top:-4px;
+                        background-image: url("/images/toggle.png");
+                        cursor: pointer;
+                        height: 24px;
+                        width: 115px;
+                    }
+                    .broker_setup_on_off_button.button_off {
+                        margin-left: -20px;
+                    }
+                    .broker_setup_on_off_button.button_on {
+                        margin: 0;
+                    }
+                </style>
+                <td>
+                                    <center><img style="max-width:100px;display:none" class="inprogress_ico" src="/images/inprogress.gif"></center>
+    
+                        <button href="" class="start_bot btn_green" style="font-weight:bolder;display:inline-block; border: none; outline: none;">Старт</button>
+                        <div style="color: red; font-weight: bolder; font-size: 13px; display: none;" class="error Insufficient_balance status_error">Ошибка запуска робота: Недостаточно средств на балансе.</div>
+    
+                        <button href="" class="stop_bot btn_green " style="font-weight:bolder;display:none; background: red; outline: none; border: none;">Стоп</button>
+                                    <div style="color: red; font-weight:bolder; font-size:13px;" class="error status_error"></div>
+                </td>
+            </tr>  
+            <tr style="border-bottom: 1px solid #ddd">
+                <td colspan="6">
+                    <div class="row" style="padding:15px">
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">AUD/JPY</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="1" class="assets broker_setup_on_off_button button_off"></div>
+                                        <input type="hidden" name="quote" id="1" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">AUD/USD</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="2" class="assets broker_setup_on_off_button button_off"></div>
+                                        <input type="hidden" name="quote" id="2" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">EUR/AUD</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="3" class="assets broker_setup_on_off_button button_off"></div>
+                                        <input type="hidden" name="quote" id="3" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">EUR/CAD</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="4" class="assets broker_setup_on_off_button button_off"></div>
+                                        <input type="hidden" name="quote" id="4" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">EUR/GBP</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="5" class="assets broker_setup_on_off_button button_off"></div>
+                                        <input type="hidden" name="quote" id="5" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">EUR/JPY</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="6" class="assets broker_setup_on_off_button button_off"></div>
+                                        <input type="hidden" name="quote" id="6" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">EUR/USD</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="7" class="assets broker_setup_on_off_button button_off"></div>
+                                        <input type="hidden" name="quote" id="7" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">GBP/JPY</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="8" class="assets broker_setup_on_off_button button_off"></div>
+                                        <input type="hidden" name="quote" id="8" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">GBP/USD</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="9" class="assets broker_setup_on_off_button button_off"></div>
+                                        <input type="hidden" name="quote" id="9" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">NZD/USD</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="10" class="assets broker_setup_on_off_button button_off"></div>
+                                        <input type="hidden" name="quote" id="10" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">USD/CAD</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="11" class="assets broker_setup_on_off_button button_off"></div>
+                                        <input type="hidden" name="quote" id="11" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">USD/CHF</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="12" class="assets broker_setup_on_off_button button_off"></div>
+                                        <input type="hidden" name="quote" id="12" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">USD/JPY</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="13" class="assets broker_setup_on_off_button button_off"></div>
+                                        <input type="hidden" name="quote" id="13" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">GBP/AUD</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="14" class="assets broker_setup_on_off_button button_off"></div>
+                                        <input type="hidden" name="quote" id="14" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">GBP/CAD</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="15" class="assets broker_setup_on_off_button button_off"></div>
+                                        <input type="hidden" name="quote" id="15" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">NZD/CHF</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="16" class="assets broker_setup_on_off_button button_off"></div>
+                                        <input type="hidden" name="quote" id="16" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">BTC/USD</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="400" class="assets broker_setup_on_off_button button_on"></div>
+                                        <input type="hidden" name="quote" id="400" value="1">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">LTC/USD</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="402" class="assets broker_setup_on_off_button button_on"></div>
+                                        <input type="hidden" name="quote" id="402" value="1">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">XRP/USD</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="407" class="assets broker_setup_on_off_button button_on"></div>
+                                        <input type="hidden" name="quote" id="407" value="1">
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="col-sm-3 text-center">
+                                <div class="element" style="margin-bottom:10px;">
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset">ETH/USD</div>
+                                    <div style="display:inline-block; vertical-align:middle;" class="asset_triger">
+                                        <div asset-id="404" class="assets broker_setup_on_off_button button_on"></div>
+                                        <input type="hidden" name="quote" id="404" value="1">
+                                    </div>
+                                </div>
+                            </div>
+                                            
+                        <!--<button data-toggle="modal" data-target="#instruction_modal" style='float:left; margin-left:80px;background:none; font-weight:bolder;color: rgb(12, 121, 168)' class="btn" data-action="modal" data-modal="custom">Информация о работе алгоритма.</button>-->
+                    </div>
+                </td>
+            </tr>    
+        </tbody>
+    </table>
+            <style>
+                .inprocess img{
+                    display:inline-block;
+                    vertical-align: middle;
+                }
+                .inprocess .text{
+                    margin-left:20px;
+                    display:inline-block;
+                    vertical-align: middle;
+                    font-weight: bolder;
+                    color: black;
+                    font-size: 12px;
+                }
+            </style>
+    
+            <div class="inprocess" style="margin:10px 0px; margin-left:30px;display:none">
+                <div class="text">
+                    <p>Торговый алгоритм успешно запущен. В данный момент он осуществляет анализ рынка, и определяет точки входа в сделки!</p>
+                    <p><a data-toggle="modal" data-target="#instruction_modal" style="color:rgb(12, 121, 168)" href="">Более детальная информация о работе торгового алгоритма здесь.</a></p>
+                </div>
+            </div>
+            <style>
+    
+                #deal_block{
+                    padding:0px 50px;            
+                }
+                #deal_block .table{
+                    padding:0px;
+                    margin:0px;            
+                }
+                .table > thead > tr > th{
+                    background: none;
+                    border:1px solid #f3f3f3;
+                    border-top:1px solid transparent;
+                    vertical-align:middle;
+                    color: #222222;
+                    font-size: 12px;
+                    height: 68px;
+                    text-align: center;
+                }
+                .table > tbody > tr > td{
+                    border-right: 1px solid #f3f3f3;
+                    border-left: 1px solid #f3f3f3;
+                    text-align: center;
+                }
+                .table > tbody{
+                    border-bottom: 1px solid #f3f3f3;
+                }
+            </style>
+            <button style="display:block;margin-left:35px;background:none; font-weight:bolder;color: rgb(12, 121, 168)" class="btn instruction_button" data-toggle="modal" data-target="#instruction_modal">How the algorithm works.</button>
+            <div id="deal_block"><table class="table table-striped" style="margin-top:40px; max-width:1200px;">
+            <tbody class="bets-table"><tr>
+                <th>Котировка</th>
+                <th>Инвестиция</th>
+                <th>Начальный баланс</th>
+                <th>Конечный баланс</th>
+                <th>Цена открытия</th>
+                <th>Цена закрытия</th>
+                <th>Дата начала</th>
+                <th>Дата окончания</th>
+                <th>Позици</th>
+                <th>Выигрыш</th>
+                <th>Статус</th>
+            </tr>
+                        
+                </tr>
+                </tbody></table></div>
+        </div>
+    </div>  
+    <script>
+        $('document').ready(function(){
+            $('.instruction_popup_btn').click(function(){
+                $('#instruction_modal').modal('show');
+                return false;
+            });
+        });
+    </script>
+    <style>
+        #instruction_modal .modal-dialog{
+            width: 1024px;
+        }
+    </style>
+    <div class="modal fade in" id="instruction_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; padding-right: 15px;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title font-header"><p><strong>Инструкция</strong></p></h4>
+                </div>
+    
+                <div class="modal-body">
+                    <h2>Общая информация о работе торгового алгоритма.</h2>
+    
+                    <p>Торговый алгоритм ранее использовался и отлично зарекомендовал себя торговлей фьючерсами на Чикагской товарной бирже (CME). Он имеет ряд преимуществ как перед живыми трейдерами, так и другими торговыми алгоритмами. Основные преимущества перед конкурентами:</p>
+                    <ul>
+                        <li>Скорость: Так как торговый алгоритм мгновенно реагируют на изменение рыночных условий, он открывает позицию сразу после определения точки входа.</li>
+                        <li>Диверсификация: Торгует различными активами с использованием проверенных алгоритмов. Это дает возможность распределять риски между несколькими финансовыми инструментами, и избежать значительных потерь.</li>
+                        <li>Рациональность: В отличие от трейдеров-новичков, чьи предположения и выводы на фоне принятых шаблонов являются субъективными, работает максимально эффективно и объективно по заранее определенным правилам.</li>
+                        <li>Жесткая дисциплина: Дисциплина поддерживается даже в условиях неустойчивого рынка в виде соблюдения и выполнения торговых правил.</li>
+                        <li>Последовательность: предоставляет Вам системный подход, так как он всегда торгует автоматически в соответствии с алгоритмом. При торговле использует, для инвестиции, не больше 10% от суммы баланса Вашего счета(в пределах допустимых ставок, которые предоставлены у брокера). Режим торговли на счетах разных типов (DEMO &amp; REAL) могут отличаться, так как для торговли на DEMO счетах использует размер инвестиции не менее 100 $.</li>
+                    </ul>
+                    <p>При торговле на счету REAL, размер инвестиции будет меняться в зависимости от баланса. Пример: Ваш баланс = 400$ Размер инвестиции доступный у брокера 10$, 25$, 50$, 100$, 250$, 500$, 1000$ Робот будет открывать сделку с размером инвестиции 25$, так как размер данной инвестиции будет соответствовать правилам Money &amp; Risk managemant которых придерживается торговый алгоритм.</p>
+                    <p>Перед запуском торгового алгоритма убедитесь что Вы выбрали верный тип счета REAL/DEMO.</p>
+                    <p>Также отличия заключаются в остановке торгового алгоритма.</p>
+                    <p>При торговле на DEMO, остановка торговли осуществляется после нажатия кнопки "СТОП" + 1 сделка которая будет осуществлена в течении 15 минут.</p>
+                    <p>При торговле на REAL, остановка торговли осуществляется после нажатия кнопки "СТОП" + 10 сделок которые будут осуществлена в течении 1 часа.</p>
+                    <div style="text-align: center; margin-bottom:20px;">
+                        <a data-dismiss="modal" style="margin:auto;" class="link_to_broker" href="#">Закрыть</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+    <script>
+
+        localStorage.setItem('switch-acc', 'real')
+            if (localStorage.getItem('switch-acc') == 'real') {
+                document.querySelector('.btn_real').className += ' active'
+                document.querySelector('.btn_demo').classList.remove('active')
+            } else {
+                document.querySelector('.btn_demo').className += ' active'
+                document.querySelector('.btn_real').classList.remove('active')
+            }
+        fetch('/en/me').then(res => res.json())
+        .then(user => {
+            const userId = user._id;
+
+            const keyDate = user.keyDate;
+        
+        if (keyDate) document.querySelector('.key-date-until').innerHTML = keyDate.split('T')[0];
+
+            document.querySelector('.stop_bot').onclick = function() {
+            fetch('/en/stop-bot', {
+                method: "POST",
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                body: JSON.stringify({
+                    userId
+                })
+            })
+            .then(res => res.json())
+            .then(response => {
+                window.location.reload()
+            })
+        }
+
+        fetch(`/en/active-bot/${user._id}`)
+        .then(res => res.json())
+        .then(response => {
+            const { bot } = response;
+
+            if (bot) {
+                document.querySelector('.stop_bot').style.display = 'inline';
+                document.querySelector('.start_bot').style.display = 'none';
+                document.querySelector('.inprogress_ico').style.display = 'inline'
+            }
+        })
+        let acc = localStorage.getItem('switch-acc');
+
+        if (!acc) acc = 'demo'
+
+        fetch(`/en/bot-bets/${userId}/${acc}`)
+            .then(res => res.json())
+            .then(response => {
+                const { bets } = response;
+    
+                bets.forEach(bet => {
+                    const formatDate = (date) => {
+                        if (!date) return "—";
+                        const d = new Date(date);
+                        return `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.${d.getFullYear()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`;
+                    };
+    
+                    document.querySelector('.bets-table').innerHTML += `<tr>    
+                        <td>${bet.asset}</td>
+                        <td>${bet.amount}.00$</td>
+                        <td>${bet.initialBalance.toFixed(2)}</td>
+                        <td>${bet.finalBalance.toFixed(2)}</td>
+                        <td>${bet.openPrice.toFixed(5)}</td>
+                        <td>${bet.closePrice.toFixed(5)}</td>
+                        <td>${formatDate(bet.startedAt)}</td>
+                        <td>${formatDate(bet.closedAt)}</td>
+                        <td><span style="color: ${bet.position == 'call' ? 'green' : 'red'}">${bet.position}</span></td>
+                        <td>${bet.finalBalance - bet.initialBalance < 0 ? "0.00" : (bet.finalBalance - bet.initialBalance).toFixed(2)}</td>
+                        <td>${bet.result}</td>
+                    </tr>`;
+                });
+            })
+            
+            document.querySelector('.start_bot').onclick = function(e) {
+                const accType = localStorage.getItem('switch-acc') ? localStorage.getItem('switch-acc') : 'demo'
+
+                if (accType == 'real' && user.realBalance < 200) {
+                    document.querySelector('.Insufficient_balance').style.display = 'block';
+                    return;
+                }
+    
+                fetch('/en/start-bot', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': "application/json"
+                    },
+                    body: JSON.stringify({
+                        userId,
+                        accType
+                    })
+                })
+                .then(res => res.json())
+                .then(response => {
+                    window.location.reload()
+                })
+            }
+
+            const formatDate = (date) => {
+                    if (!date) return "—";
+                    const d = new Date(date);
+                    return `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.${d.getFullYear()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`;
+        };
+    
+    
+            document.querySelector('.btn_real').onclick = function() {
+            localStorage.setItem('switch-acc', 'real')
+            document.querySelector('#balance_block').textContent = user.realBalance.toFixed(2);
+            this.className += ' active'
+            document.querySelector('.btn_demo').classList.remove('active')
+
+            fetch(`/en/bot-bets/${user._id}/real`)
+            .then(res => res.json())
+            .then(bets => {
+                document.querySelector('.bets-table').innerHTML = `<tr>
+                <th>Котировка</th>
+                <th>Инвестиция</th>
+                <th>Начальный баланс</th>
+                <th>Конечный баланс</th>
+                <th>Цена открытия</th>
+                <th>Цена закрытия</th>
+                <th>Дата начала</th>
+                <th>Дата окончания</th>
+                <th>Позици</th>
+                <th>Выигрыш</th>
+                <th>Статус</th>
+            </tr>`;
+                if (bets) {
+                    bets.bets.forEach(bet => {
+                    document.querySelector('.bets-table').innerHTML += `<tr>    
+                    <td>${bet.asset}</td>
+                    <td>${bet.amount}.00$</td>
+                    <td>${bet.initialBalance.toFixed(2)}</td>
+                    <td>${bet.finalBalance.toFixed(2)}</td>
+                    <td>${bet.openPrice.toFixed(5)}</td>
+                    <td>${bet.closePrice.toFixed(5)}</td>
+                    <td>${formatDate(bet.startedAt)}</td>
+                    <td>${formatDate(bet.closedAt)}</td>
+                    <td><span style="color: ${bet.position == 'call' ? 'green' : 'red'}">${bet.position}</span></td>
+                    <td>${bet.finalBalance - bet.initialBalance < 0 ? "0.00" : (bet.finalBalance - bet.initialBalance).toFixed(2)}</td>
+                    <td>${bet.result}</td>
+                </tr>`;
+                })
+                }
+            })
+
+        }
+        document.querySelector('.btn_demo').onclick = function() {
+            localStorage.setItem('switch-acc', 'demo')
+            document.querySelector('#balance_block').textContent = user.demoBalance.toFixed(2);
+            this.className += ' active'
+            document.querySelector('.btn_real').classList.remove('active')
+
+            fetch(`/en/bot-bets/${user._id}/demo`)
+            .then(res => res.json())
+            .then(bets => {
+                document.querySelector('.bets-table').innerHTML = `<tr>
+                <th>Котировка</th>
+                <th>Инвестиция</th>
+                <th>Начальный баланс</th>
+                <th>Конечный баланс</th>
+                <th>Цена открытия</th>
+                <th>Цена закрытия</th>
+                <th>Дата начала</th>
+                <th>Дата окончания</th>
+                <th>Позици</th>
+                <th>Выигрыш</th>
+                <th>Статус</th>
+            </tr>`;
+                if (bets) {
+                    bets.bets.forEach(bet => {
+                        document.querySelector('.bets-table').innerHTML += `<tr>    
+                        <td>${bet.asset}</td>
+                        <td>${bet.amount}.00$</td>
+                        <td>${bet.initialBalance.toFixed(2)}</td>
+                        <td>${bet.finalBalance.toFixed(2)}</td>
+                        <td>${bet.openPrice.toFixed(5)}</td>
+                        <td>${bet.closePrice.toFixed(5)}</td>
+                        <td>${formatDate(bet.startedAt)}</td>
+                        <td>${formatDate(bet.closedAt)}</td>
+                        <td><span style="color: ${bet.position == 'call' ? 'green' : 'red'}">${bet.position}</span></td>
+                        <td>${bet.finalBalance - bet.initialBalance < 0 ? "0.00" : (bet.finalBalance - bet.initialBalance).toFixed(2)}</td>
+                        <td>${bet.result}</td>
+                    </tr>`;
+                    })
+                }
+            })
+        }
+    
+            document.querySelector('#balance_block').textContent = localStorage.getItem('switch-acc') == 'demo' ? user.demoBalance.toFixed(2) : user.realBalance.toFixed(2);
+
+    
+            document.querySelector('.bot-email').textContent = user.email;
+    
+            if (user.isBot) {
+                document.querySelector('.no-robot-container').style.display = 'none'
+            } else {
+                document.querySelector('.vip-key-info').style.display = 'none'
+                document.querySelector('.bot-content').style.display = 'none'
+                document.querySelector('.bot-title').style.display = 'none'
+            }
+    
+            const activateInput = document.querySelector('.activate-input');
+        const activate = document.querySelector('.activate');
+    
+        const rightCode = "5837562968";
+    
+        activate.onclick = function() {
+                if (activateInput.value.trim() == rightCode) {
+                        const id = user._id;
+                        fetch('/en/updateBot', {
+                            method: "POST",
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                id
+                            })
+                        })
+                        window.location.reload()
+                } 
+                else {
+                    alert('Код не подходит')
+                }
+            }
+        })
+    </script>          
         <style>
+            .bets-table th, .bets-table td {
+                text-align: center;
+                font-weight: bold;
+            }
     #contacts{
         width:100%;
         height:115px;
@@ -856,8 +1830,11 @@
     #footer .logo{
         background: url('/images/logo.png');
         width:283px;
-        height:48px;
+        height: 80px;
         margin-bottom:20px;
+                    background-size: 100%;
+            background-attachment: cover;
+            background-repeat: no-repeat;
     }
     #footer .menu ul{
         padding-left:0px;
@@ -926,8 +1903,8 @@
                         
                         <div class='col-sm-3'>
                             <ul>
-                                <li><a href='/trade/'>ТОРГОВАТЬ</a></li>
-                                <li class='sub'><a href='/trade/'>60 Секунд</a></li>
+                                <li><a href='/trade?asset=404/'>ТОРГОВАТЬ</a></li>
+                                <li class='sub'><a href='/trade?asset=404/'>60 Секунд</a></li>
                             </ul>   
                         </div>
                     </div>
@@ -936,8 +1913,8 @@
         </div>
         <div class='bottom'>
             <p>You haven`t made any investments in Option builder tool yet. To make an investment you should: Choose the asset you want to trade with, enter your current investment amount. And choose how will asset behavior: if it will rise - press HIGH button, other way press LOW button. Select the profit and the pay off level. Confirm your deal with the Confirmal button. Due to different time zones at the worldwide stocks, some assets could be inactive or might has limited availability. If the asset`s value didn`t change sinse made an investment, the full investment price will be returned to investor.</p>
-            <p>Legal: cryptgates.com is a trading name of CryptGates, registration number: IBC 2015 (Suite 305, Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
-            <div class='copyrights'>© 2025 | CryptGates - All rights reserved</div>
+            <p>Legal: Optigates.com is a trading name of Optigates, registration number: IBC 2015 (Suite 305, Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
+            <div class='copyrights'>© 2025 | Optigates - All rights reserved</div>
         </div>
 <a href="https://freekassa.ru" target="_blank" rel="noopener noreferrer">
   <img src="/images/freekasa.png" title="Прием платежей на сайте">

@@ -445,12 +445,12 @@
 	                            <span class='balance'>$1,181.60</span>
             </li>
                                                                 <li class="modes active">   
-                        <a href="/switch/?account=250239">
+                        <a href="">
                             <div class='status'></div>
                             Demo                        </a>
                     </li>
                                                                                 <li class="modes ">   
-                        <a href="/switch/?account=250240">
+                        <a href="">
                             <div class='status'></div>
                             Real                        </a>
                     </li>
@@ -616,7 +616,7 @@
                     <li><a href="/termsandconditions/">Условия и положения</a></li>
                 </ul>
             </li>
-                            <li class=""><a class="oustaff_link" href="/trade/">Торговля</a></li>
+                            <li class=""><a class="oustaff_link" href="/trade?asset=404">Торговля</a></li>
                         <li class=""><a class="oustaff_link" href="/aboutus/">О нас</a></li>
             <li class=""><a class="oustaff_link" href="/faq/bonus/">Бонус</a></li>
                         <li class="active"><a class="oustaff_link" href="/account/personalinfo/">Личные данные</a></li>
@@ -761,7 +761,7 @@
         <table class="table">
             <tbody><tr>
                 <td class="">
-                    <a href="/trade/">Торговля</a>
+                    <a href="/trade?asset=404">Торговля</a>
                 </td>
                 <td class="">
                     <a href="/autotrade/">Робот</a>
@@ -1077,10 +1077,10 @@
                                 <strong>Телефон</strong>
                             </div>
                             <div class="col-sm-2">
-                                <input type='text' class='form-control' placeholder='код' name='phone_code' value="380">
+                                <input type='text' class='form-control change-data-code' placeholder='код' name='phone_code' value="380">
                             </div>
                             <div class="col-sm-10">
-                                <input type='text' class='form-control' placeholder='мобильный' name='phone' value="">
+                                <input type='text' class='form-control change-data-phone' placeholder='мобильный' name='phone' value="">
                             </div>
                             <div class="error"></div>
                         </div>
@@ -1089,7 +1089,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-12">
-                                <strong>E-mail:</strong> olegmongol99812@gmail.com                            </div>                        
+                                <strong>E-mail:</strong>                           </div>                        
                         </div>
                     </div>
 
@@ -1099,7 +1099,7 @@
                                 <strong>Введите пароль</strong>
                             </div>
                             <div class="col-sm-12">
-                                <input type='password' class='form-control' placeholder='Пароль' name='password'>
+                                <input type='password' class='form-control change-data-pass' placeholder='Пароль' name='password'>
                                 <div class="error"></div>
                             </div>
                         </div>
@@ -1107,7 +1107,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-12">
-                                <input type="submit" name='personal_form'  class="btn btn-orange pull-right" value="Изменить">
+                                <input type="submit" name='personal_form'  class="btn btn-orange pull-right change-data-submit" value="Изменить">
                             </div>
                         </div>
                     </div>
@@ -1130,7 +1130,7 @@
                                 <strong>Текущий пароль</strong>
                             </div>
                             <div class="col-sm-12">
-                                <input type='password' class='form-control' placeholder='' name="password">
+                                <input type='password' class='form-control curr-pass' placeholder='' name="password">
                                 <div class="error"></div>
                             </div>
                         </div>
@@ -1141,7 +1141,7 @@
                                 <strong>Новый пароль</strong>
                             </div>
                             <div class="col-sm-12">
-                                <input type='password' class='form-control' placeholder='' name="newpassword">
+                                <input type='password' class='form-control new-pass' placeholder='' name="newpassword">
                                 <div class="error"></div>
                             </div>
                         </div>
@@ -1152,7 +1152,7 @@
                                 <strong>Введите пароль снова</strong>
                             </div>
                             <div class="col-sm-12">
-                                <input type='password' class='form-control' placeholder='' name="confirm">
+                                <input type='password' class='form-control new-pass-submit' placeholder='' name="confirm">
                                 <div class="error"></div>
                                                             </div>
                         </div>
@@ -1160,7 +1160,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-12">
-                                <input type="submit" name='pass_form' class="btn btn-orange pull-right" value="Изменить">
+                                <input type="submit" name='pass_form' class="btn btn-orange pull-right change-password-submit" value="Изменить">
                             </div>
                         </div>
                     </div>
@@ -1226,8 +1226,11 @@
     #footer .logo{
         background: url('/images/logo.png');
         width:283px;
-        height:48px;
+        height: 80px;
         margin-bottom:20px;
+                    background-size: 100%;
+            background-attachment: cover;
+            background-repeat: no-repeat;
     }
     #footer .menu ul{
         padding-left:0px;
@@ -1296,8 +1299,8 @@
                         
                         <div class='col-sm-3'>
                             <ul>
-                                <li><a href='/trade/'>ТОРГОВАТЬ</a></li>
-                                <li class='sub'><a href='/trade/'>60 Секунд</a></li>
+                                <li><a href='/trade?asset=404/'>ТОРГОВАТЬ</a></li>
+                                <li class='sub'><a href='/trade?asset=404/'>60 Секунд</a></li>
                             </ul>   
                         </div>
                     </div>
@@ -1313,5 +1316,5 @@
   <img src="/images/freekasa.png" title="Прием платежей на сайте">
 </a>
     </div>
-</div><script src="/js/global.js"></script>    </body>
+</div><script src="/js/global.js"></script> <script src="/js/personalinfo.js"></script>   </body>
 </html>

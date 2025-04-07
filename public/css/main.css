@@ -178,6 +178,27 @@ h3 {
   /*background-position:-232px -102px;*/
 }
 
+.paysystems{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+.paysystems .deposit {
+ height: 5rem;
+ display: flex;
+     align-items: center;
+     justify-content: center;
+     width: max-content;
+     padding: 5px 15px;
+     background-color: #ebebeb;
+     border-radius: 15px;
+     cursor: pointer;
+}
+
+.paysystems .deposit-active {
+ border: 1px solid rgb(134, 134, 134);
+ }
+
 .paysystems a.visa_rus {
   width: 69px;
   height: 88px;

@@ -8,7 +8,7 @@
         <meta name="Keywords" content="Форекс, Биржа Форекс, Бинарные Опционы, торговля акциями, Биржа">
         <meta name="description" content="Надежная торговая платформа бинарных опционов с доходностью до 76%. Доступные инструменты для ведения торговли, обучающие материалы и простой в использовании интерфейс. "/>
         <link rel="icon" type='image/png' href="/images/small-logo.png">
-        <title>60 секундные бинарные опционы: самый быстрый инструмент торговли - CryptGates</title>
+        <title>60 секундные бинарные опционы: самый быстрый инструмент торговли - Optigates</title>
         <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/css/main.css?v4" rel="stylesheet" type="text/css" />        <script src="/js/jquery.js" type="text/javascript" /></script><script src="/js/bootstrap.min.js" type="text/javascript" /></script><script src="/js/main.js" type="text/javascript" /></script><script src="/js/angular.min.js" type="text/javascript" /></script><script src="/js/jquery.scrollTo.min.js" type="text/javascript" /></script><script src="/js/chartsMain.js" type="text/javascript" /></script><script src="/js/service.js" type="text/javascript" /></script><script src="/js/charts.js" type="text/javascript" /></script><script src="/js/quotes.js" type="text/javascript" /></script><script src="/js/protocol.js" type="text/javascript" /></script><meta name="frog" content="b4f134ae336d927bcf8206d38534bf79" />
     </head>
     <body ng-app="app">
@@ -153,6 +153,9 @@
         width:283px;
         height:48px;
         background: url('/images/logo2.png');
+                    background-size: 50%;
+            background-attachment: cover;
+            background-repeat: no-repeat;
     }
 
     #header.main .logo{
@@ -362,14 +365,14 @@
 
                     <ul class='list collapse dropdown-menu' aria-expanded="false">
                         <li>
-                            <a href='/en/'>
+                            <a href='/en?asset=404'>
                                 <div class='ico en'></div>
                                 <div class='lang'>English</div>
                             </a>
                         </li>
 
                         <li>
-                            <a href='/ru/'>
+                            <a href='/ru?asset=404'>
                             <div class='ico ru'></div>
                             <div class='lang'>Русский</div>
                             </a>
@@ -746,7 +749,7 @@
                         <div class='form-group'>
                             <div class='row'>
                                 <div class='col-sm-12'>
-                                    <input type='submit' value='ОТКРЫТЬ СЧЕТ' class='btn btn-default' style='float:right'>
+                                    <a href="/en/registration"><input type='submit' value='ОТКРЫТЬ СЧЕТ' class='btn btn-default' style='float:right'></a>
                                 </div>
                             </div>
                         </div>
@@ -925,168 +928,187 @@
         .service('Indicator', function () {
             //this.square = function (a) { return a*a};
             //console.log('SERVICE');
-            this.submitRSI = function($scope,event){
+            this.submitRSI = function ($scope, event) {
                 console.log('RSI RSI');
-                var period = parseInt($('input[name=period]',event.target).val());
-                var overbought = parseInt($('input[name=overbought]',event.target).val());
-                var oversold = parseInt($('input[name=oversold]',event.target).val());
-                
-                $scope.grafic.setRSIindicator(period,overbought,oversold);
+                var period = parseInt($('input[name=period]', event.target).val());
+                var overbought = parseInt($('input[name=overbought]', event.target).val());
+                var oversold = parseInt($('input[name=oversold]', event.target).val());
+
+                $scope.grafic.setRSIindicator(period, overbought, oversold);
                 $('#RSIIndicatorModal').modal('hide');
-                $('#indicators_form #RSItriger').attr('checked',true);
-                
+                $('#indicators_form #RSItriger').attr('checked', true);
+
                 event.preventDefault();
                 //return false;
             }
-            
-            this.submitAlligator = function($scope,event){
-                var jaw = parseInt($('input[name=jaw]',event.target).val());
-                var deviation_jaw = parseInt($('input[name=deviation_jaw]',event.target).val());
-                var color_jaw = $('input[name=color_jaw]',event.target).val();
 
-                var teeth = parseInt($('input[name=teeth]',event.target).val());
-                var deviation_teeth = parseInt($('input[name=deviation_teeth]',event.target).val());
-                var color_teeth = $('input[name=color_teeth]',event.target).val();
+            this.submitAlligator = function ($scope, event) {
+                var jaw = parseInt($('input[name=jaw]', event.target).val());
+                var deviation_jaw = parseInt($('input[name=deviation_jaw]', event.target).val());
+                var color_jaw = $('input[name=color_jaw]', event.target).val();
 
-                var lips = parseInt($('input[name=lips]',event.target).val());
-                var deviation_lips = parseInt($('input[name=deviation_lips]',event.target).val());
-                var color_lips = $('input[name=color_lips]',event.target).val();
+                var teeth = parseInt($('input[name=teeth]', event.target).val());
+                var deviation_teeth = parseInt($('input[name=deviation_teeth]', event.target).val());
+                var color_teeth = $('input[name=color_teeth]', event.target).val();
 
-                $scope.grafic.setAlligatorIndicator([jaw,deviation_jaw,color_jaw],[teeth,deviation_teeth,color_teeth],[lips,deviation_lips,color_lips]);
+                var lips = parseInt($('input[name=lips]', event.target).val());
+                var deviation_lips = parseInt($('input[name=deviation_lips]', event.target).val());
+                var color_lips = $('input[name=color_lips]', event.target).val();
+
+                $scope.grafic.setAlligatorIndicator([jaw, deviation_jaw, color_jaw], [teeth, deviation_teeth, color_teeth], [lips, deviation_lips, color_lips]);
                 $('#alligatorIndicatorModal').modal('hide');
-                $('#indicators_form #AlligatorTriger').attr('checked',true);
-                
+                $('#indicators_form #AlligatorTriger').attr('checked', true);
+
                 event.preventDefault();
             }
-            
-            this.submitSMA = function($scope,event){
-                var period = parseInt($('input[name=period]',event.target).val());
-                var color = $('input[name=color]',event.target).val();
 
-                $scope.grafic.setSMAindicator(period,color);
+            this.submitSMA = function ($scope, event) {
+                var period = parseInt($('input[name=period]', event.target).val());
+                var color = $('input[name=color]', event.target).val();
+
+                $scope.grafic.setSMAindicator(period, color);
                 $('#smaIndicatorModal').modal('hide');
-                $('#indicators_form #SMAtriger').attr('checked',true);
-                
+                $('#indicators_form #SMAtriger').attr('checked', true);
+
                 event.preventDefault();
             }
-            
-            this.submitBollinger = function($scope,event){
-                var period = parseInt($('input[name=period]',event.target).val());
-                var deviation = parseInt($('input[name=deviation]',event.target).val());
-                var color1 = $('input[name=color1]',event.target).val();
-                var color2 = $('input[name=color2]',event.target).val();
-                var color3 = $('input[name=color3]',event.target).val();
 
-                $scope.grafic.setBolingerIndicator(period,deviation,[color1,color2,color3]);
+            this.submitBollinger = function ($scope, event) {
+                var period = parseInt($('input[name=period]', event.target).val());
+                var deviation = parseInt($('input[name=deviation]', event.target).val());
+                var color1 = $('input[name=color1]', event.target).val();
+                var color2 = $('input[name=color2]', event.target).val();
+                var color3 = $('input[name=color3]', event.target).val();
+
+                $scope.grafic.setBolingerIndicator(period, deviation, [color1, color2, color3]);
 
                 $('#bolingerIndicatorModal').modal('hide');
-                $('#indicators_form #BolingerTriger').attr('checked',true);
-                
+                $('#indicators_form #BolingerTriger').attr('checked', true);
+
                 event.preventDefault();
             }
-            
-            this.submitMACD = function($scope,event){
-                var fast = $('input[name=fast]',event.target).val();
-                var slow = $('input[name=slow]',event.target).val();
-                var period = $('input[name=period]',event.target).val();
-                $scope.grafic.setMACDIndicator(fast,slow,period);
+
+            this.submitMACD = function ($scope, event) {
+                var fast = $('input[name=fast]', event.target).val();
+                var slow = $('input[name=slow]', event.target).val();
+                var period = $('input[name=period]', event.target).val();
+                $scope.grafic.setMACDIndicator(fast, slow, period);
 
                 $('#bolingerIndicatorModal').modal('hide');
-                $('#indicators_form #MACDtriger').attr('checked',true);
-                
+                $('#indicators_form #MACDtriger').attr('checked', true);
+
                 event.preventDefault();
             }
         });
-            
-    var app = angular.module("app",['IndicatorsService']);
-    app.controller('controlPanelCtrl', function($scope,Indicator){
+
+
+        async function getUserId() {
+            let res = await fetch('/en/me');
+            let user = await res.json();
+            let id = user._id;
+
+            return id;
+        }
+
+    var app = angular.module("app", ['IndicatorsService']);
+    app.controller('controlPanelCtrl', async function ($scope, Indicator) {
         $scope.assets = {};
-        
-        $scope.traderchoice = 0;
-        
+
+        $scope.traderchoice = Math.floor(Math.random() * (80 - 20 + 1)) + 20;
+
         //$scope.grafic = new Canvas('canvas');
-        $scope.grafic = new Canvas({block:'canvas',height:450,width:690});
+        $scope.grafic = new Canvas({ block: 'canvas', height: 450, width: 690 });
         $scope.params = {};
         $scope.params.asset = 400;
-        $scope.protocol = new Protocol($scope.grafic, 400,'0a527bf4e0fd5ad83683540850cec4e2', '0');
+        const id = await getUserId();
+        $scope.protocol = new Protocol($scope.grafic, id);
         $scope.position = '';
-        $scope.monthes = ['JAN',"FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+        $scope.monthes = ['JAN', "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
         $scope.expiration = '';//дата завершения
         $scope.payment = 76;
         $scope.payouts = '0';
         $scope.investments = '10';
         $scope.current_asset = "400";
-        
-        $scope.time = '';        
-       
-        $('.grafic_panel').on('click','.type',function(){
-            if($(this).attr('class').indexOf('active') != -1) {                    
+
+        $scope.time = '';
+
+        $('.grafic_panel').on('click', '.type', function () {
+            if ($(this).attr('class').indexOf('active') != -1) {
                 $(this).removeClass('active');
-                $scope.grafic.changeToNormalView();                    
-            }else{
+                $scope.grafic.changeToNormalView();
+            } else {
                 $(this).addClass('active');
-                $scope.grafic.changeToCandlesView();                    
+                $scope.grafic.changeToCandlesView();
             }
 
-        });            
+        });
         ////////////////////////
-        
-        $scope.setCurrentTime = function(timestamp){
-            var d = new Date(timestamp*1000);
-            
-            var hours = d.getHours();
-                hours = hours < 10 ? '0'+hours : hours;
-            var minutes = d.getMinutes();
-                minutes = minutes < 10 ? '0'+minutes : minutes;
-            var seconds = d.getSeconds();
-                seconds = hours < 10 ? '0'+seconds : seconds;
-                
-            $scope.time = hours+':'+minutes+':'+seconds;
-            $scope.$digest();
-        }
-        
-        $scope.setPayout = function(){
-            $scope.payouts = ((parseInt($scope.investments)/100 * 76)+parseInt($scope.investments) ).toFixed(2) ;
+
+        $scope.setCurrentTime = function (timestamp) {
+                        var d = new Date(timestamp * 1000);
+                        $scope.servertime = timestamp;
+                        var hours = d.getHours();
+                        hours = hours < 10 ? '0' + hours : hours;
+                        var minutes = d.getMinutes();
+                        minutes = minutes < 10 ? '0' + minutes : minutes;
+                        var seconds = d.getSeconds();
+                        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                        $scope.time = hours + ':' + minutes + ':' + seconds;
+                        $scope.$digest();
+                    }
+
+                    setInterval(() => {
+                            $scope.traderchoice = Math.floor(Math.random() * (80 - 20 + 1)) + 20;
+                        }, Math.floor(Math.random() * (20000 - 4000 + 1)) + 4000)
+
+        $scope.setPayout = function () {
+            $scope.payouts = ((parseInt($scope.investments) / 100 * 76) + parseInt($scope.investments)).toFixed(2);
         }
         $scope.setPayout();
-        
-        $scope.setSecondsLeft = function(seconds){
-            var minutes = Math.floor(seconds/60);
-            var seconds = seconds - (minutes*60);
-            
-            minutes = minutes < 10 ? '0'+minutes : minutes;
-            seconds = seconds < 10 ? '0'+seconds : seconds;
-            
-            $scope.seconds_left = minutes+':'+seconds;
-        }
-        
-        $scope.setExpirationDate = function(time){
-            var d = new Date(time*1000);
-            
-            var day = d.getDate();            
-            day = day < 10?'0'+day:day;
-            var month = d.getMonth();
-            var hours = d.getHours();
-            hours = hours< 10?'0'+hours:hours;
-            var minutes = d.getMinutes();
-            minutes = minutes< 10?'0'+minutes:minutes;
-            var seconds = d.getSeconds();
-            seconds = seconds< 10?'0'+seconds:seconds;
-            
-            $scope.expiration = day+' '+$scope.monthes[month]+' '+hours+':'+minutes+':'+seconds;
-        }
 
-        //initIndicators(grafic);
-        $scope.setStartPosition = function(data){
-            var cur,pre;
-            for(var key in data){
-                if(cur) pre = cur;                
+        $scope.setSecondsLeft = function (seconds) {
+                        var minutes = Math.floor(seconds / 60);
+                        var seconds = seconds - (minutes * 60);
+
+                        minutes = minutes < 10 ? '0' + minutes : minutes;
+                        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                        $scope.seconds_left = minutes + ':' + seconds;
+                    }
+
+                    $scope.setExpirationDate = function (time) {
+                        if(time == undefined) return;
+                        var d = new Date(time * 1000);
+
+                        var day = d.getDate();
+                        day = day < 10 ? '0' + day : day;
+                        var month = d.getMonth();
+                        var hours = d.getHours();
+                        hours = hours < 10 ? '0' + hours : hours;
+                        var minutes = d.getMinutes();
+                        minutes = minutes < 10 ? '0' + minutes : minutes;
+                        var seconds = d.getSeconds();
+                        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                        $scope.expiration = day + ' ' + $scope.monthes[month] + ' ' + hours + ':' + minutes + ':' + seconds;
+                    }
+
+                    document.querySelector('.type').onclick = function() {
+                        $scope.grafic.charts[0].type = $scope.grafic.charts[0].type == 'candles' ? 'normal' : 'candles'
+                        $scope.grafic.charts[0].render($scope.grafic.charts[0].aData)
+                    }
+
+        $scope.setStartPosition = function (data) {
+            var cur, pre;
+            for (var key in data) {
+                if (cur) pre = cur;
                 cur = key;
-            }                
-            
-            if(data[cur]*1 < data[pre]*1){
+            }
+
+            if (data[cur] * 1 < data[pre] * 1) {
                 $scope.position_status = 0;
-            }else{
+            } else {
                 $scope.position_status = 1;
             }
             $scope.position = data[cur];
@@ -1095,134 +1117,125 @@
             $scope.grafic.setZoom(60);
             $scope.grafic.changeToCandlesView();
         }
-        
-        $scope.gag = function(){
+
+        $scope.gag = function () {
             //$('#notAvailibleModal').modal('show');                
             $('#canvas #gag').remove();
-            var d = new Date($scope.assets[$scope.current_asset][4]*1000);
+            var d = new Date($scope.assets[$scope.current_asset][4] * 1000);
 
-            var year = d.getYear()+1900;
-            var month = d.getMonth()+1;
-                month = month < 10 ? '0'+month:month
+            var year = d.getYear() + 1900;
+            var month = d.getMonth() + 1;
+            month = month < 10 ? '0' + month : month
             var day = d.getDate();
-                day = day < 10?'0'+day:day;
+            day = day < 10 ? '0' + day : day;
             var hours = d.getHours();
-                hours = hours < 10 ? '0'+hours : hours;
+            hours = hours < 10 ? '0' + hours : hours;
             var minutes = d.getMinutes();
-                minutes = minutes < 10 ? '0'+minutes: minutes;
-            var text = year+'/'+month+'/'+day+' '+hours+':'+minutes;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            var text = year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
 
-            $('#canvas').append('<div id="gag"><span>График не активен Торговля будет доступна: </br>'+text+'</span></div>');
-        }
-        
-        $scope.protocol.onDataReceive(function(json){
-            if(json.data != undefined){
-                $('#canvas #gag').remove();
-                            
-                $scope.traderchoice = json.tradersChoice;
-
-                $scope.setCurrentTime(json.time);
-
-                $scope.grafic.syncTime(json.time);
-                $scope.grafic.addData(json);
-
-                $scope.$digest();
-                $scope.setStartPosition(json.data);
-
-            }else{
-                $scope.gag();
-            }
-        });
-
-        $scope.protocol.onTimeSync(function(time){
-            $scope.setCurrentTime(time);
-            $scope.grafic.syncTime(time);
-            //console.log($scope.grafic.getSecondsLeft());
-            
-            $scope.setSecondsLeft($scope.grafic.seconds_left);
-            $scope.setExpirationDate($scope.grafic.end_expiration);
-            
-            
-            $scope.$digest();
-        });
-
-        $scope.protocol.onUpdate(function(element){
-            if (element.asset != $scope.current_asset)return;
-            if(element.amount < $scope.position){
-                $scope.position_status = 0;
-            }else{
-                $scope.position_status = 1;
-            }
-
-            $scope.position = element.amount;
-            
-            $scope.$digest();
-            $scope.grafic.addPosition(element);
-        });
-        
-        $scope.protocol.onAsset(function(data,asset){
-            $scope.params.asset = asset;
-            $scope.assets = data;
-            
-            $scope.$digest();
-        });
-        
-        $scope.changeAsset = function(asset){            
-            if(asset == undefined){
-                asset = parseInt($scope.current_asset);
-            }
-            $scope.protocol.changeAsset(asset);
+            $('#canvas').append('<div id="gag"><span>Graph is not active Trade will be available: </br>' + text + '</span></div>');
         }
 
+        $scope.protocol.onTimeSync(function (time) {
+                        $scope.setCurrentTime(time);
+                        $scope.grafic.syncTime(time);
 
-        $scope.trade = function(event){
+                        if ($scope.grafic.activeDeals == false) {
+                            var d = new Date($scope.grafic.serverTime * 1000);
+                            var seconds = d.getSeconds();
+                            if (seconds < 30) {
+                                d.setSeconds(0);
+                                $scope.grafic.end_expiration = Math.floor(d.getTime() / 1000) + 60;
+                            }
+                            else {
+                                d.setSeconds(0);
+                                $scope.grafic.end_expiration = Math.floor(d.getTime() / 1000) + 120;
+                            }
+                        }
+                        $scope.setSecondsLeft($scope.grafic.seconds_left);
+                        $scope.setExpirationDate($scope.grafic.end_expiration);
+
+                        $scope.$digest();
+                    });
+
+                    $scope.protocol.onAsset(function (data, asset) {
+                        $scope.params.asset = asset;
+                        $scope.assets = data;
+
+                        $scope.$digest();
+                    });
+                    $scope.protocol.onGetDeals(function (deals) {
+                        $scope.deals = deals;
+                        $scope.$digest();
+                    });
+
+                    $scope.changeAsset = function (asset) {
+                        if (asset == undefined) {
+                            asset = parseInt($scope.current_select_asset);
+                        }
+
+                        $scope.updatePause = true;
+                        $scope.current_asset = asset;
+
+                        const newUrl = window.location.origin + window.location.pathname + "?asset=" + asset;
+                        
+                        history.pushState({foo: "bar"}, "page2", newUrl);
+
+                        window.location.href = newUrl;
+
+                        $scope.protocol.changeAsset(asset);
+                    }
+
+
+        $scope.trade = function (event) {
             /*if($scope.bet_position == undefined){
                 event.preventDeafult();
                 return false;
             }
 
             alert('Вы должны авторизироваться для совершения сделок');*/
-            $('.accepted_bet').css({'display':'block'});
+            $('.accepted_bet').css({ 'display': 'block' });
             event.preventDefault();
         }
-        $scope.call = function(){
+        $scope.call = function () {
             $scope.bet_position = 1;
 
-            $('#controls input[type=submit]').removeClass('put').addClass('call');                
+            $('#controls input[type=submit]').removeClass('put').addClass('call');
         }
-        $scope.put = function(){                
+        $scope.put = function () {
             $scope.bet_position = 0;
-            $('#controls input[type=submit]').removeClass('call').addClass('put');                
+            $('#controls input[type=submit]').removeClass('call').addClass('put');
         }
 
-        $scope.hoverCall = function(){            
+        $scope.hoverCall = function () {
             $scope.grafic.setCallOnHover();
         }
-        
-        $scope.hoverPut = function(){
+
+        $scope.hoverPut = function () {
             $scope.grafic.setPutOnHover();
         }
-        
-        $scope.unsetHover = function(){
+
+        $scope.unsetHover = function () {
             $scope.grafic.unsetOnHover();
         }
 
-/*$scope.test = function(){
-    console.log($scope.current_asset);
-    console.log('TEST TETST ET T');
-}*/
-        
-        $scope.setZoom = function($event){
+        /*$scope.test = function(){
+            console.log($scope.current_asset);
+            console.log('TEST TETST ET T');
+        }*/
+
+        $scope.setZoom = function ($event) {
             var value = parseInt($($event.target).text());
             console.log(value);
             $scope.grafic.setZoom(value);
             $('.zoom_menu li').removeClass('active');
             $($event.target).addClass('active');
         }
-        
-         $scope.checkChecked = function($event){                
-                return $event.target.checked;
-            }
+
+        $scope.checkChecked = function ($event) {
+            return $event.target.checked;
+        }
     });
 </script>
 <style>
@@ -1918,7 +1931,7 @@
                             <div class="col-sm-6">
                                 <label style='color:white;'>Активы</label>
                                 
-                                <select style="height:26px; padding: 0px 5px;" class='form-control' ng-model="current_asset" ng-click="changeAsset()">
+                                <select style="height:26px; padding: 0px 5px;" class='form-control' ng-model="current_select_asset" ng-change="changeAsset()">
                                     <option ng-repeat="(key,item) in assets" value="{{key}}" data-start="{{item[3]}}" data-end="{{item[4]}}">{{item[1]}}</option>
                                 </select>
                             </div>
@@ -1932,7 +1945,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-12">
-                                <input style="width:126px; height:32px; font-weight:bolder; text-align: center; margin:auto; color:{{position_status == 1 ? 'green':'red'}}" type="text" class="form-control" value="{{position}}">
+                                <input style="width:126px; height:32px; font-weight:bolder; text-align: center; margin:auto; color:{{position_status == 1 ? 'green':'red'}}" type="text" class="curr-price-input form-control" value="{{position}}">
                             </div>                        
                         </div>
                     </div>
@@ -2491,8 +2504,11 @@
     #footer .logo{
         background: url('/images/logo.png');
         width:283px;
-        height:48px;
+        height: 80px;
         margin-bottom:20px;
+                    background-size: 100%;
+            background-attachment: cover;
+            background-repeat: no-repeat;
     }
     #footer .menu ul{
         padding-left:0px;
@@ -2561,8 +2577,8 @@
                         
                         <div class='col-sm-3'>
                             <ul>
-                                <li><a href='/trade/'>ТОРГОВАТЬ</a></li>
-                                <li class='sub'><a href='/trade/'>60 Секунд</a></li>
+                                <li><a href='/trade?asset=404/'>ТОРГОВАТЬ</a></li>
+                                <li class='sub'><a href='/trade?asset=404/'>60 Секунд</a></li>
                             </ul>   
                         </div>
                     </div>
@@ -2571,8 +2587,8 @@
         </div>
         <div class='bottom'>
             <p>You haven`t made any investments in Option builder tool yet. To make an investment you should: Choose the asset you want to trade with, enter your current investment amount. And choose how will asset behavior: if it will rise - press HIGH button, other way press LOW button. Select the profit and the pay off level. Confirm your deal with the Confirmal button. Due to different time zones at the worldwide stocks, some assets could be inactive or might has limited availability. If the asset`s value didn`t change sinse made an investment, the full investment price will be returned to investor.</p>
-            <p>Legal: cryptgates.com is a trading name of CryptGates, registration number: IBC 2015 (Suite 305, Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
-            <div class='copyrights'>© 2025 | CryptGates - All rights reserved</div>
+            <p>Legal: Optigates.com is a trading name of Optigates, registration number: IBC 2015 (Suite 305, Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
+            <div class='copyrights'>© 2025 | Optigates - All rights reserved</div>
         </div>
 <a href="https://freekassa.ru" target="_blank" rel="noopener noreferrer">
   <img src="/images/freekasa.png" title="Прием платежей на сайте">

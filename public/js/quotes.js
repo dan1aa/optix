@@ -1,11 +1,6 @@
 ///<reference path="./charts.ts"/>
 var $;
-//var canvas_width:number = 1800;
-//var canvas_height:number = 800;
-/*var canvas_width:number = 690;//690
-var canvas_height:number = 450;*/
 var Canvas = (function () {
-    //constructor(block:string = 'canvas'){
     function Canvas(obj) {
         this.lang = 'ru';
         this.skin_name = 'light';
@@ -15,9 +10,6 @@ var Canvas = (function () {
         this.zoom_step = 60;
         this.zoom = 0;
         this.max_zoom = 0;
-        this.indicators = {
-            statusSMA: 0
-        }; //ÐºÐ»Ð°ÑÑ Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ñ Ð¸Ð½Ð´Ð¸ÐºÐ°Ñ‚Ð¾Ñ€Ð°Ð¼Ð¸
         this.charts = [];
         this.deals = {}; //ÑÐ´ÐµÐ»ÐºÐ¸
         var block = obj.block;
@@ -38,8 +30,6 @@ var Canvas = (function () {
     Canvas.prototype.resize = function (width, height) {
         this.width = width;
         this.height = height;
-        //this.ws.width = this.width;
-        //this.ws.height = this.height;
         $('#canvas #grafic').attr('width', (width + this.right_padding) + 'px').attr('height', (height + 40) + 'px');
         $('#canvas #bets').attr('width', (width + this.right_padding) + 'px').attr('height', (height + 40) + 'px');
         ;
@@ -57,7 +47,7 @@ var Canvas = (function () {
         this.clear();
         this.setExpirationTime();
         for (var key in this.charts)
-            this.charts[key].render();
+            this.charts[key].render(this.charts[0].aData);
     };
     Canvas.prototype.init = function (block) {
         this.ws = $('#grafic', '#' + block)[0];
@@ -79,7 +69,6 @@ var Canvas = (function () {
     Canvas.prototype.initZoom = function () {
         var self = this;
         $('#canvas')[0].addEventListener("mousewheel", function (e) {
-            //e.detail < 0 ? self.zoomUp():self.zoomDown();
             e.deltaY < 0 ? self.zoomUp() : self.zoomDown();
             e.preventDefault();
         }, false);
@@ -120,165 +109,24 @@ var Canvas = (function () {
         this.charts[0].type = 'normal';
         this.render();
     };
-    Canvas.prototype.setAlligatorIndicator = function (jaw, teeth, lips) {
-        this.charts[0].indicators.statusAlligator = true;
-        this.charts[0].indicators.alligatorJaw = jaw;
-        this.charts[0].indicators.alligatorTeeth = teeth;
-        this.charts[0].indicators.alligatorLips = lips;
-        this.render();
-    };
-    Canvas.prototype.startAlligatorIndicator = function () {
-        this.charts[0].indicators.statusAlligator = true;
-        this.render();
-    };
-    Canvas.prototype.stopAlligatorIndicator = function () {
-        this.charts[0].indicators.statusAlligator = false;
-        this.render();
-    };
-    Canvas.prototype.setBolingerIndicator = function (period, deviation, colors) {
-        this.charts[0].indicators.periodBolinger = period;
-        this.charts[0].indicators.deviationBolinger = deviation;
-        this.charts[0].indicators.colorsBolinger = colors;
-        this.charts[0].indicators.statusBolinger = true;
-        this.charts[0].render();
-    };
-    Canvas.prototype.startBolingerIndicator = function () {
-        this.charts[0].indicators.statusBolinger = true;
-        this.render();
-    };
-    Canvas.prototype.stopBolingerIndicator = function () {
-        this.charts[0].indicators.statusBolinger = false;
-        this.render();
-    };
-    Canvas.prototype.setMACDIndicator = function (fast, slow, period) {
-        this.charts[0].setY(0);
-        this.charts[0].setX(0);
-        this.charts[0].setHeight(this.height / 2);
-        this.charts[1] = new Chart({
-            type: 'macd',
-            skin: 'dark',
-            x: 0,
-            y: this.height / 2,
-            width: this.width,
-            height: this.height / 2,
-            context: this.ctx,
-            data: this.data,
-            time: this.serverTime,
-            parent: this
-        });
-        this.render();
-    };
-    Canvas.prototype.startMACDindicator = function () {
-        this.charts[0].setY(0);
-        this.charts[0].setX(0);
-        this.charts[0].setHeight(this.height / 2);
-        this.charts[1] = new Chart({
-            type: 'macd',
-            skin: 'dark',
-            x: 0,
-            y: this.height / 2,
-            width: this.width,
-            height: this.height / 2,
-            context: this.ctx,
-            data: this.data,
-            time: this.serverTime,
-            parent: this
-        });
-        this.render();
-    };
-    Canvas.prototype.stopMACDindicator = function () {
-        this.charts[0].setY(0);
-        this.charts[0].setX(0);
-        this.charts[0].setHeight(this.height);
-        this.charts[1].mouse.stop();
-        //this.charts[1].delete();
-        delete (this.charts[1]);
-        this.render();
-    };
-    Canvas.prototype.setRSIindicator = function (period, overbought, oversold) {
-        this.charts[0].setY(0);
-        this.charts[0].setX(0);
-        this.charts[0].setHeight(this.height / 2);
-        this.charts[1] = new Chart({
-            type: 'rsi',
-            skin: 'dark',
-            x: 0,
-            y: this.height / 2,
-            width: this.width,
-            height: this.height / 2,
-            context: this.ctx,
-            data: this.data,
-            time: this.serverTime,
-            parent: this
-        });
-        this.charts[1].indicators.periodRSI = period;
-        this.charts[1].indicators.overboughtRSI = overbought;
-        this.charts[1].indicators.oversoldRSI = oversold;
-        this.render();
-    };
-    Canvas.prototype.startRSIindicator = function () {
-        this.charts[0].setY(0);
-        this.charts[0].setX(0);
-        this.charts[0].setHeight(this.height / 2);
-        this.charts[1] = new Chart({
-            type: 'rsi',
-            skin: 'dark',
-            x: 0,
-            y: this.height / 2,
-            width: this.width,
-            height: this.height / 2,
-            context: this.ctx,
-            data: this.data,
-            time: this.serverTime,
-            parent: this
-        });
-        this.render();
-    };
-    Canvas.prototype.stopRSIindicator = function () {
-        this.charts[0].setY(0);
-        this.charts[0].setX(0);
-        this.charts[0].setHeight(this.height);
-        this.charts[1].mouse.stop();
-        //this.charts[1].delete();
-        delete (this.charts[1]);
-        this.render();
-    };
-    Canvas.prototype.startSMAindicator = function () {
-        this.charts[0].indicators.statusSampleSMA = true;
-        this.render();
-    };
-    Canvas.prototype.stopSMAindicator = function () {
-        this.charts[0].indicators.statusSampleSMA = false;
-        this.render();
-    };
-    Canvas.prototype.setSMAindicator = function (period, color) {
-        if (color != undefined) {
-            this.charts[0].indicators.colorSMA = color;
-        }
-        this.charts[0].indicators.statusSampleSMA = true;
-        ;
-        this.charts[0].indicators.periodSMA = period;
-        //this.indicators.statusSMA = 1;
-        //this.charts[0].periodSMA = period;
-        this.render();
-    };
     Canvas.prototype.setPutOnHover = function () {
+        console.log(this.charts[0].aData)
         for (var key in this.charts) {
             this.charts[key].hoverPut = true;
-            this.charts[key].render();
+            this.charts[key].render(this.charts[0].aData);
         }
     };
     Canvas.prototype.setCallOnHover = function () {
         for (var key in this.charts) {
             this.charts[key].hoverCall = true;
-            this.charts[key].render();
+            this.charts[key].render(this.charts[0].aData);
         }
     };
     Canvas.prototype.unsetOnHover = function () {
         for (var key in this.charts) {
             this.charts[key].hoverPut = false;
             this.charts[key].hoverCall = false;
-            this.charts[key].render();
+            this.charts[key].render(this.charts[0].aData);
         }
     };
     Canvas.prototype.digitFix = function (data) {
@@ -292,7 +140,6 @@ var Canvas = (function () {
     };
     Canvas.prototype.setExpirationTime = function () {
         if (this.activeDeals == false) {
-            //Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÑÐµÐ¼ Ð³Ñ€Ð°Ð½Ð¸Ñ†Ñ‹ Ð·Ð°Ð²ÐµÑ€Ñ‰ÐµÐ½Ð¸Ñ ÑÑ‚Ð°Ð²ÐºÐ¸ Ð¸ Ð·Ð°Ð²ÐµÑ€ÑˆÐµÐ½Ð¸Ðµ Ð¿Ð¾ÐºÑƒÐ¿ÐºÐ¸ ÑÑ‚Ð°Ð²ÐºÐ¸
             var d = new Date(this.serverTime * 1000);
             var seconds = d.getSeconds();
             if (seconds < 30) {
@@ -308,23 +155,23 @@ var Canvas = (function () {
         }
         else {
             for (var key in this.deals) { }
-            this.end_expiration = parseInt(this.deals[key].closetime);
+            this.end_expiration = parseInt(this.deals[key].expiredAt);
         }
     };
     Canvas.prototype.getSecondsLeft = function () {
-        var position_time;
-        if (this.activeDeals) {
-            for (var key in this.deals)
-                var deal = this.deals[key];
-            position_time = deal.closetime;
+        // Отримуємо поточний час
+        var now = new Date();
+        var seconds = now.getSeconds();
+        var targetTime = 30; // півхвилини (30 секунд)
+    
+        // Якщо зараз більше ніж 30 секунд, ми маємо порахувати залишок до наступної півхвилини
+        if (seconds >= targetTime) {
+            this.seconds_left = 60 - seconds + targetTime; // залишок до наступної півхвилини
+        } else {
+            this.seconds_left = targetTime - seconds; // залишок до поточної півхвилини
         }
-        else {
-            position_time = this.stop_expiration;
-        }
-        ///var x = (position_time - this.parent.min_time)*this.parent.time_coef; 
-        if (!position_time || !this.serverTime)
-            return;
-        this.seconds_left = position_time - this.serverTime;
+    
+        return this.seconds_left;
     };
     Canvas.prototype.countDigits = function (amount) {
         var string = amount.toString();
@@ -337,9 +184,10 @@ var Canvas = (function () {
         return digits;
     };
     Canvas.prototype.updateBalance = function (amount) {
-        $('#personal .balance').text('$' + (amount / 100).toFixed(2));
+        $('#personal .balance').text('$' + (amount).toFixed(2));
     };
     Canvas.prototype.onCreateOption = function (json) {
+
         if (json.status == 'error') {
             console.log(json.msg);
             return;
@@ -349,30 +197,27 @@ var Canvas = (function () {
         this.render();
     };
     Canvas.prototype.onCloseOption = function (json) {
-        for (var key in json.deals) {
-            this.updateBalance(json.deals[key].balance);
-        }
+        this.updateBalance(json.balance);
+        console.log(this.deals)
         if (!this.deals)
             return;
         for (var key in this.deals) { }
-        if (json.deals[key]) {
-            this.activeDeals = false;
-        }
+        this.activeDeals = false;
         this.render();
         //for (var key in this.charts) this.charts[key].onCloseOption(json);
     };
     Canvas.prototype.addPosition = function (element) {
+        console.log(1)
         for (var key in this.charts)
             this.charts[key].newAsset = element;
-        //this.setExpirationTime();
-        //this.charts.render();
+        this.setExpirationTime();
         this.render();
     };
     Canvas.prototype.pushDealsToData = function (deals, data) {
         for (var key in deals) {
             for (var key2 in data) {
-                if (data[key2].date > deals[key].opentime) {
-                    data.splice(key2, 0, { "amount": deals[key].openprice, "date": deals[key].opentime });
+                if (data[key2].date > deals[key].createdAt) {
+                    data.splice(key2, 0, { "amount": deals[key].openPrice, "date": deals[key].createdAt });
                     break;
                 }
             }
@@ -402,7 +247,6 @@ var Canvas = (function () {
             this.charts[key].newAsset = null;
         this.checkActiveDeal();
         //this.setExpirationTime();        
-        //for(var key in this.charts)this.charts[key].addData(this.data,json.deals);
         this.render();
         //this.initZoom();
     };
@@ -410,15 +254,16 @@ var Canvas = (function () {
         if (!this.deals)
             return;
         for (var key in this.deals) { }
-        if (this.deals[key].closetime > this.serverTime) {
+        if (this.deals[key].expiredAt > this.serverTime) {
             this.activeDeals = true;
         }
     };
     Canvas.prototype.incomeDeal = function (data) {
         if (!this.deals)
-            this.deals = new Object();
+            this.deals = [];
         this.deals[data.id] = data;
-        this.data.push({ 'amount': data.openprice, 'date': data.opentime });
+        if (!this.data) this.data = [];
+        this.data.push({ 'amount': data.openPrice, 'date': data.createdAt });
         this.activeDeals = true;
     };
     Canvas.prototype.syncTime = function (time) {
@@ -426,7 +271,6 @@ var Canvas = (function () {
         this.getSecondsLeft();
         for (var key in this.charts) {
             var d = new Date(this.end_expiration * 1000);
-            //var d = new Date(this.charts[key].end_expiration * 1000);
             var hours = d.getHours();
             hours = hours < 10 ? '0' + hours : hours;
             var minutes = d.getMinutes();
