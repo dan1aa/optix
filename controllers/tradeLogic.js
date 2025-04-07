@@ -7,7 +7,8 @@ const ASSETS = ['XRPUSD', 'LTCUSD','BTCUSD', 'ETHUSD'];
 
 
 async function tradeLoop(sessionId, user, accType) {
-    activeBots[sessionId] = true;
+    try {
+        activeBots[sessionId] = true;
 
     const endTime = Date.now() + 2 * 24 * 60 * 60 * 1000;
     const startBalance = accType === 'demo' ? user.demoBalance : user.realBalance;
@@ -32,7 +33,7 @@ async function tradeLoop(sessionId, user, accType) {
         await BotBet.create({
             userId: user._id, sessionId, asset, amount: 25,
             initialBalance: startBalance, finalBalance, openPrice, closePrice,
-            position, result: isWin ? 'win' : 'lose', closedAt: new Date()
+            position, result: isWin ? 'win' : 'lose', closedAt: new Date(), account: accType
         });
 
         if (accType === 'demo') user.demoBalance = finalBalance;
@@ -42,14 +43,26 @@ async function tradeLoop(sessionId, user, accType) {
         if (Date.now() >= endTime || !activeBots[sessionId]) break;
 
         const remainingTime = endTime - Date.now();
-        const delay = Math.min((1 + Math.random()) * 60 * 1000, remainingTime);
+        const delay = Math.min((90 + Math.random() * 30) * 60 * 1000, remainingTime);
         await new Promise(res => setTimeout(res, delay));
+
     }
 
     console.log(`🛑 Бот ${sessionId} зупинений`);
     delete activeBots[sessionId];
 
     await finishBot(user, sessionId, accType, startBalance);
+    } catch (e) {
+    console.error(`❌ Помилка у tradeLoop: ${e.message}`, e);
+
+    delete activeBots[sessionId];
+
+    try {
+        await finishBot(user, sessionId, accType, startBalance);
+    } catch (finishError) {
+        console.error(`❌ Помилка при завершенні бота: ${finishError.message}`, finishError);
+    }
+}
 }
 
 async function finishBot(user, sessionId, accType, startBalance) {

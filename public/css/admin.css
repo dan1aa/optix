@@ -9,6 +9,9 @@
     height: 100vh;
     display: none;
 }
+body::-webkit-scrollbar {
+    display: none; /* Приховуємо скролбар */
+}
 .row {
     width: 100%;
     height: 80px;
@@ -18,15 +21,27 @@
     border-bottom: 1px solid black;
 }
 .row div{
-    width: 25%;
+    width: 12.5vw;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     background: lightgray;
+    word-wrap: break-word; /* Для старіших браузерів */
+    overflow-wrap: break-word; /* Сучасний спосіб */
+    white-space: normal; /* Дозволяє переносити текст */
+}
+.email-div {
+    width: 20vw !important;
+}
+.ourselves-div {
+    width: 5vw !important;
 }
 .row div:not(:last-child) {
     border-right: 1px solid black;
+}
+.demo-input, .real-input {
+    max-width: 6vw;
 }
 .pass_wrapper {
     width: 100vw;

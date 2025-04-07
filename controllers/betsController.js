@@ -11,6 +11,8 @@ const getNextRoundExpiration = () => {
     return Math.floor(nextMinute.getTime() / 1000);
 };
 
+
+
 async function getCurrentPrice(asset) {
     const url = `https://api.kraken.com/0/public/Ticker?pair=${asset}`;
 
@@ -39,6 +41,7 @@ async function scheduleBetClosure(betId, expiredAt) {
 
     const delaySeconds = unix - now; 
     const delayMs = delaySeconds * 1000;
+    console.log(now, unix, delaySeconds, delayMs)
 
     if (delayMs <= 0) return;
 
@@ -53,6 +56,7 @@ async function scheduleBetClosure(betId, expiredAt) {
 
 
 async function createBet(ssid, [asset, mode, amount, position, type, assetName]) {
+    console.log(ssid, [asset, mode, amount, position, type, assetName])
 
     const user = await User.findById(ssid);
 
@@ -94,49 +98,37 @@ async function createBet(ssid, [asset, mode, amount, position, type, assetName])
 async function closeBet(userId, [betId, closePrice]) {
     if (userId != 'undefined') {
         const bet = await Bet.findById(betId);
-        if (!bet) return { error: "Ставка не знайдена" };
-        if (bet.result !== 'pending') return { error: "Ставка вже закрита" };
+    if (!bet) return { error: "Ставка не знайдена" };
+    if (bet.result !== 'pending') return { error: "Ставка вже закрита" };
+    let isWin;
 
-        // Отримуємо останні 3 ставки користувача
-        const lastBets = await Bet.find({ ssid: userId }).sort({ createdAt: -1 }).limit(3);
-        const lastResults = lastBets.map(b => b.result);
-        
-        // Визначаємо, чи повинна ця ставка бути виграшною
-        let isWin;
-        if (lastResults.length === 0) {
-            isWin = Math.random() < 0.5; // Якщо ставок немає, випадковий вибір
-        } else if (lastResults.includes('lose')) {
-            isWin = true;
-        } else if (lastResults.length === 3 && lastResults.every(r => r === 'win')) {
-            isWin = false;
-        } else {
-            isWin = true;
-        }
+    if (closePrice == bet.openPrice) {
+        isWin = true;
+    } else {
+        isWin = (bet.position === 'call' && closePrice > bet.openPrice) ||
+        (bet.position === 'put' && closePrice < bet.openPrice);
+    }
+    
 
-        // Коригуємо `closePrice`
-        if (isWin) {
-            closePrice = bet.position === 'call' ? closePrice * 1.001 : closePrice * 0.999;
-        } else {
-            closePrice = bet.position === 'call' ? closePrice * 0.999 : closePrice * 1.001;
-        }
+    const payoutMultiplier = 1.76;
+    let profit;
+    if (closePrice != bet.openPrice) profit = isWin ? (bet.amount * payoutMultiplier - bet.amount).toFixed(2) : -bet.amount.toFixed(2);
+    else profit = 0;
 
-        const payoutMultiplier = 1.76;
-        let profit = isWin ? (bet.amount * payoutMultiplier - bet.amount).toFixed(2) : -bet.amount.toFixed(2);
+    bet.closePrice = closePrice;
+    bet.result = isWin ? 'win' : 'lose';
+    bet.profit = parseFloat(profit);
+    await bet.save();
+    const user = await User.findById(userId);
 
-        bet.closePrice = closePrice;
-        bet.result = isWin ? 'win' : 'lose';
-        bet.profit = parseFloat(profit);
-        await bet.save();
+    if (isWin) {
+        if (bet.accType == 'demo') user.demoBalance += parseFloat(profit) + bet.amount;
+        else if (bet.accType == 'real') user.realBalance += parseFloat(profit) + bet.amount;
+        await user.save();
+    }
 
-        const user = await User.findById(userId);
-        if (isWin) {
-            if (bet.accType == 'demo') user.demoBalance += parseFloat(profit) + bet.amount;
-            else if (bet.accType == 'real') user.realBalance += parseFloat(profit) + bet.amount;
-            await user.save();
-        }
-
-        return { id: betId, result: bet.result, profit, closePrice: bet.closePrice,
-                 status: bet.position == 'call' ? 1 : 0, balance: bet.accType == 'demo' ? user.demoBalance : user.realBalance };
+    return { id: betId, result: bet.result, profit, closePrice: bet.closePrice,
+           status: bet.position == 'call' ? 1 : 0, balance: bet.accType == 'demo' ? user.demoBalance : user.realBalance };
     }
 }
 

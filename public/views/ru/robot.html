@@ -8,7 +8,7 @@
         <meta name="Keywords" content="Форекс, Биржа Форекс, Бинарные Опционы, торговля акциями, Биржа">
         <meta name="description" content="Надежная торговая платформа бинарных опционов с доходностью до 76%. Доступные инструменты для ведения торговли, обучающие материалы и простой в использовании интерфейс. "/>
         <link rel="icon" type='image/png' href="/images/small-logo.png">
-        <title>60 секундные бинарные опционы: самый быстрый инструмент торговли - CryptGates</title>
+        <title>60 секундные бинарные опционы: самый быстрый инструмент торговли - Optigates</title>
         <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/css/main.css?v4" rel="stylesheet" type="text/css" />        <script src="/js/jquery.js" type="text/javascript" /></script><script src="/js/bootstrap.min.js" type="text/javascript" /></script><script src="/js/main.js" type="text/javascript" /></script><meta name="frog" content="b4f134ae336d927bcf8206d38534bf79" />
     </head>
     <body ng-app="app">
@@ -497,6 +497,9 @@
         width:283px;
         height:48px;
         background: url('/images/logo2.png');
+                    background-size: 50%;
+            background-attachment: cover;
+            background-repeat: no-repeat;
     }
 
     #header.main .logo{
@@ -967,7 +970,7 @@
      </style>
      <div class="row">
         <div class="col-md-9"></div>
-        <div class="col-md-3">
+        <div class="col-md-3 vip-key-info">
     <div class="alert alert-info" role="alert" style="color: #333;">
 
                     Ваш ключ <span class="label label-primary" style="font-size:14px;">
@@ -1542,9 +1545,7 @@
     </div>   
     <script>
 
-        if (!localStorage.getItem('switch-acc')) {
-            localStorage.setItem('switch-acc', 'demo');
-        } else {
+        localStorage.setItem('switch-acc', 'real')
             if (localStorage.getItem('switch-acc') == 'real') {
                 document.querySelector('.btn_real').className += ' active'
                 document.querySelector('.btn_demo').classList.remove('active')
@@ -1552,14 +1553,13 @@
                 document.querySelector('.btn_demo').className += ' active'
                 document.querySelector('.btn_real').classList.remove('active')
             }
-        }
         fetch('/en/me').then(res => res.json())
         .then(user => {
             const userId = user._id;
 
             const keyDate = user.keyDate;
         
-        document.querySelector('.key-date-until').innerHTML = keyDate.split('T')[0];
+        if (keyDate) document.querySelector('.key-date-until').innerHTML = keyDate.split('T')[0];
 
             document.querySelector('.stop_bot').onclick = function() {
             fetch('/en/stop-bot', {
@@ -1588,8 +1588,11 @@
                 document.querySelector('.inprogress_ico').style.display = 'inline'
             }
         })
-    
-            fetch(`/en/bot-bets/${userId}`)
+        let acc = localStorage.getItem('switch-acc');
+
+        if (!acc) acc = 'demo'
+
+        fetch(`/en/bot-bets/${userId}/${acc}`)
             .then(res => res.json())
             .then(response => {
                 const { bets } = response;
@@ -1620,7 +1623,7 @@
             document.querySelector('.start_bot').onclick = function(e) {
                 const accType = localStorage.getItem('switch-acc') ? localStorage.getItem('switch-acc') : 'demo'
 
-                if (accType == 'real' && user.realBalance < 2000) {
+                if (accType == 'real' && user.realBalance < 200) {
                     document.querySelector('.Insufficient_balance').style.display = 'block';
                     return;
                 }
@@ -1640,30 +1643,107 @@
                     window.location.reload()
                 })
             }
+
+            const formatDate = (date) => {
+                    if (!date) return "—";
+                    const d = new Date(date);
+                    return `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.${d.getFullYear()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`;
+        };
     
     
             document.querySelector('.btn_real').onclick = function() {
-                localStorage.setItem('switch-acc', 'real')
-                document.querySelector('#balance_block').textContent = user.realBalance.toFixed(2);
-                this.className += ' active'
-                document.querySelector('.btn_demo').classList.remove('active')
+            localStorage.setItem('switch-acc', 'real')
+            document.querySelector('#balance_block').textContent = user.realBalance.toFixed(2);
+            this.className += ' active'
+            document.querySelector('.btn_demo').classList.remove('active')
+
+            fetch(`/en/bot-bets/${user._id}/real`)
+            .then(res => res.json())
+            .then(bets => {
+                document.querySelector('.bets-table').innerHTML = `<tr>
+                <th>Котировка</th>
+                <th>Инвестиция</th>
+                <th>Начальный баланс</th>
+                <th>Конечный баланс</th>
+                <th>Цена открытия</th>
+                <th>Цена закрытия</th>
+                <th>Дата начала</th>
+                <th>Дата окончания</th>
+                <th>Позици</th>
+                <th>Выигрыш</th>
+                <th>Статус</th>
+            </tr>`;
+                if (bets) {
+                    bets.bets.forEach(bet => {
+                    document.querySelector('.bets-table').innerHTML += `<tr>    
+                    <td>${bet.asset}</td>
+                    <td>${bet.amount}.00$</td>
+                    <td>${bet.initialBalance.toFixed(2)}</td>
+                    <td>${bet.finalBalance.toFixed(2)}</td>
+                    <td>${bet.openPrice.toFixed(5)}</td>
+                    <td>${bet.closePrice.toFixed(5)}</td>
+                    <td>${formatDate(bet.startedAt)}</td>
+                    <td>${formatDate(bet.closedAt)}</td>
+                    <td><span style="color: ${bet.position == 'call' ? 'green' : 'red'}">${bet.position}</span></td>
+                    <td>${bet.finalBalance - bet.initialBalance < 0 ? "0.00" : (bet.finalBalance - bet.initialBalance).toFixed(2)}</td>
+                    <td>${bet.result}</td>
+                </tr>`;
+                })
+                }
+            })
+
+        }
+        document.querySelector('.btn_demo').onclick = function() {
+            localStorage.setItem('switch-acc', 'demo')
+            document.querySelector('#balance_block').textContent = user.demoBalance.toFixed(2);
+            this.className += ' active'
+            document.querySelector('.btn_real').classList.remove('active')
+
+            fetch(`/en/bot-bets/${user._id}/demo`)
+            .then(res => res.json())
+            .then(bets => {
+                document.querySelector('.bets-table').innerHTML = `<tr>
+                <th>Котировка</th>
+                <th>Инвестиция</th>
+                <th>Начальный баланс</th>
+                <th>Конечный баланс</th>
+                <th>Цена открытия</th>
+                <th>Цена закрытия</th>
+                <th>Дата начала</th>
+                <th>Дата окончания</th>
+                <th>Позици</th>
+                <th>Выигрыш</th>
+                <th>Статус</th>
+            </tr>`;
+                if (bets) {
+                    bets.bets.forEach(bet => {
+                        document.querySelector('.bets-table').innerHTML += `<tr>    
+                        <td>${bet.asset}</td>
+                        <td>${bet.amount}.00$</td>
+                        <td>${bet.initialBalance.toFixed(2)}</td>
+                        <td>${bet.finalBalance.toFixed(2)}</td>
+                        <td>${bet.openPrice.toFixed(5)}</td>
+                        <td>${bet.closePrice.toFixed(5)}</td>
+                        <td>${formatDate(bet.startedAt)}</td>
+                        <td>${formatDate(bet.closedAt)}</td>
+                        <td><span style="color: ${bet.position == 'call' ? 'green' : 'red'}">${bet.position}</span></td>
+                        <td>${bet.finalBalance - bet.initialBalance < 0 ? "0.00" : (bet.finalBalance - bet.initialBalance).toFixed(2)}</td>
+                        <td>${bet.result}</td>
+                    </tr>`;
+                    })
+                }
+            })
+        }
     
-            }
-            document.querySelector('.btn_demo').onclick = function() {
-                localStorage.setItem('switch-acc', 'demo')
-                document.querySelector('#balance_block').textContent = user.demoBalance.toFixed(2);
-                this.className += ' active'
-                document.querySelector('.btn_real').classList.remove('active')
-            }
-    
-            document.querySelector('#balance_block').textContent = user.demoBalance;
+            document.querySelector('#balance_block').textContent = localStorage.getItem('switch-acc') == 'demo' ? user.demoBalance.toFixed(2) : user.realBalance.toFixed(2);
+
     
             document.querySelector('.bot-email').textContent = user.email;
-            document.querySelector('#balance_block').textContent = user.demoBalance;
     
             if (user.isBot) {
                 document.querySelector('.no-robot-container').style.display = 'none'
             } else {
+                document.querySelector('.vip-key-info').style.display = 'none'
                 document.querySelector('.bot-content').style.display = 'none'
                 document.querySelector('.bot-title').style.display = 'none'
             }
@@ -1750,8 +1830,11 @@
     #footer .logo{
         background: url('/images/logo.png');
         width:283px;
-        height:48px;
+        height: 80px;
         margin-bottom:20px;
+                    background-size: 100%;
+            background-attachment: cover;
+            background-repeat: no-repeat;
     }
     #footer .menu ul{
         padding-left:0px;
@@ -1830,8 +1913,8 @@
         </div>
         <div class='bottom'>
             <p>You haven`t made any investments in Option builder tool yet. To make an investment you should: Choose the asset you want to trade with, enter your current investment amount. And choose how will asset behavior: if it will rise - press HIGH button, other way press LOW button. Select the profit and the pay off level. Confirm your deal with the Confirmal button. Due to different time zones at the worldwide stocks, some assets could be inactive or might has limited availability. If the asset`s value didn`t change sinse made an investment, the full investment price will be returned to investor.</p>
-            <p>Legal: cryptgates.com is a trading name of CryptGates, registration number: IBC 2015 (Suite 305, Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
-            <div class='copyrights'>© 2025 | CryptGates - All rights reserved</div>
+            <p>Legal: Optigates.com is a trading name of Optigates, registration number: IBC 2015 (Suite 305, Griffith Corporate Centre, Beachmont, Kingstown, St. Vincent and the Grenadines)</p>
+            <div class='copyrights'>© 2025 | Optigates - All rights reserved</div>
         </div>
 <a href="https://freekassa.ru" target="_blank" rel="noopener noreferrer">
   <img src="/images/freekasa.png" title="Прием платежей на сайте">

@@ -84,7 +84,8 @@ router.post('/:lang/account/change-data', async (req, res) => {
 });
 
 router.post('/:lang/account/change-pass', async (req, res) => {
-    const { currPass, newPass, id } = req.body;
+    try {
+        const { currPass, newPass, id } = req.body;
 
     const user = await User.findOne({_id: id});
 
@@ -97,14 +98,21 @@ router.post('/:lang/account/change-pass', async (req, res) => {
     await User.updateOne({ _id: id }, { $set: { pass: newPass } });
 
     res.json({ message: 'User updated successfully' });
+    } catch(e) {
+        return res.json({e})
+    }
 })
 
 router.get('/:lang/account/open-bets/:sessionId', async (req, res) => {
-    const sessionId = req.params.sessionId;
+    try {
+        const sessionId = req.params.sessionId;
     if (!sessionId) return res.status(400).json({ error: "Session ID is required" });
 
     const openBets = await getOpenBets(sessionId);
     res.json(openBets);
+    } catch(e) {
+        return res.json({e})
+    }
 });
 
 module.exports = router;

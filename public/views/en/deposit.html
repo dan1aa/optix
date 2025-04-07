@@ -13,6 +13,24 @@
     </head>
     <body ng-app="app">
             <script>
+                document.addEventListener("DOMContentLoaded", function () {
+    const paymentItems = document.querySelectorAll(".paysystems .deposit");
+
+    paymentItems.forEach(item => {
+        item.addEventListener("click", function () {
+            paymentItems.forEach(el => el.classList.remove("deposit-active"));
+
+            this.classList.add("deposit-active");
+
+            const selectedId = this.getAttribute("data-id");
+
+            const url = new URL(window.location);
+            url.searchParams.set("payment", selectedId);
+            window.history.replaceState(null, "", url);
+        });
+    });
+});
+
         $('document').ready(function(){
             
             $('#loginModal form').submit(function(){
@@ -522,6 +540,9 @@
         width:283px;
         height:48px;
         background: url('/images/logo2.png');
+                    background-size: 50%;
+            background-attachment: cover;
+            background-repeat: no-repeat;
     }
 
     #header.main .logo{
@@ -885,6 +906,13 @@
                 return;
             }
             
+            const urlParams = new URLSearchParams(window.location.search);
+    const paymentGatewayId = urlParams.get("payment");
+
+    if (!paymentGatewayId) {
+        alert("Please select a payment method!");
+        return;
+    }
             fetch('/en/create-top-up', {
                 method: "POST",
                 headers: {
@@ -894,7 +922,7 @@
                 body: JSON.stringify({
                     amount: +amount,
                     currency: "USD",
-                    paymentGatewayId: 1
+                    paymentGatewayId: paymentGatewayId
                 })
             })
             .then(res => res.json())
@@ -933,29 +961,24 @@ $('body').on('click', '.input-group-btn button', function(event) {
             <h3 style='margin-bottom:30px;font-size:20px;'>1. Select a payment system</h3>
             <ul class="list-inline paysystems">
 			                
-	                        	        <li>
-                	    <a href="/account/deposit/usdttrc/" style="background:url('/images/usdttrc.jpg');background-position:0;" class="visa_usd "></a>
-	                </li>
-        	        
-	                        	        <li>
-                	    <a href="/account/deposit/card-fk/" style="background:url('/images/ps-1.png');background-position:0;" class="visa_usd active"></a>
-	                </li>
-        	        
-	                
-
-	                
-	                
-	                
-	                
-	                
-	                	                
-                
-                
-                
-                
-                
-                
-                
+                <li class="deposit" data-id="24">
+                    <img src="/images/Payments/BITCOIN.svg" alt="">
+                </li>
+                <li class="deposit" data-id="26">
+                    <img src="/images/Payments/ETH.svg" alt="">
+                </li>
+                <li class="deposit" data-id="2">
+                    <img src="/images/Payments/FKWALLET.svg" alt="">
+                </li>
+                <li class="deposit" data-id="25">
+                    <img src="/images/Payments/LITECOIN.svg" alt="">
+                </li>
+                <li class="deposit" data-id="15">
+                    <img src="/images/Payments/TRC20.svg" alt="">
+                </li>
+                <li class="deposit" data-id="39">
+                    <img src="/images/Payments/TRX.svg" alt="">
+                </li>
                             </ul>
         </div>
         
@@ -1046,8 +1069,11 @@ $('body').on('click', '.input-group-btn button', function(event) {
     #footer .logo{
         background: url('/images/logo.png');
         width:283px;
-        height:48px;
+        height: 80px;
         margin-bottom:20px;
+                    background-size: 100%;
+            background-attachment: cover;
+            background-repeat: no-repeat;
     }
     #footer .menu ul{
         padding-left:0px;

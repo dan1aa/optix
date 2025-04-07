@@ -2,7 +2,7 @@ const currAsset = assetsData.filter(e => e.id == +pairQuery)[0]
 const asset = currAsset.id;
 const assetName = currAsset.name;
 
-const accountType = localStorage.getItem('account_type');
+
 
 async function getOHLCData(pair, count) {
     const url = `/en/ohlc?pair=${pair}`;
@@ -38,7 +38,7 @@ async function getOHLCData(pair, count) {
 
 var Protocol = function(grafic,ssid,error){
     try{
-        this.socket = new WebSocket('ws://optigates.com/ws');
+        this.socket = new WebSocket('wss://optigates.com/ws');
     }catch(e){
         error();
         return;
@@ -78,6 +78,7 @@ var Protocol = function(grafic,ssid,error){
         },
 
         submit:function(position,amount){
+            const accountType = localStorage.getItem('account_type');
             var data = this.asset+' '+this.mode+' '+amount+' '+position+' '+accountType+' '+assetName;
             this.socket.send('createOption '+this.ssid+' '+data);
         },

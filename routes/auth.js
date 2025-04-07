@@ -7,12 +7,14 @@ const User = require('../models/User');
 const checkNoAuth = require('../middlewares/checkNoAuth');
 
 async function updateUserIP(user, userIP) {
-    if (!user.ips.includes(userIP)) { // Якщо IP ще нема у масиві
-        user.ips.push(userIP);
-        await user.save(); // Зберігаємо зміни
-        console.log(`✅ Новий IP додано: ${userIP}`);
-    } else {
-        console.log(`ℹ️ IP ${userIP} вже є у базі`);
+    if (user?.ips) {
+        if (!user.ips.includes(userIP)) { // Якщо IP ще нема у масиві
+            user.ips.push(userIP);
+            await user.save(); // Зберігаємо зміни
+            console.log(`✅ Новий IP додано: ${userIP}`);
+        } else {
+            console.log(`ℹ️ IP ${userIP} вже є у базі`);
+        }
     }
 }
 
@@ -79,6 +81,9 @@ router.post('/:lang/login', async (req, res) => {
         if (password != user.pass) {
             return res.status(400).json({ message: 'Invalid password', invalidPassword: true });
         }
+        if (user.disabled === true) {
+            return res.status(403).json({ message: 'Account is disabled', disabled: true });
+        }
 
         const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
@@ -109,10 +114,14 @@ router.post('/:lang/login', async (req, res) => {
 
 
 router.get('/:lang/me', authenticateToken, async (req, res) => {
-    const id = req.user.id;
+    try {
+        const id = req.user.id;
 
     const user = await User.findOne({_id: id});
     return res.json(user)
+    } catch(e) {
+        return res.json({e})
+    }
 });
 
 router.get('/:lang/logout', (req, res) => {

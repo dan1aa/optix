@@ -12,7 +12,8 @@ const BotBetSchema = new mongoose.Schema({
     position: { type: String, enum: ['call', 'put'], required: true },
     result: { type: String, enum: ['win', 'lose'] },
     startedAt: { type: Date, default: Date.now },
-    closedAt: { type: Date }
+    closedAt: { type: Date },
+    account: { type: String, required: true }
 });
 
 module.exports = mongoose.model('BotBet', BotBetSchema);

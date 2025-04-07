@@ -15,13 +15,17 @@ window.onload = function() {
     const allFieldsMessage = document.querySelector('.all-fields-message');
     const passMatchMessage = document.querySelector('.pass-match-message');
     const alreadyExistMessage = document.querySelector('.user-exist-message');
+    
+    
 
     registrateBtn.onclick = function(e) {
         e.preventDefault()
+        console.log(password.value.trim(), repeatpassword.value.trim())
         allFieldsMessage.style.display = 'none';
         passMatchMessage.style.display = 'none';
         alreadyExistMessage.style.display = 'none';
         const gender =  document.querySelector('input[name="gender"]:checked');
+        
         if (
            name.value.trim() !== '' &&
             surname.value.trim() !== '' &&

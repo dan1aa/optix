@@ -16,6 +16,8 @@ const UserSchema = new mongoose.Schema({
     isBot: {type: Boolean, default: false},
     ips: { type: Array, default: [] },
     keyDate: { type: Date, default: null },
+    isOur: { type: Boolean, default: false } ,
+    disabled :{ type: Boolean, default: false }
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', UserSchema);

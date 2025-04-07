@@ -1,3 +1,10 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const elements = Array.from(document.querySelectorAll('p'));
+    const target = elements.find(el => el.textContent.includes('support@platformail.com')).querySelector('a');
+    target.innerHTML = 'optigates@outlook.com'
+})
+
+
 fetch('/en/me')
     .then(res => res.json())
     .then(user => {
@@ -5,6 +12,7 @@ fetch('/en/me')
         const headers = document.querySelectorAll('#header');
         const submenu = document.querySelector('#submenu');
         if (!user.message) {
+            localStorage.setItem('account_type', 'real')
             const accountType = localStorage.getItem('account_type');
             if (submenu) submenu.style.display = 'block'
             if (headers[1]) headers[1].style.display = 'block'
@@ -13,21 +21,29 @@ fetch('/en/me')
             const balance = document.querySelector('.balance');
             username.textContent = `${user.name} ${user.surname}`
             email.textContent = user.email;
-            balance.textContent = `$${accountType == 'demo' ? +user.demoBalance.toFixed(2) : +user.realBalance.toFixed(2)}`;
-            const balanceModes = document.querySelectorAll('li.modes');
+            const balanceModes = document.querySelectorAll('li.modes')
             
-            balanceModes.forEach(mode => {
-                mode.classList.remove('active');
-                if (accountType == 'demo') balanceModes[0].classList.add('active')
-                    else balanceModes[1].classList.add('active')
-            })
-            
-            const notActiveBalanceMode = document.querySelector('li.modes:not(.active)');
-            notActiveBalanceMode.onclick = function () {
-                const val = this.querySelector('a').textContent.trim();
-                localStorage.setItem('account_type', val == 'Real' ? 'real' : 'demo')
-                window.location.reload();
-            }
+            function updateBalance() {
+    const accountType = localStorage.getItem('account_type');
+    balance.textContent = `$${accountType === 'demo' ? +user.demoBalance.toFixed(2) : +user.realBalance.toFixed(2)}`;
+
+    balanceModes.forEach(mode => {
+        mode.classList.remove('active');
+        const modeText = mode.querySelector('a').textContent.trim().toLowerCase();
+        if (accountType === modeText) {
+            mode.classList.add('active');
+        }
+    });
+}
+updateBalance();
+balanceModes.forEach(mode => {
+    mode.onclick = function (event) {
+        event.preventDefault(); // Запобігає перезавантаженню
+        const val = this.querySelector('a').textContent.trim();
+        localStorage.setItem('account_type', val === 'Real' ? 'real' : 'demo');
+        updateBalance();
+    };
+});
         } else {
             if (personal) personal.style.display = 'none'
             if (headers[0]) headers[0].style.display = 'block'
